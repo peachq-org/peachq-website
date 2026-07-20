@@ -34,8 +34,17 @@ extra_css:
   - css/styles.css
   - css/extra.css
 
+# repl, compatibility and contact are PHP pages served by Apache, not MkDocs
+# output, so they are linked absolutely rather than as documents.
 nav:
   - Home: index.md
+  - Try Live: https://peachq.org/repl
+  - Download: download.md
+  - Compatibility: https://peachq.org/compatibility
+  - Roadmap: roadmap.md
+  - News: news/index.md
+  - About: about.md
+  - Contact: https://peachq.org/contact
 
 # _chrome.md exists only so the build can emit header/footer for the PHP pages
 # (see tools/split_chrome.py). It is never user-visible and is deleted from the
