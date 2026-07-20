@@ -20,8 +20,10 @@ def check(label, condition):
         failures.append(label)
 
 
-subprocess.run(["mkdocs", "build", "--strict"], cwd=ROOT, check=True)
-subprocess.run([sys.executable, "tools/split_chrome.py"], cwd=ROOT, check=True)
+# Run the real pipeline, not just mkdocs. Calling "mkdocs build" directly would
+# wipe site/ and rebuild from docs/ alone, discarding the static/ overlay and
+# leaving the tree without its PHP pages for whatever runs next.
+subprocess.run(["./tools/build.sh"], cwd=ROOT, check=True)
 
 check("header.php exists", HEADER.is_file())
 check("footer.php exists", FOOTER.is_file())
