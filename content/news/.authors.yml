@@ -1,5 +1,14 @@
+# Post authors. Add yourself here before using your key in a post's front
+# matter. `avatar` and `url` both work with a GitHub username:
+#
+#   yourkey:
+#     name: Your Name
+#     description: How you want to be described, e.g. "q developer"
+#     avatar: https://github.com/YOURUSER.png
+#     url: https://github.com/YOURUSER
 authors:
   ryan:
     name: Ryan Hamilton
     description: PeachQ maintainer
     avatar: https://github.com/ryanhamilton.png
+    url: https://github.com/ryanhamilton

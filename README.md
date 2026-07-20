@@ -66,4 +66,16 @@ stored here, and nothing pushes to the server from CI.
 
 ## Licence
 
-Site content is © the PeachQ project. PeachQ itself is MIT licensed.
+This repository — the website content, pages, styles and build scripts — is
+licensed **[CC BY 4.0](LICENSE)**, the same licence as the
+[kdb+ documentation](https://github.com/KxSystems/docs). Reuse and adapt it
+freely, with attribution.
+
+By opening a pull request you agree your contribution is published under that
+licence.
+
+PeachQ itself — the [implementation](https://github.com/peachq-org/peachq) — is
+MIT licensed. That is a separate repository with separate terms.
+
+"kdb+", "q" and "Kx" are trademarks of their respective owners; nothing here
+grants any right to those marks.

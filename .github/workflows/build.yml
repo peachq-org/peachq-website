@@ -30,6 +30,16 @@ jobs:
       - name: Verify pages
         run: ./tests/test_pages.sh
 
+      # Contributors who cannot run the site locally can download this from the
+      # Checks tab and open it, rather than guessing at how a change looks.
+      # The PHP pages need a PHP server, but the docs and news render as-is.
+      - name: Attach preview build
+        uses: actions/upload-artifact@v4
+        with:
+          name: site-preview
+          path: site/
+          retention-days: 14
+
       - name: Publish to built branch
         if: github.ref == 'refs/heads/main'
         run: |
