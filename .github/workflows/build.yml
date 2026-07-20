@@ -1,0 +1,50 @@
+name: Build site
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - run: pip install -r requirements.txt
+
+      - name: Install PHP
+        run: sudo apt-get update && sudo apt-get install -y php-cli
+
+      # test_chrome_split.py runs tools/build.sh itself, so this covers the
+      # build too. Running mkdocs separately would discard the static overlay.
+      - name: Verify chrome split
+        run: python3 tests/test_chrome_split.py
+
+      - name: Verify PHP pages
+        run: ./tests/test_pages.sh
+
+      - name: Publish to built branch
+        if: github.ref == 'refs/heads/main'
+        run: |
+          git config user.name "peachq-bot"
+          git config user.email "noreply@peachq.org"
+          git checkout --orphan built-tmp
+          git rm -rf --cached . >/dev/null
+          find . -maxdepth 1 ! -name site ! -name .git ! -name . -exec rm -rf {} +
+          # cp -a site/. copies dotfiles; `mv site/*` would silently drop
+          # .htaccess, which every extensionless URL depends on.
+          cp -a site/. .
+          rm -rf site
+          git add -A
+          git commit -m "Build ${GITHUB_SHA}"
+          git branch -M built-tmp built
+          git push --force origin built
