@@ -36,14 +36,13 @@
       </div>
     </div>
 
-    {# The site nav, inline, mirroring .nav-links in template.php. #}
+    {# The site nav, inline, mirroring .nav-links in template.php. Driven by
+       extra.peachq_nav so the URLs stay root-relative -- see mkdocs.yml. #}
     <nav class="peachq-nav" aria-label="Site">
-      {% for item in nav %}
-        {% if item.is_link %}
-          <a class="peachq-nav__link" href="{{ item.url }}">{{ item.title }}</a>
-        {% else %}
-          <a class="peachq-nav__link{% if item.active %} peachq-nav__link--active{% endif %}" href="{{ item.url | url }}">{{ item.title }}</a>
-        {% endif %}
+      {% set here = "/" ~ (page.url if page and page.url else "") %}
+      {% for item in config.extra.peachq_nav %}
+        {% set current = here == item.url or here == item.url ~ "/" or (item.url != "/" and here.startswith(item.url ~ "/")) %}
+        <a class="peachq-nav__link{% if current %} peachq-nav__link--active{% endif %}" href="{{ item.url }}">{{ item.title }}</a>
       {% endfor %}
       <a class="peachq-nav__link" href="{{ config.repo_url }}" target="_blank" rel="noreferrer">GitHub &#8599;</a>
     </nav>

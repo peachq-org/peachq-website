@@ -109,6 +109,33 @@ echo "--- shared light/dark preference ---"
 has "docs reads peachq-theme"  /docs/ 'peachq-theme'
 has "root reads peachq-theme"  /script.js 'peachq-theme'
 
+echo "--- release-uploaded data files are referenced correctly ---"
+# A PeachQ release uploads JSON into file/, wasm/ and data/, which live only on
+# the server. The pages that consume them must still ask for the right paths.
+has "download.js fetches latest.json" /download.js '/file/latest.json'
+has "download page loads download.js" /download    'src="/download.js"'
+has "repl fetches the wasm manifest"  /repl.js     '/wasm/latest/manifest.json'
+has "compatibility loads qdash data"  /compatibility 'src="/data/qdash/data.js"'
+# The deploy must never delete those directories.
+for dir in file wasm data; do
+  grep -q -- "--exclude $dir/" deploy/pull-peachq.sh
+  check "deploy excludes $dir/ from --delete" $?
+done
+
+echo "--- every script a root page references resolves ---"
+# download.js was missed in the initial port: the page referenced it, it 404'd,
+# and the release-driven version override silently stopped working. Nothing
+# caught it, because a missing script still renders a perfectly good page.
+for page in "" repl compatibility contact download roadmap about; do
+  for ref in $(get "/$page" | grep -oE 'src="/[^"]+\.js"' | sed 's/src="//;s/"//'); do
+    case "$ref" in
+      /data/*|/wasm/*|/file/*) continue ;;  # server-only, absent from the build
+    esac
+    code=$(curl -s -o /dev/null -w '%{http_code}' "http://127.0.0.1:$PORT$ref")
+    [ "$code" = "200" ]; check "${page:-home} script resolves: $ref" $?
+  done
+done
+
 echo "--- assets ---"
 # Dotfiles are easy to lose in a copy step, and every extensionless URL on the
 # site depends on this one surviving into the build output.

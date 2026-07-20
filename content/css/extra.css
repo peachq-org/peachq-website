@@ -166,11 +166,36 @@ body {
   color: #18140a;
 }
 
-/* The root pages collapse their nav on narrow screens; do the same here rather
-   than letting seven pills overflow the bar. */
+/* On narrow screens the pills scroll horizontally rather than being hidden.
+   The left drawer is suppressed below, so hiding these would strand the menu. */
 @media screen and (max-width: 76.234375em) {
   .peachq-nav {
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .peachq-nav::-webkit-scrollbar {
     display: none;
+  }
+  .peachq-nav__link {
+    padding: 8px 10px;
+    font-size: .82rem;
+  }
+}
+
+/* --- Left sidebar ---------------------------------------------------------
+   The site menu lives in the header, so Material's primary nav drawer would
+   just repeat it. The table of contents (secondary sidebar) stays. */
+
+.md-sidebar--primary,
+.md-header__button[for="__drawer"] {
+  display: none;
+}
+
+/* With the drawer gone, reclaim its column. */
+@media screen and (min-width: 76.25em) {
+  .md-content {
+    margin-left: 0;
   }
 }
 

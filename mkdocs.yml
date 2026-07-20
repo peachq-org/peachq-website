@@ -49,22 +49,40 @@ plugins:
       categories: true
       pagination_per_page: 10
 
-# Mirrors the nav in static/template.php exactly, in the same order, so moving
-# between the PHP root pages and this section does not change the menu. Keep the
-# two in sync: if you add an entry to template.php, add it here too.
-# GitHub is covered by repo_url, which Material renders in the header.
+# MkDocs' own structure. Only pages it generates belong here.
 nav:
-  - Try Live: https://peachq.org/repl
-  - Download: https://peachq.org/download
-  - Compatibility: https://peachq.org/compatibility
-  - Roadmap: https://peachq.org/roadmap
   - News: news/index.md
-  - About: https://peachq.org/about
-  - Contact: https://peachq.org/contact
 
-# /docs is live but deliberately unlinked from the nav for now.
+# /docs is live but deliberately unlinked from the menu for now.
 not_in_nav: |
   docs/*.md
+
+extra:
+  # The site menu, rendered inline by overrides/partials/header.html. It mirrors
+  # the $nav array in static/template.php exactly, in the same order, so moving
+  # between the PHP root pages and this section does not change the menu.
+  #
+  # URLs are root-relative, not absolute: the PHP pages use root-relative hrefs
+  # too, and hard-coding https://peachq.org/ would send anyone browsing a local
+  # build or a staging host off to production. They live under `extra` rather
+  # than `nav` because MkDocs tries to resolve `nav` entries as documents.
+  #
+  # Keep in sync with static/template.php; tests/test_pages.sh checks this.
+  peachq_nav:
+    - title: Try Live
+      url: /repl
+    - title: Download
+      url: /download
+    - title: Compatibility
+      url: /compatibility
+    - title: Roadmap
+      url: /roadmap
+    - title: News
+      url: /news/
+    - title: About
+      url: /about
+    - title: Contact
+      url: /contact
 
 markdown_extensions:
   - admonition
