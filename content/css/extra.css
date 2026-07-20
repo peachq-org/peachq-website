@@ -87,17 +87,19 @@ body {
   align-items: center;
 }
 
-/* .logo in styles.css is 42px square. */
+/* Header type and logo run at 80% of the root pages' sizes. styles.css uses a
+   42px logo and a 1.25rem brand; the docs section is denser, so it is scaled
+   down deliberately rather than kept in step. */
 .md-header__button.md-logo img,
 .md-header__button.md-logo svg {
-  width: 42px;
-  height: 42px;
+  width: 34px;
+  height: 34px;
 }
 
-/* .brand: heavy weight, tight tracking. */
+/* .brand: heavy weight, tight tracking, at 80% of 1.25rem. */
 .md-header__title {
   font-weight: 850;
-  font-size: 1.25rem;
+  font-size: 1rem;
   letter-spacing: -.04em;
   color: var(--peachq-text);
   margin-left: .4rem;
@@ -134,13 +136,14 @@ body {
   margin-left: auto;
 }
 
-/* Sizing mirrors .nav-links a in static/css/styles.css -- keep them in step. */
+/* 80% of .nav-links a in static/css/styles.css (1.06rem / 10px 14px), which is
+   a deliberate difference: the docs header is denser than the root pages'. */
 .peachq-nav__link {
-  padding: 10px 14px;
+  padding: 8px 11px;
   border-radius: 12px;
   color: var(--peachq-muted);
   font-weight: 700;
-  font-size: 1.06rem;
+  font-size: .85rem;
   letter-spacing: .012em;
   white-space: nowrap;
   border: 0;
@@ -181,8 +184,8 @@ body {
     display: none;
   }
   .peachq-nav__link {
-    padding: 8px 10px;
-    font-size: .82rem;
+    padding: 6px 8px;
+    font-size: .66rem;
   }
 }
 
