@@ -1,17 +1,231 @@
-/* PeachQ brand colour mapped onto Material's theme variables.
-   Source values: static/css/styles.css --peach / --peach-strong.
+/* ---------------------------------------------------------------------------
+   PeachQ theming for the docs and news section.
 
-   This is the only custom CSS in the docs section. The root pages have their
-   own design in static/css/styles.css and are served by Apache, not MkDocs --
-   the two are deliberately separate skins. */
+   The root pages are PHP using static/css/styles.css. This file makes Material
+   match that design closely enough that moving between the two halves does not
+   feel like leaving the site.
+
+   Approach: restyle Material's own header rather than replacing it, so search,
+   the mobile drawer and the palette toggle keep working. Values are taken from
+   static/css/styles.css so the two stay recognisably the same design.
+   --------------------------------------------------------------------------- */
+
 :root {
+  --peachq-peach:        #ffb38a;
+  --peachq-peach-strong: #f28b57;
+  --peachq-bg:           #fbfbf8;
+  --peachq-text:         #101217;
+  --peachq-muted:        #636973;
+  --peachq-line:         rgba(15, 18, 23, .10);
+  --peachq-surface:      rgba(255, 255, 255, .72);
+
   --md-primary-fg-color:        #f28b57;
   --md-primary-fg-color--light: #ffb38a;
   --md-primary-fg-color--dark:  #d9713f;
-  --md-accent-fg-color:         #f28b57;
+  --md-accent-fg-color:         #d9713f;
+  --md-default-bg-color:        #fbfbf8;
 }
 
 [data-md-color-scheme="slate"] {
-  --md-primary-fg-color:        #f28b57;
-  --md-accent-fg-color:         #ffb38a;
+  --peachq-peach:        #ffb38a;
+  --peachq-peach-strong: #ffb38a;
+  --peachq-bg:           #0d1014;
+  --peachq-text:         #f4f5f7;
+  --peachq-muted:        #9da4ae;
+  --peachq-line:         rgba(255, 255, 255, .10);
+  --peachq-surface:      rgba(20, 24, 30, .72);
+
+  --md-primary-fg-color: #ffb38a;
+  --md-accent-fg-color:  #ffb38a;
+  --md-default-bg-color: #0d1014;
+  --md-typeset-a-color:  #ffb38a;
+}
+
+/* --- Background -----------------------------------------------------------
+   The same warm radial wash the root pages use: a peach/gold bloom top-left
+   and a cool counterweight top-right over an off-white base. */
+
+body {
+  background:
+    radial-gradient(circle at 10% -10%, rgba(255, 179, 138, .30), transparent 32rem),
+    radial-gradient(circle at 90% 4%,  rgba(255, 211,  56, .13), transparent 28rem),
+    var(--peachq-bg);
+  background-attachment: fixed;
+}
+
+[data-md-color-scheme="slate"] body {
+  background:
+    radial-gradient(circle at 10% -10%, rgba(242, 139, 87, .20), transparent 32rem),
+    radial-gradient(circle at 90% 4%,  rgba(77, 115, 255, .10), transparent 28rem),
+    var(--peachq-bg);
+  background-attachment: fixed;
+}
+
+/* Material paints its own solid backgrounds over the body; make them defer. */
+.md-main,
+.md-container,
+.md-content,
+.md-sidebar,
+.md-footer-meta {
+  background: transparent;
+}
+
+/* --- Header ---------------------------------------------------------------
+   Matches .nav in styles.css: sticky, translucent, blurred, hairline rule. */
+
+.md-header {
+  height: 72px;
+  color: var(--peachq-text);
+  background: color-mix(in srgb, var(--peachq-bg) 80%, transparent);
+  backdrop-filter: blur(18px);
+  border-bottom: 1px solid var(--peachq-line);
+  box-shadow: none;
+}
+
+.md-header__inner {
+  height: 72px;
+  align-items: center;
+}
+
+/* .logo in styles.css is 42px square. */
+.md-header__button.md-logo img,
+.md-header__button.md-logo svg {
+  width: 42px;
+  height: 42px;
+}
+
+/* .brand: heavy weight, tight tracking. */
+.md-header__title {
+  font-weight: 850;
+  font-size: 1.25rem;
+  letter-spacing: -.04em;
+  color: var(--peachq-text);
+  margin-left: .4rem;
+}
+
+.md-header__topic:first-child {
+  font-weight: 850;
+}
+
+/* Search sits in the header; keep it legible against the light bar. */
+.md-search__form {
+  background: var(--peachq-surface);
+  border: 1px solid var(--peachq-line);
+  border-radius: 12px;
+}
+
+.md-search__form:hover {
+  background: var(--peachq-surface);
+  border-color: color-mix(in srgb, var(--peachq-peach-strong) 50%, transparent);
+}
+
+.md-search__input,
+.md-search__input::placeholder,
+.md-search__icon {
+  color: var(--peachq-muted);
+}
+
+.md-header__button {
+  color: var(--peachq-text);
+}
+
+/* --- Tabs -----------------------------------------------------------------
+   .nav-links renders as muted pills that fill in on hover/active. */
+
+.md-tabs {
+  background: transparent;
+  border-bottom: 1px solid var(--peachq-line);
+  color: var(--peachq-muted);
+}
+
+.md-tabs__link {
+  color: var(--peachq-muted);
+  font-weight: 650;
+  opacity: 1;
+  margin-top: .5rem;
+  padding: 9px 12px;
+  border-radius: 12px;
+  transition: background .15s, color .15s;
+}
+
+.md-tabs__link:hover,
+.md-tabs__link--active {
+  color: var(--peachq-text);
+  background: var(--peachq-surface);
+}
+
+/* "Try Live" is the peach call-to-action in the root nav; keep it prominent
+   here too. Matched on href rather than position, so reordering the nav in
+   mkdocs.yml cannot silently move the highlight onto a different link. */
+.md-tabs__link[href$="/repl"] {
+  color: #18140a;
+  background: var(--peachq-peach);
+  border: 1px solid color-mix(in srgb, var(--peachq-peach-strong) 62%, transparent);
+  box-shadow: 0 8px 24px rgba(242, 139, 87, .22);
+}
+
+.md-tabs__link[href$="/repl"]:hover {
+  background: color-mix(in srgb, var(--peachq-peach) 88%, white);
+  color: #18140a;
+}
+
+/* --- Content --------------------------------------------------------------- */
+
+.md-typeset h1,
+.md-typeset h2 {
+  letter-spacing: -.03em;
+  font-weight: 800;
+  color: var(--peachq-text);
+}
+
+.md-typeset a {
+  color: var(--peachq-peach-strong);
+}
+
+.md-typeset a:hover {
+  color: var(--peachq-text);
+}
+
+/* Cards, tables and code blocks sit on the washed background; give them the
+   same surface treatment the root pages use. */
+.md-typeset table:not([class]) {
+  border: 1px solid var(--peachq-line);
+  background: var(--peachq-surface);
+}
+
+.md-typeset table:not([class]) th {
+  background: color-mix(in srgb, var(--peachq-peach) 20%, transparent);
+  color: var(--peachq-text);
+}
+
+.md-typeset pre > code,
+.md-typeset .highlight {
+  border-radius: 12px;
+}
+
+/* Blog post cards on the news index. */
+.md-post--excerpt {
+  border-bottom: 1px solid var(--peachq-line);
+  padding-bottom: 1rem;
+}
+
+/* --- Footer ---------------------------------------------------------------- */
+
+.md-footer {
+  background: color-mix(in srgb, var(--peachq-bg) 92%, var(--peachq-peach));
+  color: var(--peachq-text);
+}
+
+.md-footer-meta {
+  background: transparent;
+  border-top: 1px solid var(--peachq-line);
+}
+
+.md-footer__link {
+  color: var(--peachq-text);
+}
+
+.md-copyright,
+.md-footer-meta .md-footer-copyright {
+  color: var(--peachq-muted);
 }

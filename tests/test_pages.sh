@@ -44,6 +44,19 @@ get /news/ | grep -q 'website is now open source'  ; check "news index lists the
 [ -f site/news/2026/07/20-the-peachq-website-is-now-open-source/index.html ]
 check "blog post page generated" $?
 [ -d site/news/archive/2026 ]                      ; check "blog archive generated" $?
+get /docs/ | grep -q 'css/extra.css'               ; check "docs loads PeachQ theming" $?
+# The docs section must lead back to the main site, or it is a one-way trip.
+get /docs/ | grep -q 'href="https://peachq.org/"'  ; check "docs links back to main site" $?
+# extra.css highlights the CTA via [href$="/repl"]; if the nav link changes
+# shape that selector silently stops matching.
+get /docs/ | grep -q 'href="https://peachq.org/repl"'
+check "repl CTA link present for styling hook" $?
+
+echo "--- root pages expose docs and news ---"
+for page in index repl about; do
+  get "/$page.php" | grep -q 'href="/news/"' ; check "$page links to news" $?
+  get "/$page.php" | grep -q 'href="/docs/"' ; check "$page links to docs" $?
+done
 
 echo "--- assets ---"
 # Dotfiles are easy to lose in a copy step, and every extensionless URL on the
