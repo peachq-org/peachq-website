@@ -148,6 +148,10 @@ done
 echo "--- download page follows latest.json ---"
 # `make q-upload` writes /file/latest.json last, so it is the release source of
 # truth. download.php must render from it, or every release needs a repo edit.
+#
+# tools/dev-fixtures.sh may have left a real latest.json in site/. Move it aside
+# so these assertions test the code rather than whatever is currently published.
+if [ -e site/file ]; then mv site/file site/.file-testbak; fi
 has "download falls back without latest.json" /download 'peachq-v0.41.0-linux-x86_64.tar.gz'
 mkdir -p site/file
 cat > site/file/latest.json <<'JSON'
@@ -167,6 +171,7 @@ has "download shows latest.json filename" /download 'peachq-v9.9.9-linux-x86_64.
 has "install command uses that filename"  /download 'tar -xzf peachq-v9.9.9-linux-x86_64.tar.gz'
 lacks "stale hardcoded version is gone"   /download 'peachq-v0.41.0-linux'
 rm -rf site/file
+if [ -e site/.file-testbak ]; then mv site/.file-testbak site/file; fi
 
 echo "--- every script a root page references resolves ---"
 # download.js was missed in the initial port: the page referenced it, it 404'd,
