@@ -40,4 +40,18 @@ fetch data/qdash/data.js
 fetch data/qdash/data.json
 fetch file/latest.json
 
+# The browser REPL needs the WebAssembly runtime. Its scripts are named in the
+# manifest rather than fixed, so read them from there rather than guessing.
+fetch wasm/latest/manifest.json
+if [ -f site/wasm/latest/manifest.json ]; then
+  scripts=$(sed -n 's/.*"script"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p' site/wasm/latest/manifest.json)
+  for s in $scripts; do
+    fetch "wasm/latest/$s"
+    # Emscripten ships a .js loader beside a .wasm binary of the same stem.
+    case "$s" in
+      *.js) fetch "wasm/latest/$(basename "$s" .js).wasm" ;;
+    esac
+  done
+fi
+
 echo "done. These are preview-only and are removed by the next build."
