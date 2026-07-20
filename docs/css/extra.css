@@ -1,0 +1,8 @@
+/* Map PeachQ's brand colour onto Material's theme variables.
+   Source values: docs/css/styles.css --peach / --peach-strong. */
+:root {
+  --md-primary-fg-color:        #f28b57;
+  --md-primary-fg-color--light: #ffb38a;
+  --md-primary-fg-color--dark:  #d9713f;
+  --md-accent-fg-color:         #f28b57;
+}

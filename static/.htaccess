@@ -1,0 +1,41 @@
+Options All -Indexes
+
+DirectoryIndex index.php index.html
+
+AddType application/wasm .wasm
+
+SetEnvIf Request_URI "^/wasm/latest/" PEACHQ_NO_CACHE=1
+SetEnvIf Request_URI "^/data/qdash/" PEACHQ_NO_CACHE=1
+SetEnvIf Request_URI "^/examples/" PEACHQ_NO_CACHE=1
+SetEnvIf Request_URI "^/file/latest\.json$" PEACHQ_NO_CACHE=1
+SetEnvIf Request_URI "^/img/" PEACHQ_IMMUTABLE=1
+SetEnvIf Request_URI "\.(css|js|wasm)$" PEACHQ_SHORT_CACHE=1
+
+<FilesMatch "\.(ico|jpg|jpeg|png|gif|woff|woff2|mp4|webp|svg)$">
+	ExpiresActive on
+	ExpiresDefault "access plus 1 year"
+</FilesMatch>
+
+<FilesMatch "\.(js|css|wasm)$">
+	ExpiresActive on
+	ExpiresDefault "access plus 1 hour"
+</FilesMatch>
+
+<IfModule mod_headers.c>
+	Header set Cache-Control "public, max-age=31536000, immutable" env=PEACHQ_IMMUTABLE
+	Header set Cache-Control "public, max-age=3600" env=PEACHQ_SHORT_CACHE
+	Header set Cache-Control "no-store, max-age=0" env=PEACHQ_NO_CACHE
+</IfModule>
+
+<IfModule mod_rewrite.c>
+	RewriteEngine on
+
+	RedirectMatch 301 ^/(index|download|repl|compatibility|roadmap|about|demo|qdash)\.html$ /$1
+
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteCond %{DOCUMENT_ROOT}/$1.php -f
+	RewriteRule ^([A-Za-z0-9_-]+)/?$ $1.php [L]
+</IfModule>
+
+ErrorDocument 404 /weberror.php
