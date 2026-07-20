@@ -107,49 +107,46 @@ body {
   font-weight: 850;
 }
 
-/* Search sits in the header; keep it legible against the light bar. */
-.md-search__form {
-  background: var(--peachq-surface);
-  border: 1px solid var(--peachq-line);
-  border-radius: 12px;
+/* The wordmark, matching template.php's
+   <span>Peach<span style="color:var(--peach-strong)">Q</span></span>.
+   Rendered by overrides/partials/header.html. */
+.peachq-wordmark {
+  font-weight: 900;
 }
 
-.md-search__form:hover {
-  background: var(--peachq-surface);
-  border-color: color-mix(in srgb, var(--peachq-peach-strong) 50%, transparent);
-}
-
-.md-search__input,
-.md-search__input::placeholder,
-.md-search__icon {
-  color: var(--peachq-muted);
+.peachq-wordmark__q {
+  color: var(--peachq-peach-strong);
+  font-weight: 900;
 }
 
 .md-header__button {
   color: var(--peachq-text);
 }
 
-/* --- Tabs -----------------------------------------------------------------
-   .nav-links renders as muted pills that fill in on hover/active. */
+/* --- Inline nav -----------------------------------------------------------
+   Rendered by overrides/partials/header.html in the header row, matching
+   .nav-links in styles.css: muted pills that fill in on hover/active. */
 
-.md-tabs {
-  background: transparent;
-  border-bottom: 1px solid var(--peachq-line);
-  color: var(--peachq-muted);
+.peachq-nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
 }
 
-.md-tabs__link {
-  color: var(--peachq-muted);
-  font-weight: 650;
-  opacity: 1;
-  margin-top: .5rem;
+.peachq-nav__link {
   padding: 9px 12px;
   border-radius: 12px;
+  color: var(--peachq-muted);
+  font-weight: 650;
+  white-space: nowrap;
+  border: 0;
+  background: transparent;
   transition: background .15s, color .15s;
 }
 
-.md-tabs__link:hover,
-.md-tabs__link--active {
+.peachq-nav__link:hover,
+.peachq-nav__link--active {
   color: var(--peachq-text);
   background: var(--peachq-surface);
 }
@@ -157,16 +154,39 @@ body {
 /* "Try Live" is the peach call-to-action in the root nav; keep it prominent
    here too. Matched on href rather than position, so reordering the nav in
    mkdocs.yml cannot silently move the highlight onto a different link. */
-.md-tabs__link[href$="/repl"] {
+.peachq-nav__link[href$="/repl"] {
   color: #18140a;
   background: var(--peachq-peach);
   border: 1px solid color-mix(in srgb, var(--peachq-peach-strong) 62%, transparent);
   box-shadow: 0 8px 24px rgba(242, 139, 87, .22);
 }
 
-.md-tabs__link[href$="/repl"]:hover {
+.peachq-nav__link[href$="/repl"]:hover {
   background: color-mix(in srgb, var(--peachq-peach) 88%, white);
   color: #18140a;
+}
+
+/* The root pages collapse their nav on narrow screens; do the same here rather
+   than letting seven pills overflow the bar. */
+@media screen and (max-width: 76.234375em) {
+  .peachq-nav {
+    display: none;
+  }
+}
+
+/* --- Footer ----------------------------------------------------------------
+   Mirrors the two-line footer in template.php. */
+
+.md-copyright__highlight {
+  color: var(--peachq-text);
+}
+
+.md-copyright a {
+  color: var(--peachq-muted);
+}
+
+.md-copyright a:hover {
+  color: var(--peachq-peach-strong);
 }
 
 /* --- Content --------------------------------------------------------------- */

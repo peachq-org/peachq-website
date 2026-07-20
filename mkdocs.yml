@@ -15,22 +15,24 @@ theme:
   custom_dir: overrides
   logo: img/peachq-logo.svg
   favicon: img/favicon.ico
+  # No `media:` entries. Those make Material auto-select from the system
+  # preference, which fights the explicit choice shared with the root pages via
+  # localStorage["peachq-theme"]. Index 0 is light, index 1 is dark, and
+  # overrides/main.html keeps them in step with the PHP side.
   palette:
-    - media: "(prefers-color-scheme: light)"
-      scheme: default
+    - scheme: default
       toggle:
         icon: material/weather-night
         name: Switch to dark mode
-    - media: "(prefers-color-scheme: dark)"
-      scheme: slate
+    - scheme: slate
       toggle:
         icon: material/weather-sunny
         name: Switch to light mode
+  # navigation.tabs is deliberately absent: overrides/partials/header.html
+  # renders the nav inline in the header row instead, matching template.php.
   features:
-    - navigation.tabs
     - navigation.sections
     - navigation.top
-    - search.suggest
     - content.code.copy
     - content.action.edit
 
@@ -47,14 +49,22 @@ plugins:
       categories: true
       pagination_per_page: 10
 
-# The absolute entries point back at the PHP root pages, so the docs section is
-# not a one-way trip. The logo links home via site_url as well.
+# Mirrors the nav in static/template.php exactly, in the same order, so moving
+# between the PHP root pages and this section does not change the menu. Keep the
+# two in sync: if you add an entry to template.php, add it here too.
+# GitHub is covered by repo_url, which Material renders in the header.
 nav:
-  - Docs: docs/index.md
-  - News: news/index.md
   - Try Live: https://peachq.org/repl
   - Download: https://peachq.org/download
-  - Main site: https://peachq.org/
+  - Compatibility: https://peachq.org/compatibility
+  - Roadmap: https://peachq.org/roadmap
+  - News: news/index.md
+  - About: https://peachq.org/about
+  - Contact: https://peachq.org/contact
+
+# /docs is live but deliberately unlinked from the nav for now.
+not_in_nav: |
+  docs/*.md
 
 markdown_extensions:
   - admonition

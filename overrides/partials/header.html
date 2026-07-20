@@ -1,0 +1,60 @@
+{#-
+  Adapted from Material for MkDocs' partials/header.html.
+
+  Differences from the original, all so this header matches the PHP root pages'
+  <header class="nav"> in static/template.php:
+
+    * The wordmark renders the Q in --peach-strong and links to the site root,
+      the way .brand does. config.site_name is escaped by Jinja, so this cannot
+      be expressed in mkdocs.yml.
+    * The nav items render inline in the header row instead of in a separate
+      tabs bar below it, matching .nav-links.
+    * The search box and the repo source link are omitted. GitHub is linked from
+      the footer instead (see partials/copyright.html).
+    * The per-page topic (which swaps the title for the current page name on
+      scroll) is dropped, since the root pages have no equivalent.
+
+  If Material is upgraded, diff this against the upstream partial.
+-#}
+{% set class = "md-header md-header--shadow" %}
+<header class="{{ class }}" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="{{ lang.t('header') }}">
+    <a href="{{ config.site_url | d('/', true) }}" title="{{ config.site_name | e }}" class="md-header__button md-logo" aria-label="{{ config.site_name }}" data-md-component="logo">
+      {% include "partials/logo.html" %}
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      {% set icon = config.theme.icon.menu or "material/menu" %}
+      {% include ".icons/" ~ icon ~ ".svg" %}
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <a class="md-ellipsis peachq-wordmark" href="{{ config.site_url | d('/', true) }}">
+            Peach<span class="peachq-wordmark__q">Q</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    {# The site nav, inline, mirroring .nav-links in template.php. #}
+    <nav class="peachq-nav" aria-label="Site">
+      {% for item in nav %}
+        {% if item.is_link %}
+          <a class="peachq-nav__link" href="{{ item.url }}">{{ item.title }}</a>
+        {% else %}
+          <a class="peachq-nav__link{% if item.active %} peachq-nav__link--active{% endif %}" href="{{ item.url | url }}">{{ item.title }}</a>
+        {% endif %}
+      {% endfor %}
+      <a class="peachq-nav__link" href="{{ config.repo_url }}" target="_blank" rel="noreferrer">GitHub &#8599;</a>
+    </nav>
+
+    {% if config.theme.palette %}
+      {% if not config.theme.palette is mapping %}
+        {% include "partials/palette.html" %}
+      {% endif %}
+    {% endif %}
+    {% if not config.theme.palette is mapping %}
+      {% include "partials/javascripts/palette.html" %}
+    {% endif %}
+  </nav>
+</header>
