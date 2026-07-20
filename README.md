@@ -30,12 +30,20 @@ worked q examples, migration notes from kdb+ and news posts all live in
 `content/` and need nothing but Markdown — no PHP, no Node, no build step. Use
 the edit icon at the top of any docs or news page to open a PR in the browser.
 
-Especially welcome:
+We are particularly looking for **tutorial writers, documentation writers, and
+people writing articles about using PeachQ**. If you have taught q to anyone, or
+worked something out the hard way, that is exactly the material this site needs.
 
-- **Guides** for something you actually had to work out
+- **Tutorials** — take someone from nothing to doing something useful
+- **Documentation** — how a feature actually behaves, with examples
+- **Articles** on using PeachQ for real work: analysis, time series, tooling, whatever you built
 - **Worked examples** in q, ideally ones that run in the [browser REPL](https://peachq.org/repl)
 - **Migration notes** for people arriving from kdb+, particularly where PeachQ differs
 - **Gotchas** you hit — the hardest pages to write and the most useful to read
+
+You do not need to be an expert. A page written by someone who just learned
+something is often clearer than one written by someone who has known it for
+years.
 
 Fixes to the PHP pages are welcome too, they are just a smaller part of the job.
 
