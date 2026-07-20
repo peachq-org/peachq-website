@@ -27,12 +27,19 @@ build, see [Download](https://peachq.org/download).
 
 ## Contributing documentation
 
-This section is deliberately thin — it is where the community can help most.
-Useful things to write:
+This section is deliberately thin — it is where the community can help most. We
+are particularly looking for **tutorial writers, documentation writers, and
+people writing articles about using PeachQ**.
 
-- **Guides** for a task someone actually has to do: loading data, using the REPL, connecting over IPC.
-- **Worked examples** in q, ideally ones that run in the browser REPL.
+- **Tutorials** that take someone from nothing to doing something useful.
+- **Documentation** of how a feature actually behaves, with examples.
+- **Articles** on using PeachQ for real work: analysis, time series, tooling, whatever you built.
+- **Worked examples** in q, ideally ones that run in the [browser REPL](https://peachq.org/repl).
 - **Migration notes** for people arriving from kdb+, especially where PeachQ differs.
-- **Gotchas** you hit and had to work out — those are the hardest pages to write and the most useful to read.
+- **Gotchas** you hit and had to work out — the hardest pages to write and the most useful to read.
 
-Everything here is Markdown. Use the edit icon at the top of any page.
+You do not need to be an expert. A page written by someone who just learned
+something is often clearer than one written by someone who has known it for years.
+
+Everything here is Markdown. Use the edit icon at the top of any page, or see
+[CONTRIBUTING.md](https://github.com/peachq-org/peachq-website/blob/main/CONTRIBUTING.md).
