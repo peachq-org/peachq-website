@@ -1,0 +1,72 @@
+{% extends "main.html" %}
+
+{% block content %}
+<div class="peachq-home">
+
+<section class="hero"><div class="container hero-grid">
+<div>
+  <div class="eyebrow"><span class="dot"></span> MIT licensed &middot; community built</div>
+  <h1>Peach<span class="peach">Q</span></h1>
+  <p class="hero-copy">An open implementation of q for everyone, built on the Rayforce in-memory engine today, with DuckDB-backed storage being shaped for future releases.</p>
+  <div class="actions">
+    <a class="button peach-button" href="/download/">Download PeachQ</a>
+    <a class="button primary" href="/repl">Try the live REPL</a>
+    <a class="button" href="https://github.com/peachq-org/peachq" target="_blank" rel="noreferrer">View on GitHub &#8599;</a>
+  </div>
+  <p class="note">Early project. APIs and compatibility are improving quickly.</p>
+</div>
+<div class="hero-card">
+  <div class="terminal">
+    <div class="terminal-head"><i></i><i></i><i></i></div>
+    <pre><span class="prompt">q)</span>trade:([]sym:`AAPL`MSFT;px:211.2 493.7)
+<span class="result">sym   px</span>
+<span class="result">---------</span>
+<span class="result">AAPL  211.2</span>
+<span class="result">MSFT  493.7</span>
+
+<span class="prompt">q)</span><span class="sql">select avg px by sym from trade</span>
+<span class="result">sym | px</span>
+<span class="result">----|------</span>
+<span class="result">AAPL| 211.2</span>
+<span class="result">MSFT| 493.7</span></pre>
+    <div class="duck-mark">&#127825;</div>
+  </div>
+</div>
+</div></section>
+
+<section class="section"><div class="container">
+<h2>A modern foundation for q.</h2>
+<p class="section-intro">Keep the concise array language and table semantics people love. Add an open implementation, a broad storage ecosystem, and room for the community to move it forward.</p>
+<div class="grid-3">
+  <div class="card"><div class="card-icon">&#9889;</div><h3>Fast in memory</h3><p>Built on the high-performance Rayforce engine for vector operations, tables and interactive analysis.</p></div>
+  <div class="card"><div class="card-icon duck-icon"><img src="/img/yellow-duck.svg" alt="" aria-hidden="true"></div><h3>DuckDB storage trials</h3><p>DuckDB-backed storage is not in the public release yet. We are looking for volunteers to trial durable tables, SQL and Parquet workflows as they land.</p></div>
+  <div class="card"><div class="card-icon">&#8984;</div><h3>Open everywhere</h3><p>Run q freely on laptops, servers, containers, CI systems and inside the browser.</p></div>
+</div>
+</div></section>
+
+<section class="section"><div class="container split">
+<div><h2>Compatibility you can see.</h2><p class="section-intro">PeachQ is being built in public. The compatibility page tracks language features, qSQL, types, IPC and storage support as each area lands.</p><div class="actions"><a class="button" href="/compatibility">Explore compatibility</a></div></div>
+<div class="chart-wrap"><div class="chart-meta"><strong>q compatibility</strong><span id="homeCompatScore">loading current score</span></div><svg id="compatChart" viewBox="0 0 720 300" role="img" aria-label="Compatibility increasing over time"></svg></div>
+</div></section>
+
+<section class="section"><div class="container help-build">
+  <span class="tag">Community</span>
+  <h2>Help build Peach<span class="peach">Q</span>.</h2>
+  <p class="section-intro">PeachQ is an open-source community project, and we would love your help.</p>
+  <div class="help-list">
+    <p><strong>IDE authors</strong> Make existing q editors and IDEs work seamlessly with PeachQ.</p>
+    <p><strong>Library maintainers</strong> Help shape an open standard library and reusable package ecosystem.</p>
+    <p><strong>q developers</strong> Improve compatibility with tests, examples and real-world workloads.</p>
+    <p><strong>Tool builders</strong> Build drivers, language servers, formatters, linters, notebooks and other ecosystem tools.</p>
+    <p><strong>Companies using q</strong> Tell us what compatibility matters most to your workflows.</p>
+  </div>
+  <div class="actions"><a class="button peach-button" href="https://github.com/peachq-org/peachq" target="_blank" rel="noreferrer">Join on GitHub &#8599;</a><a class="button" href="/contact">Get in touch</a></div>
+</div></section>
+
+</div>
+{% endblock %}
+
+{% block scripts %}
+  {{ super() }}
+  <script src="/script.js"></script>
+{% endblock %}
