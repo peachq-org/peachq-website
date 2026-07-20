@@ -85,7 +85,7 @@ has "docs loads PeachQ theming"      /docs/ 'css/extra.css'
 # matching template.php, and link home the way .brand does.
 has "news wordmark has a peach Q"    /news/ 'peachq-wordmark__q'
 has "docs wordmark has a peach Q"    /docs/ 'peachq-wordmark__q'
-has "wordmark links to the site root" /docs/ 'class="md-ellipsis peachq-wordmark" href="https://peachq.org/"'
+has "wordmark links to the site root" /docs/ 'class="md-ellipsis peachq-wordmark" href="/"'
 # Search and the header repo link are deliberately omitted; GitHub moved to the
 # footer. If a Material upgrade reinstates them, this catches it.
 lacks "docs header has no search"    /docs/ 'md-search'
@@ -98,16 +98,39 @@ has "docs nav is inline"             /docs/ 'peachq-nav__link'
 echo "--- docs nav mirrors the root nav ---"
 # Every entry in template.php's nav must appear in the Material header too, or
 # the two halves present different menus.
-for target in /repl /download /compatibility /roadmap /about /contact; do
-  has "docs nav has $target" /docs/ "peachq.org$target\""
+# Match the nav link itself, not just the URL. An earlier version searched for
+# the bare path, which also matched links in the page body -- so four of these
+# passed without the nav containing anything at all.
+for target in /repl /download /compatibility /roadmap /news/ /about /contact; do
+  has "docs nav has $target" /docs/ "peachq-nav__link[^\"]*\" href=\"$target\""
 done
-has "docs nav has News"   /docs/ '>News<'
 has "docs nav has GitHub" /docs/ 'peachq-nav__link" href="https://github.com/peachq-org/peachq"'
+# The nav must contain exactly the root nav's entries plus GitHub.
+count=$(get /docs/ | grep -oc 'class="peachq-nav__link')
+[ "$count" = "8" ]; check "docs nav has 8 entries (7 + GitHub), got $count" $?
 
 echo "--- shared light/dark preference ---"
-# Both halves must read the same localStorage key or the toggle does not carry.
-has "docs reads peachq-theme"  /docs/ 'peachq-theme'
-has "root reads peachq-theme"  /script.js 'peachq-theme'
+# Material owns the state; the PHP pages follow it. script.js must therefore
+# read and write Material's own localStorage entry, and Material's theme code
+# must be left untouched.
+has "root pages use Material's palette key" /script.js '"/\.__palette"'
+has "root pages map slate to dark"          /script.js 'slate'
+lacks "no override of Material's palette"   /docs/     'peachq-theme'
+# Material computes the storage scope per page depth; all pages must land on
+# the same site-root scope or the choice would not persist between them.
+for page in /docs/ /news/; do
+  has "$page scopes palette to site root" "$page" '__md_scope=new URL("\.\."'
+done
+# The toggle is icon-only.
+lacks "toggle has no Light text" /script.js '☀ Light'
+lacks "toggle has no Dark text"  /script.js '◐ Dark'
+
+echo "--- header links are root-relative ---"
+has  "logo links to /"      /docs/ 'class="md-header__button md-logo"'
+lacks "no absolute site URL in docs header" /docs/ 'href="https://peachq.org/"'
+lacks "no absolute site URL in news header" /news/ 'href="https://peachq.org/"'
+has  "footer about is relative"   /docs/ 'href="/about"'
+has  "footer contact is relative" /docs/ 'href="/contact"'
 
 echo "--- release-uploaded data files are referenced correctly ---"
 # A PeachQ release uploads JSON into file/, wasm/ and data/, which live only on
@@ -121,6 +144,29 @@ for dir in file wasm data; do
   grep -q -- "--exclude $dir/" deploy/pull-peachq.sh
   check "deploy excludes $dir/ from --delete" $?
 done
+
+echo "--- download page follows latest.json ---"
+# `make q-upload` writes /file/latest.json last, so it is the release source of
+# truth. download.php must render from it, or every release needs a repo edit.
+has "download falls back without latest.json" /download 'peachq-v0.41.0-linux-x86_64.tar.gz'
+mkdir -p site/file
+cat > site/file/latest.json <<'JSON'
+{
+  "version": "v9.9.9",
+  "uploaded": "2099-01-02",
+  "files": {
+    "windows": { "name": "peachq-v9.9.9-windows-x86_64.zip",  "bytes": 1, "sha256": "x" },
+    "mac":     { "name": "peachq-v9.9.9-darwin-arm64.tar.gz", "bytes": 1, "sha256": "x" },
+    "linux":   { "name": "peachq-v9.9.9-linux-x86_64.tar.gz", "bytes": 1, "sha256": "x" }
+  }
+}
+JSON
+has "download shows latest.json version"  /download 'v9.9'
+has "download shows latest.json date"     /download '2099-01-02'
+has "download shows latest.json filename" /download 'peachq-v9.9.9-linux-x86_64.tar.gz'
+has "install command uses that filename"  /download 'tar -xzf peachq-v9.9.9-linux-x86_64.tar.gz'
+lacks "stale hardcoded version is gone"   /download 'peachq-v0.41.0-linux'
+rm -rf site/file
 
 echo "--- every script a root page references resolves ---"
 # download.js was missed in the initial port: the page referenced it, it 404'd,

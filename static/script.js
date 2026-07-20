@@ -1,14 +1,77 @@
 const root = document.documentElement;
-const saved = localStorage.getItem("peachq-theme");
-const preferredDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
-root.dataset.theme = saved || (preferredDark ? "dark" : "light");
+
+/* Light/dark is shared with the MkDocs Material section at /docs and /news.
+ *
+ * Material is the owner: it stores the choice in localStorage as
+ * "<site root>.__palette" holding {index, color:{media,scheme,primary,accent}},
+ * where scheme is "default" or "slate". Its own theme code is left untouched;
+ * these pages read and write that same entry so a toggle on either half of the
+ * site carries to the other.
+ *
+ * The key is scoped to the site root. Material computes it per page with
+ * `new URL("..", location)` varied by depth; from these root-level pages that
+ * is simply "/".
+ */
+const PALETTE_KEY = "/.__palette";
+
+function readPalette() {
+  try {
+    return JSON.parse(localStorage.getItem(PALETTE_KEY)) || null;
+  } catch (e) {
+    return null;
+  }
+}
+
+function currentTheme() {
+  const palette = readPalette();
+  if (palette && palette.color && palette.color.scheme) {
+    return palette.color.scheme === "slate" ? "dark" : "light";
+  }
+  if (palette && typeof palette.index === "number") {
+    return palette.index === 1 ? "dark" : "light";
+  }
+  // Migrate anyone still carrying the pre-Material key.
+  const legacy = localStorage.getItem("peachq-theme");
+  if (legacy === "dark" || legacy === "light") {
+    return legacy;
+  }
+  return window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches
+    ? "dark"
+    : "light";
+}
+
+function writeTheme(theme) {
+  const existing = readPalette() || {};
+  // Preserve whatever Material stored; only the scheme and index change.
+  const color = Object.assign(
+    { media: "", primary: "indigo", accent: "indigo" },
+    existing.color || {}
+  );
+  color.scheme = theme === "dark" ? "slate" : "default";
+  try {
+    localStorage.setItem(
+      PALETTE_KEY,
+      JSON.stringify({ index: theme === "dark" ? 1 : 0, color })
+    );
+  } catch (e) {
+    /* private browsing, quota, etc. -- the page still works, just unremembered */
+  }
+}
+
+root.dataset.theme = currentTheme();
 
 document.querySelectorAll("[data-theme-toggle]").forEach(btn => {
-  const render = () => btn.textContent = root.dataset.theme === "dark" ? "☀ Light" : "◐ Dark";
+  // Icon only. The button carries aria-label="Toggle theme" in template.php,
+  // so screen readers still get a description without visible text.
+  const render = () => {
+    const dark = root.dataset.theme === "dark";
+    btn.textContent = dark ? "☀" : "◐";
+    btn.title = dark ? "Switch to light mode" : "Switch to dark mode";
+  };
   render();
   btn.addEventListener("click", () => {
     root.dataset.theme = root.dataset.theme === "dark" ? "light" : "dark";
-    localStorage.setItem("peachq-theme", root.dataset.theme);
+    writeTheme(root.dataset.theme);
     render();
   });
 });

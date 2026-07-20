@@ -1,56 +1,9 @@
 {% extends "base.html" %}
 
 {#
-  Share the light/dark choice with the PHP root pages.
-
-  static/script.js stores the site-wide preference in
-  localStorage["peachq-theme"] as "light" or "dark" and applies it as
-  html[data-theme]. Material keeps its own state in localStorage["__palette"]
-  and applies html[data-md-color-scheme]. Left alone the two drift, so toggling
-  in the docs would not carry back to the main site.
-
-  This makes "peachq-theme" the single source of truth: read it before first
-  paint to avoid a flash, then mirror Material's toggle back into it.
+  Material's palette handling is deliberately left untouched. It owns the
+  light/dark state in localStorage under "<site root>.__palette", and
+  static/script.js on the PHP root pages reads and writes that same key so the
+  choice carries across both halves of the site. See the theme block in
+  static/script.js.
 #}
-{% block extrahead %}
-  {{ super() }}
-  <script>
-    (function () {
-      var KEY = "peachq-theme";
-      function read() { try { return localStorage.getItem(KEY); } catch (e) { return null; } }
-      function write(v) { try { localStorage.setItem(KEY, v); } catch (e) {} }
-
-      var want = read();
-      if (want !== "light" && want !== "dark") {
-        want = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-      }
-
-      // Applied here, in <head>, so the correct scheme is in place before the
-      // first paint rather than flashing the wrong one.
-      var root = document.documentElement;
-      root.setAttribute("data-md-color-scheme", want === "dark" ? "slate" : "default");
-      root.setAttribute("data-theme", want);
-
-      document.addEventListener("DOMContentLoaded", function () {
-        var inputs = document.querySelectorAll('input[name="__palette"]');
-        if (!inputs.length) return;
-
-        // Palette order is fixed in mkdocs.yml: index 0 light, index 1 dark.
-        var index = want === "dark" ? 1 : 0;
-        if (inputs[index] && !inputs[index].checked) {
-          inputs[index].checked = true;
-          inputs[index].dispatchEvent(new Event("change"));
-        }
-
-        Array.prototype.forEach.call(inputs, function (input, i) {
-          input.addEventListener("change", function () {
-            if (!input.checked) return;
-            var value = i === 1 ? "dark" : "light";
-            write(value);
-            root.setAttribute("data-theme", value);
-          });
-        });
-      });
-    })();
-  </script>
-{% endblock %}

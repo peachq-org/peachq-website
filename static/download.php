@@ -1,6 +1,11 @@
 <?php
 include 'template.php';
 peachq_page_start('Download PeachQ', 'Download PeachQ preview builds and browser runtime.', 'download');
+// `make q-upload` writes /file/latest.json last, once every binary is in place,
+// which makes it the release source of truth. Reading it here means a release
+// updates this page with no repo change, and the correct version is in the
+// server-rendered HTML rather than only appearing once download.js runs.
+// The literals below are the fallback for a machine with no release uploaded.
 $release = 'v0.41.0';
 $releaseDisplay = 'v0.41';
 $uploaded = '2026-07-16';
@@ -9,6 +14,28 @@ $files = [
     'mac' => "peachq-$release-darwin-arm64.tar.gz",
     'linux' => "peachq-$release-linux-x86_64.tar.gz",
 ];
+
+$latestPath = __DIR__ . '/file/latest.json';
+if (is_readable($latestPath)) {
+    $latest = json_decode((string)file_get_contents($latestPath), true);
+    if (is_array($latest)) {
+        if (!empty($latest['version']) && is_string($latest['version'])) {
+            $release = $latest['version'];
+            // latest.json carries the full tag (v0.41.0); the hero shows the
+            // short form (v0.41), matching how releases are talked about.
+            $releaseDisplay = preg_replace('/^(v\d+\.\d+)\.\d+$/', '$1', $release) ?? $release;
+        }
+        if (!empty($latest['uploaded']) && is_string($latest['uploaded'])) {
+            $uploaded = $latest['uploaded'];
+        }
+        foreach (['windows', 'mac', 'linux'] as $platform) {
+            $name = $latest['files'][$platform]['name'] ?? null;
+            if (is_string($name) && $name !== '') {
+                $files[$platform] = $name;
+            }
+        }
+    }
+}
 $commands = [
     'linux' => "curl -LO https://peachq.org/file/{$files['linux']}\nmkdir -p peachq\ntar -xzf {$files['linux']} -C peachq\ncd peachq\n./q",
     'mac' => "curl -LO https://peachq.org/file/{$files['mac']}\nmkdir -p peachq\ntar -xzf {$files['mac']} -C peachq\ncd peachq\n./q",

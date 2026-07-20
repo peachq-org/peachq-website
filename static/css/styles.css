@@ -57,8 +57,13 @@ button,input{font:inherit}
 .logo{width:42px;height:42px;display:block}
 .nav-links{display:flex;align-items:center;gap:8px}
 .nav-links a,.theme-toggle{
-  padding:9px 12px;border-radius:12px;color:var(--muted);font-weight:650;border:0;background:transparent;cursor:pointer
+  padding:10px 14px;border-radius:12px;color:var(--muted);
+  font-weight:700;font-size:1.06rem;letter-spacing:.012em;
+  border:0;background:transparent;cursor:pointer
 }
+/* The toggle is icon-only, so give the glyph its own sizing rather than
+   inheriting the wider tracking meant for words. */
+.theme-toggle{font-size:1.15rem;letter-spacing:0;line-height:1}
 .nav-links a:hover,.nav-links a.active,.theme-toggle:hover{color:var(--text);background:var(--surface)}
 .nav-links a.nav-cta{
   color:#18140a;background:var(--peach);border:1px solid color-mix(in srgb,var(--peach-strong) 62%,transparent);
