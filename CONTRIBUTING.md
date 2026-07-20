@@ -77,6 +77,31 @@ php -S 127.0.0.1:8000 -t site
 `static/email.php` handles the contact form. It relays through a mailer that
 lives outside this repo, so it will not send mail locally — that is expected.
 
+### Server-only data
+
+Three directories are **not** in this repo, because a PeachQ release uploads
+them straight to the server with `make q-upload`:
+
+| Path | Contains | Used by |
+|---|---|---|
+| `/file/` | Release archives and `latest.json` | Download page version, names, checksums |
+| `/wasm/latest/` | The WebAssembly runtime and its manifest | The browser REPL |
+| `/data/qdash/` | Conformance results | The compatibility chart |
+
+The deploy excludes all three from `rsync --delete`, so publishing the website
+can never remove a release.
+
+Locally this means the compatibility chart is empty and the download page falls
+back to a hardcoded version. To preview against the live data:
+
+```bash
+./tools/build.sh
+./tools/dev-fixtures.sh     # pulls the real files from peachq.org
+php -S 127.0.0.1:8000 -t site tools/preview-router.php
+```
+
+Fixtures land in `site/`, are never committed, and are wiped by the next build.
+
 ## Tests
 
 ```bash
