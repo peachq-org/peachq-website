@@ -1,0 +1,9 @@
+# Pinned deliberately. MkDocs 2.0 removes the plugin system and rewrites the
+# theming system, breaking all custom_dir theme overrides with no migration
+# path -- and this site's PHP pages depend on those overrides (see
+# tools/split_chrome.py). Material for MkDocs itself pins mkdocs<2.0 from
+# 9.7.5 onward and is building a replacement called Zensical.
+#
+# Do not unpin without re-running tests/test_chrome_split.py.
+mkdocs==1.6.1
+mkdocs-material==9.7.6
