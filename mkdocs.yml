@@ -1,8 +1,14 @@
 site_name: PeachQ
 site_url: https://peachq.org/
-site_description: An open source implementation of q, built on Rayforce.
+site_description: Documentation and news for PeachQ, an open source implementation of q.
 repo_url: https://github.com/peachq-org/peachq
-edit_uri: https://github.com/peachq-org/peachq-website/edit/main/docs/
+edit_uri: https://github.com/peachq-org/peachq-website/edit/main/content/
+
+# MkDocs owns only /docs and /news. Everything at the site root -- the landing
+# page, download, roadmap, about, repl, compatibility and contact -- is PHP
+# served by Apache from static/, using the site's own template.php. The two
+# halves are deliberately separate skins, like kx.com and code.kx.com.
+docs_dir: content
 
 theme:
   name: material
@@ -26,36 +32,30 @@ theme:
     - navigation.top
     - search.suggest
     - content.code.copy
+    - content.action.edit
 
-# styles.css lives in docs/ rather than static/ so Material emits it into every
-# page -- including _chrome, which is how the PHP pages inherit it. The PHP
-# pages reference /css/styles.css directly, so there is exactly one copy.
 extra_css:
-  - css/styles.css
   - css/extra.css
 
-# repl, compatibility and contact are PHP pages served by Apache, not MkDocs
-# output, so they are linked absolutely rather than as documents.
-nav:
-  - Home: index.md
-  - Try Live: https://peachq.org/repl
-  - Download: download.md
-  - Compatibility: https://peachq.org/compatibility
-  - Roadmap: roadmap.md
-  - News: news/index.md
-  - About: about.md
-  - Contact: https://peachq.org/contact
+plugins:
+  - search
+  - blog:
+      blog_dir: news
+      post_url_format: "{date}-{slug}"
+      post_excerpt: optional
+      archive: true
+      categories: true
+      pagination_per_page: 10
 
-# _chrome.md exists only so the build can emit header/footer for the PHP pages
-# (see tools/split_chrome.py). It is never user-visible and is deleted from the
-# output after the split.
-not_in_nav: |
-  _chrome.md
+nav:
+  - Docs: docs/index.md
+  - News: news/index.md
 
 markdown_extensions:
   - admonition
   - attr_list
   - def_list
+  - footnotes
   - tables
   - toc:
       permalink: true

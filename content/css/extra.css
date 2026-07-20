@@ -1,0 +1,17 @@
+/* PeachQ brand colour mapped onto Material's theme variables.
+   Source values: static/css/styles.css --peach / --peach-strong.
+
+   This is the only custom CSS in the docs section. The root pages have their
+   own design in static/css/styles.css and are served by Apache, not MkDocs --
+   the two are deliberately separate skins. */
+:root {
+  --md-primary-fg-color:        #f28b57;
+  --md-primary-fg-color--light: #ffb38a;
+  --md-primary-fg-color--dark:  #d9713f;
+  --md-accent-fg-color:         #f28b57;
+}
+
+[data-md-color-scheme="slate"] {
+  --md-primary-fg-color:        #f28b57;
+  --md-accent-fg-color:         #ffb38a;
+}

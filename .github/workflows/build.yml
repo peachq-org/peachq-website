@@ -24,12 +24,10 @@ jobs:
       - name: Install PHP
         run: sudo apt-get update && sudo apt-get install -y php-cli
 
-      # test_chrome_split.py runs tools/build.sh itself, so this covers the
-      # build too. Running mkdocs separately would discard the static overlay.
-      - name: Verify chrome split
-        run: python3 tests/test_chrome_split.py
+      - name: Build
+        run: ./tools/build.sh
 
-      - name: Verify PHP pages
+      - name: Verify pages
         run: ./tests/test_pages.sh
 
       - name: Publish to built branch

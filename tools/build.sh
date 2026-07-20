@@ -1,16 +1,15 @@
 #!/bin/sh
-# Build the full site: MkDocs output, then the static overlay, then the chrome
-# split. Run from anywhere; it cds to the repo root itself.
+# Build the site: MkDocs generates /docs and /news, then the static overlay adds
+# the PHP root pages and their assets. Run from anywhere; it cds to the repo root.
 set -eu
 
 cd "$(dirname "$0")/.."
 
 mkdocs build --strict
 
-# Overlay first, split second: split_chrome.py writes into site/partials and
-# must not be clobbered by the copy.
+# The root of the site is the PHP application, not MkDocs output. Copying it in
+# afterwards means Apache serves index.php, repl.php and friends from the root
+# while /docs and /news come from the build.
 cp -a static/. site/
-
-python3 tools/split_chrome.py
 
 echo "built site/ ($(find site -type f | wc -l) files)"
