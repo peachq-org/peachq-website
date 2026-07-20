@@ -28,6 +28,12 @@ theme:
 nav:
   - Home: index.md
 
+# _chrome.md exists only so the build can emit header/footer for the PHP pages
+# (see tools/split_chrome.py). It is never user-visible and is deleted from the
+# output after the split.
+not_in_nav: |
+  _chrome.md
+
 markdown_extensions:
   - admonition
   - attr_list
