@@ -27,6 +27,30 @@ function peachq_install_path(): string {
     return rtrim($path, '/') . '/';
 }
 
+/**
+ * This page's address on peachq.org, for rel=canonical.
+ *
+ * Always peachq.org, even when this copy is being served from peachq.org: a
+ * self-referencing canonical is the recommended form, and it means one rule
+ * covers both this site and the mirror at timestored.com/peachq without
+ * checking which one is running. On the mirror it says, of every page, that the
+ * original lives here -- so the copy does not compete with the real site in
+ * search results.
+ *
+ * Material already does the same for /docs and /news, deriving it from
+ * site_url in mkdocs.yml. This is the other half of the site.
+ */
+function peachq_canonical_url(): string {
+    $path = (string)parse_url((string)($_SERVER['REQUEST_URI'] ?? '/'), PHP_URL_PATH);
+    // Strip the directory this copy is installed in, leaving the path as
+    // peachq.org addresses it: /peachq/repl and /repl are both "repl".
+    $install = peachq_install_path();
+    if ($install !== '/' && strpos($path, $install) === 0) {
+        $path = substr($path, strlen($install));
+    }
+    return 'https://peachq.org/' . ltrim($path, '/');
+}
+
 function peachq_page_start(string $title, string $description = '', string $active = ''): void {
     $title = htmlspecialchars($title, ENT_QUOTES, 'UTF-8');
     $description = htmlspecialchars($description, ENT_QUOTES, 'UTF-8');
@@ -58,6 +82,14 @@ function peachq_page_start(string $title, string $description = '', string $acti
 <base href="<?= htmlspecialchars(peachq_install_path(), ENT_QUOTES, 'UTF-8') ?>">
 <?php if ($description !== ''): ?><meta name="description" content="<?= $description ?>"><?php endif; ?>
 <title><?= $title ?></title>
+<?php
+    // Not on an error page: weberror.php is served for whatever was requested,
+    // so the canonical would name a URL that does not exist on peachq.org.
+    $peachq_status = http_response_code();
+    if ($peachq_status === false || $peachq_status < 400):
+?>
+<link rel="canonical" href="<?= htmlspecialchars(peachq_canonical_url(), ENT_QUOTES, 'UTF-8') ?>">
+<?php endif; ?>
 <link rel="icon" href="img/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="16x16" href="img/peachq-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="img/peachq-32x32.png">

@@ -140,6 +140,19 @@ for path in /no-such-page /docs/no-such-page /a/b/c; do
   check "/$SUBDIR$path points <base> at the install root" $?
 done
 
+echo "--- the mirror points search engines at the original ---"
+# The failure this catches is a canonical that resolves to the mirror's own
+# address, which would tell Google the copy is the original.
+for page in / /repl /about /docs/ /news/; do
+  canonical=$(curl -s "http://127.0.0.1:$NEST_PORT/$SUBDIR$page" \
+    | grep -o '<link rel="canonical" href="[^"]*"' | sed 's/.*href="//;s/"//')
+  case "$canonical" in
+    https://peachq.org/*) check "$page canonical is $canonical" 0 ;;
+    "") check "$page has a canonical (none found)" 1 ;;
+    *) check "$page canonical points off peachq.org: $canonical" 1 ;;
+  esac
+done
+
 echo "--- the mirror announces itself ---"
 # The banner is decided at run time from the hostname, which is what allows one
 # build to serve both sites. Only its wiring can be checked without a browser.

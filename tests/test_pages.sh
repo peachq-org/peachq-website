@@ -140,6 +140,21 @@ for page in "" repl compatibility contact download roadmap about /docs/ /news/; 
   has "${page:-home} tracks page view" "$url" "trackPageView"
 done
 
+echo "--- every page tells search engines peachq.org is the original ---"
+# The same build is also served from timestored.com/peachq. Without these the
+# mirror competes with this site for its own content. Self-referencing here,
+# which is the recommended form and is what lets one rule cover both copies.
+for page in "" repl compatibility contact download roadmap about; do
+  label=${page:-home}
+  target="https://peachq.org/$page"
+  has "$label points rel=canonical at peachq.org" "/$page" "<link rel=\"canonical\" href=\"$target\">"
+done
+# Material derives these from site_url; they are the reason it stays absolute.
+has "docs points rel=canonical at peachq.org" /docs/ '<link rel="canonical" href="https://peachq.org/docs/">'
+has "news points rel=canonical at peachq.org" /news/ '<link rel="canonical" href="https://peachq.org/news/">'
+# A 404 is served for whatever was asked for, so it has no canonical URL.
+lacks "the error page has no canonical" /no-such-page 'rel="canonical"'
+
 echo "--- header links are root-relative ---"
 has  "logo links to /"      /docs/ 'class="md-header__button md-logo"'
 lacks "no absolute site URL in docs header" /docs/ 'href="https://peachq.org/"'
