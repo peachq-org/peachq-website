@@ -1,0 +1,282 @@
+/* ---------------------------------------------------------------------------
+   PeachQ theming for the docs and news section.
+
+   The root pages are PHP using static/css/styles.css. This file makes Material
+   match that design closely enough that moving between the two halves does not
+   feel like leaving the site.
+
+   Approach: restyle Material's own header rather than replacing it, so search,
+   the mobile drawer and the palette toggle keep working. Values are taken from
+   static/css/styles.css so the two stay recognisably the same design.
+   --------------------------------------------------------------------------- */
+
+:root {
+  --peachq-peach:        #ffb38a;
+  --peachq-peach-strong: #f28b57;
+  --peachq-bg:           #fbfbf8;
+  --peachq-text:         #101217;
+  --peachq-muted:        #636973;
+  --peachq-line:         rgba(15, 18, 23, .10);
+  --peachq-surface:      rgba(255, 255, 255, .72);
+
+  --md-primary-fg-color:        #f28b57;
+  --md-primary-fg-color--light: #ffb38a;
+  --md-primary-fg-color--dark:  #d9713f;
+  --md-accent-fg-color:         #d9713f;
+  --md-default-bg-color:        #fbfbf8;
+}
+
+[data-md-color-scheme="slate"] {
+  --peachq-peach:        #ffb38a;
+  --peachq-peach-strong: #ffb38a;
+  --peachq-bg:           #0d1014;
+  --peachq-text:         #f4f5f7;
+  --peachq-muted:        #9da4ae;
+  --peachq-line:         rgba(255, 255, 255, .10);
+  --peachq-surface:      rgba(20, 24, 30, .72);
+
+  --md-primary-fg-color: #ffb38a;
+  --md-accent-fg-color:  #ffb38a;
+  --md-default-bg-color: #0d1014;
+  --md-typeset-a-color:  #ffb38a;
+}
+
+/* --- Background -----------------------------------------------------------
+   The same warm radial wash the root pages use: a peach/gold bloom top-left
+   and a cool counterweight top-right over an off-white base. */
+
+body {
+  background:
+    radial-gradient(circle at 10% -10%, rgba(255, 179, 138, .30), transparent 32rem),
+    radial-gradient(circle at 90% 4%,  rgba(255, 211,  56, .13), transparent 28rem),
+    var(--peachq-bg);
+  background-attachment: fixed;
+}
+
+[data-md-color-scheme="slate"] body {
+  background:
+    radial-gradient(circle at 10% -10%, rgba(242, 139, 87, .20), transparent 32rem),
+    radial-gradient(circle at 90% 4%,  rgba(77, 115, 255, .10), transparent 28rem),
+    var(--peachq-bg);
+  background-attachment: fixed;
+}
+
+/* Material paints its own solid backgrounds over the body; make them defer. */
+.md-main,
+.md-container,
+.md-content,
+.md-sidebar,
+.md-footer-meta {
+  background: transparent;
+}
+
+/* --- Header ---------------------------------------------------------------
+   Matches .nav in styles.css: sticky, translucent, blurred, hairline rule. */
+
+.md-header {
+  height: 72px;
+  color: var(--peachq-text);
+  background: color-mix(in srgb, var(--peachq-bg) 80%, transparent);
+  backdrop-filter: blur(18px);
+  border-bottom: 1px solid var(--peachq-line);
+  box-shadow: none;
+}
+
+.md-header__inner {
+  height: 72px;
+  align-items: center;
+}
+
+/* Header type and logo run at 80% of the root pages' sizes. styles.css uses a
+   42px logo and a 1.25rem brand; the docs section is denser, so it is scaled
+   down deliberately rather than kept in step. */
+.md-header__button.md-logo img,
+.md-header__button.md-logo svg {
+  width: 34px;
+  height: 34px;
+}
+
+/* .brand: heavy weight, tight tracking, at 80% of 1.25rem. */
+.md-header__title {
+  font-weight: 850;
+  font-size: 1rem;
+  letter-spacing: -.04em;
+  color: var(--peachq-text);
+  margin-left: .4rem;
+}
+
+.md-header__topic:first-child {
+  font-weight: 850;
+}
+
+/* The wordmark, matching template.php's
+   <span>Peach<span style="color:var(--peach-strong)">Q</span></span>.
+   Rendered by overrides/partials/header.html. */
+.peachq-wordmark {
+  font-weight: 900;
+}
+
+.peachq-wordmark__q {
+  color: var(--peachq-peach-strong);
+  font-weight: 900;
+}
+
+.md-header__button {
+  color: var(--peachq-text);
+}
+
+/* --- Inline nav -----------------------------------------------------------
+   Rendered by overrides/partials/header.html in the header row, matching
+   .nav-links in styles.css: muted pills that fill in on hover/active. */
+
+.peachq-nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+}
+
+/* 80% of .nav-links a in static/css/styles.css (1.06rem / 10px 14px), which is
+   a deliberate difference: the docs header is denser than the root pages'. */
+.peachq-nav__link {
+  padding: 8px 11px;
+  border-radius: 12px;
+  color: var(--peachq-muted);
+  font-weight: 700;
+  font-size: .85rem;
+  letter-spacing: .012em;
+  white-space: nowrap;
+  border: 0;
+  background: transparent;
+  transition: background .15s, color .15s;
+}
+
+.peachq-nav__link:hover,
+.peachq-nav__link--active {
+  color: var(--peachq-text);
+  background: var(--peachq-surface);
+}
+
+/* "Try Live" is the peach call-to-action in the root nav; keep it prominent
+   here too. Matched on href rather than position, so reordering the nav in
+   mkdocs.yml cannot silently move the highlight onto a different link. */
+.peachq-nav__link[href$="/repl"] {
+  color: #18140a;
+  background: var(--peachq-peach);
+  border: 1px solid color-mix(in srgb, var(--peachq-peach-strong) 62%, transparent);
+  box-shadow: 0 8px 24px rgba(242, 139, 87, .22);
+}
+
+.peachq-nav__link[href$="/repl"]:hover {
+  background: color-mix(in srgb, var(--peachq-peach) 88%, white);
+  color: #18140a;
+}
+
+/* On narrow screens the pills scroll horizontally rather than being hidden.
+   The left drawer is suppressed below, so hiding these would strand the menu. */
+@media screen and (max-width: 76.234375em) {
+  .peachq-nav {
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .peachq-nav::-webkit-scrollbar {
+    display: none;
+  }
+  .peachq-nav__link {
+    padding: 6px 8px;
+    font-size: .66rem;
+  }
+}
+
+/* --- Left sidebar ---------------------------------------------------------
+   The site menu lives in the header, so Material's primary nav drawer would
+   just repeat it. The table of contents (secondary sidebar) stays. */
+
+.md-sidebar--primary,
+.md-header__button[for="__drawer"] {
+  display: none;
+}
+
+/* With the drawer gone, reclaim its column. */
+@media screen and (min-width: 76.25em) {
+  .md-content {
+    margin-left: 0;
+  }
+}
+
+/* --- Footer ----------------------------------------------------------------
+   Mirrors the two-line footer in template.php. */
+
+.md-copyright__highlight {
+  color: var(--peachq-text);
+}
+
+.md-copyright a {
+  color: var(--peachq-muted);
+}
+
+.md-copyright a:hover {
+  color: var(--peachq-peach-strong);
+}
+
+/* --- Content --------------------------------------------------------------- */
+
+.md-typeset h1,
+.md-typeset h2 {
+  letter-spacing: -.03em;
+  font-weight: 800;
+  color: var(--peachq-text);
+}
+
+.md-typeset a {
+  color: var(--peachq-peach-strong);
+}
+
+.md-typeset a:hover {
+  color: var(--peachq-text);
+}
+
+/* Cards, tables and code blocks sit on the washed background; give them the
+   same surface treatment the root pages use. */
+.md-typeset table:not([class]) {
+  border: 1px solid var(--peachq-line);
+  background: var(--peachq-surface);
+}
+
+.md-typeset table:not([class]) th {
+  background: color-mix(in srgb, var(--peachq-peach) 20%, transparent);
+  color: var(--peachq-text);
+}
+
+.md-typeset pre > code,
+.md-typeset .highlight {
+  border-radius: 12px;
+}
+
+/* Blog post cards on the news index. */
+.md-post--excerpt {
+  border-bottom: 1px solid var(--peachq-line);
+  padding-bottom: 1rem;
+}
+
+/* --- Footer ---------------------------------------------------------------- */
+
+.md-footer {
+  background: color-mix(in srgb, var(--peachq-bg) 92%, var(--peachq-peach));
+  color: var(--peachq-text);
+}
+
+.md-footer-meta {
+  background: transparent;
+  border-top: 1px solid var(--peachq-line);
+}
+
+.md-footer__link {
+  color: var(--peachq-text);
+}
+
+.md-copyright,
+.md-footer-meta .md-footer-copyright {
+  color: var(--peachq-muted);
+}

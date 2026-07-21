@@ -1,0 +1,63 @@
+# This file must work both at a document root and in a subdirectory: the whole
+# site is also served from timestored.com/peachq, for networks that block newer
+# domains. Everything below is therefore path-independent -- no rule names an
+# absolute location. The site's HTML follows the same rule; links are relative
+# and static/template.php emits a <base> for the site root.
+
+Options All -Indexes
+
+DirectoryIndex index.php index.html
+
+AddType application/wasm .wasm
+
+SetEnvIf Request_URI "/wasm/latest/" PEACHQ_NO_CACHE=1
+SetEnvIf Request_URI "/data/qdash/" PEACHQ_NO_CACHE=1
+SetEnvIf Request_URI "/examples/" PEACHQ_NO_CACHE=1
+SetEnvIf Request_URI "/file/latest\.json$" PEACHQ_NO_CACHE=1
+SetEnvIf Request_URI "/img/" PEACHQ_IMMUTABLE=1
+SetEnvIf Request_URI "\.(css|js|wasm)$" PEACHQ_SHORT_CACHE=1
+
+<FilesMatch "\.(ico|jpg|jpeg|png|gif|woff|woff2|mp4|webp|svg)$">
+	ExpiresActive on
+	ExpiresDefault "access plus 1 year"
+</FilesMatch>
+
+<FilesMatch "\.(js|css|wasm)$">
+	ExpiresActive on
+	ExpiresDefault "access plus 1 hour"
+</FilesMatch>
+
+<IfModule mod_headers.c>
+	Header set Cache-Control "public, max-age=31536000, immutable" env=PEACHQ_IMMUTABLE
+	Header set Cache-Control "public, max-age=3600" env=PEACHQ_SHORT_CACHE
+	Header set Cache-Control "no-store, max-age=0" env=PEACHQ_NO_CACHE
+</IfModule>
+
+<IfModule mod_rewrite.c>
+	RewriteEngine on
+
+	# Legacy .html URLs. Written as a rewrite rather than RedirectMatch because
+	# RedirectMatch needs an absolute path and this must survive being installed
+	# in a subdirectory.
+	#
+	# Matched against REQUEST_URI rather than the per-directory path. An external
+	# redirect whose substitution is relative gets the filesystem path prepended
+	# -- Apache cannot tell which URL a directory corresponds to, so /repl.html
+	# redirected to /srv/rsync/peachq.org/public_html/repl. REQUEST_URI is
+	# already the URL path, and a substitution starting with "/" is used as-is,
+	# so this is correct at any depth and still needs no RewriteBase.
+	RewriteCond %{REQUEST_URI} ^(.*)/(index|download|repl|compatibility|roadmap|about|demo|qdash)\.html$
+	RewriteRule ^ %1/%2 [R=301,L]
+
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteCond %{REQUEST_FILENAME}.php -f
+	RewriteRule ^([A-Za-z0-9_-]+)/?$ $1.php [L]
+
+	# Anything left over is a 404. ErrorDocument would need an absolute path, so
+	# the request is rewritten to the error page instead -- weberror.php sets the
+	# 404 status itself, so nothing here has to.
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteRule ^ weberror.php [L]
+</IfModule>
