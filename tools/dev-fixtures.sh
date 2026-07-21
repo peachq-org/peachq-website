@@ -11,6 +11,11 @@
 # This fetches the live copies into site/ purely so preview looks like
 # production. They are wiped by the next tools/build.sh and are never committed.
 #
+# PEACHQ_WITH_RELEASES=1 also pulls the release archives named in latest.json.
+# Preview does not need them -- nobody installs from a local build -- but the
+# mirror at timestored.com/peachq does: it exists for people whose network
+# blocks peachq.org, so it has to serve the downloads itself.
+#
 # Usage: ./tools/build.sh && ./tools/dev-fixtures.sh
 set -eu
 
@@ -51,6 +56,14 @@ if [ -f site/wasm/latest/manifest.json ]; then
     case "$s" in
       *.js) fetch "wasm/latest/$(basename "$s" .js).wasm" ;;
     esac
+  done
+fi
+
+# The release archives, for a mirror that has to serve downloads itself.
+if [ "${PEACHQ_WITH_RELEASES:-}" = "1" ] && [ -f site/file/latest.json ]; then
+  names=$(sed -n 's/.*"name"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p' site/file/latest.json)
+  for n in $names; do
+    fetch "file/$n"
   done
 fi
 
