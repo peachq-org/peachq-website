@@ -10,9 +10,10 @@
 
 {#
   Matomo, self-hosted at timestored.com/mat. `extrahead` is the last thing in
-  Material's <head>, which is where the snippet belongs. Keep in sync with
-  static/template.php, which carries the same snippet for the PHP root pages;
-  tests/test_pages.sh checks both halves have it.
+  Material's <head>, which is where the snippet belongs. Site 4 is "peachq";
+  site 1 is TimeStored's own site. Keep in sync with static/template.php, which
+  carries the same snippet for the PHP root pages; tests/test_pages.sh checks
+  both halves have it and that the site id matches.
 #}
 {#
   The mirror banner. Same file the PHP pages load from static/template.php; it
@@ -30,7 +31,7 @@
     (function() {
       var u="//www.timestored.com/mat/";
       _paq.push(['setTrackerUrl', u+'matomo.php']);
-      _paq.push(['setSiteId', '1']);
+      _paq.push(['setSiteId', '4']);
       var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
       g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
     })();

@@ -97,8 +97,10 @@ function peachq_page_start(string $title, string $description = '', string $acti
 <link rel="stylesheet" href="css/styles.css">
 <script src="mirror-banner.js" defer></script>
 <!-- Matomo. Self-hosted at timestored.com/mat, so no third-party analytics
-     service sees the traffic. Keep in sync with overrides/main.html, which
-     carries the same snippet for the MkDocs half of the site. -->
+     service sees the traffic. Site 4 is "peachq"; site 1 is TimeStored's own
+     site, and pointing this at 1 filed every PeachQ visit under TimeStored.
+     Keep in sync with overrides/main.html, which carries the same snippet for
+     the MkDocs half of the site; tests/test_pages.sh checks the id matches. -->
 <script>
   var _paq = window._paq = window._paq || [];
   /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
@@ -107,7 +109,7 @@ function peachq_page_start(string $title, string $description = '', string $acti
   (function() {
     var u="//www.timestored.com/mat/";
     _paq.push(['setTrackerUrl', u+'matomo.php']);
-    _paq.push(['setSiteId', '1']);
+    _paq.push(['setSiteId', '4']);
     var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
     g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
   })();
