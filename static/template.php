@@ -4,46 +4,34 @@ declare(strict_types=1);
 /**
  * Where this copy of the site is installed, as a URL path ending in "/".
  *
- * "/" when served from a document root, "/peachq/" when the whole site is
- * dropped into a subdirectory of another one -- which is exactly what the
- * mirror at timestored.com/peachq is. Nothing is configured: this template
- * always sits in the site root, so its own location relative to the document
- * root is the answer.
+ * "/" from a document root, "/peachq/" when installed in a subdirectory of
+ * another site. Emitted as <base> so relative URLs resolve against the install
+ * root rather than the requested path -- which is what weberror.php needs,
+ * since it is served for arbitrary URLs at arbitrary depth.
  *
- * Every link in the site is relative, and the pages that use this template are
- * all served at depth 0, so relative alone would very nearly do. What it does
- * not survive is weberror.php, which is served for arbitrary URLs at arbitrary
- * depth -- from /docs/nope, "repl" would resolve to /docs/repl. Emitting this
- * as <base> fixes that page and costs the others nothing, since there it is
- * simply the directory they were already resolving against.
+ * Taken from SCRIPT_NAME, the URL path of the running script, rather than from
+ * this file's location on disk. Both work for a real directory; only this one
+ * works when the directory is a symlink to another site's document root, since
+ * __DIR__ resolves to the link target and so is not under DOCUMENT_ROOT at all.
  */
 function peachq_install_path(): string {
-    $root = realpath((string)($_SERVER['DOCUMENT_ROOT'] ?? ''));
-    $here = realpath(__DIR__);
-    if ($root === false || $here === false || strpos($here, $root) !== 0) {
+    $script = (string)($_SERVER['SCRIPT_NAME'] ?? '');
+    if ($script === '' || $script[0] !== '/') {
         return '/';
     }
-    $path = str_replace(DIRECTORY_SEPARATOR, '/', substr($here, strlen($root)));
-    return rtrim($path, '/') . '/';
+    $dir = str_replace('\\', '/', dirname($script));
+    return rtrim($dir, '/') . '/';
 }
 
 /**
  * This page's address on peachq.org, for rel=canonical.
  *
- * Always peachq.org, even when this copy is being served from peachq.org: a
- * self-referencing canonical is the recommended form, and it means one rule
- * covers both this site and the mirror at timestored.com/peachq without
- * checking which one is running. On the mirror it says, of every page, that the
- * original lives here -- so the copy does not compete with the real site in
- * search results.
- *
- * Material already does the same for /docs and /news, deriving it from
- * site_url in mkdocs.yml. This is the other half of the site.
+ * Always peachq.org, even when served from peachq.org: a self-referencing
+ * canonical is the recommended form, and one rule then covers this site and the
+ * timestored.com/peachq mirror without checking which is running.
  */
 function peachq_canonical_url(): string {
     $path = (string)parse_url((string)($_SERVER['REQUEST_URI'] ?? '/'), PHP_URL_PATH);
-    // Strip the directory this copy is installed in, leaving the path as
-    // peachq.org addresses it: /peachq/repl and /repl are both "repl".
     $install = peachq_install_path();
     if ($install !== '/' && strpos($path, $install) === 0) {
         $path = substr($path, strlen($install));

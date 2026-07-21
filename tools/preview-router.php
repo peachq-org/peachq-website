@@ -15,12 +15,28 @@ $root = rtrim((string)$_SERVER['DOCUMENT_ROOT'], '/');
 $uri  = (string)parse_url((string)$_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $path = $root . $uri;
 
+/**
+ * Point SCRIPT_NAME at the script actually being run, as Apache does.
+ *
+ * template.php reads it to work out where the site is installed, so a
+ * dispatched request that left SCRIPT_NAME on the requested URL would give the
+ * error page the wrong <base>.
+ */
+function peachq_set_script_name(string $file): void {
+    $root = rtrim((string)$_SERVER['DOCUMENT_ROOT'], '/');
+    $real = realpath($file);
+    if ($real !== false && strpos($real, $root) === 0) {
+        $_SERVER['SCRIPT_NAME'] = str_replace('\\', '/', substr($real, strlen($root)));
+    }
+}
+
 /** Serve a directory index, mirroring `DirectoryIndex index.php index.html`. */
 function peachq_serve_dir(string $dir): bool {
     foreach (['index.php', 'index.html'] as $candidate) {
         $file = rtrim($dir, '/') . '/' . $candidate;
         if (is_file($file)) {
             if (str_ends_with($file, '.php')) {
+                peachq_set_script_name($file);
                 chdir(dirname($file));
                 require $file;
             } else {
@@ -65,6 +81,7 @@ if (is_file($path)) {
 // lets the tests serve one build both from a document root and from /peachq.
 $trimmed = trim($uri, '/');
 if ($trimmed !== '' && preg_match('#^[A-Za-z0-9_-]+(/[A-Za-z0-9_-]+)*$#', $trimmed) && is_file("$root/$trimmed.php")) {
+    peachq_set_script_name("$root/$trimmed.php");
     chdir(dirname("$root/$trimmed.php"));
     require "$root/$trimmed.php";
     return true;
@@ -94,6 +111,7 @@ while (strlen($dir) >= strlen($root)) {
 
 http_response_code(404);
 if ($installRoot !== null) {
+    peachq_set_script_name("$installRoot/weberror.php");
     chdir($installRoot);
     require "$installRoot/weberror.php";
 } else {
