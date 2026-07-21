@@ -14,8 +14,14 @@
   static/template.php, which carries the same snippet for the PHP root pages;
   tests/test_pages.sh checks both halves have it.
 #}
+{#
+  The mirror banner. Same file the PHP pages load from static/template.php; it
+  decides for itself whether this copy is a mirror, so there is no build flag
+  and no second copy of the markup. base_url keeps it working at any page depth.
+#}
 {% block extrahead %}
   {{ super() }}
+  <script src="{{ base_url }}/mirror-banner.js"></script>
   <script>
     var _paq = window._paq = window._paq || [];
     /* tracker methods like "setCustomDimension" should be called before "trackPageView" */

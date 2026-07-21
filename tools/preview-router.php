@@ -48,10 +48,14 @@ if (is_file($path)) {
     return false; // let the built-in server handle static files and MIME types
 }
 
-// RewriteRule ^([A-Za-z0-9_-]+)/?$ $1.php
+// RewriteRule ^([A-Za-z0-9_-]+)/?$ $1.php, guarded by REQUEST_FILENAME.php -f.
+//
+// Apache applies that per directory, so it matches at whatever depth the site is
+// installed. Testing the resolved filename here does the same, which is what
+// lets the tests serve one build both from a document root and from /peachq.
 $trimmed = trim($uri, '/');
-if ($trimmed !== '' && preg_match('/^[A-Za-z0-9_-]+$/', $trimmed) && is_file("$root/$trimmed.php")) {
-    chdir($root);
+if ($trimmed !== '' && preg_match('#^[A-Za-z0-9_-]+(/[A-Za-z0-9_-]+)*$#', $trimmed) && is_file("$root/$trimmed.php")) {
+    chdir(dirname("$root/$trimmed.php"));
     require "$root/$trimmed.php";
     return true;
 }
@@ -61,11 +65,27 @@ if (is_dir("$root/$trimmed") && peachq_serve_dir("$root/$trimmed")) {
     return true;
 }
 
-// ErrorDocument 404 /weberror.php
+// RewriteRule ^ weberror.php, which .htaccess applies from the directory it
+// sits in. That directory is the site's install root, so find it the same way
+// Apache would: the nearest ancestor of the request holding the error page.
+$dir = is_dir($path) ? $path : dirname($path);
+$installRoot = null;
+while (strlen($dir) >= strlen($root)) {
+    if (is_file("$dir/weberror.php")) {
+        $installRoot = $dir;
+        break;
+    }
+    $parent = dirname($dir);
+    if ($parent === $dir) {
+        break;
+    }
+    $dir = $parent;
+}
+
 http_response_code(404);
-if (is_file("$root/weberror.php")) {
-    chdir($root);
-    require "$root/weberror.php";
+if ($installRoot !== null) {
+    chdir($installRoot);
+    require "$installRoot/weberror.php";
 } else {
     echo "404 Not Found\n";
 }

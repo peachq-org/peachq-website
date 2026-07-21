@@ -80,4 +80,4 @@ peachq_page_start('PeachQ Browser REPL', 'Try PeachQ in a browser REPL.', 'repl'
 </div>
 </aside>
 </div></section></main>
-<?php peachq_page_end(['/repl.js']); ?>
+<?php peachq_page_end(['repl.js']); ?>
