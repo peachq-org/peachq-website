@@ -39,7 +39,15 @@ SetEnvIf Request_URI "\.(css|js|wasm)$" PEACHQ_SHORT_CACHE=1
 	# Legacy .html URLs. Written as a rewrite rather than RedirectMatch because
 	# RedirectMatch needs an absolute path and this must survive being installed
 	# in a subdirectory.
-	RewriteRule ^(index|download|repl|compatibility|roadmap|about|demo|qdash)\.html$ $1 [R=301,L]
+	#
+	# Matched against REQUEST_URI rather than the per-directory path. An external
+	# redirect whose substitution is relative gets the filesystem path prepended
+	# -- Apache cannot tell which URL a directory corresponds to, so /repl.html
+	# redirected to /srv/rsync/peachq.org/public_html/repl. REQUEST_URI is
+	# already the URL path, and a substitution starting with "/" is used as-is,
+	# so this is correct at any depth and still needs no RewriteBase.
+	RewriteCond %{REQUEST_URI} ^(.*)/(index|download|repl|compatibility|roadmap|about|demo|qdash)\.html$
+	RewriteRule ^ %1/%2 [R=301,L]
 
 	RewriteCond %{REQUEST_FILENAME} !-f
 	RewriteCond %{REQUEST_FILENAME} !-d

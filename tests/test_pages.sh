@@ -140,6 +140,41 @@ for page in "" repl compatibility contact download roadmap about /docs/ /news/; 
   has "${page:-home} tracks page view" "$url" "trackPageView"
 done
 
+echo "--- legacy .html URLs redirect to a clean URL ---"
+# The redirect must be a URL path. An earlier version substituted a relative
+# path in a per-directory rewrite, and Apache prepended the filesystem path --
+# /repl.html sent visitors to /srv/rsync/peachq.org/public_html/repl.
+for page in index download repl compatibility roadmap about; do
+  location=$(curl -s -o /dev/null -w '%{redirect_url}' "http://127.0.0.1:$PORT/$page.html")
+  code=$(curl -s -o /dev/null -w '%{http_code}' "http://127.0.0.1:$PORT/$page.html")
+  [ "$code" = "301" ]; check "/$page.html is a 301 (got $code)" $?
+  case "$location" in
+    */"$page") check "/$page.html redirects to $location" 0 ;;
+    *) check "/$page.html redirects somewhere wrong: $location" 1 ;;
+  esac
+done
+# Everything above exercises tools/preview-router.php, which emulates .htaccess
+# -- it cannot reproduce the Apache behaviour that caused the bug (a relative
+# substitution in a per-directory external redirect gets DOCUMENT_ROOT's
+# filesystem path prepended). So assert the shape of the rule itself, which is
+# the part that has to stay right.
+grep -q 'RewriteCond %{REQUEST_URI} \^(\.\*)/(index|download' site/.htaccess
+check "the .html rule matches on REQUEST_URI" $?
+grep -q 'RewriteRule \^ %1/%2 \[R=301,L\]' site/.htaccess
+check "the .html rule substitutes a URL path, not a relative one" $?
+if grep -qE 'RewriteRule \^\(index\|download.*\[R=301' site/.htaccess; then
+  check "the relative-substitution form is gone" 1
+else
+  check "the relative-substitution form is gone" 0
+fi
+
+# The specific shape of the old bug: a filesystem path in the redirect target.
+location=$(curl -s -o /dev/null -w '%{redirect_url}' "http://127.0.0.1:$PORT/repl.html")
+case "$location" in
+  *srv/*|*public_html*|*/home/*) check "redirect leaks a filesystem path: $location" 1 ;;
+  *) check "redirect contains no filesystem path" 0 ;;
+esac
+
 echo "--- every page tells search engines peachq.org is the original ---"
 # The same build is also served from timestored.com/peachq. Without these the
 # mirror competes with this site for its own content. Self-referencing here,

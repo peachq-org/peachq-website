@@ -140,6 +140,17 @@ for path in /no-such-page /docs/no-such-page /a/b/c; do
   check "/$SUBDIR$path points <base> at the install root" $?
 done
 
+echo "--- legacy .html URLs redirect correctly from a subdirectory ---"
+# This is where the filesystem-path leak showed up worst: the redirect has to
+# keep the subdirectory, so it cannot be a fixed absolute path either.
+for page in repl download about; do
+  location=$(curl -s -o /dev/null -w '%{redirect_url}' "http://127.0.0.1:$NEST_PORT/$SUBDIR/$page.html")
+  case "$location" in
+    *"/$SUBDIR/$page") check "/$SUBDIR/$page.html redirects to $location" 0 ;;
+    *) check "/$SUBDIR/$page.html redirects wrong: $location" 1 ;;
+  esac
+done
+
 echo "--- the mirror points search engines at the original ---"
 # The failure this catches is a canonical that resolves to the mirror's own
 # address, which would tell Google the copy is the original.
