@@ -125,6 +125,15 @@ done
 lacks "toggle has no Light text" /script.js '☀ Light'
 lacks "toggle has no Dark text"  /script.js '◐ Dark'
 
+echo "--- Matomo runs on both halves of the site ---"
+# The snippet is duplicated in static/template.php and overrides/main.html, so
+# assert every kind of page has it: dropping one half loses half the traffic.
+for page in "" repl compatibility contact download roadmap about /docs/ /news/; do
+  case $page in /*) url=$page ;; *) url=/$page ;; esac
+  has "${page:-home} loads matomo.js"  "$url" "timestored\.com/mat/"
+  has "${page:-home} tracks page view" "$url" "trackPageView"
+done
+
 echo "--- header links are root-relative ---"
 has  "logo links to /"      /docs/ 'class="md-header__button md-logo"'
 lacks "no absolute site URL in docs header" /docs/ 'href="https://peachq.org/"'

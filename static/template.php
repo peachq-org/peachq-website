@@ -30,6 +30,22 @@ function peachq_page_start(string $title, string $description = '', string $acti
 <link rel="icon" type="image/png" sizes="32x32" href="/img/peachq-32x32.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/img/peachq-180x180.png">
 <link rel="stylesheet" href="/css/styles.css">
+<!-- Matomo. Self-hosted at timestored.com/mat, so no third-party analytics
+     service sees the traffic. Keep in sync with overrides/main.html, which
+     carries the same snippet for the MkDocs half of the site. -->
+<script>
+  var _paq = window._paq = window._paq || [];
+  /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u="//www.timestored.com/mat/";
+    _paq.push(['setTrackerUrl', u+'matomo.php']);
+    _paq.push(['setSiteId', '1']);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
 </head>
 <body>
 <header class="nav">
