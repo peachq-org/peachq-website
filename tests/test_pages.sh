@@ -138,6 +138,11 @@ for page in "" repl compatibility contact download roadmap about /docs/ /news/; 
   case $page in /*) url=$page ;; *) url=/$page ;; esac
   has "${page:-home} loads matomo.js"  "$url" "timestored\.com/mat/"
   has "${page:-home} tracks page view" "$url" "trackPageView"
+  # Site 4 is "peachq". Site 1 is TimeStored's own site, and this said 1 for a
+  # while -- tracking worked perfectly and filed every visit under TimeStored,
+  # so the peachq site read zero. The snippet is duplicated across the two
+  # halves, which is exactly how the ids drift apart.
+  has "${page:-home} reports to site 4" "$url" "setSiteId', *'4'"
 done
 
 echo "--- every page tells search engines peachq.org is the original ---"
