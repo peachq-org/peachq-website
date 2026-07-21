@@ -16,11 +16,12 @@ cd "$(dirname "$0")/.."
 
 ROOT_PORT=${ROOT_PORT:-8903}
 NEST_PORT=${NEST_PORT:-8904}
+SYM_PORT=${SYM_PORT:-8905}
 SUBDIR=peachq
 WORK=$(mktemp -d)
 failures=0
 
-trap 'kill ${root_server:-0} ${nest_server:-0} 2>/dev/null; rm -rf "$WORK"' EXIT
+trap 'kill ${root_server:-0} ${nest_server:-0} ${sym_server:-0} 2>/dev/null; rm -rf "$WORK"' EXIT
 
 check() {
   if [ "$2" -eq 0 ]; then echo "PASS  $1"; else echo "FAIL  $1"; failures=$((failures+1)); fi
@@ -36,10 +37,20 @@ fi
 mkdir -p "$WORK/nested/$SUBDIR"
 cp -a site/. "$WORK/nested/$SUBDIR/"
 
+# A third layout: the subdirectory is a symlink to the site rather than a copy,
+# which is how timestored.com/peachq points at peachq.org's document root on the
+# shared box. __DIR__ resolves to the link target and so is not under
+# DOCUMENT_ROOT, which is why template.php takes the install path from
+# SCRIPT_NAME instead of from disk.
+mkdir -p "$WORK/symlinked"
+ln -s "$WORK/nested/$SUBDIR" "$WORK/symlinked/$SUBDIR"
+
 php -S "127.0.0.1:$ROOT_PORT" -t site tools/preview-router.php >/dev/null 2>&1 &
 root_server=$!
 php -S "127.0.0.1:$NEST_PORT" -t "$WORK/nested" tools/preview-router.php >/dev/null 2>&1 &
 nest_server=$!
+php -S "127.0.0.1:$SYM_PORT" -t "$WORK/symlinked" tools/preview-router.php >/dev/null 2>&1 &
+sym_server=$!
 sleep 2
 
 PAGES="/ /repl /compatibility /contact /download /roadmap /about /docs/ /news/ /news/2026/07/20-announcing-peachq/"
@@ -126,6 +137,23 @@ if [ -s "$WORK/links.log" ]; then
 else
   check "every reference resolves at both depths" 0
 fi
+
+echo "--- served through a symlink, not just a copy ---"
+for page in / /repl /about /docs/ /news/; do
+  code=$(curl -s -o /dev/null -w '%{http_code}' "http://127.0.0.1:$SYM_PORT/$SUBDIR$page")
+  [ "$code" = "200" ]; check "symlinked $page returns 200 (got $code)" $?
+  base=$(curl -s "http://127.0.0.1:$SYM_PORT/$SUBDIR$page" \
+    | grep -o '<base href="[^"]*"' | sed 's/.*href="//;s/"//')
+  case "$page" in
+    /docs/|/news/) continue ;;  # Material pages set no <base>; links are relative
+  esac
+  [ "$base" = "/$SUBDIR/" ]; check "symlinked $page has base /$SUBDIR/ (got '$base')" $?
+done
+# Assets and the REPL examples have to come through the link too.
+for asset in /examples/example-functions.q /css/styles.css /script.js; do
+  code=$(curl -s -o /dev/null -w '%{http_code}' "http://127.0.0.1:$SYM_PORT/$SUBDIR$asset")
+  [ "$code" = "200" ]; check "symlinked $asset serves (got $code)" $?
+done
 
 echo "--- the 404 page works at any depth ---"
 # It is served for arbitrary URLs, so it is the one page whose own depth is
