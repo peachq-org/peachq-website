@@ -30,6 +30,11 @@ jobs:
       - name: Verify pages
         run: ./tests/test_pages.sh
 
+      # The site is also served from timestored.com/peachq. This serves the same
+      # build from a subdirectory and checks every link still resolves.
+      - name: Verify it works in a subdirectory
+        run: ./tests/test_subdirectory.sh
+
       # Contributors who cannot run the site locally can download this from the
       # Checks tab and open it, rather than guessing at how a change looks.
       # The PHP pages need a PHP server, but the docs and news render as-is.

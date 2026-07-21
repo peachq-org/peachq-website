@@ -1,5 +1,5 @@
 (function () {
-  const fileBase = "/file/";
+  const fileBase = "file/";
   const versionEl = document.querySelector("[data-release-version]");
   const uploadedEl = document.querySelector("[data-release-uploaded]");
 
@@ -69,7 +69,7 @@
     });
   }
 
-  fetch("/file/latest.json", { cache: "no-store" })
+  fetch("file/latest.json", { cache: "no-store" })
     .then(response => response.ok ? response.json() : null)
     .then(release => {
       if (!release || !release.files) return;

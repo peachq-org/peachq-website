@@ -11,7 +11,7 @@ peachq_page_start('About PeachQ', 'About the PeachQ open source q implementation
 </p><p>He is the creator of QStudio, first released in 2013 and open sourced in 2025 after more than a decade of development. He also created Pulse, a real-time analytics platform supporting dozens of databases.
 
 </p><p>Before founding TimeStored, Ryan worked on kdb systems at UBS, Morgan Stanley and Citi. PeachQ builds on that experience but is intended to grow as a community-led open-source project.</p></div>
-<div class="card"><h2>Community first</h2><p>The goal is larger than a compatible runtime. It is an open home for the language, drivers, editor integrations, documentation, tests and the ecosystem around them.</p><div class="actions"><a class="button peach-button" href="https://github.com/peachq-org/peachq">Join on GitHub ↗</a><a class="button" href="/roadmap">See the roadmap</a></div></div>
+<div class="card"><h2>Community first</h2><p>The goal is larger than a compatible runtime. It is an open home for the language, drivers, editor integrations, documentation, tests and the ecosystem around them.</p><div class="actions"><a class="button peach-button" href="https://github.com/peachq-org/peachq">Join on GitHub ↗</a><a class="button" href="roadmap">See the roadmap</a></div></div>
 </div></section>
 <section class="section"><div class="container thanks-section">
 <div>

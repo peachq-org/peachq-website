@@ -19,7 +19,7 @@
 {% set class = "md-header md-header--shadow" %}
 <header class="{{ class }}" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="{{ lang.t('header') }}">
-    <a href="/" title="{{ config.site_name | e }}" class="md-header__button md-logo" aria-label="{{ config.site_name }}" data-md-component="logo">
+    <a href="{{ base_url }}/" title="{{ config.site_name | e }}" class="md-header__button md-logo" aria-label="{{ config.site_name }}" data-md-component="logo">
       {% include "partials/logo.html" %}
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -29,7 +29,7 @@
     <div class="md-header__title" data-md-component="header-title">
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
-          <a class="md-ellipsis peachq-wordmark" href="/">
+          <a class="md-ellipsis peachq-wordmark" href="{{ base_url }}/">
             Peach<span class="peachq-wordmark__q">Q</span>
           </a>
         </div>
@@ -37,12 +37,17 @@
     </div>
 
     {# The site nav, inline, mirroring .nav-links in template.php. Driven by
-       extra.peachq_nav so the URLs stay root-relative -- see mkdocs.yml. #}
+       extra.peachq_nav -- see mkdocs.yml. Each URL is relative to the site root
+       and gets Material's per-page base_url in front, so the links work at any
+       page depth and whether the site is served from a document root or from a
+       subdirectory of another site. #}
     <nav class="peachq-nav" aria-label="Site">
-      {% set here = "/" ~ (page.url if page and page.url else "") %}
+      {# page.url is already relative to the site root ("news/"), the same form
+         extra.peachq_nav uses, so they compare directly. #}
+      {% set here = page.url if page and page.url else "" %}
       {% for item in config.extra.peachq_nav %}
-        {% set current = here == item.url or here == item.url ~ "/" or (item.url != "/" and here.startswith(item.url ~ "/")) %}
-        <a class="peachq-nav__link{% if current %} peachq-nav__link--active{% endif %}" href="{{ item.url }}">{{ item.title }}</a>
+        {% set current = here == item.url or here == item.url ~ "/" or here.startswith(item.url ~ "/") %}
+        <a class="peachq-nav__link{% if current %} peachq-nav__link--active{% endif %}" href="{{ base_url }}/{{ item.url }}">{{ item.title }}</a>
       {% endfor %}
       <a class="peachq-nav__link" href="{{ config.repo_url }}" target="_blank" rel="noreferrer">GitHub &#8599;</a>
     </nav>

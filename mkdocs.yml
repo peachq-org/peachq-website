@@ -39,6 +39,11 @@ theme:
 extra_css:
   - css/extra.css
 
+# Rewrites root-relative URLs written in page content, so the site works when
+# installed in a subdirectory. See the hook and static/.htaccess.
+hooks:
+  - hooks/relative_urls.py
+
 plugins:
   - search
   - blog:
@@ -62,27 +67,29 @@ extra:
   # the $nav array in static/template.php exactly, in the same order, so moving
   # between the PHP root pages and this section does not change the menu.
   #
-  # URLs are root-relative, not absolute: the PHP pages use root-relative hrefs
-  # too, and hard-coding https://peachq.org/ would send anyone browsing a local
-  # build or a staging host off to production. They live under `extra` rather
-  # than `nav` because MkDocs tries to resolve `nav` entries as documents.
+  # URLs are relative to the site root, and the header prefixes each with
+  # Material's per-page base_url. Neither absolute (which would send anyone on a
+  # local build or a staging host off to production) nor root-relative (which
+  # would break the copy installed at timestored.com/peachq). They live under
+  # `extra` rather than `nav` because MkDocs tries to resolve `nav` entries as
+  # documents.
   #
   # Keep in sync with static/template.php; tests/test_pages.sh checks this.
   peachq_nav:
     - title: Try Live
-      url: /repl
+      url: repl
     - title: Download
-      url: /download
+      url: download
     - title: Compatibility
-      url: /compatibility
+      url: compatibility
     - title: Roadmap
-      url: /roadmap
+      url: roadmap
     - title: News
-      url: /news/
+      url: news/
     - title: About
-      url: /about
+      url: about
     - title: Contact
-      url: /contact
+      url: contact
 
 markdown_extensions:
   - admonition
