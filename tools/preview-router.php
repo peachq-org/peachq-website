@@ -33,6 +33,16 @@ function peachq_serve_dir(string $dir): bool {
     return false;
 }
 
+// RewriteCond %{REQUEST_URI} ^(.*)/(index|download|...)\.html$ -> %1/%2 [R=301]
+//
+// Emulated because it was missing here, so nothing caught the redirect sending
+// visitors to a filesystem path. It has to run before the file checks: 404.html
+// exists on disk and would otherwise be served instead of redirecting.
+if (preg_match('#^(.*)/(index|download|repl|compatibility|roadmap|about|demo|qdash)\.html$#', $uri, $m)) {
+    header('Location: ' . $m[1] . '/' . $m[2], true, 301);
+    return true;
+}
+
 // An existing directory: serve its index.
 if (is_dir($path) && peachq_serve_dir($path)) {
     return true;
