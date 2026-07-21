@@ -26,11 +26,11 @@ peachq_page_start('PeachQ Browser REPL', 'Try PeachQ in a browser REPL.', 'repl'
           <button type="button" id="replOpenToggle" aria-expanded="false" aria-controls="replOpenMenu">Open <span aria-hidden="true">▾</span></button>
           <div class="repl-editor-menu-panel" id="replOpenMenu" hidden>
             <strong>Editor examples</strong>
-            <button type="button" data-editor-example="/examples/example-first-open.q">First open</button>
-            <button type="button" data-editor-example="/examples/example-operations.q">Operations</button>
-            <button type="button" data-editor-example="/examples/example-casting.q">Casting</button>
-            <button type="button" data-editor-example="/examples/example-functions.q">Functions</button>
-            <button type="button" data-editor-example="/examples/example-tables.q">Tables</button>
+            <button type="button" data-editor-example="examples/example-first-open.q">First open</button>
+            <button type="button" data-editor-example="examples/example-operations.q">Operations</button>
+            <button type="button" data-editor-example="examples/example-casting.q">Casting</button>
+            <button type="button" data-editor-example="examples/example-functions.q">Functions</button>
+            <button type="button" data-editor-example="examples/example-tables.q">Tables</button>
           </div>
         </div>
         <button type="button" class="repl-icon-button" id="replExportTabs" aria-label="Export workspace" title="Export workspace">↓</button>
