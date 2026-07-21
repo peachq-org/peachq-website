@@ -59,7 +59,7 @@ echo "--- no page hard-codes a root-relative URL ---"
 # since an error page is served at an unknown depth -- but nothing serves it:
 # .htaccess rewrites unmatched requests to weberror.php, which handles the same
 # problem with <base> and does work in a subdirectory.
-leaked=$(grep -rlE '(href|src|action)="/[^/"]' site --include='*.html' --include='*.php' --include='*.js' 2>/dev/null \
+leaked=$(grep -rlE '(href|src|action|data-[a-z-]+)="/[^/"]' site --include='*.html' --include='*.php' --include='*.js' 2>/dev/null \
   | grep -v '^site/404\.html$')
 if [ -z "$leaked" ]; then
   check "built files contain no root-relative URLs" 0
@@ -138,6 +138,22 @@ for path in /no-such-page /docs/no-such-page /a/b/c; do
   # Without <base> the stylesheet would resolve against the requested path.
   curl -s "http://127.0.0.1:$NEST_PORT/$SUBDIR$path" | grep -q "<base href=\"/$SUBDIR/\">"
   check "/$SUBDIR$path points <base> at the install root" $?
+done
+
+echo "--- URLs held in data- attributes resolve too ---"
+for page in $PAGES; do
+  base=$(curl -s "http://127.0.0.1:$NEST_PORT/$SUBDIR$page" \
+    | grep -o '<base href="[^"]*"' | sed 's/.*href="//;s/"//')
+  for ref in $(curl -s "http://127.0.0.1:$NEST_PORT/$SUBDIR$page" \
+    | grep -oE 'data-[a-z-]+="[^"]*\.[a-z0-9]+"' | sed 's/.*="//;s/"$//' | sort -u); do
+    case "$ref" in
+      http*|//*) continue ;;
+      /*) url="$ref" ;;
+      *) url="${base:-/$SUBDIR/}$ref" ;;
+    esac
+    code=$(curl -s -o /dev/null -w '%{http_code}' "http://127.0.0.1:$NEST_PORT$url")
+    [ "$code" = "200" ]; check "$page: $ref resolves to $url (got $code)" $?
+  done
 done
 
 echo "--- legacy .html URLs redirect correctly from a subdirectory ---"

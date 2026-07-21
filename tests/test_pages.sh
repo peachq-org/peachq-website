@@ -75,6 +75,9 @@ has "repl loads repl.js"             /repl          'src="repl.js"'
 has "compatibility keeps heatmap"    /compatibility 'id="compatHeat"'
 has "contact keeps its form token"   /contact       'name="formtoken"'
 has "repl examples are served"       /examples/example-first-open.q 'a + b'
+# Held in data- attributes and fetched from JS, so the href/src checks above
+# never see them -- they were absolute and 404'd on the subdirectory copy.
+has "repl example paths are relative" /repl 'data-editor-example="examples/'
 
 echo "--- docs and news are Material, themed to match ---"
 has "docs has Material chrome"       /docs/ 'md-header'
