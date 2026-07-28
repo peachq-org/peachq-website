@@ -20,7 +20,7 @@ peachq_page_start('PeachQ Roadmap', 'Where PeachQ is going and how to read the v
     <h2>Useful, but early.</h2>
   </div>
   <p>PeachQ is already useful for experiments, coding challenges and exploring a free q-like environment. It also has strong performance foundations through Rayforce. It is not yet a drop-in q replacement: important areas such as char and string semantics, on-disk storage, and parts of the long-term architecture are still undecided or unimplemented.</p>
-  <p>We are looking for people who want to discuss those choices, try real workloads, and help shape the roadmap. If that sounds useful, please <a href="/contact">get in touch</a>.</p>
+  <p>We are looking for people who want to discuss those choices, try real workloads, and help shape the roadmap. If that sounds useful, please <a href="contact">get in touch</a>.</p>
 </div>
 
 <div class="roadmap-grid">
@@ -76,8 +76,8 @@ peachq_page_start('PeachQ Roadmap', 'Where PeachQ is going and how to read the v
 <div class="roadmap-footer card">
   <p>PeachQ is built in public. The compatibility page tracks the score, suite by suite, from the current build.</p>
   <div class="actions">
-    <a class="button peach-button" href="/compatibility">View compatibility</a>
-    <a class="button" href="/repl">Try Live</a>
+    <a class="button peach-button" href="compatibility">View compatibility</a>
+    <a class="button" href="repl">Try Live</a>
   </div>
 </div>
 </div></section>

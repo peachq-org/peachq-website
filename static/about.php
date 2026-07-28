@@ -11,7 +11,7 @@ peachq_page_start('About PeachQ', 'About the PeachQ open source q implementation
 </p><p>He is the creator of QStudio, first released in 2013 and open sourced in 2025 after more than a decade of development. He also created Pulse, a real-time analytics platform supporting dozens of databases.
 
 </p><p>Before founding TimeStored, Ryan worked on kdb systems at UBS, Morgan Stanley and Citi. PeachQ builds on that experience but is intended to grow as a community-led open-source project.</p></div>
-<div class="card"><h2>Community first</h2><p>The goal is larger than a compatible runtime. It is an open home for the language, drivers, editor integrations, documentation, tests and the ecosystem around them.</p><div class="actions"><a class="button peach-button" href="https://github.com/peachq-org/peachq">Join on GitHub ↗</a><a class="button" href="/roadmap">See the roadmap</a></div></div>
+<div class="card"><h2>Community first</h2><p>The goal is larger than a compatible runtime. It is an open home for the language, drivers, editor integrations, documentation, tests and the ecosystem around them.</p><div class="actions"><a class="button peach-button" href="https://github.com/peachq-org/peachq">Join on GitHub ↗</a><a class="button" href="roadmap">See the roadmap</a></div></div>
 </div></section>
 <section class="section"><div class="container thanks-section">
 <div>
@@ -22,7 +22,7 @@ peachq_page_start('About PeachQ', 'About the PeachQ open source q implementation
 <div class="thanks-grid">
   <div class="card thanks-card"><h3>Rayforce</h3><p>Thanks to Anton and the Rayforce contributors for the pure-C, in-memory vector engine PeachQ builds on. That work gives PeachQ a compact native core for arrays, tables and interactive evaluation.</p></div>
   <div class="card thanks-card"><h3>DuckDB</h3><p>Thanks to Hannes, Mark and the DuckDB community for the database engine we are building PeachQ's durable-data story around. DuckDB brings local analytics, Parquet, SQL and a serious storage ecosystem to the project.</p></div>
-  <div class="card thanks-card thanks-card-wide"><h3>The wider q community</h3><p>Thanks to the people who have published q tutorials, examples, tools, documentation, tests, puzzles and libraries over the years. That includes past contributions from Charlie Skelton, Jo Shinonome, Stephen Taylor, András Dőtsch, Mark Street and many others. Some work is a direct input; much more is part of the shared foundation PeachQ learns from.</p></div>
+  <div class="card thanks-card thanks-card-wide"><h3>The wider q community</h3><p>Thanks to the people who have published q tutorials, examples, tools, documentation, tests, puzzles and libraries over the years. That includes past contributions from <a href="https://www.linkedin.com/in/charlesskelton/" target="_blank" rel="noreferrer">Charlie Skelton</a>, <a href="https://github.com/jshinonome" target="_blank" rel="noreferrer">Jo Shinonome</a>, <a href="https://github.com/qbists" target="_blank" rel="noreferrer">Stephen Taylor</a>, <a href="https://github.com/adotsch/aoc" target="_blank" rel="noreferrer">András Dőtsch</a>, <a href="https://github.com/mkst" target="_blank" rel="noreferrer">Mark Street</a>, <a href="https://www.defconq.tech/" target="_blank" rel="noreferrer">Alexander Unterrainer</a> of DefconQ and many others. Some work is a direct input; much more is part of the shared foundation PeachQ learns from.</p></div>
 </div>
 </div></section>
 </main>

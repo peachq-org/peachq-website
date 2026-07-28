@@ -33,9 +33,9 @@ const storageKeys = {
 };
 
 const defaultRuntimeScripts = [
-  "/wasm/latest/peachq.js",
-  "/wasm/latest/openq.js",
-  "/wasm/latest/rayforce.js"
+  "wasm/latest/peachq.js",
+  "wasm/latest/openq.js",
+  "wasm/latest/rayforce.js"
 ];
 const factoryNames = ["createPeachQ", "createOpenQ", "createRayforce"];
 const sqlTypes = "array binary bit boolean char character clob date decimal double float int integer interval large national nchar nclob numeric object precision real smallint time timestamp varchar varying";
@@ -465,7 +465,7 @@ async function initCodeMirror() {
       sql,
       SQLDialect,
       sublime
-    } = await import("/js/codemirror-peachq.js");
+    } = await import("./js/codemirror-peachq.js");
     const qCommentMark = Decoration.mark({ class: "cm-q-comment" });
     function qCommentDecorations(view) {
       const ranges = [];
@@ -741,13 +741,13 @@ async function loadRuntime() {
 async function runtimeList() {
   const defaults = defaultRuntimeScripts.map(script => ({ script }));
   try {
-    const response = await fetch("/wasm/latest/manifest.json", { cache: "no-store" });
+    const response = await fetch("wasm/latest/manifest.json", { cache: "no-store" });
     if (!response.ok) return defaults;
     const manifest = await response.json();
     const scripts = Array.isArray(manifest.scripts)
       ? manifest.scripts
       : [{ script: manifest.script || manifest.js, factory: manifest.factory }];
-    const base = window.location.origin + "/wasm/latest/";
+    const base = new URL("wasm/latest/", document.baseURI).href;
     const seen = new Set();
     return scripts
       .filter(item => item && item.script)

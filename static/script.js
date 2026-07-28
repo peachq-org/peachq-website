@@ -9,10 +9,12 @@ const root = document.documentElement;
  * site carries to the other.
  *
  * The key is scoped to the site root. Material computes it per page with
- * `new URL("..", location)` varied by depth; from these root-level pages that
- * is simply "/".
+ * `new URL("..", location)` varied by depth; these pages take it from
+ * document.baseURI, which template.php sets to the same root -- "/" when the
+ * site is served from a document root, "/peachq/" when it is installed in a
+ * subdirectory.
  */
-const PALETTE_KEY = "/.__palette";
+const PALETTE_KEY = new URL(document.baseURI).pathname + ".__palette";
 
 function readPalette() {
   try {
@@ -186,7 +188,7 @@ if (chart) {
   }
 
   renderHomeCompat(fallbackPoints.map(score => ({ score })));
-  fetch("/data/qdash/data.json", { cache: "no-store" })
+  fetch("data/qdash/data.json", { cache: "no-store" })
     .then(response => response.ok ? response.json() : null)
     .then(data => {
       if (!data) return;
@@ -217,7 +219,7 @@ if (roadmapVersionExample && roadmapScoreExample) {
     };
   }
 
-  fetch("/file/latest.json", { cache: "no-store" })
+  fetch("file/latest.json", { cache: "no-store" })
     .then(response => response.ok ? response.json() : null)
     .then(release => {
       const parsed = parseReleaseVersion(release && release.version);

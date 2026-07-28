@@ -27,4 +27,4 @@ peachq_page_start('PeachQ Compatibility', 'Track PeachQ q compatibility progress
 <div class="compat-qmatrix" id="compatQmatrix"></div>
 </div></section>
 </main>
-<?php peachq_page_end(['/data/qdash/data.js', '/compatibility.js']); ?>
+<?php peachq_page_end(['data/qdash/data.js', 'compatibility.js']); ?>

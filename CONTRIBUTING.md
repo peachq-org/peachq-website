@@ -107,12 +107,33 @@ Fixtures land in `site/`, are never committed, and are wiped by the next build.
 ```bash
 ./tools/build.sh
 ./tests/test_pages.sh
+./tests/test_subdirectory.sh
 ```
 
-This checks that the root pages keep the PeachQ design and do **not** pick up
-Material's chrome, that the REPL, compatibility dashboard and contact form
-survive the build, and that `/docs` and `/news` render as Material. CI runs it on
-every pull request.
+`test_pages.sh` checks that the root pages keep the PeachQ design and do **not**
+pick up Material's chrome, that the REPL, compatibility dashboard and contact
+form survive the build, and that `/docs` and `/news` render as Material.
+
+`test_subdirectory.sh` serves that same build twice -- once from a document root
+and once from a subdirectory -- and checks every link resolves both ways. CI runs
+both on every pull request.
+
+## Links must be relative
+
+The site is served from two places: `peachq.org`, and `timestored.com/peachq`, a
+mirror for the corporate networks that block domains they have not seen before.
+There is no separate build for the mirror. The same output is served both ways,
+which holds only while no URL names the site root:
+
+* PHP pages: write `href="repl"`, not `href="/repl"`. Every page rendered
+  through `template.php` is served at depth 0, so relative is unambiguous.
+* Templates in `overrides/`: prefix with Material's per-page `{{ base_url }}`.
+* Markdown in `content/`: write `/repl` as normal. `hooks/relative_urls.py`
+  converts root-relative URLs in rendered pages to the right number of `../`.
+* JavaScript: relative paths resolve against the `<base>` that `template.php`
+  emits, so `fetch("file/latest.json")` is correct.
+
+`test_subdirectory.sh` fails on the first URL that breaks this.
 
 ## A note on pinned dependencies
 

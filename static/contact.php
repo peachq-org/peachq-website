@@ -29,13 +29,13 @@ peachq_page_start('Contact PeachQ', 'Contact the PeachQ project.', 'contact');
   <h2>Follow along.</h2>
   <p>Release notes, compatibility work and build updates are published through the repository and the site.</p>
   <div class="actions">
-    <a class="button" href="/compatibility">Compatibility</a>
-    <a class="button" href="/download">Downloads</a>
+    <a class="button" href="compatibility">Compatibility</a>
+    <a class="button" href="download">Downloads</a>
   </div>
 </div>
 </div></section>
 <section class="section contact-form-section"><div class="container">
-<form class="card contact-form" id="contactForm" method="post" action="/email.php">
+<form class="card contact-form" id="contactForm" method="post" action="email.php">
   <input type="hidden" name="formtoken" value="<?= htmlspecialchars(FormToken::make(), ENT_QUOTES, 'UTF-8') ?>">
   <input type="hidden" name="tag" value="peachq-contact">
   <div class="honeypot" aria-hidden="true">
@@ -79,4 +79,4 @@ peachq_page_start('Contact PeachQ', 'Contact the PeachQ project.', 'contact');
 </div>
 </div></section>
 </main>
-<?php peachq_page_end(['/contact.js']); ?>
+<?php peachq_page_end(['contact.js']); ?>
