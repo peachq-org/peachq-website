@@ -7,7 +7,7 @@ function peachq_help_absolute_target(string $target, string $source, string $doc
         return $target;
     }
     if ($target[0] === '#') {
-        $sourcePage = str_ends_with($source, '.md') ? substr($source, 0, -3) . '/' : $source;
+        $sourcePage = substr($source, -3) === '.md' ? substr($source, 0, -3) . '/' : $source;
         return 'https://peachq.org/docs/' . $sourcePage . $target;
     }
     if ($target[0] === '/') {
@@ -34,10 +34,10 @@ function peachq_help_absolute_target(string $target, string $source, string $doc
     }
     $path = implode('/', $resolved);
     $localFile = rtrim($docsRoot, '/') . '/' . $path;
-    $isImported = str_starts_with($path, 'basics/') || str_starts_with($path, 'ref/');
+    $isImported = strpos($path, 'basics/') === 0 || strpos($path, 'ref/') === 0;
 
     if ($isImported && is_file($localFile)) {
-        if (str_ends_with($path, '.md')) {
+        if (substr($path, -3) === '.md') {
             return 'https://peachq.org/docs/' . substr($path, 0, -3) . '/' . $fragment;
         }
         return 'https://peachq.org/docs/' . $path . $fragment;
@@ -45,7 +45,7 @@ function peachq_help_absolute_target(string $target, string $source, string $doc
 
     // A relative target outside the imported snapshot belongs to the original
     // documentation site. Its MkDocs HTML URLs use directories, not .md.
-    if (str_ends_with($path, '.md')) {
+    if (substr($path, -3) === '.md') {
         $path = substr($path, 0, -3) . '/';
     }
     return 'https://code.kx.com/q/' . $path . $fragment;
@@ -148,25 +148,25 @@ function peachq_help_transform_markdown(string $markdown, string $source, string
         }
 
         if ($inComment) {
-            if (str_contains($line, '-->')) {
+            if (strpos($line, '-->') !== false) {
                 $inComment = false;
             }
             continue;
         }
-        if (str_contains($line, '<!--')) {
-            if (!str_contains($line, '-->')) {
+        if (strpos($line, '<!--') !== false) {
+            if (strpos($line, '-->') === false) {
                 $inComment = true;
             }
             continue;
         }
         if ($inStyle) {
-            if (str_contains(strtolower($line), '</style>')) {
+            if (strpos(strtolower($line), '</style>') !== false) {
                 $inStyle = false;
             }
             continue;
         }
         if (preg_match('/^\s*<style\b/i', $line)) {
-            if (!str_contains(strtolower($line), '</style>')) {
+            if (strpos(strtolower($line), '</style>') === false) {
                 $inStyle = true;
             }
             continue;

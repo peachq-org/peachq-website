@@ -305,6 +305,11 @@ echo "$body" | grep -q '^>$'; check "single-line admonitions add no empty quote 
 echo "$body" | grep -q '^\[\](.*{#'; check "help.md strips invisible anchor helpers" $((! $?))
 body=$(curl -s --get --data-urlencode 'q=maps' "http://127.0.0.1:$PORT/help.md")
 echo "$body" | grep -q '^```text$'; check "help.md preserves typewriter layout in a text fence" $?
+if grep -qE 'str_(contains|starts_with|ends_with)\(' static/module-help-markdown.php; then
+    check "help.md transformer supports the production PHP runtime" 1
+else
+    check "help.md transformer supports the production PHP runtime" 0
+fi
 echo "$body" | grep -q '^\[Image: each-both\](https://peachq.org/docs/basics/svg/each-both.svg)$'; check "help.md gives images a terminal-friendly linked label" $?
 echo "$body" | grep -q '<div'; check "help.md removes presentation divs" $((! $?))
 body=$(curl -s --get --data-urlencode 'q=less-than' "http://127.0.0.1:$PORT/help.md")
