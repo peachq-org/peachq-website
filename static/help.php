@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+require_once __DIR__ . '/module-help-markdown.php';
 
 $format = (string)($_GET['format'] ?? 'html');
 $query = trim((string)($_GET['q'] ?? ''));
@@ -69,10 +70,11 @@ if (is_string($target) && preg_match('~^(?:basics|ref)/[a-z0-9._-]+$~', $target)
             $endLine = $topic['end_line'] ?? null;
             if ($lines !== false && is_int($startLine) && is_int($endLine)
                 && $startLine >= 0 && $endLine > $startLine && $endLine <= count($lines)) {
-                echo implode('', array_slice($lines, $startLine, $endLine - $startLine));
+                $body = implode('', array_slice($lines, $startLine, $endLine - $startLine));
             } else {
-                readfile($markdown);
+                $body = (string)file_get_contents($markdown);
             }
+            echo peachq_help_transform_markdown($body, $target . '.md', __DIR__ . '/docs');
             exit;
         }
     }
