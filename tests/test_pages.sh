@@ -292,6 +292,27 @@ echo "$body" | grep -q '^## `.h.hu` (URI escape)'; check "help.md returns only t
 echo "$body" | grep -q '^## `.h.hug`'; check "help.md stops before the next peer section" $((! $?))
 body=$(curl -s --get --data-urlencode 'q=.Q.en' "http://127.0.0.1:$PORT/help.md")
 echo "$body" | grep -q '^\.Q\.en\[dir;table\]'; check "consecutive .Q.en/.Q.ens headings share their body" $?
+body=$(curl -s --get --data-urlencode 'q=asc' "http://127.0.0.1:$PORT/help.md")
+echo "$body" | grep -q '^## `asc`'; check "page-name lookup selects the matching callable section" $?
+echo "$body" | grep -q '^## `iasc`'; check "callable section stops before its sibling" $((! $?))
+echo "$body" | sed -n '1p' | grep -q '^## `asc`$'; check "help.md strips source front matter" $?
+body=$(curl -s --get --data-urlencode 'q=.Q.fpn' "http://127.0.0.1:$PORT/help.md")
+echo "$body" | grep -q '^\.Q\.fpn\[x;y;z\]'; check "empty sibling headings share the following namespace body" $?
+echo "$body" | grep -q 'https://code.kx.com/q/kb/named-pipes/#streaming'; check "out-of-scope help links point to their upstream page" $?
+echo "$body" | grep -q 'https://peachq.org/docs/ref/dotq/#fs-file-streaming'; check "same-page anchors point to the rendered source page" $?
+echo "$body" | grep -q '^> \*\*Tip'; check "help.md converts admonitions to blockquotes" $?
+echo "$body" | grep -q '^>$'; check "single-line admonitions add no empty quote tail" $((! $?))
+echo "$body" | grep -q '^\[\](.*{#'; check "help.md strips invisible anchor helpers" $((! $?))
+body=$(curl -s --get --data-urlencode 'q=maps' "http://127.0.0.1:$PORT/help.md")
+echo "$body" | grep -q '^```text$'; check "help.md preserves typewriter layout in a text fence" $?
+echo "$body" | grep -q '^\[Image: each-both\](https://peachq.org/docs/basics/svg/each-both.svg)$'; check "help.md gives images a terminal-friendly linked label" $?
+echo "$body" | grep -q '<div'; check "help.md removes presentation divs" $((! $?))
+body=$(curl -s --get --data-urlencode 'q=less-than' "http://127.0.0.1:$PORT/help.md")
+echo "$body" | grep -q '\[Greater Than, At Least\](https://peachq.org/docs/ref/greater-than/)'; check "imported relative links point to PeachQ" $?
+echo "$body" | grep -q '^<br */*>$'; check "help.md removes standalone br lines" $((! $?))
+body=$(curl -s --get --data-urlencode 'q=datatypes' "http://127.0.0.1:$PORT/help.md")
+echo "$body" | grep -q '^!!!'; check "admonitions with quoted q literals are converted" $((! $?))
+echo "$body" | grep -q '^```text$'; check "datatype tables retain their line layout" $?
 has "help.csv has parseable headers" /help.csv '^pagepath,qname,kind'
 has "help.csv lists .Q.en" /help.csv 'docs/ref/dotq/#en-enumerate-varchar-cols,.Q.en'
 has "help.csv lists qualified .Q.fpn" /help.csv 'docs/ref/dotq/#fpn-pipe-streaming,.Q.fpn'

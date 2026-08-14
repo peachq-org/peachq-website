@@ -51,7 +51,7 @@ function add_topic(
     string $kind = 'keyword'
 ): void {
     $key = trim($alias);
-    if ($key === '' || isset($topics[$key])) {
+    if ($key === '' || (isset($topics[$key]) && ($topics[$key]['kind'] ?? '') !== 'page')) {
         return;
     }
     $topics[$key] = [
@@ -110,8 +110,12 @@ foreach (['ref', 'basics'] as $section) {
             // Some namespace entries use consecutive peer headings for names
             // that share one body (notably .Q.en and .Q.ens). If this heading
             // has no content before the next peer, include that peer's body.
-            if ($endLine < $lineCount
-                && trim(implode('', array_slice($lines, $lineNumber + 1, $endLine - $lineNumber - 1))) === '') {
+            $betweenHeadings = array_slice($lines, $lineNumber + 1, $endLine - $lineNumber - 1);
+            $betweenHeadings = array_filter($betweenHeadings, static function (string $candidate): bool {
+                $candidate = trim($candidate);
+                return $candidate !== '' && !preg_match('/^\[\]\(\)\{#[^}]+\}$/', $candidate);
+            });
+            if ($endLine < $lineCount && $betweenHeadings === []) {
                 for ($next = $endLine + 1; $next < $lineCount; $next++) {
                     if (preg_match('/^(#{1,6})\s+/', $lines[$next], $nextHeading)
                         && strlen($nextHeading[1]) <= $level) {
