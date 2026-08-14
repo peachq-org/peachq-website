@@ -9,6 +9,7 @@ Options All -Indexes
 DirectoryIndex index.php index.html
 
 AddType application/wasm .wasm
+AddType "text/markdown; charset=UTF-8" .md
 
 SetEnvIf Request_URI "/wasm/latest/" PEACHQ_NO_CACHE=1
 SetEnvIf Request_URI "/data/qdash/" PEACHQ_NO_CACHE=1
@@ -35,6 +36,11 @@ SetEnvIf Request_URI "\.(css|js|wasm)$" PEACHQ_SHORT_CACHE=1
 
 <IfModule mod_rewrite.c>
 	RewriteEngine on
+
+	# Machine-facing help returns Markdown directly. Keep the friendly .md URL
+	# while executing the same resolver as /help?q=..., preserving its query.
+	RewriteRule ^help\.md$ help.php?format=md [QSA,L]
+	RewriteRule ^help\.csv$ help.php?format=csv [QSA,L]
 
 	# Legacy .html URLs. Written as a rewrite rather than RedirectMatch because
 	# RedirectMatch needs an absolute path and this must survive being installed

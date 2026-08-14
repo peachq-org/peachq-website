@@ -254,6 +254,43 @@ body {
   border-radius: 12px;
 }
 
+/* The imported q reference uses typewriter blocks for aligned reference cards.
+   md_in_html turns their Markdown into a paragraph; preserving its whitespace
+   keeps the deliberately column-aligned source readable without changing the
+   upstream snapshot. */
+.md-typeset .typewriter p {
+  margin: 1em 0;
+  padding: 1em;
+  overflow-x: auto;
+  border: 1px solid var(--peachq-line);
+  border-radius: 12px;
+  background: var(--peachq-surface);
+  font-family: var(--md-code-font-family);
+  font-size: .85em;
+  line-height: 1.5;
+  white-space: pre;
+}
+
+.md-typeset .typewriter p:first-child {
+  margin-top: 0;
+}
+
+.md-typeset .typewriter p:last-child {
+  margin-bottom: 0;
+}
+
+.peachq-import-attribution {
+  margin-top: 3rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--peachq-line);
+  color: var(--peachq-muted);
+  font-size: .78rem;
+}
+
+.peachq-import-attribution p {
+  margin: 0;
+}
+
 /* Blog post cards on the news index. */
 .md-post--excerpt {
   border-bottom: 1px solid var(--peachq-line);

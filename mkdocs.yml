@@ -43,6 +43,7 @@ extra_css:
 # installed in a subdirectory. See the hook and static/.htaccess.
 hooks:
   - hooks/relative_urls.py
+  - hooks/imported_docs.py
 
 plugins:
   - search
@@ -61,6 +62,8 @@ nav:
 # /docs is live but deliberately unlinked from the menu for now.
 not_in_nav: |
   docs/*.md
+  docs/basics/*.md
+  docs/ref/*.md
 
 extra:
   # The site menu, rendered inline by overrides/partials/header.html. It mirrors
@@ -96,10 +99,14 @@ markdown_extensions:
   - attr_list
   - def_list
   - footnotes
+  - md_in_html
   - tables
   - toc:
       permalink: true
   - pymdownx.highlight
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
   - pymdownx.superfences
   - pymdownx.tabbed:
       alternate_style: true

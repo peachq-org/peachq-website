@@ -268,6 +268,53 @@ for ref in /css/styles.css /script.js /img/peachq-logo.svg; do
   code=$(curl -s -o /dev/null -w '%{http_code}' "http://127.0.0.1:$PORT$ref")
   [ "$code" = "200" ]; check "asset 200: $ref" $?
 done
+
+echo "--- imported documentation serves as HTML and Markdown ---"
+has "datatypes renders through Material" /docs/basics/datatypes/ 'class="md-content"'
+has "datatypes renders its typewriter block" /docs/basics/datatypes/ '<p><strong>Basic datatypes</strong>'
+has "imported basics page shows attribution" /docs/basics/datatypes/ 'peachq-import-attribution'
+has "asc renders through Material"       /docs/ref/asc/             'class="md-content"'
+has "imported ref page shows attribution" /docs/ref/asc/            'peachq-import-attribution'
+lacks "PeachQ-authored docs omit import attribution" /docs/         'peachq-import-attribution'
+has "datatypes Markdown is published"    /docs/basics/datatypes.md  '^# Datatypes'
+has "asc Markdown is published"          /docs/ref/asc.md            '^# `asc`, `iasc`, `xasc`'
+has "help index includes heading aliases" /docs/help-index.json      '"iasc": {'
+location=$(curl -s -o /dev/null -w '%{redirect_url}' "http://127.0.0.1:$PORT/help?q=datatypes")
+[ "$location" = "http://127.0.0.1:$PORT/docs/basics/datatypes/" ]; check "help resolves datatypes (got $location)" $?
+location=$(curl -s -o /dev/null -w '%{redirect_url}' "http://127.0.0.1:$PORT/help?q=iasc")
+[ "$location" = "http://127.0.0.1:$PORT/docs/ref/asc/#iasc" ]; check "help resolves iasc alias (got $location)" $?
+location=$(curl -s -o /dev/null -w '%{redirect_url}' --get --data-urlencode 'q=.Q.en' "http://127.0.0.1:$PORT/help")
+[ "$location" = "http://127.0.0.1:$PORT/docs/ref/dotq/#en-enumerate-varchar-cols" ]; check "help resolves .Q.en (got $location)" $?
+location=$(curl -s -o /dev/null -w '%{redirect_url}' --get --data-urlencode 'q=system-d' "http://127.0.0.1:$PORT/help")
+[ "$location" = "http://127.0.0.1:$PORT/docs/basics/syscmds/#d-directory" ]; check "help resolves system-d (got $location)" $?
+body=$(curl -s --get --data-urlencode 'q=.h.hu' "http://127.0.0.1:$PORT/help.md")
+echo "$body" | grep -q '^## `.h.hu` (URI escape)'; check "help.md returns only the indexed section" $?
+echo "$body" | grep -q '^## `.h.hug`'; check "help.md stops before the next peer section" $((! $?))
+body=$(curl -s --get --data-urlencode 'q=.Q.en' "http://127.0.0.1:$PORT/help.md")
+echo "$body" | grep -q '^\.Q\.en\[dir;table\]'; check "consecutive .Q.en/.Q.ens headings share their body" $?
+has "help.csv has parseable headers" /help.csv '^pagepath,qname,kind'
+has "help.csv lists .Q.en" /help.csv 'docs/ref/dotq/#en-enumerate-varchar-cols,.Q.en'
+has "help.csv lists qualified .Q.fpn" /help.csv 'docs/ref/dotq/#fpn-pipe-streaming,.Q.fpn'
+lacks "help.csv omits bare namespace members" /help.csv 'docs/ref/dotq/#fpn-pipe-streaming,fpn'
+has "help.csv strips internal-function arguments" /help.csv 'docs/basics/internal/#21-x-compression-encryption-stats,-21!,internal'
+lacks "help.csv omits internal-function arguments" /help.csv 'docs/basics/internal/#21-x-compression-encryption-stats,-21!x'
+has "help.csv maps dot to Apply" /help.csv 'docs/ref/apply/,.,glyph'
+has "help.csv maps at to Apply At" /help.csv 'docs/ref/apply/#apply-at-index-at,@,glyph'
+has "help.csv maps colon to Assign" /help.csv 'docs/ref/assign/,:,glyph'
+has "help.csv maps plus to Add" /help.csv 'docs/ref/add/,+,glyph'
+has "help.csv maps plus-colon to assignment" /help.csv 'docs/ref/assign/#assign-through-operator,+:,glyph'
+has "help.csv indexes iterator glyphs" /help.csv 'docs/ref/maps/#each-left-and-each-right,/:'
+has "help.csv indexes qSQL phrases" /help.csv 'docs/basics/qsql/#where-phrase,where,qsql'
+has "help.csv indexes datatype names" /help.csv 'docs/basics/datatypes/#temporal,timestamp,datatype'
+has "help.csv indexes literal errors" /help.csv "docs/basics/errors/#type,'type,error"
+has "help.csv preserves 0N case" /help.csv 'docs/basics/datatypes/#infinities,0N,datatype'
+has "help.csv preserves 0n case" /help.csv 'docs/basics/datatypes/#infinities,0n,datatype'
+location=$(curl -s -o /dev/null -w '%{redirect_url}' --get --data-urlencode 'q=docs/ref/dotq/#en-enumerate-varchar-cols' "http://127.0.0.1:$PORT/help")
+[ "$location" = "http://127.0.0.1:$PORT/docs/ref/dotq/#en-enumerate-varchar-cols" ]; check "CSV pagepath is accepted as q (got $location)" $?
+code=$(curl -s -o /dev/null -w '%{http_code}' "http://127.0.0.1:$PORT/help?q=not-a-topic")
+[ "$code" = "404" ]; check "unknown help topic 404s (got $code)" $?
+result=$(curl -s -o /dev/null -w '%{http_code} %{content_type} %{size_download}' "http://127.0.0.1:$PORT/help.md?q=not-a-topic")
+[ "$result" = "404 text/markdown; charset=UTF-8 0" ]; check "unknown help.md topic is an empty Markdown 404 (got $result)" $?
 for ref in $(get /docs/ | grep -oE 'href="[^"]*\.css"' | sed 's/href="//;s/"//' | grep -v '^http'); do
   code=$(curl -s -o /dev/null -w '%{http_code}' "http://127.0.0.1:$PORT/docs/$ref")
   [ "$code" = "200" ]; check "docs css resolves: $ref" $?
