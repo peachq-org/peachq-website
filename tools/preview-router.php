@@ -59,6 +59,16 @@ if (preg_match('#^(.*)/(index|download|repl|compatibility|roadmap|about|demo|qda
     return true;
 }
 
+// RewriteRule ^help\.md$ help.php?format=md [QSA,L]
+if (preg_match('#^(.*)/help\.(md|csv)$#', $uri, $m) && is_file($root . $m[1] . '/help.php')) {
+    $_GET['format'] = $m[2];
+    $file = $root . $m[1] . '/help.php';
+    peachq_set_script_name($file);
+    chdir(dirname($file));
+    require $file;
+    return true;
+}
+
 // An existing directory: serve its index.
 if (is_dir($path) && peachq_serve_dir($path)) {
     return true;
