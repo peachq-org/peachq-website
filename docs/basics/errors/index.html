@@ -1,0 +1,1171 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Errors signalled by the interpreter, and what triggers them">
+      
+      
+      
+        <link rel="canonical" href="https://peachq.org/docs/basics/errors/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../img/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Errors | Basics | kdb+ and q documentation - PeachQ</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../css/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  
+  <script src="../../../mirror-banner.js"></script>
+  <script>
+    var _paq = window._paq = window._paq || [];
+    /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    (function() {
+      var u="//www.timestored.com/mat/";
+      _paq.push(['setTrackerUrl', u+'matomo.php']);
+      _paq.push(['setSiteId', '4']);
+      var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+      g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+    })();
+  </script>
+
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#errors" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../" title="PeachQ" class="md-header__button md-logo" aria-label="PeachQ" data-md-component="logo">
+      
+  <img src="../../../img/peachq-logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <a class="md-ellipsis peachq-wordmark" href="../../../">
+            Peach<span class="peachq-wordmark__q">Q</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    
+    <nav class="peachq-nav" aria-label="Site">
+      
+      
+      
+        
+        <a class="peachq-nav__link" href="../../../repl">Try Live</a>
+      
+        
+        <a class="peachq-nav__link" href="../../../download">Download</a>
+      
+        
+        <a class="peachq-nav__link" href="../../../compatibility">Compatibility</a>
+      
+        
+        <a class="peachq-nav__link" href="../../../roadmap">Roadmap</a>
+      
+        
+        <a class="peachq-nav__link" href="../../../news/">News</a>
+      
+        
+        <a class="peachq-nav__link" href="../../../about">About</a>
+      
+        
+        <a class="peachq-nav__link" href="../../../contact">Contact</a>
+      
+      <a class="peachq-nav__link" href="https://github.com/peachq-org/peachq" target="_blank" rel="noreferrer">GitHub &#8599;</a>
+    </nav>
+
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="PeachQ" class="md-nav__button md-logo" aria-label="PeachQ" data-md-component="logo">
+      
+  <img src="../../../img/peachq-logo.svg" alt="logo">
+
+    </a>
+    PeachQ
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/peachq-org/peachq" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../news/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    News
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#runtime-errors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Runtime errors
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#system-errors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        System errors
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#parse-errors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parse errors
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#license-errors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        License errors
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#handling-errors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Handling errors
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/peachq-org/peachq-website/edit/main/content/docs/basics/errors.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+
+
+<h1 id="errors"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M480-16c6.9 0 13 4.4 15.2 10.9l13.5 40.4 40.4 13.5C555.6 51 560 57.1 560 64s-4.4 13-10.9 15.2l-40.4 13.5-13.5 40.4c-2.2 6.5-8.3 10.9-15.2 10.9s-13-4.4-15.2-10.9l-13.5-40.4-40.4-13.5C404.4 77 400 70.9 400 64s4.4-13 10.9-15.2l40.4-13.5 13.5-40.4C467-11.6 473.1-16 480-16M321.4 97.4c12.5-12.5 32.8-12.5 45.3 0l80 80c12.5 12.5 12.5 32.8 0 45.3l-10.9 10.9c7.9 22 12.2 45.7 12.2 70.5 0 114.9-93.1 208-208 208S32 418.9 32 304 125.1 96 240 96c24.7 0 48.5 4.3 70.5 12.3zM144 304c0-53 43-96 96-96 13.3 0 24-10.7 24-24s-10.7-24-24-24c-79.5 0-144 64.5-144 144 0 13.3 10.7 24 24 24s24-10.7 24-24"/></svg></span> Errors<a class="headerlink" href="#errors" title="Permanent link">&para;</a></h1>
+<h2 id="runtime-errors">Runtime errors<a class="headerlink" href="#runtime-errors" title="Permanent link">&para;</a></h2>
+<style>dt {color:#F23A66}</style>
+
+<dl>
+<dt>{directory}/q.k. OS reports: No such file or directory</dt>
+<dd>
+<p>Using the environment variable <code>QHOME</code> (or <code>&lt;HOME DIRECTORY&gt;/q</code> if not set), <code>q.k</code> was not found in the directory specified. Check that the <code>QHOME</code> environment variable is correctly set to the directory containing <code>q.k</code>, which is provided in the kdb+ installation files.</p>
+</dd>
+<dt><a href="" id="access"></a></dt>
+<dt>access</dt>
+<dd>
+<p>Tried to read files above directory, run system commands or failed usr/pwd</td> </tr></p>
+</dd>
+<dt><a href="" id="accp"></a></dt>
+<dt>accp</dt>
+<dd>
+<p>Tried to accept an incoming TCP/IP connection but failed to do so</p>
+</dd>
+<dt><a href="" id="adict"></a></dt>
+<dt>adict</dt>
+<dd>
+<p>E.g. <code>d[::]:x</code></p>
+</dd>
+<dd>
+<p>Blocked assignment (<code>'nyi</code>)</p>
+</dd>
+<dt><a href="" id="arch"></a></dt>
+<dt>arch</dt>
+<dd>
+<p>E.g.
+<div class="highlight"><pre><span></span><code><span class="ss">`:test</span><span class="w"> </span><span class="nb">set</span><span class="w"> </span><span class="nb">til</span><span class="w"> </span><span class="il">100</span>
+<span class="o">-</span><span class="il">17</span><span class="o">!</span><span class="ss">`:test</span>
+</code></pre></div></p>
+<p>Tried to load file of wrong endian format</p>
+</dd>
+<dt><a href="" id="assign"></a></dt>
+<dt>assign</dt>
+<dd>
+<p>E.g. <code>cos:12</code></p>
+<p>Tried to redefine a reserved word</p>
+</dd>
+<dt><a href="" id="bad-lambda"></a></dt>
+<dt>bad lambda</dt>
+<dd>
+<p>E.g. <code>h{select x by x from x}</code></p>
+<p>lambda from an older version of kdb+ over IPC that no longer parses</p>
+</dd>
+<dt><a href="" id="badmsg"></a></dt>
+<dt>badmsg</dt>
+<dd>
+<p>Failure in <a href="../releases/ChangesIn2.7.md#ipc-message-validator">IPC validator</a></p>
+</dd>
+<dt>bad meta data in file</dt>
+<dd>
+<p>The compressed file contains corrupt meta data. This can happen if the file was incomplete at the time of reading.</p>
+</dd>
+<dt><a href="" id="badtail"></a></dt>
+<dt>badtail</dt>
+<dd>
+<p>Incomplete transaction at end of file, get good (count;length) with <code>-11!(-2;`:file)</code></p>
+</dd>
+<dt><a href="" id="binary-mismatch"></a></dt>
+<dt>binary mismatch</dt>
+<dd>
+<p>Wrong process for <a href="../kb/profiler.md">code profiler</a></p>
+</dd>
+<dt><a href="" id="can't"></a></dt>
+<dt>can't</dt>
+<dd>
+<p>Only commercially licensed kdb+ instances can encrypt code in a script</p>
+</dd>
+<dt><a href="" id="cast"></a></dt>
+<dt>cast</dt>
+<dd>
+<p>E.g. <code>s:`a`b; c:`s$`a`e</code></p>
+<p>Value not in enumeration</p>
+</dd>
+<dt><a href="" id="close"></a></dt>
+<dt>close</dt>
+<dd>
+<p>(1) content-length header missing from HTTP response</p>
+<p>(2) handle: n – handle was closed by the remote while a msg was expected</p>
+</dd>
+<dt><a href="" id="con"></a></dt>
+<dt>con</dt>
+<dd>
+<p>qcon client is not supported when kdb+ is in <a href="../listening-port/#multi-threaded-input-mode">multithreaded input mode</a></p>
+</dd>
+<dt><a href="" id="cond"></a></dt>
+<dt>cond</dt>
+<dd>
+<p>Even number of arguments to <code>$</code> (until V3.6 2018.12.06)</p>
+</dd>
+<dt><a href="" id="conn"></a></dt>
+<dt>conn</dt>
+<dd>
+<p>Too many connections. Max connections was 1022 prior to 4.1t 2023.09.15, otherwise the limit imposed by the operating system (operating system configurable for system/protocol).</p>
+</dd>
+<dt><a href="" id="could-not-initialize-ssl"></a></dt>
+<dt>Could not initialize ssl</dt>
+<dd>
+<p><a href="../internal/#-26x-ssl"><code>(-26!)[]</code></a> found SSL/TLS not enabled</p>
+</dd>
+<dt><a href="" id="d8"></a></dt>
+<dt>d8</dt>
+<dd>
+<p>The log had a partial transaction at the end but q couldn’t truncate the file</p>
+</dd>
+<dt><a href="" id="decompression-error-at-block-[b]-in"></a></dt>
+<dt>decompression error at block [b] in [k]</dt>
+<dd>
+<p>Error signalled by underlying decompression routine. Can be due to file corruption or a file that is concurrently being overwritten.</p>
+</dd>
+<dt><a href="" id="domain"></a></dt>
+<dt>domain</dt>
+<dd>
+<p>E.g. <code>til -1</code></p>
+<p>Out of domain</p>
+</dd>
+<dt><a href="" id="dup"></a></dt>
+<dt>dup</dt>
+<dd>
+<p>E.g. <code>`a`b xasc flip`a`b`a!()</code></p>
+<p>Duplicate column in table (since V3.6 2019.02.19)</p>
+</dd>
+<dt><a href="" id="dup-names-for-cols/groups"></a></dt>
+<dt>dup names for cols/groups</dt>
+<dd>
+<p>E.g. <code>select a,a by a from t</code></p>
+<p>Name collision (since V4.0 2020.03.17)</p>
+</dd>
+<dt><a href="" id="elim"></a></dt>
+<dt>elim</dt>
+<dd>
+<p>E.g. <code>((-58?`3) set\:(),`a)$`a</code></p>
+<p>Too many enumerations (max: 57)</p>
+</dd>
+<dt><a href="" id="empty"></a></dt>
+<dt>empty</dt>
+<dd>
+<p>The paths listed in <code>par.txt</code> do not contain any partitions or are inaccessible.</p>
+</dd>
+<dt><a href="" id="enable-secondary-threads-via-cmd-line--s-only"></a></dt>
+<dt>enable secondary threads via cmd line -s only</dt>
+<dd>
+<p>E.g. <code>\s 4</code></p>
+<p>Command line enabled processes for parallel processing</p>
+</dd>
+<dt><a href="" id="encryption-lib-unavailable"></a></dt>
+<dt>encryption lib unavailable</dt>
+<dd>
+<p>E.g. <code>-36!(`:kf;"pwd")</code></p>
+<p>Failed to load OpenSSL libraries</p>
+</dd>
+<dt><a href="" id="expected-response"></a></dt>
+<dt>expected response</dt>
+<dd>
+<p>One-shot request did not receive response</p>
+</dd>
+<dt><a href="" id="failed-to-load-TLS-certificates"></a></dt>
+<dt>failed to load TLS certificates</dt>
+<dd>
+<p>Started kdb+ <a href="../cmdline/#-e-tls-server-mode">with <code>-E 1</code> or <code>-E 2</code></a> but without SSL/TLS enabled</p>
+</dd>
+<dt><a href="" id="from"></a></dt>
+<dt>from</dt>
+<dd>
+<p>E.g. <code>select price trade</code></p>
+<p>Badly formed select query</p>
+</dd>
+<dt><a href="" id="hop"></a></dt>
+<dt>hop</dt>
+<dd>
+<p>Request to <code>hopen</code> a handle fails; includes message from OS</p>
+</dd>
+<dt><a href="" id="hwr"></a></dt>
+<dt>hwr</dt>
+<dd>
+<p>Handle write error, can’t write inside a <a href="../peach/"><code>peach</code></a></p>
+</dd>
+<dt><a href="" id="IJS"></a></dt>
+<dt>IJS</dt>
+<dd>
+<p>E.g. <code>"D=\001"0:"0=hello\0011=world"</code></p>
+<p><a href="../../ref/file-text/#key-value-pairs">Key type</a> is not <code>I</code>, <code>J</code>, or <code>S</code>.</p>
+</dd>
+<dt><a href="" id="insert"></a></dt>
+<dt>insert</dt>
+<dd>
+<p>E.g. <code>t:([k:0 1]a:2 3);`t insert(0;3)</code></p>
+<p>Tried to <a href="../../ref/insert/"><code>insert</code></a> a record with an existing key into a keyed table</p>
+</dd>
+<dt><a href="" id="invalid"></a></dt>
+<dt>invalid</dt>
+<dd>
+<p>E.g. <code>q -e 3</code></p>
+<p>Invalid command-line option value</p>
+</dd>
+<dt><a href="" id="invalid-password"></a></dt>
+<dt>invalid password</dt>
+<dd>
+<p>E.g. <code>-36!(`:kf;"pwd")</code></p>
+<p>Invalid keyfile password</p>
+</dd>
+<dt><a href="" id="\l"></a></dt>
+<dt>\l</dt>
+<dd>
+<p>Not a <a href="../syscmds/#l-load-file-or-directory">data file</a></p>
+</dd>
+<dt><a href="" id="length"></a></dt>
+<dt>length</dt>
+<dd>
+<p>E.g. <code>()+til 1</code></p>
+<p>Arguments do not <a href="../conformable/">conform</a></p>
+</dd>
+<dt><a href="" id="limit"></a></dt>
+<dt>limit</dt>
+<dd>
+<p>E.g.<code>0W#2</code></p>
+<p>Tried to generate a list longer than <span>2<sup>40</sup>-1</span>,
+or serialized object is &gt; 1TB,
+or <code>'type</code> if trying to serialize a nested object which has &gt; 2 billion elements,
+or <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M448 128H270.4c1 5.2 1.6 10.5 1.6 16v16h176c8.8 0 16-7.2 16-16s-7.2-16-16-16m-224 16c0-17.7-14.3-32-32-32h-24c-66.3 0-120 53.7-120 120v48c0 52.5 33.7 97.1 80.7 113.4-.5-3.1-.7-6.2-.7-9.4 0-20 9.2-37.9 23.6-49.7-4.9-9-7.6-19.4-7.6-30.3 0-15.1 5.3-29 14-40-8.8-11-14-24.9-14-40v-40c0-13.3 10.7-24 24-24s24 10.7 24 24v40c0 8.8 7.2 16 16 16s16-7.2 16-16zm-32-80c18 0 34.6 6 48 16h208c35.3 0 64 28.7 64 64s-28.7 64-64 64h-82c1.3 5.1 2 10.5 2 16 0 25.3-14.7 47.2-36 57.6 2.6 7 4 14.5 4 22.4 0 20-9.2 37.9-23.6 49.7 4.9 9 7.6 19.4 7.6 30.3 0 35.3-28.7 64-64 64h-88C75.2 448 0 372.8 0 280v-48C0 139.2 75.2 64 168 64zm64 336c8.8 0 16-7.2 16-16s-7.2-16-16-16h-64c-8.8 0-16 7.2-16 16s7.2 16 16 16zm16-176c0 5.5-.7 10.9-2 16h34c8.8 0 16-7.2 16-16s-7.2-16-16-16h-32zm-24 64h-40c-8.8 0-16 7.2-16 16s7.2 16 16 16h64c8.8 0 16-7.2 16-16s-7.2-16-16-16z"/></svg></span> <a href="#parse-errors">Parse errors</a></p>
+</dd>
+<dt><a href="" id="load"></a></dt>
+<dt>load</dt>
+<dd>
+<p>Not a <a href="../../ref/load/">data file</a></p>
+</dd>
+<dt><a href="" id="loop"></a></dt>
+<dt>loop</dt>
+<dd>
+<p>E.g. <code>a::b::a</code></p>
+</dd>
+<dd>
+<p>Dependency loop</p>
+</dd>
+<dt><a href="" id="main-thread-only"></a></dt>
+<dt>main thread only</dt>
+<dd>
+<p>E.g. <code>-36!(`:kf;"pwd")</code></p>
+</dd>
+<dd>
+<p>Not executed from main thread</p>
+</dd>
+<dt><a href="" id="match"></a></dt>
+<dt>match</dt>
+<dd>
+<p>E.g.
+<div class="highlight"><pre><span></span><code><span class="p">(</span><span class="il">1</span><span class="p">)</span><span class="o">:</span><span class="il">2</span>
+<span class="p">(</span><span class="il">1</span><span class="w"> </span><span class="il">2</span><span class="o">!</span><span class="p">(</span><span class="n">one</span><span class="p">;</span><span class="n">two</span><span class="p">))</span><span class="o">:</span><span class="il">1</span><span class="w"> </span><span class="il">3</span><span class="o">!</span><span class="s2">"ac"</span>
+</code></pre></div></p>
+</dd>
+<dd>
+<p><a href="../pattern/">Pattern match</a> encountered a non-matching value or missing key</p>
+</dd>
+<dt><a href="" id="mismatch"></a></dt>
+<dt>mismatch</dt>
+<dd>
+<p>E.g. <code>([]a:til 4),([]b:til 3)</code></p>
+</dd>
+<dd>
+<p>Columns that can’t be aligned for <code>R,R</code> or <code>K,K</code></p>
+</dd>
+<dt><a href="" id="mlim"></a></dt>
+<dt>mlim</dt>
+<dd>
+<p>Too many nested columns in <a href="../kb/splayed-tables.md">splayed tables</a>.
+(Prior to V3.0, limited to 999; from V3.0, 251; from V3.3, 65530)</p>
+</dd>
+<dt><a href="" id="mq"></a></dt>
+<dt>mq</dt>
+<dd>
+<p>Multi-threading not allowed</p>
+</dd>
+<dt><a href="" id="name-too-long"></a></dt>
+<dt>name too long</dt>
+<dd>
+<p>Filepath ≥100 chars (until V3.6 2018.09.26)</p>
+</dd>
+<dt><a href="" id="need-zlib-to-compress"></a></dt>
+<dt>need zlib to compress</dt>
+<dd>
+<p>zlib not available. <a href="../kb/file-compression.md#gzip">Install zlib libraries</a> if ability to compress or decompress gzip is required.</p>
+</dd>
+<dt><a href="" id="noamend"></a></dt>
+<dt>noamend</dt>
+<dd>
+<p>E.g.
+<div class="highlight"><pre><span></span><code><span class="nv">t</span><span class="o">:</span><span class="p">([]</span><span class="nv">a</span><span class="o">:</span><span class="il">1</span><span class="w"> </span><span class="il">2</span><span class="w"> </span><span class="il">3</span><span class="p">)</span>
+<span class="nv">n</span><span class="o">:</span><span class="ss">`a`b`c</span>
+<span class="ow">update</span><span class="w"> </span><span class="nf">b</span><span class="o">:</span><span class="p">{</span><span class="ss">`n</span><span class="o">?</span><span class="ss">`d</span><span class="p">;</span><span class="o">:</span><span class="ss">`n</span><span class="o">?</span><span class="ss">`d</span><span class="p">}[]</span><span class="w"> </span><span class="ow">from</span><span class="w"> </span><span class="ss">`t</span>
+</code></pre></div></p>
+</dd>
+<dd>
+<p>Cannot change global state from within an amend</p>
+</dd>
+<dt><a href="" id="no-append-to-zipped-enums"></a></dt>
+<dt>no append to zipped enums</dt>
+<dd>
+<p>E.g. <code>`:sym?`c</code></p>
+</dd>
+<dd>
+<p>Cannot append to zipped enum (from V3.0)</p>
+</dd>
+<dt><a href="" id="no-`g#"></a></dt>
+<dt>no <code>`g#</code></dt>
+<dd>
+<p>E.g. <code>{`g#x}peach 2#enlist 0 1</code></p>
+</dd>
+<dd>
+<p>A thread other than the main q thread has attempted to add a group <a href="../syntax/#attributes">attribute</a> to a vector.
+Seen with <a href="../peach/"><code>peach</code></a>+secondary threads or multithreaded input queue</p>
+</dd>
+<dt><a href="" id="noupdate"></a></dt>
+<dt>noupdate</dt>
+<dd>
+<p>E.g. <code>{a::x}peach 0 1</code></p>
+</dd>
+<dd>
+<p>Updates blocked by the <a href="../cmdline/#-b-blocked"><code>-b</code> cmd line arg</a>,
+or <a href="../../ref/eval/#reval"><code>reval</code></a> code or a thread other than the main thread has attempted to update a global variable
+when in <a href="../peach/"><code>peach</code></a>+secondary threads or multithreaded input queue.
+Update not allowed when using <a href="../syscmds/#p-listening-port">negative port number</a>.</p>
+</dd>
+<dt><a href="" id="nosocket"></a></dt>
+<dt>nosocket</dt>
+<dd>
+<p>Can only open or use sockets in main thread.</p>
+</dd>
+<dt><a href="" id="nyi"></a></dt>
+<dt>nyi</dt>
+<dd>
+<p>E.g. <code>"a"like"**"</code></p>
+</dd>
+<dd>
+<p>Not yet implemented: it probably makes sense, but it’s not defined nor implemented, and needs more thinking about as the language evolves</p>
+</dd>
+<dt><a href="" id="os"></a></dt>
+<dt>os</dt>
+<dd>
+<p>E.g. <code>\foo bar</code></p>
+</dd>
+<dd>
+<p>Operating-system error or <a href="#license-errors">license error</a></p>
+</dd>
+<dt><a href="" id="par"></a></dt>
+<dt>par</dt>
+<dd>
+<p>Unsupported operation on a partitioned table or component thereof</p>
+</dd>
+<dt><a href="" id="parse"></a></dt>
+<dt>parse</dt>
+<dd>
+<p>Invalid <a href="../syntax/">syntax</a>; bad IPC header; or bad binary data in file</p>
+</dd>
+<dt><a href="" id="part"></a></dt>
+<dt>part</dt>
+<dd>
+<p>Something wrong with the partitions in the HDB; or <a href="../../ref/med/"><code>med</code></a> applied over partitions or segments</p>
+</dd>
+<dt><a href="" id="path-too-long"></a></dt>
+<dt>path too long</dt>
+<dd>
+<p>E.g. <code>(`$":",1000#"a") set 1 2 3</code></p>
+</dd>
+<dd>
+<p>File path ≥255 chars (100 before V3.6 2018.09.26)</p>
+</dd>
+<dt><a href="" id="PKCS5_PBKDF2_HMAC"></a></dt>
+<dt>PKCS5_PBKDF2_HMAC</dt>
+<dd>
+<p>E.g. <code>-36!(`:kf;"pwd")</code></p>
+</dd>
+<dd>
+<p>Library invocation failed</p>
+</dd>
+<dt><a href="" id="pread"></a></dt>
+<dt>pread</dt>
+<dd>
+<p>Issue reading a compressed file. This can happen if file corrupt or modified during read.</p>
+</dd>
+<dt><a href="" id="pwuid"></a></dt>
+<dt>pwuid</dt>
+<dd>
+<p>OS is missing libraries for <code>getpwuid</code>.
+(Most likely 32-bit app on 64-bit OS. Try to <a href="../learn/install.md">install ia32-libs</a>.)</p>
+</dd>
+<dd>
+<p>or</p>
+</dd>
+<dd>
+<p>UID (user id) not found in system database of users (e.g. running on container with randomized UID).
+To prevent this issue (since 4.1t 2023.05.26,4.0 2023.11.03) system environment variable HOME or USER can be set to home directory for the user.</p>
+</dd>
+<dt><a href="" id="Q7"></a></dt>
+<dt>Q7</dt>
+<dd>
+<p>nyi op on file nested array</p>
+</dd>
+<dt><a href="" id="rank"></a></dt>
+<dt>rank</dt>
+<dd>
+<p>E.g. <code>+[2;3;4]</code></p>
+</dd>
+<dd>
+<p>Invalid <a href="../glossary/#rank">rank</a></p>
+</dd>
+<dt><a href="" id="rb"></a></dt>
+<dt>rb</dt>
+<dd>
+<p>Encountered a problem while doing a blocking read</p>
+</dd>
+<dt><a href="" id="restricted"></a></dt>
+<dt>restricted</dt>
+<dd>
+<p>E.g. <code>0"2+3"</code> in a kdb+ process which was started with <a href="../cmdline/#-b-blocked"><code>-b</code> cmd line</a>.</p>
+</dd>
+<dd>
+<p>Also for a kdb+ process using the username:password authentication file,
+or the <code>-b</code> cmd line option, <code>\x</code> cannot be used to reset handlers to their default.
+e.g. <code>\x .z.pg</code></p>
+</dd>
+<dt><a href="" id="s-fail"></a></dt>
+<dt>s-fail</dt>
+<dd>
+<p>E.g. <code>`s#3 2</code></p>
+</dd>
+<dd>
+<p>Invalid attempt to set sorted <a href="../../ref/set-attribute/">attribute</a>.
+Also encountered with <code>`s#enums</code> when loading a database (<code>\l db</code>) and enum target is not already loaded.</p>
+</dd>
+<dt><a href="" id="splay"></a></dt>
+<dt>splay</dt>
+<dd>
+<p>nyi op on <a href="../kb/splayed-tables.md">splayed table</a></p>
+</dd>
+<dt><a href="" id="stack"></a></dt>
+<dt>stack</dt>
+<dd>
+<p>E.g. <code>{.z.s[]}[]</code></p>
+</dd>
+<dd>
+<p>Ran out of stack space.
+Consider using <a href="../../ref/accumulators/#unary-values">Converge <code>\</code> <code>/</code></a> instead of recursion.</p>
+</dd>
+<dt><a href="" id="step"></a></dt>
+<dt>step</dt>
+<dd>
+<p>E.g. <code>d:`s#`a`b!1 2;`d upsert `c`d!3 4</code></p>
+<p>Tried to upsert a step dictionary in place</p>
+</dd>
+<dt><a href="" id="stop"></a></dt>
+<dt>stop</dt>
+<dd>
+<p>Current operation stopped due to user interrupt (Ctrl-c) or <a href="../cmdline/#-t-timeout">time limit (<code>-T</code>)</a></p>
+</dd>
+<dt><a href="" id="stype"></a></dt>
+<dt>stype</dt>
+<dd>
+<p>E.g. <code>'42</code></p>
+</dd>
+<dd>
+<p>Invalid <a href="../datatypes/">type</a> used for <a href="../../ref/signal/">Signal</a></p>
+</dd>
+<dt><a href="" id="sys"></a></dt>
+<dt>sys</dt>
+<dd>
+<p>E.g. <code>{system "ls"}peach 0 1</code></p>
+</dd>
+<dd>
+<p>Using system call from thread other than main thread</p>
+</dd>
+<dt><a href="" id="threadview"></a></dt>
+<dt>threadview</dt>
+<dd>
+<p>Trying to calc a <a href="../learn/views.md">view</a> in a thread other than main thread. A view can be calculated in the main thread only. The cached result can be used from other threads.</p>
+</dd>
+<dt><a href="" id="timeout"></a></dt>
+<dt>timeout</dt>
+<dd>
+<p>Request to <code>hopen</code> a handle fails on a timeout; includes message from OS</p>
+</dd>
+<dt><a href="" id="TLS-not-enabled"></a></dt>
+<dt>TLS not enabled</dt>
+<dd>
+<p>Received a TLS connection request, but kdb+ not <a href="../cmdline/#-e-tls-server-mode">started with <code>-E 1</code> or <code>-E 2</code></a></p>
+</dd>
+<dt><a href="" id="too-many-syms"></a></dt>
+<dt>too many syms</dt>
+<dd>
+<p>kdb+ currently allows for about 1.4B interned symbols in the pool
+and will exit with this error when this threshold is reached</p>
+</dd>
+<dt><a href="" id="trunk"></a></dt>
+<dt>trunc</dt>
+<dd>
+<p>The log had a partial transaction at the end but q couldn’t truncate the file</p>
+</dd>
+<dt><a href="" id="type"></a></dt>
+<dt>type</dt>
+<dd>
+<p>E.g. <code>til 2.2</code></p>
+</dd>
+<dd>
+<p>Wrong <a href="../datatypes/">type</a>. Also see <code>limit</code></p>
+</dd>
+<dt><a href="" id="type/attr-error-amending-file"></a></dt>
+<dt>type/attr error amending file</dt>
+<dd>
+<p>Direct update on disk for this type or attribute is not allowed</p>
+</dd>
+<dt><a href="" id="u-fail"></a></dt>
+<dt>u-fail</dt>
+<dd>
+<p>E.g. <code>`u#2 2</code></p>
+</dd>
+<dd>
+<p>Invalid attempt to set unique or parted <a href="../../ref/set-attribute/">attribute</a></p>
+</dd>
+<dt><a href="" id="unmappable"></a></dt>
+<dt>unmappable</dt>
+<dd>
+<p>E.g.
+<div class="highlight"><pre><span></span><code><span class="nv">t</span><span class="o">:</span><span class="p">([]</span><span class="nv">sym</span><span class="o">:</span><span class="ss">`a`b</span><span class="p">;</span><span class="nv">a</span><span class="o">:</span><span class="p">(();()))</span>
+<span class="o">.</span><span class="n">Q.dpft</span><span class="p">[</span><span class="ss">`:thdb</span><span class="p">;</span><span class="o">.</span><span class="n">z.d</span><span class="p">;</span><span class="ss">`sym</span><span class="p">;</span><span class="ss">`t</span><span class="p">]</span>
+</code></pre></div></p>
+</dd>
+<dd>
+<p>When saving partitioned data each column must be mappable. <code>()</code> and <code>("";"";"")</code> are OK</p>
+</dd>
+<dt><a href="" id="unrecognized-key-format"></a></dt>
+<dt>unrecognized key format</dt>
+<dd>
+<p>E.g. <code>-36!(`:kf;"pwd")</code></p>
+</dd>
+<dd>
+<p>Master keyfile format not recognized</p>
+</dd>
+<dt><a href="" id="upd"></a></dt>
+<dt>upd</dt>
+<dd>
+<p>Function <code>upd</code> is undefined (sometimes encountered during <code>-11!`:logfile</code>) <em>or</em> <a href="#license-errors">license error</a></p>
+</dd>
+<dt><a href="" id="utf8"></a></dt>
+<dt>utf8</dt>
+<dd>
+<p>The websocket requires that text is UTF-8 encoded</p>
+</dd>
+<dt><a href="" id="value"></a></dt>
+<dt>value</dt>
+<dd>
+<p>No value</p>
+</dd>
+<dt><a href="" id="vd1"></a></dt>
+<dt>vd1</dt>
+<dd>
+<p>Attempted multithread update</p>
+</dd>
+<dt><a href="" id="view"></a></dt>
+<dt>view</dt>
+<dd>
+<p>Tried to re-assign a <a href="../learn/views.md">view</a> to something else</p>
+</dd>
+<dt><a href="" id="-w-abort"></a></dt>
+<dt>-w abort</dt>
+<dd>
+<p><a href="https://en.wikipedia.org/wiki/C_dynamic_memory_allocation"><code>malloc</code></a> hit <a href="../cmdline/#-w-workspace"><code>-w</code> limit</a> or <a href="../syscmds/#w-workspace"><code>\w</code> limit</a></p>
+</dd>
+<dt><a href="" id="-w-init-via-cmd-line"></a></dt>
+<dt>-w init via cmd line</dt>
+<dd>
+<p>Trying to allocate memory with <a href="../syscmds/#w-workspace"><code>\w</code></a> without <code>-w</code> on command line</p>
+</dd>
+<dt><a href="" id="wsfull"></a></dt>
+<dt>wsfull</dt>
+<dd>
+<p>E.g. <code>999999999#0</code></p>
+</dd>
+<dd>
+<p><a href="https://en.wikipedia.org/wiki/C_dynamic_memory_allocation"><code>malloc</code></a> failed, or ran out of swap (or addressability on 32-bit).
+The params also reported are intended to help KX diagnose when assisting clients, and are subject to change.</p>
+</dd>
+<dt><a href="" id="wsm"></a></dt>
+<dt>wsm</dt>
+<dd>
+<p>E.g. <code>010b wsum 010b</code></p>
+</dd>
+<dd>
+<p>Alias for <code>nyi</code> for <code>wsum</code> prior to V3.2</p>
+</dd>
+<dt><a href="" id="XXX"></a></dt>
+<dt>XXX</dt>
+<dd>
+<p>E.g. <code>delete x from system "d";x</code></p>
+</dd>
+<dd>
+<p>Value error (<code>XXX</code> undefined)</p>
+</dd>
+</dl>
+<h2 id="system-errors">System errors<a class="headerlink" href="#system-errors" title="Permanent link">&para;</a></h2>
+<p>From file ops and <a href="../ipc/">IPC</a></p>
+<table>
+<thead>
+<tr>
+<th>error</th>
+<th>explanation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="" id="Bad-CPU-Type"></a>Bad CPU Type</td>
+<td>Tried to run 32-bit interpreter in macOS 10.15+</td>
+</tr>
+<tr>
+<td><a href="" id="XXX:YYY"></a><code>XXX:YYY</code></td>
+<td><code>XXX</code> is from kdb+, <code>YYY</code> from the OS</td>
+</tr>
+</tbody>
+</table>
+<p><code>XXX</code> from addr, close, conn, p(from <code>-p</code>), snd, rcv or (invalid) filename, e.g. <code>read0`:invalidname.txt</code></p>
+<h2 id="parse-errors">Parse errors<a class="headerlink" href="#parse-errors" title="Permanent link">&para;</a></h2>
+<p>On execute or load</p>
+<table>
+<thead>
+<tr>
+<th>error</th>
+<th>example / explanation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>[({])}"</code></td>
+<td><code>"hello</code><br><br>Open <code>([{</code> or <code>"</code></td>
+</tr>
+<tr>
+<td><a href="" id="branch"></a>branch</td>
+<td><code>a:"1;",65024#"0;"</code><br/><code>value "{if[",a,"]}"</code><br><br>A branch (<code>if</code>;<code>do</code>;<code>while</code>;<code>$[.;.;.]</code>) more than 65025 byte codes away<br>(255 before V3.6 2017.09.26)</td>
+</tr>
+<tr>
+<td><a href="" id="char"></a>char</td>
+<td><code>value "\000"</code><br><br>Invalid character (watch out for non-breaking spaces in copied expressions)</td>
+</tr>
+<tr>
+<td><a href="" id="globals"></a>globals</td>
+<td><code>a:"::a"sv string til 111;</code><br/><code>value"{a",a,"::0}"</code><br><br>Too many <a href="../function-notation/#variables-and-constants">global variables</a></td>
+</tr>
+<tr>
+<td>limit</td>
+<td><code>a:";"sv string 2+til 241;</code><br/><code>value"{",a,"}"</code><br><br>Too many <a href="../function-notation/#variables-and-constants">constants</a>, or <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M448 128H270.4c1 5.2 1.6 10.5 1.6 16v16h176c8.8 0 16-7.2 16-16s-7.2-16-16-16m-224 16c0-17.7-14.3-32-32-32h-24c-66.3 0-120 53.7-120 120v48c0 52.5 33.7 97.1 80.7 113.4-.5-3.1-.7-6.2-.7-9.4 0-20 9.2-37.9 23.6-49.7-4.9-9-7.6-19.4-7.6-30.3 0-15.1 5.3-29 14-40-8.8-11-14-24.9-14-40v-40c0-13.3 10.7-24 24-24s24 10.7 24 24v40c0 8.8 7.2 16 16 16s16-7.2 16-16zm-32-80c18 0 34.6 6 48 16h208c35.3 0 64 28.7 64 64s-28.7 64-64 64h-82c1.3 5.1 2 10.5 2 16 0 25.3-14.7 47.2-36 57.6 2.6 7 4 14.5 4 22.4 0 20-9.2 37.9-23.6 49.7 4.9 9 7.6 19.4 7.6 30.3 0 35.3-28.7 64-64 64h-88C75.2 448 0 372.8 0 280v-48C0 139.2 75.2 64 168 64zm64 336c8.8 0 16-7.2 16-16s-7.2-16-16-16h-64c-8.8 0-16 7.2-16 16s7.2 16 16 16zm16-176c0 5.5-.7 10.9-2 16h34c8.8 0 16-7.2 16-16s-7.2-16-16-16h-32zm-24 64h-40c-8.8 0-16 7.2-16 16s7.2 16 16 16h64c8.8 0 16-7.2 16-16s-7.2-16-16-16z"/></svg></span> <a href="#runtime-errors">limit error</a></td>
+</tr>
+<tr>
+<td><a href="" id="locals"></a>locals</td>
+<td><code>a:":a"sv string til 111;</code><br/><code>value"{a",a,":0}"</code><br><br>Too many <a href="../function-notation/#variables-and-constants">local variables</a></td>
+</tr>
+<tr>
+<td><a href="" id="params"></a>params</td>
+<td><code>f:{[a;b;c;d;e;f;g;h;e]}</code><br><br>Too many parameters (8 max)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="license-errors">License errors<a class="headerlink" href="#license-errors" title="Permanent link">&para;</a></h2>
+<p>On launch</p>
+<table>
+<thead>
+<tr>
+<th>error</th>
+<th>explanation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>{timestamp} couldn't connect to license daemon</td>
+<td>Could not connect to KX license server (<a href="../learn/licensing.md#licensing-server">kdb+ On Demand</a>)</td>
+</tr>
+<tr>
+<td><a href="" id="cores"></a>cores</td>
+<td>The license is for <a href="../learn/licensing.md#core-restrictions">fewer cores than available</a></td>
+</tr>
+<tr>
+<td><a href="" id="cpu"></a>cpu</td>
+<td>The license is for fewer CPUs than available</td>
+</tr>
+<tr>
+<td><a href="" id="exp"></a>exp</td>
+<td>License expiry date is prior to system date. The license has expired. Commercial license holders should have their Designated Contacts reach out to licadmin@kx.com or contact sales@kx.com to begin a new commercial agreement.</td>
+</tr>
+<tr>
+<td><a href="" id="host"></a>host</td>
+<td>The hostname reported by the OS does not match the hostname or hostname-pattern in the license.<br><br>If you see <code>255.255.255.255</code> in the kdb+ banner, the machine likely cannot resolve its hostname to an IP address, which will cause a <code>host</code> error.<br><br>Since 4.1t 2022.07.01,4.0 2022.07.01 the detected hostname is printed. It can be used to compare with the hostname used within the license.</td>
+</tr>
+<tr>
+<td><a href="" id="k4.lic"></a>k4.lic</td>
+<td><code>k4.lic</code> file not found. If the environment variable <a href="../learn/licensing.md#keeping-the-license-key-file-elsewhere"><code>QLIC</code></a> is set, check it is set to the directory containing the license file. <strong>Note</strong> that it should not be set to the location of the license file itself, but to the directory that contains the license file.  If <code>QLIC</code> is not set, check that the directory specified by the environment variables <a href="../learn/install.md#step-2-unzip-your-download"><code>QHOME</code></a> contains the license file.</td>
+</tr>
+<tr>
+<td><a href="" id="os"></a>os</td>
+<td>Wrong OS or operating-system error (if runtime error)</td>
+</tr>
+<tr>
+<td><a href="" id="srv"></a>srv</td>
+<td>Client-only license in server mode</td>
+</tr>
+<tr>
+<td><a href="" id="upd"></a>upd</td>
+<td>Version of kdb+ more recent than update date, <em>or</em> the function <code>upd</code> is undefined (sometimes encountered during <code>-11!`:logfile</code>)</td>
+</tr>
+<tr>
+<td><a href="" id="user"></a>user</td>
+<td>Unlicensed user</td>
+</tr>
+<tr>
+<td><a href="" id="wha"></a>wha</td>
+<td>System date is prior to kdb+ version date. Check that the system date shows the correct date.</td>
+</tr>
+<tr>
+<td><a href="" id="wrong-q.k-version"></a>wrong q.k version</td>
+<td><code>q</code> and <code>q.k</code> versions do not match. Check that the <code>q.k</code> file found in the directory specified by the <code>QHOME</code> environment variable is the same version as that supplied with the q binary.</td>
+</tr>
+</tbody>
+</table>
+<p>License-related errors are reported with the prefix <code>licence error:</code> since V4.0 2019.10.22.</p>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="m48 195.8 209.2 86.1c9.8 4 20.2 6.1 30.8 6.1s21-2.1 30.8-6.1l242.4-99.8c9-3.7 14.8-12.4 14.8-22.1s-5.8-18.4-14.8-22.1L318.8 38.1c-9.8-4-20.2-6.1-30.8-6.1s-21 2.1-30.8 6.1L14.8 137.9C5.8 141.6 0 150.3 0 160v296c0 13.3 10.7 24 24 24s24-10.7 24-24zm48 71.7V384c0 53 86 96 192 96s192-43 192-96V267.4l-142.9 58.9c-15.6 6.4-32.2 9.7-49.1 9.7s-33.5-3.3-49.1-9.7L96 267.4z"/></svg></span>
+<a href="../learn/licensing.md">Licensing</a></p>
+<h2 id="handling-errors">Handling errors<a class="headerlink" href="#handling-errors" title="Permanent link">&para;</a></h2>
+<p>Use system command <a href="../syscmds/#terminate"><code>\</code> (abort)</a> to clear one level off the execution stack.</p>
+<p>Keyword <a href="../../ref/exit/"><code>exit</code></a> terminates the kdb+ process.</p>
+<p>Use hook <a href="../../ref/dotz/#zexit-action-on-exit"><code>.z.exit</code></a> to set a callback on process exit.</p>
+<p>Use <a href="../../ref/signal/">Signal</a> to signal errors.</p>
+<p>Use <a href="../../ref/apply/#trap">Trap and Trap At</a> to trap errors.</p>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M256 141.3v309.3l.5-.2A449 449 0 0 1 428.8 416H448V96h-19.2c-42.2 0-84.1 8.4-123.1 24.6-16.8 7-33.4 13.9-49.7 20.7m-25.1-79.8L256 72l25.1-10.5C327.9 42 378.1 32 428.8 32H464c26.5 0 48 21.5 48 48v352c0 26.5-21.5 48-48 48h-35.2c-50.7 0-100.9 10-147.7 29.5l-12.8 5.3c-7.9 3.3-16.7 3.3-24.6 0l-12.8-5.3C184.1 490 133.9 480 83.2 480H48c-26.5 0-48-21.5-48-48V80c0-26.5 21.5-48 48-48h35.2c50.7 0 100.9 10 147.7 29.5"/></svg></span>
+<a href="../debug/">Debugging</a></p>
+<!-- :fontawesome-regular-hand-point-right: Simon’s list :fontawesome-brands-github: [simongarland/help/texts/errors.txt](https://github.com/simongarland/help/blob/master/texts/errors.txt) -->
+
+<div class="peachq-import-attribution">
+<p>Source adapted from the <a href="https://github.com/KxSystems/docs">Documentation for kdb+ and q</a>
+by KX Systems and contributors, used under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.
+<a href="../../attribution/">Attribution, provenance and independence notice</a>.</p>
+</div>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  <div class="md-copyright__highlight">
+    PeachQ - MIT-licensed open source q, built on Rayforce with DuckDB storage in progress.
+  </div>
+  <a href="../../../about">Built for the community</a> &middot;
+  <a href="../../../contact">Contact</a> &middot;
+  <a href="https://github.com/peachq-org/peachq" target="_blank" rel="noreferrer">GitHub</a>
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.sections", "navigation.top", "content.code.copy", "content.action.edit"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

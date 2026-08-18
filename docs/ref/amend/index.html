@@ -1,0 +1,775 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Operators Amend and Amend At modify one or more items in a list.">
+      
+      
+      
+        <link rel="canonical" href="https://peachq.org/docs/ref/amend/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../img/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Amend, Amend At – Reference – kdb+ and q documentation - PeachQ</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../css/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  
+  <script src="../../../mirror-banner.js"></script>
+  <script>
+    var _paq = window._paq = window._paq || [];
+    /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    (function() {
+      var u="//www.timestored.com/mat/";
+      _paq.push(['setTrackerUrl', u+'matomo.php']);
+      _paq.push(['setSiteId', '4']);
+      var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+      g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+    })();
+  </script>
+
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#amend-amend-at" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../" title="PeachQ" class="md-header__button md-logo" aria-label="PeachQ" data-md-component="logo">
+      
+  <img src="../../../img/peachq-logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <a class="md-ellipsis peachq-wordmark" href="../../../">
+            Peach<span class="peachq-wordmark__q">Q</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    
+    <nav class="peachq-nav" aria-label="Site">
+      
+      
+      
+        
+        <a class="peachq-nav__link" href="../../../repl">Try Live</a>
+      
+        
+        <a class="peachq-nav__link" href="../../../download">Download</a>
+      
+        
+        <a class="peachq-nav__link" href="../../../compatibility">Compatibility</a>
+      
+        
+        <a class="peachq-nav__link" href="../../../roadmap">Roadmap</a>
+      
+        
+        <a class="peachq-nav__link" href="../../../news/">News</a>
+      
+        
+        <a class="peachq-nav__link" href="../../../about">About</a>
+      
+        
+        <a class="peachq-nav__link" href="../../../contact">Contact</a>
+      
+      <a class="peachq-nav__link" href="https://github.com/peachq-org/peachq" target="_blank" rel="noreferrer">GitHub &#8599;</a>
+    </nav>
+
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="PeachQ" class="md-nav__button md-logo" aria-label="PeachQ" data-md-component="logo">
+      
+  <img src="../../../img/peachq-logo.svg" alt="logo">
+
+    </a>
+    PeachQ
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/peachq-org/peachq" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../news/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    News
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Examples
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Examples">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#amend-entire" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Amend Entire
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#single-path" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Single path
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#amend-at" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Amend At
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cross-sections" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cross sections
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#replacement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Replacement
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#unary-value" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Unary value
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#on-disk" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        On disk
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#errors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Errors
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/peachq-org/peachq-website/edit/main/content/docs/ref/amend.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+
+
+<h1 id="amend-amend-at"><code>.</code> <code>@</code> Amend, Amend At<a class="headerlink" href="#amend-amend-at" title="Permanent link">&para;</a></h1>
+<p><em>Modify one or more items in a list, dictionary or datafile.</em></p>
+<div class="highlight"><pre><span></span><code>Amend            Amend At         values (d . i) or (d @ i)
+
+.[d; i; u]       @[d; i; u]       u[d . i]       u'[d @ i]
+.[d; i; v; vy]   @[d; i; v; vy]   v[d . i;vy]    v'[d @ i;vy]
+</code></pre></div>
+<p>Where</p>
+<ul>
+<li><code>d</code> is an atom, list, or a dictionary (<strong>value</strong>); or a <strong>handle</strong> to a list, dictionary or datafile</li>
+<li><code>i</code> indexes where <code>d</code> is to be amended:<ul>
+<li>it must be a list for <code>.</code></li>
+<li>if empty (for <code>.</code>) or the general null <code>::</code> (for <code>@</code>), or if <code>d</code> is a non-handle atom, the selection $S$ is <code>d</code> (<a href="#amend-entire">Amend Entire</a>)</li>
+<li>otherwise $S$ is <a href="../apply/#index"><code>.[d;i]</code> or <code>@[d;i]</code></a></li>
+</ul>
+</li>
+<li><code>u</code> is a unary</li>
+<li><code>v</code> is a binary, and <code>vy</code> is<ul>
+<li>in the right domain of <code>v</code></li>
+<li>unless $S$ is <code>d</code>, conformable to $S$ and of the same type</li>
+</ul>
+</li>
+</ul>
+<p>the items in <code>d</code> of the selection $S$ are replaced</p>
+<ul>
+<li>in the ternary, by <code>u[</code>$S$<code>]</code> for <code>.</code> and by <code>u'[</code>$S$<code>]</code> for <code>@</code></li>
+<li>in the quaternary, by <code>v[</code>$S$<code>;vy]</code> for <code>.</code> and by <code>v'[</code>$S$<code>;vy]</code> for <code>@</code></li>
+</ul>
+<p>and if <code>d</code> is a</p>
+<ul>
+<li><strong>value</strong>, returns a copy of it with the item/s at <code>i</code> modified</li>
+<li><strong>handle</strong>, modifies the item/s of its reference at <code>i</code>, and returns the handle</li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">If <code>v</code> is Assign (<code>:</code>) each item in the selection is replaced by the corresponding item in <code>vy</code>.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title"><code>u</code> and <code>v</code> can be replaced with values of higher rank using projection or by enlisting their arguments and using <a href="../apply/">Apply</a>.</p>
+</div>
+<p>See also binary and ternary forms of <code>.</code> and <code>@</code>
+<br></p>
+<p><a href="../apply/">Apply, Apply At, Index, Index At</a></p>
+<h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h2>
+<h3 id="amend-entire">Amend Entire<a class="headerlink" href="#amend-entire" title="Permanent link">&para;</a></h3>
+<p>If <code>i</code> is</p>
+<ul>
+<li>the empty list (for <code>.</code>)</li>
+<li>the general null (for <code>@</code>)</li>
+</ul>
+<p>the selection is the entire value in <code>d</code>.</p>
+<div class="highlight"><pre><span></span><code>.[d;();u]     &lt;=&gt;   u[d]            @[d;::;u]     &lt;=&gt;   u'[d]
+.[d;();v;y]   &lt;=&gt;   v[d;y]          @[d;::;v;y]   &lt;=&gt;   v'[d;y]
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="o">.</span><span class="p">[</span><span class="il">1</span><span class="w"> </span><span class="il">2</span><span class="p">;</span><span class="w"> </span><span class="p">();</span><span class="w"> </span><span class="il">3</span><span class="w"> </span><span class="il">4</span><span class="w"> </span><span class="il">5</span><span class="p">]</span>
+<span class="il">4</span><span class="w"> </span><span class="il">5</span>
+<span class="gp">q)</span><span class="o">.</span><span class="p">[</span><span class="il">1</span><span class="w"> </span><span class="il">2</span><span class="p">;</span><span class="w"> </span><span class="p">();</span><span class="w"> </span><span class="o">:</span><span class="p">;</span><span class="w"> </span><span class="il">3</span><span class="w"> </span><span class="il">4</span><span class="w"> </span><span class="il">5</span><span class="p">]</span>
+<span class="il">3</span><span class="w"> </span><span class="il">4</span><span class="w"> </span><span class="il">5</span>
+<span class="gp">q)</span><span class="o">.</span><span class="p">[</span><span class="il">1</span><span class="w"> </span><span class="il">2</span><span class="p">;</span><span class="w"> </span><span class="p">();</span><span class="w"> </span><span class="o">,</span><span class="p">;</span><span class="w"> </span><span class="il">3</span><span class="w"> </span><span class="il">4</span><span class="w"> </span><span class="il">5</span><span class="p">]</span>
+<span class="il">1</span><span class="w"> </span><span class="il">2</span><span class="w"> </span><span class="il">3</span><span class="w"> </span><span class="il">4</span><span class="w"> </span><span class="il">5</span>
+
+<span class="gp">q)</span><span class="o">@</span><span class="p">[</span><span class="il">1</span><span class="w"> </span><span class="il">2</span><span class="p">;</span><span class="w"> </span><span class="o">::</span><span class="p">;</span><span class="w"> </span><span class="o">*</span><span class="p">;</span><span class="w"> </span><span class="il">3</span><span class="w"> </span><span class="il">4</span><span class="p">]</span>
+<span class="il">3</span><span class="w"> </span><span class="il">8</span>
+<span class="gp">q)</span><span class="o">@</span><span class="p">[(</span><span class="il">1</span><span class="w"> </span><span class="il">2</span><span class="p">;</span><span class="il">4</span><span class="w"> </span><span class="il">5</span><span class="p">);</span><span class="w"> </span><span class="o">::</span><span class="p">;</span><span class="w"> </span><span class="o">,</span><span class="p">;</span><span class="w"> </span><span class="il">3</span><span class="w"> </span><span class="il">6</span><span class="p">]</span>
+<span class="il">1</span><span class="w"> </span><span class="il">2</span><span class="w"> </span><span class="il">3</span>
+<span class="il">4</span><span class="w"> </span><span class="il">5</span><span class="w"> </span><span class="il">6</span>
+<span class="gp">q)</span><span class="o">@</span><span class="p">[</span><span class="il">1</span><span class="w"> </span><span class="il">2</span><span class="p">;</span><span class="w"> </span><span class="o">::</span><span class="p">;</span><span class="w"> </span><span class="il">3</span><span class="w"> </span><span class="il">4</span><span class="o">*</span><span class="p">]</span>
+<span class="o">'</span><span class="nb">type</span>
+<span class="w">  </span><span class="p">[</span><span class="il">0</span><span class="p">]</span><span class="w">  </span><span class="o">@</span><span class="p">[</span><span class="il">1</span><span class="w"> </span><span class="il">2</span><span class="p">;</span><span class="w"> </span><span class="o">::</span><span class="p">;</span><span class="w"> </span><span class="il">3</span><span class="w"> </span><span class="il">4</span><span class="o">*</span><span class="p">]</span>
+<span class="w">       </span><span class="o">^</span>
+</code></pre></div>
+<h3 id="single-path">Single path<a class="headerlink" href="#single-path" title="Permanent link">&para;</a></h3>
+<p>If <code>i</code> is a non-negative integer vector then the selection is a single item at depth <code>count i</code> in <code>d</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="p">(</span><span class="il">5</span><span class="w"> </span><span class="mf">2.14</span><span class="p">;</span><span class="w"> </span><span class="s2">"abc"</span><span class="p">)</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="il">1</span><span class="w"> </span><span class="il">2</span><span class="w">              </span><span class="c1">/ index at depth 2</span>
+<span class="s2">"c"</span>
+<span class="gp">q)</span><span class="o">.</span><span class="p">[(</span><span class="il">5</span><span class="w"> </span><span class="mf">2.14</span><span class="p">;</span><span class="w"> </span><span class="s2">"abc"</span><span class="p">);</span><span class="w"> </span><span class="il">1</span><span class="w"> </span><span class="il">2</span><span class="p">;</span><span class="w"> </span><span class="o">:</span><span class="p">;</span><span class="w"> </span><span class="s2">"x"</span><span class="p">]</span><span class="w">    </span><span class="c1">/ replace at depth 2</span>
+<span class="il">5</span><span class="w"> </span><span class="mf">2.14</span>
+<span class="s2">"abx"</span>
+</code></pre></div>
+<h3 id="amend-at">Amend At<a class="headerlink" href="#amend-at" title="Permanent link">&para;</a></h3>
+<p>Indices results are accumulated when repeated:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="o">@</span><span class="p">[(</span><span class="il">0</span><span class="w"> </span><span class="il">1</span><span class="w"> </span><span class="il">2</span><span class="p">;</span><span class="il">1</span><span class="w"> </span><span class="il">2</span><span class="w"> </span><span class="il">3</span><span class="w"> </span><span class="il">4</span><span class="p">;</span><span class="il">7</span><span class="w"> </span><span class="il">8</span><span class="w"> </span><span class="il">9</span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="il">1</span><span class="w"> </span><span class="il">1</span><span class="p">;</span><span class="w"> </span><span class="il">2</span><span class="o">*</span><span class="p">]</span>
+<span class="il">0</span><span class="w"> </span><span class="il">1</span><span class="w"> </span><span class="il">2</span>
+<span class="il">4</span><span class="w"> </span><span class="il">8</span><span class="w"> </span><span class="il">12</span><span class="w"> </span><span class="il">16</span><span class="w">                                   </span><span class="c1">/ equates to 2*2*1 2 3 4</span>
+<span class="il">7</span><span class="w"> </span><span class="il">8</span><span class="w"> </span><span class="il">9</span>
+<span class="gp">q)</span><span class="o">@</span><span class="p">[(</span><span class="il">0</span><span class="w"> </span><span class="il">1</span><span class="w"> </span><span class="il">2</span><span class="p">;</span><span class="il">1</span><span class="w"> </span><span class="il">2</span><span class="w"> </span><span class="il">3</span><span class="w"> </span><span class="il">4</span><span class="p">;</span><span class="il">7</span><span class="w"> </span><span class="il">8</span><span class="w"> </span><span class="il">9</span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="il">0</span><span class="w"> </span><span class="il">1</span><span class="w"> </span><span class="il">2</span><span class="w"> </span><span class="il">1</span><span class="p">;</span><span class="w"> </span><span class="il">100</span><span class="o">*</span><span class="p">]</span>
+<span class="il">0</span><span class="w"> </span><span class="il">100</span><span class="w"> </span><span class="il">200</span><span class="w">                                   </span><span class="c1">/ equates to 100*0 1 2</span>
+<span class="il">10000</span><span class="w"> </span><span class="il">20000</span><span class="w"> </span><span class="il">30000</span><span class="w"> </span><span class="il">40000</span><span class="w">                     </span><span class="c1">/ equates to 100*100*1 2 3 4</span>
+<span class="il">700</span><span class="w"> </span><span class="il">800</span><span class="w"> </span><span class="il">900</span><span class="w">                                 </span><span class="c1">/ equates to 100*7 8 9</span>
+<span class="gp">q)</span><span class="o">@</span><span class="p">[(</span><span class="il">0</span><span class="w"> </span><span class="il">1</span><span class="w"> </span><span class="il">2</span><span class="p">;</span><span class="il">1</span><span class="w"> </span><span class="il">2</span><span class="w"> </span><span class="il">3</span><span class="w"> </span><span class="il">4</span><span class="p">;</span><span class="il">7</span><span class="w"> </span><span class="il">8</span><span class="w"> </span><span class="il">9</span><span class="p">)</span><span class="w"> </span><span class="p">;</span><span class="il">0</span><span class="w"> </span><span class="il">1</span><span class="w"> </span><span class="il">2</span><span class="w"> </span><span class="il">1</span><span class="p">;</span><span class="w"> </span><span class="p">{</span><span class="n">x</span><span class="o">*</span><span class="n">y</span><span class="p">};</span><span class="il">100</span><span class="p">]</span>
+<span class="il">0</span><span class="w"> </span><span class="il">100</span><span class="w"> </span><span class="il">200</span><span class="w">                                   </span><span class="c1">/ equates to {x*100}0 1 2</span>
+<span class="il">10000</span><span class="w"> </span><span class="il">20000</span><span class="w"> </span><span class="il">30000</span><span class="w"> </span><span class="il">40000</span><span class="w">                     </span><span class="c1">/ equates to {x*100}{x*100}1 2 3 4</span>
+<span class="il">700</span><span class="w"> </span><span class="il">800</span><span class="w"> </span><span class="il">900</span><span class="w">                                 </span><span class="c1">/ equates to {x*100}7 8 9</span>
+</code></pre></div>
+<h3 id="cross-sections">Cross sections<a class="headerlink" href="#cross-sections" title="Permanent link">&para;</a></h3>
+<p>Where the items of <code>i</code> are non-negative integer vectors, they define a cross section.
+The result can be understood as a series of single-path amends.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="n">d</span>
+<span class="p">(</span><span class="il">1</span><span class="w"> </span><span class="il">2</span><span class="w"> </span><span class="il">3</span><span class="p">;</span><span class="il">4</span><span class="w"> </span><span class="il">5</span><span class="w"> </span><span class="il">6</span><span class="w"> </span><span class="il">7</span><span class="p">)</span>
+<span class="p">(</span><span class="il">8</span><span class="w"> </span><span class="il">9</span><span class="p">;</span><span class="il">10</span><span class="p">;</span><span class="il">11</span><span class="w"> </span><span class="il">12</span><span class="p">)</span>
+<span class="p">(</span><span class="il">13</span><span class="w"> </span><span class="il">14</span><span class="p">;</span><span class="il">15</span><span class="w"> </span><span class="il">16</span><span class="w"> </span><span class="il">17</span><span class="w"> </span><span class="il">18</span><span class="p">;</span><span class="il">19</span><span class="w"> </span><span class="il">20</span><span class="p">)</span>
+<span class="gp">q)</span><span class="nv">i</span><span class="o">:</span><span class="p">(</span><span class="il">2</span><span class="w"> </span><span class="il">0</span><span class="p">;</span><span class="w"> </span><span class="il">0</span><span class="w"> </span><span class="il">1</span><span class="w"> </span><span class="il">0</span><span class="p">)</span>
+<span class="gp">q)</span><span class="nv">y</span><span class="o">:</span><span class="p">(</span><span class="il">100</span><span class="w"> </span><span class="il">200</span><span class="w"> </span><span class="il">300</span><span class="p">;</span><span class="w"> </span><span class="il">400</span><span class="w"> </span><span class="il">500</span><span class="w"> </span><span class="il">600</span><span class="p">)</span>
+<span class="gp">q)</span><span class="nv">r</span><span class="o">:.</span><span class="p">[</span><span class="n">d</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="p">;</span><span class="w"> </span><span class="o">,</span><span class="p">;</span><span class="w"> </span><span class="n">y</span><span class="p">]</span>
+</code></pre></div>
+<p>Compare <code>d</code> and <code>r</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="n">d</span><span class="w">                              </span><span class="n">q</span><span class="err">)</span><span class="n">r</span>
+<span class="p">(</span><span class="il">1</span><span class="w"> </span><span class="il">2</span><span class="w"> </span><span class="il">3</span><span class="p">;</span><span class="il">4</span><span class="w"> </span><span class="il">5</span><span class="w"> </span><span class="il">6</span><span class="w"> </span><span class="il">7</span><span class="p">)</span><span class="w">                  </span><span class="p">(</span><span class="il">1</span><span class="w"> </span><span class="il">2</span><span class="w"> </span><span class="il">3</span><span class="w"> </span><span class="il">400</span><span class="w"> </span><span class="il">600</span><span class="p">;</span><span class="il">4</span><span class="w"> </span><span class="il">5</span><span class="w"> </span><span class="il">6</span><span class="w"> </span><span class="il">7</span><span class="w"> </span><span class="il">500</span><span class="p">)</span>
+<span class="p">(</span><span class="il">8</span><span class="w"> </span><span class="il">9</span><span class="p">;</span><span class="il">10</span><span class="p">;</span><span class="il">11</span><span class="w"> </span><span class="il">12</span><span class="p">)</span><span class="w">                   </span><span class="p">(</span><span class="il">8</span><span class="w"> </span><span class="il">9</span><span class="p">;</span><span class="il">10</span><span class="p">;</span><span class="il">11</span><span class="w"> </span><span class="il">12</span><span class="p">)</span>
+<span class="p">(</span><span class="il">13</span><span class="w"> </span><span class="il">14</span><span class="p">;</span><span class="il">15</span><span class="w"> </span><span class="il">16</span><span class="w"> </span><span class="il">17</span><span class="w"> </span><span class="il">18</span><span class="p">;</span><span class="il">19</span><span class="w"> </span><span class="il">20</span><span class="p">)</span><span class="w">        </span><span class="p">(</span><span class="il">13</span><span class="w"> </span><span class="il">14</span><span class="w"> </span><span class="il">100</span><span class="w"> </span><span class="il">300</span><span class="p">;</span><span class="il">15</span><span class="w"> </span><span class="il">16</span><span class="w"> </span><span class="il">17</span><span class="w"> </span><span class="il">18</span><span class="w"> </span><span class="il">200</span><span class="p">;</span><span class="il">19</span><span class="w"> </span><span class="il">20</span><span class="p">)</span>
+</code></pre></div>
+<p>The shape of <code>y</code> is <code>2 3</code>, the same shape as the cross-section selected by <code>d . i</code>. The <code>(j;k)</code>th item of <code>y</code> corresponds to the path <code>(i[0;j];i[1;k])</code>. The first single-path Amend is equivalent to:</p>
+<div class="highlight"><pre><span></span><code><span class="nv">d</span><span class="o">:</span><span class="w"> </span><span class="o">.</span><span class="p">[</span><span class="n">d</span><span class="p">;</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="il">0</span><span class="w"> </span><span class="il">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="il">1</span><span class="w"> </span><span class="il">0</span><span class="p">);</span><span class="w"> </span><span class="o">,</span><span class="p">;</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="il">0</span><span class="w"> </span><span class="il">0</span><span class="p">]</span>
+</code></pre></div>
+<p>(since the amends are being done individually, and the assignment serves to capture the individual results as we go), or:</p>
+<div class="highlight"><pre><span></span><code><span class="nv">d</span><span class="o">:</span><span class="w"> </span><span class="o">.</span><span class="p">[</span><span class="n">d</span><span class="p">;</span><span class="w"> </span><span class="il">2</span><span class="w"> </span><span class="il">0</span><span class="p">;</span><span class="w"> </span><span class="o">,</span><span class="p">;</span><span class="w"> </span><span class="il">100</span><span class="p">]</span>
+</code></pre></div>
+<p>and item <code>d . 2 0</code> becomes <code>13 14,100</code>, or <code>13 14 100</code>.
+The next single-path Amend is:</p>
+<div class="highlight"><pre><span></span><code><span class="nv">d</span><span class="o">:</span><span class="w"> </span><span class="o">.</span><span class="p">[</span><span class="n">d</span><span class="p">;</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="il">0</span><span class="w"> </span><span class="il">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="il">1</span><span class="w"> </span><span class="il">1</span><span class="p">);</span><span class="w"> </span><span class="o">,</span><span class="p">;</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="il">0</span><span class="w"> </span><span class="il">1</span><span class="p">]</span>
+</code></pre></div>
+<p>or</p>
+<div class="highlight"><pre><span></span><code><span class="nv">d</span><span class="o">:</span><span class="w"> </span><span class="o">.</span><span class="p">[</span><span class="n">d</span><span class="p">;</span><span class="w"> </span><span class="il">2</span><span class="w"> </span><span class="il">1</span><span class="p">;</span><span class="w"> </span><span class="o">,</span><span class="p">;</span><span class="w"> </span><span class="il">200</span><span class="p">]</span>
+</code></pre></div>
+<p>and item <code>d . 2 1</code> becomes <code>15 16 17 18 200</code>.</p>
+<p>Continuing in this manner:</p>
+<ul>
+<li>item <code>d . 2 0</code> becomes <code>13 14 100 300</code>, modifying the previously modified value <code>13 14 100</code></li>
+<li>item <code>d . 0 0</code> becomes <code>1 2 3 400</code></li>
+<li>item <code>d . 0 1</code> becomes <code>4 5 6 7 500</code></li>
+<li>item <code>d . 0 0</code> becomes <code>1 2 3 400 600</code>, modifying the previously modified value <code>1 2 3 400</code></li>
+</ul>
+<h3 id="replacement">Replacement<a class="headerlink" href="#replacement" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="nv">d</span><span class="o">:</span><span class="p">((</span><span class="il">1</span><span class="w"> </span><span class="il">2</span><span class="w"> </span><span class="il">3</span><span class="p">;</span><span class="w"> </span><span class="il">4</span><span class="w"> </span><span class="il">5</span><span class="w"> </span><span class="il">6</span><span class="w"> </span><span class="il">7</span><span class="p">)</span>
+<span class="w">   </span><span class="p">(</span><span class="il">8</span><span class="w"> </span><span class="il">9</span><span class="p">;</span><span class="w"> </span><span class="il">10</span><span class="p">;</span><span class="w"> </span><span class="il">11</span><span class="w"> </span><span class="il">12</span><span class="p">)</span>
+<span class="w">   </span><span class="p">(</span><span class="il">13</span><span class="w"> </span><span class="il">14</span><span class="p">;</span><span class="w"> </span><span class="il">15</span><span class="w"> </span><span class="il">16</span><span class="w"> </span><span class="il">17</span><span class="w"> </span><span class="il">18</span><span class="p">;</span><span class="w"> </span><span class="il">19</span><span class="w"> </span><span class="il">20</span><span class="p">))</span>
+<span class="nv">i</span><span class="o">:</span><span class="p">(</span><span class="il">2</span><span class="w"> </span><span class="il">0</span><span class="p">;</span><span class="w"> </span><span class="il">0</span><span class="w"> </span><span class="il">1</span><span class="w"> </span><span class="il">0</span><span class="p">)</span>
+<span class="nv">y</span><span class="o">:</span><span class="p">(</span><span class="il">100</span><span class="w"> </span><span class="il">200</span><span class="w"> </span><span class="il">300</span><span class="p">;</span><span class="w"> </span><span class="il">400</span><span class="w"> </span><span class="il">500</span><span class="w"> </span><span class="il">600</span><span class="p">)</span>
+<span class="nv">r</span><span class="o">:.</span><span class="p">[</span><span class="n">d</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="p">;</span><span class="w"> </span><span class="o">:</span><span class="p">;</span><span class="w"> </span><span class="n">y</span><span class="p">]</span>
+</code></pre></div>
+<p>Compare <code>d</code> and <code>r</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="n">d</span><span class="w">                           </span><span class="n">q</span><span class="err">)</span><span class="n">r</span>
+<span class="p">(</span><span class="il">1</span><span class="w"> </span><span class="il">2</span><span class="w"> </span><span class="il">3</span><span class="p">;</span><span class="il">4</span><span class="w"> </span><span class="il">5</span><span class="w"> </span><span class="il">6</span><span class="w"> </span><span class="il">7</span><span class="p">)</span><span class="w">               </span><span class="il">600</span><span class="w"> </span><span class="il">500</span><span class="w">             </span><span class="c1">/ replaced twice; once</span>
+<span class="p">(</span><span class="il">8</span><span class="w"> </span><span class="il">9</span><span class="p">;</span><span class="il">10</span><span class="p">;</span><span class="il">11</span><span class="w"> </span><span class="il">12</span><span class="p">)</span><span class="w">                </span><span class="p">(</span><span class="il">8</span><span class="w"> </span><span class="il">9</span><span class="p">;</span><span class="il">10</span><span class="p">;</span><span class="il">11</span><span class="w"> </span><span class="il">12</span><span class="p">)</span>
+<span class="p">(</span><span class="il">13</span><span class="w"> </span><span class="il">14</span><span class="p">;</span><span class="il">15</span><span class="w"> </span><span class="il">16</span><span class="w"> </span><span class="il">17</span><span class="w"> </span><span class="il">18</span><span class="p">;</span><span class="il">19</span><span class="w"> </span><span class="il">20</span><span class="p">)</span><span class="w">     </span><span class="p">(</span><span class="il">300</span><span class="p">;</span><span class="il">200</span><span class="p">;</span><span class="il">19</span><span class="w"> </span><span class="il">20</span><span class="p">)</span><span class="w">     </span><span class="c1">/ replaced twice; once; not</span>
+</code></pre></div>
+<p>Note multiple replacements of some items-at-depth in <code>d</code>, corresponding to the multiple updates in the earlier example.</p>
+<h3 id="unary-value">Unary value<a class="headerlink" href="#unary-value" title="Permanent link">&para;</a></h3>
+<p>The ternary replaces the selection with the results of applying <code>u</code> to them.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="n">d</span>
+<span class="p">(</span><span class="il">1</span><span class="w"> </span><span class="il">2</span><span class="w"> </span><span class="il">3</span><span class="p">;</span><span class="il">4</span><span class="w"> </span><span class="il">5</span><span class="w"> </span><span class="il">6</span><span class="w"> </span><span class="il">7</span><span class="p">)</span>
+<span class="p">(</span><span class="il">8</span><span class="w"> </span><span class="il">9</span><span class="p">;</span><span class="il">10</span><span class="p">;</span><span class="il">11</span><span class="w"> </span><span class="il">12</span><span class="p">)</span>
+<span class="p">(</span><span class="il">13</span><span class="w"> </span><span class="il">14</span><span class="p">;</span><span class="il">15</span><span class="w"> </span><span class="il">16</span><span class="w"> </span><span class="il">17</span><span class="w"> </span><span class="il">18</span><span class="p">;</span><span class="il">19</span><span class="w"> </span><span class="il">20</span><span class="p">)</span>
+<span class="gp">q)</span><span class="n">i</span>
+<span class="il">2</span><span class="w"> </span><span class="il">0</span>
+<span class="il">0</span><span class="w"> </span><span class="il">1</span><span class="w"> </span><span class="il">0</span>
+<span class="gp">q)</span><span class="n">y</span>
+<span class="il">100</span><span class="w"> </span><span class="il">200</span><span class="w"> </span><span class="il">300</span>
+<span class="il">400</span><span class="w"> </span><span class="il">500</span><span class="w"> </span><span class="il">600</span>
+<span class="gp">q)</span><span class="nv">r</span><span class="o">:.</span><span class="p">[</span><span class="n">d</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="p">;</span><span class="w"> </span><span class="nb">neg</span><span class="p">]</span>
+</code></pre></div>
+<p>Compare <code>d</code> and <code>r</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="n">d</span><span class="w">                            </span><span class="n">q</span><span class="err">)</span><span class="n">r</span>
+<span class="p">(</span><span class="il">1</span><span class="w"> </span><span class="il">2</span><span class="w"> </span><span class="il">3</span><span class="p">;</span><span class="il">4</span><span class="w"> </span><span class="il">5</span><span class="w"> </span><span class="il">6</span><span class="w"> </span><span class="il">7</span><span class="p">)</span><span class="w">                </span><span class="p">(</span><span class="il">1</span><span class="w"> </span><span class="il">2</span><span class="w"> </span><span class="il">3</span><span class="p">;</span><span class="o">-</span><span class="il">4</span><span class="w"> </span><span class="o">-</span><span class="il">5</span><span class="w"> </span><span class="o">-</span><span class="il">6</span><span class="w"> </span><span class="o">-</span><span class="il">7</span><span class="p">)</span>
+<span class="p">(</span><span class="il">8</span><span class="w"> </span><span class="il">9</span><span class="p">;</span><span class="il">10</span><span class="p">;</span><span class="il">11</span><span class="w"> </span><span class="il">12</span><span class="p">)</span><span class="w">                 </span><span class="p">(</span><span class="il">8</span><span class="w"> </span><span class="il">9</span><span class="p">;</span><span class="il">10</span><span class="p">;</span><span class="il">11</span><span class="w"> </span><span class="il">12</span><span class="p">)</span>
+<span class="p">(</span><span class="il">13</span><span class="w"> </span><span class="il">14</span><span class="p">;</span><span class="il">15</span><span class="w"> </span><span class="il">16</span><span class="w"> </span><span class="il">17</span><span class="w"> </span><span class="il">18</span><span class="p">;</span><span class="il">19</span><span class="w"> </span><span class="il">20</span><span class="p">)</span><span class="w">      </span><span class="p">(</span><span class="il">13</span><span class="w"> </span><span class="il">14</span><span class="p">;</span><span class="o">-</span><span class="il">15</span><span class="w"> </span><span class="o">-</span><span class="il">16</span><span class="w"> </span><span class="o">-</span><span class="il">17</span><span class="w"> </span><span class="o">-</span><span class="il">18</span><span class="p">;</span><span class="il">19</span><span class="w"> </span><span class="il">20</span><span class="p">)</span>
+</code></pre></div>
+<p>Note multiple applications of <code>neg</code> to some items-at-depth in <code>d</code>, corresponding to the multiple updates in the first example.</p>
+<h3 id="on-disk">On disk<a class="headerlink" href="#on-disk" title="Permanent link">&para;</a></h3>
+<p>Certain vectors (types 1-19) can be updated directly on disk without the need to fully rewrite the file.
+(Since V3.4)
+Such vectors must</p>
+<ul>
+<li>have no attribute</li>
+<li>be of a mappable type</li>
+<li>not be nested, enumerated, or compressed</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="ss">`:data</span><span class="w"> </span><span class="nb">set</span><span class="w"> </span><span class="nb">til</span><span class="w"> </span><span class="il">20</span>
+<span class="gp">q)</span><span class="o">@</span><span class="p">[</span><span class="ss">`:data</span><span class="p">;</span><span class="il">3</span><span class="w"> </span><span class="il">6</span><span class="w"> </span><span class="il">8</span><span class="p">;</span><span class="o">:</span><span class="p">;</span><span class="il">100</span><span class="w"> </span><span class="il">200</span><span class="w"> </span><span class="il">300</span><span class="p">]</span>
+<span class="gp">q)</span><span class="nb">get</span><span class="w"> </span><span class="ss">`:data</span>
+<span class="il">0</span><span class="w"> </span><span class="il">1</span><span class="w"> </span><span class="il">2</span><span class="w"> </span><span class="il">100</span><span class="w"> </span><span class="il">4</span><span class="w"> </span><span class="il">5</span><span class="w"> </span><span class="il">200</span><span class="w"> </span><span class="il">7</span><span class="w"> </span><span class="il">300</span><span class="w"> </span><span class="il">9</span><span class="w"> </span><span class="il">10</span><span class="w"> </span><span class="il">11</span><span class="w"> </span><span class="il">12</span><span class="w"> </span><span class="il">13</span><span class="w"> </span><span class="il">14</span><span class="w"> </span><span class="il">15</span><span class="w"> </span><span class="il">16</span><span class="w"> </span><span class="il">17</span><span class="w"> </span><span class="il">18</span><span class="w"> </span><span class="il">19</span>
+
+<span class="gp">q)</span><span class="ss">`:test</span><span class="w"> </span><span class="nb">set</span><span class="w"> </span><span class="ss">`:sym</span><span class="o">?</span><span class="il">9</span><span class="o">?</span><span class="ss">`</span><span class="il">1</span>
+<span class="ss">`:test</span>
+<span class="gp">q)</span><span class="nb">type</span><span class="w"> </span><span class="nb">get</span><span class="w"> </span><span class="ss">`:test</span>
+<span class="mi">20h</span>
+<span class="gp">q)</span><span class="o">@</span><span class="p">[</span><span class="ss">`:test</span><span class="p">;</span><span class="il">0</span><span class="w"> </span><span class="il">1</span><span class="p">;</span><span class="o">:</span><span class="p">;</span><span class="ss">`sym</span><span class="o">?</span><span class="ss">`a`b</span><span class="p">]</span>
+<span class="o">'</span><span class="nb">type</span><span class="o">/</span><span class="nb">attr</span><span class="w"> </span><span class="n">error</span><span class="w"> </span><span class="n">amending</span><span class="w"> </span><span class="n">file</span><span class="w"> </span><span class="n">test</span>
+<span class="w">  </span><span class="p">[</span><span class="il">0</span><span class="p">]</span><span class="w">  </span><span class="o">@</span><span class="p">[</span><span class="ss">`:test</span><span class="p">;</span><span class="il">0</span><span class="w"> </span><span class="il">1</span><span class="p">;</span><span class="o">:</span><span class="p">;</span><span class="ss">`sym</span><span class="o">?</span><span class="ss">`a`b</span><span class="p">]</span>
+<span class="w">       </span><span class="o">^</span>
+</code></pre></div>
+<p>On-disk amend to apply <code>p</code> or <code>g</code> attributes now avoids in-memory copying since 4.1t 2023.01.20.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="ss">`:tab/</span><span class="w"> </span><span class="nb">set</span><span class="w"> </span><span class="p">([]</span><span class="nb">where</span><span class="w"> </span><span class="il">10000</span><span class="o">#</span><span class="il">100</span><span class="p">);</span>
+<span class="gp">q)</span><span class="o">@</span><span class="p">[</span><span class="ss">`:tab/</span><span class="p">;</span><span class="ss">`x</span><span class="p">;</span><span class="ss">`p</span><span class="o">#</span><span class="p">]</span>
+</code></pre></div>
+<!--
+## The general case
+
+In general, `i` can be
+
+-   an atom that is a valid index of `d`, e.g. one of `key d`
+-   a list representing paths to items at depth `count i` in `d`
+
+The function proceeds recursively through `i[0]` and `y` as if they were the arguments of a binary atomic function, except that when arriving at an atom in `i[0]`, that value is retained as the first item in a path and the recursion continues on with `i[1]` and the item-at-depth in `y` that had been arrived at the same time as the atom in `i[0]`.
+
+And so on, until arriving at an atom in the last item of `i`. At that point a path `p` into `d` has been created and the item at depth `count i` selected by `p`, namely `d . p`, is replaced by `m[d . p;z]` for binary `m`, or `u[d . p]` for unary `u`, where `z` is the item-at-depth in `y` that had been arrived at the same time as the atom in the last item of `i`.
+
+The general case for binary `v` can be defined recursively by partitioning the index list into its first item and the rest:
+
+<div class="highlight"><pre><span></span><code><span class="nf">Amend</span><span class="o">:</span><span class="p">{[</span><span class="n">d</span><span class="p">;</span><span class="n">F</span><span class="p">;</span><span class="n">R</span><span class="p">;</span><span class="n">v</span><span class="p">;</span><span class="n">y</span><span class="p">]</span>
+<span class="w">  </span><span class="o">$</span><span class="p">[</span><span class="w"> </span><span class="n">nil</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">F</span><span class="p">;</span><span class="w"> </span><span class="n">Amend</span><span class="p">[</span><span class="n">d</span><span class="p">;</span><span class="w"> </span><span class="nb">key</span><span class="w"> </span><span class="n">d</span><span class="p">;</span><span class="w"> </span><span class="n">R</span><span class="p">;</span><span class="w"> </span><span class="n">v</span><span class="p">;</span><span class="w"> </span><span class="n">y</span><span class="p">];</span>
+<span class="w">    </span><span class="il">0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">count</span><span class="w"> </span><span class="n">R</span><span class="p">;</span><span class="w"> </span><span class="o">@</span><span class="p">[</span><span class="n">d</span><span class="p">;</span><span class="w"> </span><span class="n">F</span><span class="p">;</span><span class="w"> </span><span class="n">v</span><span class="p">;</span><span class="w"> </span><span class="n">y</span><span class="p">];</span>
+<span class="w">        </span><span class="o">@</span><span class="w"> </span><span class="n">F</span><span class="p">;</span><span class="w"> </span><span class="n">Amend</span><span class="p">[</span><span class="n">d</span><span class="w"> </span><span class="o">@</span><span class="w"> </span><span class="n">F</span><span class="p">;</span><span class="w"> </span><span class="nb">first</span><span class="w"> </span><span class="n">R</span><span class="p">;</span><span class="w"> </span><span class="il">1</span><span class="o">_</span><span class="n">R</span><span class="p">;</span><span class="w"> </span><span class="n">v</span><span class="p">;</span><span class="w"> </span><span class="n">y</span><span class="p">];</span>
+<span class="w">             </span><span class="n">Amend</span><span class="p">[;;</span><span class="w"> </span><span class="n">R</span><span class="p">;;]</span><span class="o">/</span><span class="p">[</span><span class="n">d</span><span class="p">;</span><span class="w"> </span><span class="n">F</span><span class="p">;</span><span class="w"> </span><span class="n">v</span><span class="p">;</span><span class="w"> </span><span class="n">y</span><span class="p">]</span><span class="err">}</span>
+</code></pre></div>
+
+FIXME Revise definition: Atom; nil
+
+Note the application of [Over](accumulators.md) to Amend, which requires that whenever `F` is not an atom, either `y` is an atom or `count F` equals `count y`. Over is used to accumulate all changes in the first argument `d`.
+
+
+## Accumulate
+
+Cases of Amend with a value `u` or `v` are sometimes called Accumulate because the new items-at-depth are computed in terms of the old, as in `.[x; 2 6; +; 1]`, where item 6 of item 2 is incremented by 1.
+ -->
+
+<h2 id="errors">Errors<a class="headerlink" href="#errors" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>domain   d is a symbol atom but not a handle
+index    a path in i is not a valid path of d
+length   i and y are not conformable
+type     an atom of i is not an integer, symbol or nil
+type     replacement items of different type than selection
+
+type/attr error amending file test
+</code></pre></div>
+<hr />
+<p><a href="../apply/">Apply, Apply At, Index, Index At</a>
+<br></p>
+<p><em>Q for Mortals</em>
+<a href="../../../q4m3/6_Functions/#683-general-form-of-function-application">§6.8.3 General Form of Amend At and Amend</a></p>
+<!--
+## Functional Amend
+
+==Integrate following with preceding!==
+
+Syntax: `@[x;i;f]`
+Syntax: `@[x;i;f;a]`
+Syntax: `@[x;i;f;v]`
+
+Where
+
+- `x` is a list (or file symbol, see Tip)
+- `i` is an int vector of indexes of `x`
+- `f` is a function
+- `a` is an atom in the domain of the second argument of `f`
+- `v` is a vector in the domain of the second argument of `f`
+
+returns `x` with its values at indexes `i` changed.
+
+For `ind` in `til count i`, `x[i ind]` becomes
+
+<div class="highlight"><pre><span></span><code>expression   x[i ind]
+-----------------------------
+@[x;i;f]     f[x i ind]
+@[x;i;f;a]   f[x i ind][a]
+@[x;i;f;v]   f[x i ind][v ind]
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="nv">d</span><span class="o">:</span><span class="p">(</span><span class="s2">"quick"</span><span class="p">;</span><span class="s2">""</span><span class="p">;</span><span class="s2">"brown"</span><span class="p">;</span><span class="s2">"fox"</span><span class="p">)</span>
+<span class="gp">q)</span><span class="o">@</span><span class="p">[</span><span class="n">d</span><span class="p">;</span><span class="nb">where</span><span class="s2">"b"</span><span class="o">$</span><span class="nb">count</span><span class="w"> </span><span class="nb">each</span><span class="w"> </span><span class="n">d</span><span class="p">;</span><span class="o">,</span><span class="p">[;</span><span class="s2">"..."</span><span class="p">]]</span><span class="w"> </span><span class="c1">/ unary f</span>
+<span class="s2">"quick..."</span>
+<span class="s2">""</span>
+<span class="s2">"brown..."</span>
+<span class="s2">"fox..."</span>
+<span class="gp">q)</span><span class="nv">d</span><span class="o">:</span><span class="p">((</span><span class="il">1</span><span class="w"> </span><span class="il">2</span><span class="w"> </span><span class="il">3</span><span class="p">;</span><span class="il">4</span><span class="w"> </span><span class="il">5</span><span class="w"> </span><span class="il">6</span><span class="w"> </span><span class="il">7</span><span class="p">);(</span><span class="il">8</span><span class="w"> </span><span class="il">9</span><span class="p">;</span><span class="il">10</span><span class="p">;</span><span class="il">11</span><span class="w"> </span><span class="il">12</span><span class="p">);(</span><span class="il">13</span><span class="w"> </span><span class="il">14</span><span class="p">;</span><span class="il">15</span><span class="w"> </span><span class="il">16</span><span class="w"> </span><span class="il">17</span><span class="w"> </span><span class="il">18</span><span class="p">;</span><span class="il">19</span><span class="w"> </span><span class="il">20</span><span class="p">))</span>
+<span class="gp">q)</span><span class="o">@</span><span class="p">[</span><span class="n">d</span><span class="p">;</span><span class="il">1</span><span class="w"> </span><span class="il">1</span><span class="w"> </span><span class="il">1</span><span class="p">;</span><span class="o">+</span><span class="p">;</span><span class="il">3</span><span class="p">]</span><span class="w"> </span><span class="c1">/ binary f</span>
+<span class="p">((</span><span class="il">1</span><span class="w"> </span><span class="il">2</span><span class="w"> </span><span class="il">3</span><span class="p">;</span><span class="il">4</span><span class="w"> </span><span class="il">5</span><span class="w"> </span><span class="il">6</span><span class="w"> </span><span class="il">7</span><span class="p">);(</span><span class="il">17</span><span class="w"> </span><span class="il">18</span><span class="p">;</span><span class="il">19</span><span class="p">;</span><span class="il">20</span><span class="w"> </span><span class="il">21</span><span class="p">);(</span><span class="il">13</span><span class="w"> </span><span class="il">14</span><span class="p">;</span><span class="il">15</span><span class="w"> </span><span class="il">16</span><span class="w"> </span><span class="il">17</span><span class="w"> </span><span class="il">18</span><span class="p">;</span><span class="il">19</span><span class="w"> </span><span class="il">20</span><span class="p">))</span>
+</code></pre></div>
+
+
+!!! warning "Projections"
+
+    For a general list `x`, omitting `a` or `v` when `f` is binary returns projections at the indexes `i`:
+
+    <pre><code class="language-q">
+    q)0N!@[("ssd";"bsd");0;+];
+    (+["ssd"];"bsd")
+    </code></pre>
+ -->
+
+<div class="peachq-import-attribution">
+<p>Source adapted from the <a href="https://github.com/KxSystems/docs">Documentation for kdb+ and q</a>
+by KX Systems and contributors, used under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.
+<a href="../../attribution/">Attribution, provenance and independence notice</a>.</p>
+</div>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  <div class="md-copyright__highlight">
+    PeachQ - MIT-licensed open source q, built on Rayforce with DuckDB storage in progress.
+  </div>
+  <a href="../../../about">Built for the community</a> &middot;
+  <a href="../../../contact">Contact</a> &middot;
+  <a href="https://github.com/peachq-org/peachq" target="_blank" rel="noreferrer">GitHub</a>
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.sections", "navigation.top", "content.code.copy", "content.action.edit"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

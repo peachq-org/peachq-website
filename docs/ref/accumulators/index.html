@@ -1,0 +1,913 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="An accumulator is an iterator that takes an applicable value as argument and derives a function that evaluates the value, first on its entire (first) argument, then on the results of successive evaluations.">
+      
+      
+        <meta name="author" content="KX Systems, Inc., a subsidiary of KX Software Limited">
+      
+      
+        <link rel="canonical" href="https://peachq.org/docs/ref/accumulators/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../img/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Accumulators – Reference – kdb+ and q documentation - PeachQ</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../css/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  
+  <script src="../../../mirror-banner.js"></script>
+  <script>
+    var _paq = window._paq = window._paq || [];
+    /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    (function() {
+      var u="//www.timestored.com/mat/";
+      _paq.push(['setTrackerUrl', u+'matomo.php']);
+      _paq.push(['setSiteId', '4']);
+      var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+      g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+    })();
+  </script>
+
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#accumulators" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../" title="PeachQ" class="md-header__button md-logo" aria-label="PeachQ" data-md-component="logo">
+      
+  <img src="../../../img/peachq-logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <a class="md-ellipsis peachq-wordmark" href="../../../">
+            Peach<span class="peachq-wordmark__q">Q</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    
+    <nav class="peachq-nav" aria-label="Site">
+      
+      
+      
+        
+        <a class="peachq-nav__link" href="../../../repl">Try Live</a>
+      
+        
+        <a class="peachq-nav__link" href="../../../download">Download</a>
+      
+        
+        <a class="peachq-nav__link" href="../../../compatibility">Compatibility</a>
+      
+        
+        <a class="peachq-nav__link" href="../../../roadmap">Roadmap</a>
+      
+        
+        <a class="peachq-nav__link" href="../../../news/">News</a>
+      
+        
+        <a class="peachq-nav__link" href="../../../about">About</a>
+      
+        
+        <a class="peachq-nav__link" href="../../../contact">Contact</a>
+      
+      <a class="peachq-nav__link" href="https://github.com/peachq-org/peachq" target="_blank" rel="noreferrer">GitHub &#8599;</a>
+    </nav>
+
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="PeachQ" class="md-nav__button md-logo" aria-label="PeachQ" data-md-component="logo">
+      
+  <img src="../../../img/peachq-logo.svg" alt="logo">
+
+    </a>
+    PeachQ
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/peachq-org/peachq" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../news/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    News
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#unary-values" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Unary values
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Unary values">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#converge" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Converge
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#do" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Do
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#while" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        While
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#binary-values" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Binary values
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Binary values">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#binary-application" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Binary application
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#unary-application" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Unary application
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#keywords-scan-and-over" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Keywords scan and over
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ternary-values" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ternary values
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Ternary values">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#alternative-syntax" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Alternative syntax
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#empty-lists" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Empty lists
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Empty lists">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#scan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scan
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#over" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Over
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/peachq-org/peachq-website/edit/main/content/docs/ref/accumulators.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+
+
+<h1 id="accumulators">Accumulators<a class="headerlink" href="#accumulators" title="Permanent link">&para;</a></h1>
+<div class="typewriter">
+<p><a href="#converge">Converge  (v1\)x    v1\[x]</a>       <a href="#keywords-scan-and-over">v1 scan x</a>
+          <a href="#converge">(v1/)x    v1/[x]</a>       <a href="#keywords-scan-and-over">v1 over x</a></p>
+<p><a href="#do">Do        n v1\x    v1\[n;x]</a>
+          <a href="#do">n v1/x    v1/[n;x]</a></p>
+<p><a href="#while">While     t v1\x    v1\[t;x]</a>
+          <a href="#while">t v1/x    v1/[t;x]</a></p>
+<p><a href="#unary-application" title="binary value, unary application">Scan      (v2\)x    v2\[x]</a>      <a href="#keywords-scan-and-over">(v2)scan x</a>
+<a href="#unary-application" title="binary value, unary application">Over      (v2/)x    v2/[x]</a>      <a href="#keywords-scan-and-over">(v2)over x</a></p>
+<p><a href="#binary-application" title="binary application">Scan      x v2\y    v2\[x;y]</a>
+<a href="#binary-application" title="binary application">Over      x v2/y    v2/[x;y]</a></p>
+<p><a href="#ternary-values" title="ternary">Scan                v3\[x;y;z]</a>   <a href="#alternative-syntax" title="alternative syntax">x y\z</a>
+<a href="#ternary-values" title="ternary">Over                v3/[x;y;z]</a></p>
+<hr />
+<p>v1, v2, v3: applicable value (rank 1-3)
+n:          integer≥0
+t:          unary truth map
+x, y:       arguments/indexes of v</p>
+</div>
+<p>An accumulator is an <a href="../iterators/">iterator</a> that takes an <a href="../../basics/glossary/#applicable-value">applicable value</a> as argument and derives a function that evaluates the value, first on its entire (first) argument, then on the results of <strong>successive</strong> evaluations.</p>
+<p>There are two accumulators, Scan and Over. They have the same syntax and perform the same computation. But where the Scan-derived functions return the result of each evaluation, those of Over return only the last result.</p>
+<p>Over resembles <em>map reduce</em> in some other programming languages.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="p">(</span><span class="o">+\</span><span class="p">)</span><span class="il">2</span><span class="w"> </span><span class="il">3</span><span class="w"> </span><span class="il">4</span><span class="w">    </span><span class="c1">/ Scan</span>
+<span class="il">2</span><span class="w"> </span><span class="il">5</span><span class="w"> </span><span class="il">9</span>
+<span class="gp">q)</span><span class="p">(</span><span class="o">+/</span><span class="p">)</span><span class="il">2</span><span class="w"> </span><span class="il">3</span><span class="w"> </span><span class="il">4</span><span class="w">    </span><span class="c1">/ Over</span>
+<span class="il">9</span>
+</code></pre></div>
+<div class="admonition tip">
+<p class="admonition-title">Debugging</p>
+<p>If puzzled by the result of using Over, replace it with Scan and examine the intermediate results. They are usually illuminating.</p>
+</div>
+<div class="admonition detail">
+<p class="admonition-title">Scan, Over and memory</p>
+<p>While Scan and Over perform the same computation, in general, Over requires less memory, because it does not store intermediate results.</p>
+</div>
+<p>The number of successive evaluations is determined differently for unary and for higher-rank values.</p>
+<p>The domain of the accumulators is functions, lists, and dictionaries that represent <a href="../../basics/glossary/#finite-state-machine">finite-state machines</a>.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="n">yrp</span><span class="w">                               </span><span class="c1">/ a European tour</span>
+<span class="ow">from</span><span class="w">   </span><span class="n">to</span><span class="w">     </span><span class="n">wp</span>
+<span class="o">----------------</span>
+<span class="n">London</span><span class="w"> </span><span class="n">Paris</span><span class="w">  </span><span class="il">0</span>
+<span class="n">Paris</span><span class="w">  </span><span class="n">Genoa</span><span class="w">  </span><span class="il">1</span>
+<span class="n">Genoa</span><span class="w">  </span><span class="n">Milan</span><span class="w">  </span><span class="il">1</span>
+<span class="n">Milan</span><span class="w">  </span><span class="n">Vienna</span><span class="w"> </span><span class="il">1</span>
+<span class="n">Vienna</span><span class="w"> </span><span class="n">Berlin</span><span class="w"> </span><span class="il">1</span>
+<span class="n">Berlin</span><span class="w"> </span><span class="n">London</span><span class="w"> </span><span class="il">0</span>
+<span class="gp">q)</span><span class="nb">show</span><span class="w"> </span><span class="nv">route</span><span class="o">:</span><span class="n">yrp</span><span class="p">[</span><span class="ss">`from</span><span class="p">]</span><span class="o">!</span><span class="n">yrp</span><span class="p">[</span><span class="ss">`to</span><span class="p">]</span><span class="w">    </span><span class="c1">/ finite-state machine</span>
+<span class="n">London</span><span class="o">|</span><span class="w"> </span><span class="n">Paris</span>
+<span class="n">Paris</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">Genoa</span>
+<span class="n">Genoa</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">Milan</span>
+<span class="n">Milan</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">Vienna</span>
+<span class="n">Vienna</span><span class="o">|</span><span class="w"> </span><span class="n">Berlin</span>
+<span class="n">Berlin</span><span class="o">|</span><span class="w"> </span><span class="n">London</span>
+</code></pre></div>
+<h2 id="unary-values">Unary values<a class="headerlink" href="#unary-values" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>(v1\)x    (v1/)x   / unary application
+x v1\y    x v1/y   / binary application
+</code></pre></div>
+<p>The function an accumulator derives from a unary value is <a href="../../basics/variadic/">variadic</a>.
+The result of the first evaluation is the right argument for the second evaluation. And so on.</p>
+<div class="admonition note">
+<p class="admonition-title">The value is evaluated on the entire right argument, not on items of it.</p>
+</div>
+<p>When applied as a binary, the number of evaluations the derived function performs is determined by its left argument, or (when applied as a unary) by convergence.</p>
+<table>
+<thead>
+<tr>
+<th>syntax</th>
+<th>name</th>
+<th>number of successive evaluations</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>(v1\)x</code>, <code>(v1/)x</code></td>
+<td>Converge</td>
+<td>until two successive evaluations match, or an evaluation matches <code>x</code></td>
+</tr>
+<tr>
+<td><code>i v1\x</code>, <code>i v1/x</code></td>
+<td>Do</td>
+<td><code>i</code>, a non-negative integer</td>
+</tr>
+<tr>
+<td><code>t v1\x</code>, <code>t v1/x</code></td>
+<td>While</td>
+<td>until unary value <code>t</code>, evaluated on the result, returns 0</td>
+</tr>
+</tbody>
+</table>
+<h3 id="converge">Converge<a class="headerlink" href="#converge" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="p">(</span><span class="nb">neg</span><span class="o">\</span><span class="p">)</span><span class="il">1</span><span class="w">                                 </span><span class="c1">/ Converge</span>
+<span class="il">1</span><span class="w"> </span><span class="o">-</span><span class="il">1</span>
+<span class="gp">q)</span><span class="nv">l</span><span class="o">:-</span><span class="il">10</span><span class="o">?</span><span class="il">10</span>
+<span class="gp">q)</span><span class="p">(</span><span class="n">l</span><span class="o">\</span><span class="p">)</span><span class="nb">iasc</span><span class="w"> </span><span class="n">l</span>
+<span class="il">4</span><span class="w"> </span><span class="il">0</span><span class="w"> </span><span class="il">8</span><span class="w"> </span><span class="il">5</span><span class="w"> </span><span class="il">7</span><span class="w"> </span><span class="il">2</span><span class="w"> </span><span class="il">6</span><span class="w"> </span><span class="il">3</span><span class="w"> </span><span class="il">1</span><span class="w"> </span><span class="il">9</span>
+<span class="il">0</span><span class="w"> </span><span class="il">1</span><span class="w"> </span><span class="il">2</span><span class="w"> </span><span class="il">3</span><span class="w"> </span><span class="il">4</span><span class="w"> </span><span class="il">5</span><span class="w"> </span><span class="il">6</span><span class="w"> </span><span class="il">7</span><span class="w"> </span><span class="il">8</span><span class="w"> </span><span class="il">9</span>
+<span class="il">1</span><span class="w"> </span><span class="il">8</span><span class="w"> </span><span class="il">5</span><span class="w"> </span><span class="il">7</span><span class="w"> </span><span class="il">0</span><span class="w"> </span><span class="il">3</span><span class="w"> </span><span class="il">6</span><span class="w"> </span><span class="il">4</span><span class="w"> </span><span class="il">2</span><span class="w"> </span><span class="il">9</span>
+<span class="il">8</span><span class="w"> </span><span class="il">2</span><span class="w"> </span><span class="il">3</span><span class="w"> </span><span class="il">4</span><span class="w"> </span><span class="il">1</span><span class="w"> </span><span class="il">7</span><span class="w"> </span><span class="il">6</span><span class="w"> </span><span class="il">0</span><span class="w"> </span><span class="il">5</span><span class="w"> </span><span class="il">9</span>
+<span class="il">2</span><span class="w"> </span><span class="il">5</span><span class="w"> </span><span class="il">7</span><span class="w"> </span><span class="il">0</span><span class="w"> </span><span class="il">8</span><span class="w"> </span><span class="il">4</span><span class="w"> </span><span class="il">6</span><span class="w"> </span><span class="il">1</span><span class="w"> </span><span class="il">3</span><span class="w"> </span><span class="il">9</span>
+<span class="il">5</span><span class="w"> </span><span class="il">3</span><span class="w"> </span><span class="il">4</span><span class="w"> </span><span class="il">1</span><span class="w"> </span><span class="il">2</span><span class="w"> </span><span class="il">0</span><span class="w"> </span><span class="il">6</span><span class="w"> </span><span class="il">8</span><span class="w"> </span><span class="il">7</span><span class="w"> </span><span class="il">9</span>
+<span class="il">3</span><span class="w"> </span><span class="il">7</span><span class="w"> </span><span class="il">0</span><span class="w"> </span><span class="il">8</span><span class="w"> </span><span class="il">5</span><span class="w"> </span><span class="il">1</span><span class="w"> </span><span class="il">6</span><span class="w"> </span><span class="il">2</span><span class="w"> </span><span class="il">4</span><span class="w"> </span><span class="il">9</span>
+<span class="il">7</span><span class="w"> </span><span class="il">4</span><span class="w"> </span><span class="il">1</span><span class="w"> </span><span class="il">2</span><span class="w"> </span><span class="il">3</span><span class="w"> </span><span class="il">8</span><span class="w"> </span><span class="il">6</span><span class="w"> </span><span class="il">5</span><span class="w"> </span><span class="il">0</span><span class="w"> </span><span class="il">9</span>
+<span class="gp">q)</span><span class="p">(</span><span class="nb">rotate</span><span class="p">[</span><span class="il">1</span><span class="p">]</span><span class="o">\</span><span class="p">)</span><span class="s2">"abcd"</span>
+<span class="s2">"abcd"</span>
+<span class="s2">"bcda"</span>
+<span class="s2">"cdab"</span>
+<span class="s2">"dabc"</span>
+<span class="gp">q)</span><span class="p">({</span><span class="n">x</span><span class="o">*</span><span class="n">x</span><span class="p">}</span><span class="o">\</span><span class="p">)</span><span class="mf">0.1</span>
+<span class="mf">0.1</span><span class="w"> </span><span class="mf">0.01</span><span class="w"> </span><span class="mf">0.0001</span><span class="w"> </span><span class="mf">1e-08</span><span class="w"> </span><span class="mf">1e-16</span><span class="w"> </span><span class="mf">1e-32</span><span class="w"> </span><span class="mf">1e-64</span><span class="w"> </span><span class="mf">1e-128</span><span class="w"> </span><span class="mf">1e-256</span><span class="w"> </span><span class="il">0</span>
+<span class="gp">q)</span><span class="p">(</span><span class="n">route</span><span class="o">\</span><span class="p">)</span><span class="ss">`Genoa</span><span class="w">                          </span><span class="c1">/ a circular tour</span>
+<span class="ss">`Genoa`Milan`Vienna`Berlin`London`Paris</span>
+<span class="gp">q)</span><span class="p">(</span><span class="nb">not</span><span class="o">/</span><span class="p">)</span><span class="w"> </span><span class="il">42</span><span class="w">                               </span><span class="c1">/ never returns!</span>
+</code></pre></div>
+<p>Matching is governed by <a href="../../basics/precision/#comparison-tolerance">comparison tolerance</a>.</p>
+<h3 id="do">Do<a class="headerlink" href="#do" title="Permanent link">&para;</a></h3>
+<p>In its binary form, with an integer <code>n≥0</code> as the left argument, the derived function is applied <code>n</code> times.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="nv">dbl</span><span class="o">:</span><span class="il">2</span><span class="o">*</span>
+<span class="gp">q)</span><span class="il">3</span><span class="w"> </span><span class="n">dbl</span><span class="o">\</span><span class="il">2</span><span class="w"> </span><span class="il">7</span><span class="w">                                </span><span class="c1">/ Do</span>
+<span class="il">2</span><span class="w">  </span><span class="il">7</span>
+<span class="il">4</span><span class="w">  </span><span class="il">14</span>
+<span class="il">8</span><span class="w">  </span><span class="il">28</span>
+<span class="il">16</span><span class="w"> </span><span class="il">56</span>
+<span class="gp">q)</span><span class="il">5</span><span class="w"> </span><span class="ow">enlist</span><span class="o">\</span><span class="il">1</span>
+<span class="il">1</span>
+<span class="o">,</span><span class="il">1</span>
+<span class="o">,,</span><span class="il">1</span>
+<span class="o">,,,</span><span class="il">1</span>
+<span class="o">,,,,</span><span class="il">1</span>
+<span class="o">,,,,,</span><span class="il">1</span>
+
+<span class="gp">q)</span><span class="il">5</span><span class="p">(</span><span class="ss">`f</span><span class="p">;)</span><span class="o">\</span><span class="il">1</span>
+<span class="il">1</span>
+<span class="p">(</span><span class="ss">`f</span><span class="p">;</span><span class="il">1</span><span class="p">)</span>
+<span class="p">(</span><span class="ss">`f</span><span class="p">;(</span><span class="ss">`f</span><span class="p">;</span><span class="il">1</span><span class="p">))</span>
+<span class="p">(</span><span class="ss">`f</span><span class="p">;(</span><span class="ss">`f</span><span class="p">;(</span><span class="ss">`f</span><span class="p">;</span><span class="il">1</span><span class="p">)))</span>
+<span class="p">(</span><span class="ss">`f</span><span class="p">;(</span><span class="ss">`f</span><span class="p">;(</span><span class="ss">`f</span><span class="p">;(</span><span class="ss">`f</span><span class="p">;</span><span class="il">1</span><span class="p">))))</span>
+<span class="p">(</span><span class="ss">`f</span><span class="p">;(</span><span class="ss">`f</span><span class="p">;(</span><span class="ss">`f</span><span class="p">;(</span><span class="ss">`f</span><span class="p">;(</span><span class="ss">`f</span><span class="p">;</span><span class="il">1</span><span class="p">)))))</span>
+
+<span class="gp">q)</span><span class="o">/</span><span class="w"> </span><span class="n">First</span><span class="w"> </span><span class="il">10</span><span class="o">+</span><span class="il">2</span><span class="w"> </span><span class="n">numbers</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">Fibonacci</span><span class="w"> </span><span class="n">sequence</span>
+<span class="gp">q)</span><span class="il">10</span><span class="p">{</span><span class="n">x</span><span class="o">,</span><span class="ow">sum</span><span class="w"> </span><span class="o">-</span><span class="il">2</span><span class="o">#</span><span class="n">x</span><span class="p">}</span><span class="o">/</span><span class="il">0</span><span class="w"> </span><span class="il">1</span><span class="w">                       </span><span class="c1">/ derived binary applied infix</span>
+<span class="il">0</span><span class="w"> </span><span class="il">1</span><span class="w"> </span><span class="il">1</span><span class="w"> </span><span class="il">2</span><span class="w"> </span><span class="il">3</span><span class="w"> </span><span class="il">5</span><span class="w"> </span><span class="il">8</span><span class="w"> </span><span class="il">13</span><span class="w"> </span><span class="il">21</span><span class="w"> </span><span class="il">34</span><span class="w"> </span><span class="il">55</span><span class="w"> </span><span class="il">89</span>
+
+<span class="gp">q)</span><span class="o">/</span><span class="w"> </span><span class="n">First</span><span class="w"> </span><span class="n">n</span><span class="o">+</span><span class="il">2</span><span class="w"> </span><span class="n">numbers</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">Fibonacci</span><span class="w"> </span><span class="n">sequence</span>
+<span class="gp">q)</span><span class="nf">fibonacci</span><span class="o">:</span><span class="p">{</span><span class="n">x</span><span class="o">,</span><span class="ow">sum</span><span class="w"> </span><span class="o">-</span><span class="il">2</span><span class="o">#</span><span class="n">x</span><span class="p">}</span><span class="o">/</span><span class="p">[;</span><span class="il">0</span><span class="w"> </span><span class="il">1</span><span class="p">]</span><span class="w">            </span><span class="c1">/ projection of derived function</span>
+<span class="gp">q)</span><span class="n">fibonacci</span><span class="w"> </span><span class="il">10</span>
+<span class="il">0</span><span class="w"> </span><span class="il">1</span><span class="w"> </span><span class="il">1</span><span class="w"> </span><span class="il">2</span><span class="w"> </span><span class="il">3</span><span class="w"> </span><span class="il">5</span><span class="w"> </span><span class="il">8</span><span class="w"> </span><span class="il">13</span><span class="w"> </span><span class="il">21</span><span class="w"> </span><span class="il">34</span><span class="w"> </span><span class="il">55</span><span class="w"> </span><span class="il">89</span>
+<span class="gp">q)</span><span class="nv">m</span><span class="o">:</span><span class="p">(</span><span class="il">0</span><span class="w"> </span><span class="mf">1f</span><span class="p">;</span><span class="il">1</span><span class="w"> </span><span class="mf">1f</span><span class="p">)</span>
+<span class="gp">q)</span><span class="il">10</span><span class="w"> </span><span class="p">(</span><span class="n">m</span><span class="w"> </span><span class="nb">mmu</span><span class="p">)</span><span class="o">\</span><span class="il">1</span><span class="w"> </span><span class="mf">1f</span><span class="w">                          </span><span class="c1">/ first 10 Fibonacci numbers</span>
+<span class="il">1</span><span class="w">  </span><span class="il">1</span>
+<span class="il">1</span><span class="w">  </span><span class="il">2</span>
+<span class="il">2</span><span class="w">  </span><span class="il">3</span>
+<span class="il">3</span><span class="w">  </span><span class="il">5</span>
+<span class="il">5</span><span class="w">  </span><span class="il">8</span>
+<span class="il">8</span><span class="w">  </span><span class="il">13</span>
+<span class="il">13</span><span class="w"> </span><span class="il">21</span>
+<span class="il">21</span><span class="w"> </span><span class="il">34</span>
+<span class="il">34</span><span class="w"> </span><span class="il">55</span>
+<span class="il">55</span><span class="w"> </span><span class="il">89</span>
+<span class="il">89</span><span class="w"> </span><span class="il">144</span>
+<span class="gp">q)</span><span class="il">3</span><span class="w"> </span><span class="n">route</span><span class="o">\</span><span class="ss">`London</span><span class="w">                          </span><span class="c1">/ 3 legs of the tour</span>
+<span class="ss">`London`Paris`Genoa`Milan</span>
+</code></pre></div>
+<p>A form of the conditional:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="p">(</span><span class="s2">"j"</span><span class="o">$</span><span class="n">a</span><span class="o">=</span><span class="n">b</span><span class="p">)</span><span class="w"> </span><span class="n">foo</span><span class="o">/</span><span class="n">bar</span><span class="w">                        </span><span class="c1">/ ?[a=b;foo bar;bar]</span>
+</code></pre></div>
+<h3 id="while">While<a class="headerlink" href="#while" title="Permanent link">&para;</a></h3>
+<p>In its binary form, if the left argument <code>t</code> of the derived function is an applicable unary value, 
+it is applied <strong>while</strong> <code>t</code> applied on the result returns true or something other than <code>0</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="p">(</span><span class="il">10</span><span class="o">&gt;</span><span class="p">)</span><span class="n">dbl</span><span class="o">\</span><span class="il">2</span><span class="w">                               </span><span class="c1">/ While</span>
+<span class="il">2</span><span class="w"> </span><span class="il">4</span><span class="w"> </span><span class="il">8</span><span class="w"> </span><span class="il">16</span>
+<span class="gp">q)</span><span class="p">{</span><span class="n">x</span><span class="o">&lt;</span><span class="il">1000</span><span class="p">}{</span><span class="n">x</span><span class="o">+</span><span class="n">x</span><span class="p">}</span><span class="o">\</span><span class="il">2</span>
+<span class="il">2</span><span class="w"> </span><span class="il">4</span><span class="w"> </span><span class="il">8</span><span class="w"> </span><span class="il">16</span><span class="w"> </span><span class="il">32</span><span class="w"> </span><span class="il">64</span><span class="w"> </span><span class="il">128</span><span class="w"> </span><span class="il">256</span><span class="w"> </span><span class="il">512</span><span class="w"> </span><span class="il">1024</span>
+<span class="gp">q)</span><span class="nv">inc</span><span class="o">:</span><span class="il">1</span><span class="o">+</span>
+<span class="gp">q)</span><span class="n">inc</span><span class="o">\</span><span class="p">[</span><span class="il">105</span><span class="o">&gt;</span><span class="p">;</span><span class="il">100</span><span class="p">]</span>
+<span class="il">100</span><span class="w"> </span><span class="il">101</span><span class="w"> </span><span class="il">102</span><span class="w"> </span><span class="il">103</span><span class="w"> </span><span class="il">104</span><span class="w"> </span><span class="il">105</span>
+<span class="gp">q)</span><span class="n">inc</span><span class="o">\</span><span class="p">[</span><span class="il">105</span><span class="o">&gt;</span><span class="ow">sum</span><span class="o">@</span><span class="p">;</span><span class="il">84</span><span class="w"> </span><span class="il">20</span><span class="p">]</span>
+<span class="il">84</span><span class="w"> </span><span class="il">20</span>
+<span class="il">85</span><span class="w"> </span><span class="il">21</span>
+<span class="gp">q)</span><span class="p">(</span><span class="ss">`Berlin</span><span class="o">&lt;&gt;</span><span class="p">)</span><span class="n">route</span><span class="o">\</span><span class="ss">`Paris</span><span class="w">                  </span><span class="c1">/ Paris to Berlin</span>
+<span class="ss">`Paris`Genoa`Milan`Vienna`Berlin</span>
+<span class="gp">q)</span><span class="nv">waypoints</span><span class="o">:</span><span class="p">(</span><span class="o">!/</span><span class="p">)</span><span class="n">yrp</span><span class="ss">`from`wp</span>
+<span class="gp">q)</span><span class="n">waypoints</span><span class="w"> </span><span class="n">route</span><span class="o">\</span><span class="ss">`Paris</span><span class="w">                   </span><span class="c1">/ Paris to the end</span>
+<span class="ss">`Paris`Genoa`Milan`Vienna`Berlin</span>
+</code></pre></div>
+<p>In the last example, both applicable values are dictionaries.</p>
+<h2 id="binary-values">Binary values<a class="headerlink" href="#binary-values" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>x v\y    x v/y
+</code></pre></div>
+<p>The function an accumulator derived from a binary value is <a href="../../basics/variadic/">variadic</a>.
+Functions derived by Scan are uniform; functions derived by Over are aggregates.
+The number of evaluations is the count of the right argument.</p>
+<p><img alt="over" src="../../basics/svg/over.svg" />
+<br>
+<small><em>Unary and binary application of f/</em></small></p>
+<h3 id="binary-application">Binary application<a class="headerlink" href="#binary-application" title="Permanent link">&para;</a></h3>
+<p>When the derived function is applied as a binary, the first evaluation applies the value to the function’s left argument and the first item of the its right argument, i.e. <code>m[x;first y]</code>. The result of this becomes the left argument in the next evaluation, for which the right argument is the second item of the right argument. And so on.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="il">1000</span><span class="o">+\</span><span class="il">2</span><span class="w"> </span><span class="il">3</span><span class="w"> </span><span class="il">4</span>
+<span class="il">1002</span><span class="w"> </span><span class="il">1005</span><span class="w"> </span><span class="il">1009</span>
+<span class="gp">q)</span><span class="n">m</span><span class="w">                       </span><span class="c1">/ finite-state machine</span>
+<span class="il">1</span><span class="w"> </span><span class="il">6</span><span class="w"> </span><span class="il">4</span><span class="w"> </span><span class="il">4</span><span class="w"> </span><span class="il">2</span>
+<span class="il">2</span><span class="w"> </span><span class="il">7</span><span class="w"> </span><span class="il">2</span><span class="w"> </span><span class="il">0</span><span class="w"> </span><span class="il">5</span>
+<span class="il">7</span><span class="w"> </span><span class="il">5</span><span class="w"> </span><span class="il">6</span><span class="w"> </span><span class="il">7</span><span class="w"> </span><span class="il">0</span>
+<span class="il">2</span><span class="w"> </span><span class="il">1</span><span class="w"> </span><span class="il">8</span><span class="w"> </span><span class="il">1</span><span class="w"> </span><span class="il">0</span>
+<span class="il">7</span><span class="w"> </span><span class="il">3</span><span class="w"> </span><span class="il">3</span><span class="w"> </span><span class="il">6</span><span class="w"> </span><span class="il">8</span>
+<span class="il">2</span><span class="w"> </span><span class="il">3</span><span class="w"> </span><span class="il">8</span><span class="w"> </span><span class="il">9</span><span class="w"> </span><span class="il">0</span>
+<span class="il">1</span><span class="w"> </span><span class="il">1</span><span class="w"> </span><span class="il">9</span><span class="w"> </span><span class="il">6</span><span class="w"> </span><span class="il">9</span>
+<span class="il">7</span><span class="w"> </span><span class="il">8</span><span class="w"> </span><span class="il">4</span><span class="w"> </span><span class="il">3</span><span class="w"> </span><span class="il">0</span>
+<span class="il">4</span><span class="w"> </span><span class="il">5</span><span class="w"> </span><span class="il">8</span><span class="w"> </span><span class="il">0</span><span class="w"> </span><span class="il">4</span>
+<span class="il">9</span><span class="w"> </span><span class="il">8</span><span class="w"> </span><span class="il">0</span><span class="w"> </span><span class="il">3</span><span class="w"> </span><span class="il">9</span>
+<span class="gp">q)</span><span class="n">c</span><span class="w">                       </span><span class="c1">/ columns of m</span>
+<span class="il">4</span><span class="w"> </span><span class="il">1</span><span class="w"> </span><span class="il">3</span><span class="w"> </span><span class="il">3</span><span class="w"> </span><span class="il">1</span><span class="w"> </span><span class="il">4</span>
+<span class="gp">q)</span><span class="il">7</span><span class="w"> </span><span class="n">m</span><span class="o">\</span><span class="n">c</span>
+<span class="il">0</span><span class="w"> </span><span class="il">6</span><span class="w"> </span><span class="il">6</span><span class="w"> </span><span class="il">6</span><span class="w"> </span><span class="il">1</span><span class="w"> </span><span class="il">5</span>
+</code></pre></div>
+<p>Items of <code>x</code> must be in the left domain of the value, and items of <code>y</code> in its right domain.</p>
+<h3 id="unary-application">Unary application<a class="headerlink" href="#unary-application" title="Permanent link">&para;</a></h3>
+<p>When the derived function is applied as a unary, and the value is <strong>a function with a known identity element</strong> $I$, then $I$ is taken as the left argument of the first evaluation.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="p">(</span><span class="o">,\</span><span class="p">)</span><span class="il">2</span><span class="w"> </span><span class="il">3</span><span class="w"> </span><span class="il">4</span><span class="w">        </span><span class="c1">/ I is ()</span>
+<span class="o">,</span><span class="il">2</span>
+<span class="il">2</span><span class="w"> </span><span class="il">3</span>
+<span class="il">2</span><span class="w"> </span><span class="il">3</span><span class="w"> </span><span class="il">4</span>
+</code></pre></div>
+<p>In such cases <code>(I f\x)~(f\)x</code> and <code>(I f/x)~(f/)x</code> and items of <code>x</code> must be in the right domain of the value.</p>
+<p>Otherwise, the first item of the right argument is taken as the result of the first evaluation.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="p">{</span><span class="n">x</span><span class="o">,</span><span class="n">y</span><span class="p">}</span><span class="o">\</span><span class="p">[</span><span class="il">2</span><span class="w"> </span><span class="il">3</span><span class="w"> </span><span class="il">4</span><span class="p">]</span><span class="w">       </span><span class="c1">/ () not known as I</span>
+<span class="il">2</span>
+<span class="il">2</span><span class="w"> </span><span class="il">3</span>
+<span class="il">2</span><span class="w"> </span><span class="il">3</span><span class="w"> </span><span class="il">4</span>
+<span class="gp">q)</span><span class="il">42</span><span class="p">{[</span><span class="n">x</span><span class="p">;</span><span class="n">y</span><span class="p">]</span><span class="n">x</span><span class="p">}</span><span class="o">\</span><span class="il">2</span><span class="w"> </span><span class="il">3</span><span class="w"> </span><span class="il">4</span><span class="w">    </span><span class="c1">/ 42 is the first left argument</span>
+<span class="il">42</span><span class="w"> </span><span class="il">42</span><span class="w"> </span><span class="il">42</span>
+<span class="gp">q)</span><span class="p">({[</span><span class="n">x</span><span class="p">;</span><span class="n">y</span><span class="p">]</span><span class="n">x</span><span class="p">}</span><span class="o">\</span><span class="p">)</span><span class="il">2</span><span class="w"> </span><span class="il">3</span><span class="w"> </span><span class="il">4</span><span class="w">    </span><span class="c1">/ 2 is the first left argument</span>
+<span class="il">2</span><span class="w"> </span><span class="il">2</span><span class="w"> </span><span class="il">2</span>
+<span class="gp">q)</span><span class="p">(</span><span class="n">m</span><span class="o">\</span><span class="p">)</span><span class="n">c</span><span class="w">               </span><span class="c1">/ c[0] is the first left argument</span>
+<span class="il">4</span><span class="w"> </span><span class="il">3</span><span class="w"> </span><span class="il">1</span><span class="w"> </span><span class="il">0</span><span class="w"> </span><span class="il">6</span><span class="w"> </span><span class="il">9</span>
+</code></pre></div>
+<p>In this case, for <code>(v\)x</code> and <code>(v/)x</code></p>
+<ul>
+<li><code>x[0]</code> is in the <em>left</em> domain of <code>v</code></li>
+<li>items <code>1_x</code> are in the <em>right</em> domain of <code>v</code></li>
+</ul>
+<p>but <code>x[0]</code> need not be in the range of <code>v</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="p">({</span><span class="nb">count</span><span class="w"> </span><span class="n">x</span><span class="o">,</span><span class="n">y</span><span class="p">}</span><span class="o">\</span><span class="p">)(</span><span class="s2">"The"</span><span class="p">;</span><span class="s2">"quick"</span><span class="p">;</span><span class="s2">"brown"</span><span class="p">;</span><span class="s2">"fox"</span><span class="p">)</span>
+<span class="s2">"The"</span>
+<span class="il">8</span>
+<span class="il">6</span>
+<span class="il">4</span>
+</code></pre></div>
+<h3 id="keywords-scan-and-over">Keywords <code>scan</code> and <code>over</code><a class="headerlink" href="#keywords-scan-and-over" title="Permanent link">&para;</a></h3>
+<p>Mnemonic keywords <code>scan</code> and <code>over</code> can be used to apply a binary value to a list or dictionary.</p>
+<div class="admonition tip">
+<p class="admonition-title">Parenthesize an infix to pass it as a left argument.</p>
+</div>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="p">(</span><span class="o">+</span><span class="p">)</span><span class="w"> </span><span class="nb">over</span><span class="w"> </span><span class="nb">til</span><span class="w"> </span><span class="il">5</span><span class="w">           </span><span class="c1">/ (+/)til 5</span>
+<span class="il">10</span>
+<span class="gp">q)</span><span class="p">(</span><span class="o">+</span><span class="p">)</span><span class="w"> </span><span class="nb">scan</span><span class="w"> </span><span class="nb">til</span><span class="w"> </span><span class="il">5</span><span class="w">           </span><span class="c1">/ (+\)til 5</span>
+<span class="il">0</span><span class="w"> </span><span class="il">1</span><span class="w"> </span><span class="il">3</span><span class="w"> </span><span class="il">6</span><span class="w"> </span><span class="il">10</span>
+<span class="gp">q)</span><span class="n">m</span><span class="w"> </span><span class="nb">scan</span><span class="w"> </span><span class="n">c</span><span class="w">                 </span><span class="c1">/ (m\)c</span>
+<span class="il">4</span><span class="w"> </span><span class="il">3</span><span class="w"> </span><span class="il">1</span><span class="w"> </span><span class="il">0</span><span class="w"> </span><span class="il">6</span><span class="w"> </span><span class="il">9</span>
+</code></pre></div>
+<p><a href="../over/"><code>over</code>, <code>scan</code></a></p>
+<h2 id="ternary-values">Ternary values<a class="headerlink" href="#ternary-values" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>v\[x;y;z]    v/[x;y;z]
+</code></pre></div>
+<p>The function an accumulator derives from an value of rank &gt;2 has the same rank as the value.
+Functions derived by Scan are uniform; functions derived by Over are aggregates.
+The number of evaluations is the maximum of the count of the right arguments.</p>
+<p>For <code>v\[x;y;z]</code> and <code>v/[x;y;z]</code></p>
+<ul>
+<li><code>x</code> is in the left domain of <code>v</code></li>
+<li><code>y</code> and <code>z</code> are atoms or conforming lists or dictionaries in the right domains of <code>v</code></li>
+</ul>
+<p>The first evaluation is <code>v[x;first y;first z]</code>. Its result becomes the left argument of the second evaluation. And so on. For <code>r:v\[x;y;z]</code></p>
+<div class="highlight"><pre><span></span><code>r[0]: v[x  ; y 0; z 0]
+r[1]: v[r 0; y 1; z 1]
+r[2]: v[r 1; y 2; z 2]
+…
+</code></pre></div>
+<p>The result of <code>v/[x;y;z]</code> is simply the last item of the above.</p>
+<dl>
+<dt><code>v/[x;y;z]</code></dt>
+<dd>
+<p><code>v[ v[… v[ v[x;y<sub>0</sub>;z<sub>0</sub>] ;y<sub>1</sub>;z<sub>1</sub>]; … y<sub>n-2</sub>;z<sub>n-2</sub>]; y<sub>n-1</sub>;z<sub>n-1</sub>]</code></p>
+</dd>
+</dl>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="p">{</span><span class="n">x</span><span class="o">+</span><span class="n">y</span><span class="o">*</span><span class="n">z</span><span class="p">}</span><span class="o">\</span><span class="p">[</span><span class="il">1000</span><span class="p">;</span><span class="il">5</span><span class="w"> </span><span class="il">10</span><span class="w"> </span><span class="il">15</span><span class="w"> </span><span class="il">20</span><span class="p">;</span><span class="il">2</span><span class="w"> </span><span class="il">3</span><span class="w"> </span><span class="il">4</span><span class="w"> </span><span class="il">5</span><span class="p">]</span>
+<span class="il">1010</span><span class="w"> </span><span class="il">1040</span><span class="w"> </span><span class="il">1100</span><span class="w"> </span><span class="il">1200</span>
+<span class="gp">q)</span><span class="p">{</span><span class="n">x</span><span class="o">+</span><span class="n">y</span><span class="o">*</span><span class="n">z</span><span class="p">}</span><span class="o">\</span><span class="p">[</span><span class="il">1000</span><span class="w"> </span><span class="il">2000</span><span class="p">;</span><span class="il">5</span><span class="w"> </span><span class="il">10</span><span class="w"> </span><span class="il">15</span><span class="w"> </span><span class="il">20</span><span class="p">;</span><span class="il">3</span><span class="p">]</span>
+<span class="il">1015</span><span class="w"> </span><span class="il">2015</span>
+<span class="il">1045</span><span class="w"> </span><span class="il">2045</span>
+<span class="il">1090</span><span class="w"> </span><span class="il">2090</span>
+<span class="il">1150</span><span class="w"> </span><span class="il">2150</span>
+<span class="gp">q)</span><span class="o">/</span><span class="w"> </span><span class="n">Chinese</span><span class="w"> </span><span class="n">whispers</span>
+<span class="gp">q)</span><span class="nv">s</span><span class="o">:</span><span class="s2">"We are going to advance. Send reinforcements."</span>
+<span class="gp">q)</span><span class="nb">ssr</span><span class="o">\</span><span class="p">[</span><span class="n">s</span><span class="p">;(</span><span class="s2">"advance"</span><span class="p">;</span><span class="s2">"reinforcements"</span><span class="p">);(</span><span class="s2">"a dance"</span><span class="p">;</span><span class="s2">"three and fourpence"</span><span class="p">)]</span>
+<span class="s2">"We are going to a dance. Send reinforcements."</span>
+<span class="s2">"We are going to a dance. Send three and fourpence."</span>
+</code></pre></div>
+<p>The above description of functions derived from ternary values applies by extension to values of higher ranks.</p>
+<h3 id="alternative-syntax">Alternative syntax<a class="headerlink" href="#alternative-syntax" title="Permanent link">&para;</a></h3>
+<p>As of V3.1 2013.07.07, Scan has a built-in function for the following.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="nv">a</span><span class="o">:</span><span class="mf">1000f</span><span class="p">;</span><span class="nv">b</span><span class="o">:</span><span class="il">1</span><span class="w"> </span><span class="il">2</span><span class="w"> </span><span class="il">3</span><span class="w"> </span><span class="mf">4f</span><span class="p">;</span><span class="nv">c</span><span class="o">:</span><span class="il">5</span><span class="w"> </span><span class="il">6</span><span class="w"> </span><span class="il">7</span><span class="w"> </span><span class="mf">8f</span>
+<span class="gp">q)</span><span class="p">{</span><span class="n">z</span><span class="o">+</span><span class="n">x</span><span class="o">*</span><span class="n">y</span><span class="p">}</span><span class="o">\</span><span class="p">[</span><span class="n">a</span><span class="p">;</span><span class="n">b</span><span class="p">;</span><span class="n">c</span><span class="p">]</span>
+<span class="il">1005</span><span class="w"> </span><span class="il">2016</span><span class="w"> </span><span class="il">6055</span><span class="w"> </span><span class="mf">24228f</span>
+<span class="gp">q)</span><span class="n">a</span><span class="w"> </span><span class="n">b</span><span class="o">\</span><span class="n">c</span>
+<span class="il">1005</span><span class="w"> </span><span class="il">2016</span><span class="w"> </span><span class="il">6055</span><span class="w"> </span><span class="mf">24228f</span>
+</code></pre></div>
+<p>Note that the built-in version is for floats.</p>
+<h2 id="empty-lists">Empty lists<a class="headerlink" href="#empty-lists" title="Permanent link">&para;</a></h2>
+<div class="admonition warning">
+<p class="admonition-title">Accumulators can change datatype</p>
+</div>
+<p>In iterating through an empty list <strong>the value is not evaluated.</strong>
+The result might not be in the range of the value.</p>
+<p>Allow for a possible change of type to <code>0h</code> when scanning or reducing lists of unknown length.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="nv">mt</span><span class="o">:</span><span class="il">0</span><span class="o">#</span><span class="il">0</span>
+<span class="gp">q)</span><span class="nb">type</span><span class="w"> </span><span class="nb">each</span><span class="w"> </span><span class="p">(</span><span class="n">mt</span><span class="p">;</span><span class="o">*/</span><span class="p">[</span><span class="n">mt</span><span class="p">];{</span><span class="n">x</span><span class="o">*</span><span class="n">y</span><span class="p">}</span><span class="o">/</span><span class="p">[</span><span class="n">mt</span><span class="p">])</span><span class="w">  </span><span class="c1">/ Over can change type</span>
+<span class="il">7</span><span class="w"> </span><span class="o">-</span><span class="il">7</span><span class="w"> </span><span class="mi">0h</span>
+<span class="gp">q)</span><span class="nb">type</span><span class="w"> </span><span class="nb">each</span><span class="w"> </span><span class="p">(</span><span class="n">mt</span><span class="p">;</span><span class="o">*\</span><span class="p">[</span><span class="n">mt</span><span class="p">];{</span><span class="n">x</span><span class="o">*</span><span class="n">y</span><span class="p">}</span><span class="o">\</span><span class="p">[</span><span class="n">mt</span><span class="p">])</span><span class="w">  </span><span class="c1">/ so can Scan</span>
+<span class="il">7</span><span class="w"> </span><span class="o">-</span><span class="il">7</span><span class="w"> </span><span class="mi">0h</span>
+</code></pre></div>
+<h3 id="scan">Scan<a class="headerlink" href="#scan" title="Permanent link">&para;</a></h3>
+<p>The function Scan derives from a non-unary value is a uniform function: for empty right argument/s it returns the generic empty list.
+It does not evaluate the value.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="p">()</span><span class="o">~</span><span class="p">{</span><span class="n">x</span><span class="o">+</span><span class="n">y</span><span class="o">*</span><span class="n">z</span><span class="p">}</span><span class="o">\</span><span class="p">[</span><span class="ss">`foo</span><span class="p">;</span><span class="n">mt</span><span class="p">;</span><span class="n">mt</span><span class="p">]</span><span class="w">           </span><span class="c1">/ lambda is not evaluated</span>
+<span class="mb">1b</span>
+</code></pre></div>
+<h3 id="over">Over<a class="headerlink" href="#over" title="Permanent link">&para;</a></h3>
+<p>The function that Over derives from a non-unary value is an aggregate: it reduces lists and dictionaries to atoms.</p>
+<p>For empty right argument/s the atom result depends on the value and, if the derived function is variadic, on how it is applied.</p>
+<p>If the value is a <strong>binary function with a known identity element</strong> $I$, and the derived function is applied as a unary, the result is $I$.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="p">(</span><span class="o">+/</span><span class="p">)</span><span class="n">mt</span><span class="w">    </span><span class="c1">/ 0 is I for +</span>
+<span class="il">0</span>
+<span class="gp">q)</span><span class="p">(</span><span class="o">*/</span><span class="p">)</span><span class="n">mt</span><span class="w">    </span><span class="c1">/ 1 is I for *</span>
+<span class="il">1</span>
+</code></pre></div>
+<p>If the value is a <strong>binary function with no known identity element</strong>, and the derived function is applied as a unary, the result is <code>()</code>, the generic empty list.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="p">()</span><span class="o">~</span><span class="p">({</span><span class="n">x</span><span class="o">+</span><span class="n">y</span><span class="p">}</span><span class="o">/</span><span class="p">)</span><span class="n">mt</span>
+<span class="mb">1b</span>
+</code></pre></div>
+<p>If the value is a <strong>list</strong> and the derived function is applied as a unary, the result is an empty list of the same type as the list.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="nb">type</span><span class="w"> </span><span class="il">1</span><span class="w"> </span><span class="il">0</span><span class="w"> </span><span class="mi">3h</span><span class="o">/</span><span class="p">[</span><span class="nb">til</span><span class="w"> </span><span class="il">0</span><span class="p">]</span>
+<span class="mi">5h</span>
+<span class="gp">q)</span><span class="nb">type</span><span class="w"> </span><span class="p">(</span><span class="il">3</span><span class="w"> </span><span class="il">4</span><span class="o">#</span><span class="nb">til</span><span class="w"> </span><span class="il">12</span><span class="p">)</span><span class="o">/</span><span class="p">[</span><span class="il">0</span><span class="o">#</span><span class="il">0</span><span class="p">]</span>
+<span class="mi">0h</span>
+</code></pre></div>
+<p>Otherwise, the result is the left argument.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="il">42</span><span class="o">+/</span><span class="n">mt</span>
+<span class="il">42</span>
+<span class="gp">q)</span><span class="p">{</span><span class="n">x</span><span class="o">+</span><span class="n">y</span><span class="o">*</span><span class="n">z</span><span class="p">}</span><span class="o">/</span><span class="p">[</span><span class="il">42</span><span class="p">;</span><span class="n">mt</span><span class="p">;</span><span class="n">mt</span><span class="p">]</span>
+<span class="il">42</span>
+<span class="gp">q)</span><span class="il">42</span><span class="w"> </span><span class="p">(</span><span class="il">3</span><span class="w"> </span><span class="il">4</span><span class="o">#</span><span class="nb">til</span><span class="w"> </span><span class="il">12</span><span class="p">)</span><span class="o">/</span><span class="p">[</span><span class="il">0</span><span class="o">#</span><span class="il">0</span><span class="p">]</span>
+<span class="il">42</span>
+</code></pre></div>
+<p>The value is not evaluated.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="ss">`foo</span><span class="o">+/</span><span class="n">mt</span>
+<span class="ss">`foo</span>
+<span class="gp">q)</span><span class="p">{</span><span class="n">x</span><span class="o">+</span><span class="n">y</span><span class="o">*</span><span class="n">z</span><span class="p">}</span><span class="o">/</span><span class="p">[</span><span class="ss">`foo</span><span class="p">;</span><span class="n">mt</span><span class="p">;</span><span class="n">mt</span><span class="p">]</span>
+<span class="ss">`foo</span>
+</code></pre></div>
+<p><em>Q for Mortals</em>
+<a href="../../../q4m3/6_Functions/#676-over-for-accumulation">§6.7.6 Over (/) for Accumulation</a></p>
+<div class="peachq-import-attribution">
+<p>Source adapted from the <a href="https://github.com/KxSystems/docs">Documentation for kdb+ and q</a>
+by KX Systems and contributors, used under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.
+<a href="../../attribution/">Attribution, provenance and independence notice</a>.</p>
+</div>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  <div class="md-copyright__highlight">
+    PeachQ - MIT-licensed open source q, built on Rayforce with DuckDB storage in progress.
+  </div>
+  <a href="../../../about">Built for the community</a> &middot;
+  <a href="../../../contact">Contact</a> &middot;
+  <a href="https://github.com/peachq-org/peachq" target="_blank" rel="noreferrer">GitHub</a>
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.sections", "navigation.top", "content.code.copy", "content.action.edit"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

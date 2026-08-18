@@ -1,0 +1,953 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="TCP/IP is used for communicating between processes. The protocol is extremely simple, as is the message format.">
+      
+      
+      
+        <link rel="canonical" href="https://peachq.org/docs/basics/ipc/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../img/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Interprocess communication | Developing | kdb+ and q documentation - PeachQ</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../css/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  
+  <script src="../../../mirror-banner.js"></script>
+  <script>
+    var _paq = window._paq = window._paq || [];
+    /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    (function() {
+      var u="//www.timestored.com/mat/";
+      _paq.push(['setTrackerUrl', u+'matomo.php']);
+      _paq.push(['setSiteId', '4']);
+      var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+      g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+    })();
+  </script>
+
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#interprocess-communication" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../" title="PeachQ" class="md-header__button md-logo" aria-label="PeachQ" data-md-component="logo">
+      
+  <img src="../../../img/peachq-logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <a class="md-ellipsis peachq-wordmark" href="../../../">
+            Peach<span class="peachq-wordmark__q">Q</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    
+    <nav class="peachq-nav" aria-label="Site">
+      
+      
+      
+        
+        <a class="peachq-nav__link" href="../../../repl">Try Live</a>
+      
+        
+        <a class="peachq-nav__link" href="../../../download">Download</a>
+      
+        
+        <a class="peachq-nav__link" href="../../../compatibility">Compatibility</a>
+      
+        
+        <a class="peachq-nav__link" href="../../../roadmap">Roadmap</a>
+      
+        
+        <a class="peachq-nav__link" href="../../../news/">News</a>
+      
+        
+        <a class="peachq-nav__link" href="../../../about">About</a>
+      
+        
+        <a class="peachq-nav__link" href="../../../contact">Contact</a>
+      
+      <a class="peachq-nav__link" href="https://github.com/peachq-org/peachq" target="_blank" rel="noreferrer">GitHub &#8599;</a>
+    </nav>
+
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="PeachQ" class="md-nav__button md-logo" aria-label="PeachQ" data-md-component="logo">
+      
+  <img src="../../../img/peachq-logo.svg" alt="logo">
+
+    </a>
+    PeachQ
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/peachq-org/peachq" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../news/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    News
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#listen-for-connections" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Listen for connections
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#connecting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Connecting
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#closing-connections" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Closing connections
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#message-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Message format
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#send-messages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Send messages
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Send messages">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sync-request-get" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sync request (get)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sync request (get)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#one-shot-message" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        One-shot message
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#interrupting-requests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Interrupting requests
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#response-message-get-response" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Response message (get response)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#async-message-set" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Async message (set)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Async message (set)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#flushing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Flushing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#broadcast" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Broadcast
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deferred-sync" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deferred sync
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#handle-messages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Handle messages
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Handle messages">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#async-blocking" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Async blocking
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#authentication-authorization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Authentication / Authorization
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tracking-connections" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tracking connections
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#protocol" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Protocol
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Protocol">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#handshake" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Handshake
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#compression" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Compression
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/peachq-org/peachq-website/edit/main/content/docs/basics/ipc.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+
+
+<h1 id="interprocess-communication"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M268.9 85.2 152.3 214.8c-4.6 5.1-4.4 13 .5 17.9 30.5 30.5 80 30.5 110.5 0l31.8-31.8c4.2-4.2 9.5-6.5 14.9-6.9 6.8-.6 13.8 1.7 19 6.9L505.6 376l70.4-56V32L464 96l-23.8-15.9A96.2 96.2 0 0 0 386.9 64h-70.4c-1.1 0-2.3 0-3.4.1-16.9.9-32.8 8.5-44.2 21.1m-152.3 97.5L223.4 64h-39.6c-25.5 0-49.9 10.1-67.9 28.1L112 96 0 32v288l156.4 130.3c23 19.2 52 29.7 81.9 29.7H254l-7-7c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l41 41h9c19.1 0 37.8-4.3 54.8-12.3L359 441c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l32 32 17.5-17.5c8.9-8.9 11.5-21.8 7.6-33.1L312.1 251.7l-14.9 14.9c-49.3 49.3-129.1 49.3-178.4 0-23-23-23.9-59.9-2.2-84z"/></svg></span> Interprocess communication<a class="headerlink" href="#interprocess-communication" title="Permanent link">&para;</a></h1>
+<p><em>Simple, powerful, fast</em></p>
+<div class="typewriter">
+<p><a href="../syscmds/#p-listening-port">\p</a>  <a href="../cmdline/#-p-listening-port">-p</a>          listen to port
+<a href="../../ref/hopen/">hopen hclose</a>    open/close connection
+<a href="../../ref/dotz/">.z</a>              handle message (callbacks)</p>
+</div>
+<p>A kdb+ process can communicate with other processes through TCP/IP, which is baked into the q language. </p>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M448 32c-83.3 11-166.8 22-250 33-92 12.5-163.3 86.7-169 180-3.3 55.5 18 109.5 57.8 148.2L0 480c83.3-11 166.5-22 249.8-33 91.8-12.5 163.3-86.8 168.7-179.8 3.5-55.5-18-109.5-57.7-148.2zm-79.7 232.3c-4.2 79.5-74 139.2-152.8 134.5-79.5-4.7-140.7-71-136.3-151 4.5-79.2 74.3-139.3 153-134.5 79.3 4.7 140.5 71 136.1 151"/></svg></span> 
+<a href="../interfaces/index.md#fusion-interfaces">Fusion interfaces</a>
+<br>
+<span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M268.9 85.2 152.3 214.8c-4.6 5.1-4.4 13 .5 17.9 30.5 30.5 80 30.5 110.5 0l31.8-31.8c4.2-4.2 9.5-6.5 14.9-6.9 6.8-.6 13.8 1.7 19 6.9L505.6 376l70.4-56V32L464 96l-23.8-15.9A96.2 96.2 0 0 0 386.9 64h-70.4c-1.1 0-2.3 0-3.4.1-16.9.9-32.8 8.5-44.2 21.1m-152.3 97.5L223.4 64h-39.6c-25.5 0-49.9 10.1-67.9 28.1L112 96 0 32v288l156.4 130.3c23 19.2 52 29.7 81.9 29.7H254l-7-7c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l41 41h9c19.1 0 37.8-4.3 54.8-12.3L359 441c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l32 32 17.5-17.5c8.9-8.9 11.5-21.8 7.6-33.1L312.1 251.7l-14.9 14.9c-49.3 49.3-129.1 49.3-178.4 0-23-23-23.9-59.9-2.2-84z"/></svg></span> 
+<a href="../interfaces/c-client-for-q.md">Clients for kdb+</a> </p>
+<div class="admonition tip">
+<p class="admonition-title">This page discusses TCP/IP sockets, but there are other types of IPC, that use the familiar open/request/close paradigm. All use <a href="../../ref/hopen/"><code>hopen</code></a> to connect.</p>
+</div>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M256 141.3v309.3l.5-.2A449 449 0 0 1 428.8 416H448V96h-19.2c-42.2 0-84.1 8.4-123.1 24.6-16.8 7-33.4 13.9-49.7 20.7m-25.1-79.8L256 72l25.1-10.5C327.9 42 378.1 32 428.8 32H464c26.5 0 48 21.5 48 48v352c0 26.5-21.5 48-48 48h-35.2c-50.7 0-100.9 10-147.7 29.5l-12.8 5.3c-7.9 3.3-16.7 3.3-24.6 0l-12.8-5.3C184.1 490 133.9 480 83.2 480H48c-26.5 0-48-21.5-48-48V80c0-26.5 21.5-48 48-48h35.2c50.7 0 100.9 10 147.7 29.5"/></svg></span>
+<a href="../handles/">Connection handles</a>,
+<a href="../files/">File system</a></p>
+<h2 id="listen-for-connections">Listen for connections<a class="headerlink" href="#listen-for-connections" title="Permanent link">&para;</a></h2>
+<p>A kdb+ process can define a <a href="../listening-port/">listening port</a> at start-up or at runtime. 
+kdb+ can receive messages over TCP, UDS (unix domain sockets), named pipes or a range of third party middlewares (for example, Kafka, Solace, and so on).</p>
+<h2 id="connecting">Connecting<a class="headerlink" href="#connecting" title="Permanent link">&para;</a></h2>
+<p>A kdb+ process can connect to another using <a href="../../ref/hopen/"><code>hopen</code></a>. For example, to start a kdb+ process listening on port 5000.</p>
+<p><div class="highlight"><pre><span></span><code>$<span class="w"> </span>q<span class="w"> </span>-p<span class="w"> </span><span class="m">5001</span>
+</code></pre></div>
+another kdb+ process can connect to this process with <a href="../../ref/hopen/"><code>hopen</code></a>:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="nv">h</span><span class="o">:</span><span class="ow">hopen</span><span class="w"> </span><span class="ss">`:</span><span class="o">:</span><span class="il">5001</span>
+<span class="gp">q)</span><span class="n">h</span><span class="w">                 </span><span class="c1">/h is the socket (an OS file descriptor)</span>
+<span class="mi">3i</span>
+</code></pre></div>
+<p>Sync messages can also be sent without a pre-existing connection using <a href="#one-shot-message">one-shot</a>.</p>
+<p>The maximum number of connections is defined by the system limit for protocol (operating system configurable). Prior to 4.1t 2023.09.15, the limit was hardcoded to 1022.
+After the limit is reached, you see the error <code>'conn</code> on the server process. All successfully opened connections remain open.</p>
+<div class="admonition note">
+<p class="admonition-title">It is important to use <a href="../../ref/hopen/#hclose"><code>hclose</code></a> once finished with any connection. Connections do not automatically close if their associated handle is deleted.</p>
+</div>
+<h2 id="closing-connections">Closing connections<a class="headerlink" href="#closing-connections" title="Permanent link">&para;</a></h2>
+<p>Client or server connections can be closed using <a href="../../ref/hopen/#hclose"><code>hclose</code></a>.</p>
+<h2 id="message-format">Message format<a class="headerlink" href="#message-format" title="Permanent link">&para;</a></h2>
+<p>Where <code>h</code> is the socket, the message may be a string or list.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="n">h</span><span class="s2">"2+2"</span><span class="w">   </span><span class="c1">/string</span>
+<span class="il">4</span>
+
+<span class="gp">q)</span><span class="n">h</span><span class="p">(</span><span class="o">+</span><span class="p">;</span><span class="il">2</span><span class="p">;</span><span class="il">2</span><span class="p">)</span><span class="w"> </span><span class="c1">/list</span>
+<span class="il">4</span>
+</code></pre></div>
+<p>Use the list format to pass local functions and data to the receiver.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="n">h</span><span class="s2">"fn:{2+x}"</span><span class="w"> </span><span class="c1">/Set function fn on receiver</span>
+<span class="gp">q)</span><span class="nf">fn</span><span class="o">:</span><span class="p">{</span><span class="il">4</span><span class="o">+</span><span class="n">x</span><span class="p">}</span><span class="w"> </span><span class="c1">/Set local function fn</span>
+
+<span class="gp">q)</span><span class="n">h</span><span class="p">(</span><span class="ss">`fn</span><span class="p">;</span><span class="il">2</span><span class="p">)</span><span class="w"> </span><span class="c1">/Receiver definition of fn called</span>
+<span class="il">4</span>
+
+<span class="gp">q)</span><span class="n">h</span><span class="p">(</span><span class="s2">"fn"</span><span class="p">;</span><span class="il">2</span><span class="p">)</span><span class="w"> </span><span class="c1">/Receiver definition of fn called</span>
+<span class="il">4</span>
+
+<span class="gp">q)</span><span class="n">h</span><span class="p">(</span><span class="n">fn</span><span class="p">;</span><span class="il">2</span><span class="p">)</span><span class="w"> </span><span class="c1">/Local fn passed to receiver for evaluation</span>
+<span class="il">6</span>
+
+<span class="gp">q)</span><span class="nv">v</span><span class="o">:</span><span class="il">10</span>
+<span class="gp">q)</span><span class="n">h</span><span class="p">(</span><span class="ss">`fn</span><span class="p">;</span><span class="n">v</span><span class="p">)</span><span class="w"> </span><span class="c1">/Passing variable as argument</span>
+<span class="il">12</span>
+
+<span class="gp">q)</span><span class="n">h</span><span class="p">({</span><span class="n">x</span><span class="o">+</span><span class="n">y</span><span class="p">};</span><span class="il">2</span><span class="p">;</span><span class="il">3</span><span class="p">)</span><span class="w"> </span><span class="c1">/Extend the list to pass more arguments</span>
+<span class="il">5</span>
+</code></pre></div>
+<h2 id="send-messages">Send messages<a class="headerlink" href="#send-messages" title="Permanent link">&para;</a></h2>
+<p>Send messages from the client to the server using the <a href="../handles/">connection handle</a> returned from <code>hopen</code>.</p>
+<p>There are three message types: sync, async, and response.</p>
+<h3 id="sync-request-get">Sync request (get)<a class="headerlink" href="#sync-request-get" title="Permanent link">&para;</a></h3>
+<p>Performs the following:</p>
+<ol>
+<li>sends any pending outgoing (async) messages on <code>h</code></li>
+<li>sends the sync request message</li>
+<li>processes any pending incoming messages on <code>h</code> until a response (or error) message is received</li>
+</ol>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="n">h</span><span class="s2">"2+2"</span><span class="w"> </span><span class="c1">/ this is sent to the remote process for calculation</span>
+<span class="il">4</span>
+</code></pre></div>
+<p>The method shown above is sending the query as a string.
+You can also execute a function on the server by passing a list with the function as first item, followed by its arguments.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="nv">h</span><span class="o">:</span><span class="ow">hopen</span><span class="w"> </span><span class="il">5000</span>
+<span class="gp">q)</span><span class="n">h</span><span class="p">(</span><span class="s2">"+"</span><span class="p">;</span><span class="il">2</span><span class="p">;</span><span class="il">2</span><span class="p">)</span>
+<span class="il">4</span>
+</code></pre></div>
+<div class="admonition tip">
+<p class="admonition-title">Default handling of a sync message</p>
+<p><a href="../../ref/dotz/#zpg-get"><code>.z.pg</code></a> is called on the server when any message is received. 
+The default processing calls <a href="../../ref/value/"><code>value</code></a> with the provided message. Using <code>value</code>, the processing for the two messages above would be:
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="nb">value</span><span class="w"> </span><span class="s2">"2+2"</span>
+<span class="il">4</span>
+<span class="gp">q)</span><span class="nb">value</span><span class="w"> </span><span class="p">(</span><span class="s2">"+"</span><span class="p">;</span><span class="il">2</span><span class="p">;</span><span class="il">2</span><span class="p">)</span>
+<span class="il">4</span>
+</code></pre></div></p>
+</div>
+<p>To execute a function defined on the <em>client side</em>, pass the function name so it is resolved before sending. </p>
+<p>To execute a function defined on the <em>server side</em>, pass the function name as a symbol.</p>
+<p>For example, run the following to create a server instance with a function called 'add':
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="o">\</span><span class="n">p</span><span class="w"> </span><span class="il">5000</span>
+<span class="gp">q)</span><span class="nf">add</span><span class="o">:</span><span class="p">{</span><span class="n">x</span><span class="o">+</span><span class="n">y</span><span class="p">}</span><span class="w">           </span><span class="c1">/ define a function 'add' on the server</span>
+</code></pre></div>
+Using a separate kdb+ instance, connect to the server and execute the functions:
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="nf">add</span><span class="o">:</span><span class="p">{</span><span class="n">x</span><span class="o">+</span><span class="il">2</span><span class="o">*</span><span class="n">y</span><span class="p">}</span><span class="w">         </span><span class="c1">/ define a function 'add' on the client</span>
+<span class="gp">q)</span><span class="nv">h</span><span class="o">:</span><span class="ow">hopen</span><span class="w"> </span><span class="il">5000</span><span class="w">        </span><span class="c1">/ connect to the server</span>
+<span class="gp">q)</span><span class="n">h</span><span class="p">(</span><span class="n">add</span><span class="p">;</span><span class="il">2</span><span class="p">;</span><span class="il">3</span><span class="p">)</span><span class="w">          </span><span class="c1">/ pass the client function 'add' to the server and execute, passing 2 parameters</span>
+<span class="il">8</span>
+<span class="gp">q)</span><span class="n">h</span><span class="p">(</span><span class="ss">`add</span><span class="p">;</span><span class="il">2</span><span class="p">;</span><span class="il">3</span><span class="p">)</span><span class="w">         </span><span class="c1">/ execute the 'add' function as defined on the server, passing 2 parameters</span>
+<span class="il">5</span>
+</code></pre></div></p>
+<div class="admonition warning">
+<p class="admonition-title">Nesting sync requests is not recommended: response messages may be out of request order.</p>
+</div>
+<h4 id="one-shot-message">One-shot message<a class="headerlink" href="#one-shot-message" title="Permanent link">&para;</a></h4>
+<p>A sync message can also be sent on a short-lived connection (called a <a href="../../ref/hopen/#one-shot-request">one-shot</a>). 
+When sending multiple messages, this is less efficient than <a href="#sync-request-get">using a pre-existing connection</a> due to the effort of repeated connections/disconnections.</p>
+<p>A useful shorthand for a one-shot get is:</p>
+<p><div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="ss">`:</span><span class="o">:</span><span class="il">5001</span><span class="w"> </span><span class="s2">"1+1"</span><span class="w"> </span>
+<span class="il">2</span>
+</code></pre></div>
+which is equivalent to 
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="ss">`:localhost</span><span class="o">:</span><span class="il">5001</span><span class="w"> </span><span class="s2">"1+1"</span>
+<span class="il">2</span>
+</code></pre></div></p>
+<h4 id="interrupting-requests">Interrupting requests<a class="headerlink" href="#interrupting-requests" title="Permanent link">&para;</a></h4>
+<p>It is possible to interrupt a long-running sync query with <code>kill -s INT *PID*</code>. As with the previous example, any subsequent attempt to communicate across this handle will fail.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="n">h</span><span class="s2">"system</span><span class="se">\"</span><span class="s2">sleep 30</span><span class="se">\"</span><span class="s2">"</span>
+<span class="o">'</span><span class="n">rcv</span><span class="w"> </span><span class="nv">handle</span><span class="o">:</span><span class="w"> </span><span class="mf">4.</span><span class="w"> </span><span class="n">OS</span><span class="w"> </span><span class="nv">reports</span><span class="o">:</span><span class="w"> </span><span class="n">Interrupted</span><span class="w"> </span><span class="nb">system</span><span class="w"> </span><span class="n">call</span>
+<span class="w">  </span><span class="p">[</span><span class="il">0</span><span class="p">]</span><span class="w">  </span><span class="n">h</span><span class="s2">"system</span><span class="se">\"</span><span class="s2">sleep 30</span><span class="se">\"</span><span class="s2">"</span>
+<span class="w">       </span><span class="o">^</span>
+<span class="gp">q)</span>
+<span class="gp">q)</span><span class="n">h</span><span class="s2">"a"</span>
+<span class="o">'</span><span class="n">Cannot</span><span class="w"> </span><span class="n">write</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">handle</span><span class="w"> </span><span class="mf">4.</span><span class="w"> </span><span class="n">OS</span><span class="w"> </span><span class="nv">reports</span><span class="o">:</span><span class="w"> </span><span class="n">Bad</span><span class="w"> </span><span class="n">file</span><span class="w"> </span><span class="n">descriptor</span>
+<span class="w">  </span><span class="p">[</span><span class="il">0</span><span class="p">]</span><span class="w">  </span><span class="n">h</span><span class="s2">"a"</span>
+<span class="w">       </span><span class="o">^</span>
+</code></pre></div>
+<h3 id="response-message-get-response">Response message (get response)<a class="headerlink" href="#response-message-get-response" title="Permanent link">&para;</a></h3>
+<p>Sent automatically by the listening process on completing a sync (get) request.</p>
+<h3 id="async-message-set">Async message (set)<a class="headerlink" href="#async-message-set" title="Permanent link">&para;</a></h3>
+<p>Serializes and puts a message on the output queue for handle <code>h</code>, and does not block client nor wait for any response message. A negative handle signifies async.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="nb">neg</span><span class="p">[</span><span class="n">h</span><span class="p">]</span><span class="s2">"a:10"</span><span class="w"> </span><span class="c1">/ on the remote instance, sets the variable a to 10</span>
+</code></pre></div>
+<p>Similar to <a href="#sync-request-get">sync messages</a>, you can replace the string representing the code to execute as a list. 
+The following example uses <a href="../../ref/display/"><code>0N!</code></a> to echo data provided to the servers console</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="nb">neg</span><span class="p">[</span><span class="n">h</span><span class="p">](</span><span class="s2">"0N!"</span><span class="p">;</span><span class="il">22</span><span class="p">)</span>
+</code></pre></div>
+<p>Since the process is not waiting for a response, async querying is critical in situations where waiting for an unresponsive subscriber is unacceptable, for example, in a tickerplant.</p>
+<p>You may consider increasing the size of TCP send/receive buffers on your system to reduce the amount of blocking whilst trying to write into a socket.</p>
+<h4 id="flushing">Flushing<a class="headerlink" href="#flushing" title="Permanent link">&para;</a></h4>
+<p>Messages can be queued for sending to a remote process through using async messaging. 
+kdb+ queues the serialized message in user space, later writing it to the socket as the remote end drains the message queue. </p>
+<p>You can see the queue size using <a href="../internal/#-38x-socket-table">-38!</a>, or <a href="../../ref/dotz/#zw-handles" title="handles"><code>.z.W</code></a> for all handles.</p>
+<p>Sometimes it is useful to send a large number of aysnc messages, but then to block until they have all been sent. 
+This can be achieved through using async flush – invoked as <code>neg[h][]</code> or <code>neg[h](::)</code>. </p>
+<p>If you need confirmation that the remote end has received and processed the async messages, use a sync request. For example, <code>h""</code> – the remote end processes the messages on a socket in the order that they are sent.</p>
+<div class="admonition note">
+<p class="admonition-title">Flushing can also be achieved by sending a synchronous message on the same handle. This confirms execution as all messages are processed in the order they are sent.</p>
+</div>
+<h4 id="broadcast">Broadcast<a class="headerlink" href="#broadcast" title="Permanent link">&para;</a></h4>
+<p>Much of the overhead of sending a message using IPC is in serializing the data before sending. 
+It is possible to ‘async broadcast’ the same message to multiple handles using the internal <a href="../internal/#-25x-async-broadcast">-25!</a> function. This serializes the message once and send to all handles to reduce CPU and memory load.</p>
+<h4 id="deferred-sync">Deferred sync<a class="headerlink" href="#deferred-sync" title="Permanent link">&para;</a></h4>
+<p>Deferred sync is when a message is sent asynchronously to the server using the negative handle and executes a function which includes an instruction 
+to return the result though the handle to the client process (<a href="../../ref/dotz/#zw-handle"><code>.z.w</code></a>), again asynchronously. </p>
+<p>After the client sends its async request it <a href="#async-blocking">blocks</a> on the handle waiting for a result to be returned.</p>
+<p>For example, start a kdb+ to act as a server
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="o">\</span><span class="n">p</span><span class="w"> </span><span class="il">5000</span>
+<span class="gp">q)</span><span class="nf">add</span><span class="o">:</span><span class="p">{</span><span class="n">x</span><span class="o">+</span><span class="n">y</span><span class="o">+</span><span class="n">z</span><span class="p">}</span>
+<span class="gp">q)</span><span class="nf">proc</span><span class="o">:</span><span class="p">{</span><span class="nb">neg</span><span class="p">[</span><span class="o">.</span><span class="n">z.w</span><span class="p">](</span><span class="n">add</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="n">x</span><span class="p">)}</span><span class="w">      </span><span class="c1">/ wrapper function for client comms</span>
+</code></pre></div>
+then run a kdb+ instance to connect to the server
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="nv">h</span><span class="o">:</span><span class="ow">hopen</span><span class="w"> </span><span class="il">5000</span>
+<span class="gp">q)</span><span class="nb">neg</span><span class="p">[</span><span class="n">h</span><span class="p">](</span><span class="ss">`proc</span><span class="p">;</span><span class="il">1</span><span class="w"> </span><span class="il">2</span><span class="w"> </span><span class="il">3</span><span class="p">);</span><span class="nv">res</span><span class="o">:</span><span class="n">h</span><span class="p">[];</span><span class="w">   </span><span class="c1">/ call 'proc' on server, wait for reply</span>
+<span class="gp">q)</span><span class="n">res</span>
+<span class="il">6</span>
+</code></pre></div></p>
+<h2 id="handle-messages">Handle messages<a class="headerlink" href="#handle-messages" title="Permanent link">&para;</a></h2>
+<p>Message handlers on the server are defined in the <a href="../../ref/dotz/"><code>.z</code> namespace</a>. Their default values can be overridden. 
+The following callback functions are provided which can be set to a user defined function if desired:</p>
+<ul>
+<li><a href="../../ref/dotz/#zpw-validate-user"><code>.z.pw</code></a> for <a href="#authentication-authorization">user validation</a></li>
+<li><a href="../../ref/dotz/#zpo-open"><code>.z.po</code></a> called when a connection to a kdb+ session has been initialized</li>
+<li><a href="../../ref/dotz/#zpg-get"><code>.z.pg</code></a> called for a sync request</li>
+<li><a href="../../ref/dotz/#zps-set"><code>.z.ps</code></a> called for a async request</li>
+<li><a href="../../ref/dotz/#zpc-close"><code>.z.pc</code></a> called after a connection has been closed</li>
+</ul>
+<p>The default values of these callback can be restored using <a href="../syscmds/#x-expunge"><code>\x</code></a>.</p>
+<p>These can be made a little more interesting by inserting some debug info. </p>
+<p>Dump the handle, IP address, username, timestamp and incoming request to stdout, execute the request and return:</p>
+<div class="highlight"><pre><span></span><code><span class="nf">.z.pg</span><span class="o">:</span><span class="p">{</span><span class="m">0N</span><span class="o">!</span><span class="p">(</span><span class="o">.</span><span class="n">z.w</span><span class="p">;</span><span class="o">.</span><span class="n">z.a</span><span class="p">;</span><span class="o">.</span><span class="n">z.u</span><span class="p">;</span><span class="o">.</span><span class="n">z.p</span><span class="p">;</span><span class="n">x</span><span class="p">);</span><span class="nb">value</span><span class="w"> </span><span class="n">x</span><span class="p">}</span>
+</code></pre></div>
+<p>To detect when a connection opens, simply override the port open handler, <code>.z.po</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="c1">/ dump the port open handle to stdout</span>
+<span class="nf">.z.po</span><span class="o">:</span><span class="p">{</span><span class="m">0N</span><span class="o">!</span><span class="p">(</span><span class="ss">`portOpen</span><span class="p">;</span><span class="n">x</span><span class="p">);}</span><span class="w"> </span>
+</code></pre></div>
+<p>To detect when a connection is closed from the remote end, override the port close handler, <code>.z.pc</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="c1">/ dump the handle that has just been closed to stdout</span>
+<span class="nf">.z.pc</span><span class="o">:</span><span class="p">{</span><span class="m">0N</span><span class="o">!</span><span class="p">(</span><span class="ss">`portClosed</span><span class="p">;</span><span class="n">x</span><span class="p">);}</span><span class="w"> </span>
+</code></pre></div>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M384 512H96c-53 0-96-43-96-96V96C0 43 43 0 96 0h304c26.5 0 48 21.5 48 48v288c0 20.9-13.4 38.7-32 45.3V448c17.7 0 32 14.3 32 32s-14.3 32-32 32zM96 384c-17.7 0-32 14.3-32 32s14.3 32 32 32h256v-64zm32-232c0 13.3 10.7 24 24 24h176c13.3 0 24-10.7 24-24s-10.7-24-24-24H152c-13.3 0-24 10.7-24 24m24 72c-13.3 0-24 10.7-24 24s10.7 24 24 24h176c13.3 0 24-10.7 24-24s-10.7-24-24-24z"/></svg></span> 
+<a href="../../ref/dotz/"><code>.z</code></a> namespace
+<br>
+<span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="m48 195.8 209.2 86.1c9.8 4 20.2 6.1 30.8 6.1s21-2.1 30.8-6.1l242.4-99.8c9-3.7 14.8-12.4 14.8-22.1s-5.8-18.4-14.8-22.1L318.8 38.1c-9.8-4-20.2-6.1-30.8-6.1s-21 2.1-30.8 6.1L14.8 137.9C5.8 141.6 0 150.3 0 160v296c0 13.3 10.7 24 24 24s24-10.7 24-24zm48 71.7V384c0 53 86 96 192 96s192-43 192-96V267.4l-142.9 58.9c-15.6 6.4-32.2 9.7-49.1 9.7s-33.5-3.3-49.1-9.7L96 267.4z"/></svg></span> 
+<a href="../kb/using-dotz.md">Using <code>.z</code></a> for more resources, including contributed code for tracing and monitoring</p>
+<h3 id="async-blocking">Async blocking<a class="headerlink" href="#async-blocking" title="Permanent link">&para;</a></h3>
+<p>To block until any async message is received on handle <code>h</code></p>
+<div class="highlight"><pre><span></span><code><span class="nv">r</span><span class="o">:</span><span class="n">h</span><span class="p">[]</span><span class="w"> </span><span class="c1">/ store message in r</span>
+</code></pre></div>
+<h2 id="authentication-authorization">Authentication / Authorization<a class="headerlink" href="#authentication-authorization" title="Permanent link">&para;</a></h2>
+<p>Basic access control and authentication is supported by using the <a href="../cmdline/#-u-usr-pwd-local">-u</a>/<a href="../cmdline/#-u-usr-pwd">-U</a> command-line option to specify a file of users and passwords. The <a href="../../ref/dotz/#zpw-validate-user">.z.pw</a> callback is called immediately after successful –u/-U authentication.</p>
+<p>If the -u/-U command-line options are not used, the .z.pw callback is executed for each new connection.</p>
+<p>The ability to set .z.pw to user defined function, allows allows integration with enterprise standards such as LDAP, Kerberos, OpenID Connect,etc</p>
+<p>Finer grained authorization can be implemented by tracking user information with active handles and customizing sync/async callbacks for user-level permissioning, for example, server with protected functions for sync calls.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="o">\</span><span class="n">p</span><span class="w"> </span><span class="il">5000</span>
+<span class="gp">q)</span><span class="nv">allowedFns</span><span class="o">:</span><span class="p">(</span><span class="ss">`func1</span><span class="p">;</span><span class="ss">`func2</span><span class="p">;</span><span class="ss">`func3</span><span class="p">;</span><span class="o">+</span><span class="p">;</span><span class="o">-</span><span class="p">)</span><span class="w"> </span><span class="c1">/ list of allowed function/ops to call</span>
+<span class="gp">q)</span><span class="nf">checkFn</span><span class="o">:</span><span class="p">{</span><span class="ow">if</span><span class="p">[</span><span class="nb">not</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">allowedFns</span><span class="p">;</span><span class="o">'</span><span class="p">(</span><span class="o">.</span><span class="n">Q.s1</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="o">,</span><span class="s2">" not allowed"</span><span class="p">];}</span>
+<span class="gp">q)</span><span class="nf">validatePT</span><span class="o">:</span><span class="p">{</span><span class="ow">if</span><span class="p">[</span><span class="mi">0h</span><span class="o">=</span><span class="nv">t</span><span class="o">:</span><span class="nb">type</span><span class="w"> </span><span class="n">x</span><span class="p">;</span><span class="ow">if</span><span class="p">[(</span><span class="nb">not</span><span class="w"> </span><span class="mi">0h</span><span class="o">=</span><span class="nb">type</span><span class="w"> </span><span class="nb">first</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="o">&amp;</span><span class="il">1</span><span class="o">=</span><span class="nb">count</span><span class="w"> </span><span class="nb">first</span><span class="w"> </span><span class="n">x</span><span class="p">;</span><span class="n">checkFn</span><span class="w"> </span><span class="nb">first</span><span class="w"> </span><span class="n">x</span><span class="p">;];</span><span class="o">.</span><span class="n">z.s</span><span class="w"> </span><span class="nb">each</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="nb">where</span><span class="w"> </span><span class="mi">0h</span><span class="o">=</span><span class="nb">type</span><span class="w"> </span><span class="nb">each</span><span class="w"> </span><span class="n">x</span><span class="p">;];}</span>
+<span class="gp">q)</span><span class="nf">.z.pg</span><span class="o">:</span><span class="p">{</span><span class="ow">if</span><span class="p">[</span><span class="mi">10h</span><span class="o">=</span><span class="nb">type</span><span class="w"> </span><span class="n">x</span><span class="p">;</span><span class="nv">x</span><span class="o">:</span><span class="nb">parse</span><span class="w"> </span><span class="n">x</span><span class="p">;];</span><span class="n">validatePT</span><span class="w"> </span><span class="n">x</span><span class="p">;</span><span class="nb">eval</span><span class="w"> </span><span class="n">x</span><span class="p">}</span>
+</code></pre></div>
+<p>client trying to access protected functions:
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="nv">h</span><span class="o">:</span><span class="ow">hopen</span><span class="w"> </span><span class="il">5000</span>
+<span class="gp">q)</span><span class="n">h</span><span class="s2">"1+1"</span>
+<span class="il">2</span>
+<span class="gp">q)</span><span class="n">h</span><span class="s2">"1*1"</span>
+<span class="o">'*</span><span class="w"> </span><span class="nb">not</span><span class="w"> </span><span class="n">allowed</span>
+<span class="w">  </span><span class="p">[</span><span class="il">0</span><span class="p">]</span><span class="w">  </span><span class="n">h</span><span class="s2">"1*1"</span>
+<span class="w">       </span><span class="o">^</span>
+</code></pre></div></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Ticker plants and other high-volume message sources, such as feed handlers, generally insert data using <code>.z.ps</code>. To manage such high volumes, the handles of those processes should be used to avoid the overhead of these validation checks. That is, feeds and tickerplants could be viewed as trusted processes.</p>
+</div>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M512 48c0-8.3-4.3-16-11.3-20.4s-15.9-4.8-23.3-1.1L352.5 88.1 180 29.4c-13.7-4.7-28.7-3.8-41.9 2.3L13.8 90.3C5.4 94.2 0 102.7 0 112v352c0 8.2 4.2 15.9 11.1 20.3s15.6 4.9 23.1 1.4l127.3-59.9 170.7 56.9c13.7 4.6 28.5 3.7 41.6-2.5l124.4-58.5c8.4-4 13.8-12.4 13.8-21.7zM144 82.1v299l-96 45.2v-299zm48 303.3V84.3l128 43.5v300.3zM368 134l96-47.4v298.2L368 430z"/></svg></span>
+<a href="../wp/permissions/index.md" title="White paper">Permissions with kdb+</a>
+<br>
+<span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M512 48c0-8.3-4.3-16-11.3-20.4s-15.9-4.8-23.3-1.1L352.5 88.1 180 29.4c-13.7-4.7-28.7-3.8-41.9 2.3L13.8 90.3C5.4 94.2 0 102.7 0 112v352c0 8.2 4.2 15.9 11.1 20.3s15.6 4.9 23.1 1.4l127.3-59.9 170.7 56.9c13.7 4.6 28.5 3.7 41.6-2.5l124.4-58.5c8.4-4 13.8-12.4 13.8-21.7zM144 82.1v299l-96 45.2v-299zm48 303.3V84.3l128 43.5v300.3zM368 134l96-47.4v298.2L368 430z"/></svg></span>
+<a href="../kb/using-dotz.md">Using .z</a></p>
+<h2 id="tracking-connections">Tracking connections<a class="headerlink" href="#tracking-connections" title="Permanent link">&para;</a></h2>
+<p>A list of current connections can be viewed using <a href="../../ref/dotz/#zh-active-sockets">.z.H</a>. A more detailed list is achieved via <a href="../internal/#-38x-socket-table">-38!</a>.</p>
+<p>Further tracking of connections on a server (tracking client connections) can be accomplished using customized implementations of <a href="../../ref/dotz/#zpo-open">.z.po</a> and <a href="../../ref/dotz/#zpc-close">.z.pc</a>.</p>
+<h2 id="protocol">Protocol<a class="headerlink" href="#protocol" title="Permanent link">&para;</a></h2>
+<p>The protocol is extremely simple, as is the message format. </p>
+<p>You can see what a TCP/IP message looks like by using <a href="../internal/#-8x-to-bytes"><code>-8!object</code></a>, which generates the byte vector for the <a href="../kb/serialization.md">serialization</a> of the object.</p>
+<p>This information is provided for debugging and troubleshooting only.</p>
+<h3 id="handshake">Handshake<a class="headerlink" href="#handshake" title="Permanent link">&para;</a></h3>
+<p>After a client has opened a socket to the server, it sends a null-terminated ASCII string <code>"username:password\N"</code> where <code>\N</code> is a single byte which represents the client’s capability with respect to compression, timestamp|timespan and UUID, e.g. <code>"myname:mypassword\3"</code>. </p>
+<p>kdb+ recognizes these capability bytes:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">byte</th>
+<th>effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">0</td>
+<td>(V2.5) no compression, no timestamp, no timespan, no UUID</td>
+</tr>
+<tr>
+<td style="text-align: center;">1..2</td>
+<td>(V2.6-2.8) compression, timestamp, timespan</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td>(V3.0) compression, timestamp, timespan, UUID</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td>reserved</td>
+</tr>
+<tr>
+<td style="text-align: center;">5</td>
+<td>support msgs &gt;2GB; vectors must each have a count ≤ 2 billion</td>
+</tr>
+<tr>
+<td style="text-align: center;">6</td>
+<td>support msgs &gt;2GB and vectors may each have a count &gt; 2 billion</td>
+</tr>
+</tbody>
+</table>
+<p>If the server rejects the credentials, it closes the connection immediately. </p>
+<p>If the server accepts the credentials, it sends a single-byte response which represents the common capability. </p>
+<div class="admonition warning">
+<p class="admonition-title">Java and C# have array length limits which make capabilities 5 and 6 inviable with their current object models.</p>
+</div>
+<h3 id="compression">Compression<a class="headerlink" href="#compression" title="Permanent link">&para;</a></h3>
+<p>For releases since 2012.05.29, kdb+ and the C-API will compress an outgoing message if</p>
+<ul>
+<li>Uncompressed serialized data has a length greater than 2000 bytes</li>
+<li>Connection is not <code>localhost</code></li>
+<li>Connection is not 127.0.0.1</li>
+<li>Connection is not using UDS (Unix Domain Socket)</li>
+<li>Connection does not resolve to being localhost (since 4.1t 2021.06.04)</li>
+<li>Size of compressed data is less than &frac12; the size of uncompressed data</li>
+</ul>
+<p>The compression/decompression algorithms are proprietary and implemented as the <code>compress</code> and <code>uncompress</code> methods in the <a href="https://github.com/kxsystems/javakdb">Java API</a>. The message validator does not validate the integrity of compressed messages.</p>
+<div class="admonition note">
+<p class="admonition-title">Enumerations are automatically converted to values before sending through IPC.</p>
+</div>
+<hr />
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M384 512H96c-53 0-96-43-96-96V96C0 43 43 0 96 0h304c26.5 0 48 21.5 48 48v288c0 20.9-13.4 38.7-32 45.3V448c17.7 0 32 14.3 32 32s-14.3 32-32 32zM96 384c-17.7 0-32 14.3-32 32s14.3 32 32 32h256v-64zm32-232c0 13.3 10.7 24 24 24h176c13.3 0 24-10.7 24-24s-10.7-24-24-24H152c-13.3 0-24 10.7-24 24m24 72c-13.3 0-24 10.7-24 24s10.7 24 24 24h176c13.3 0 24-10.7 24-24s-10.7-24-24-24z"/></svg></span>
+<a href="../../ref/hopen/"><code>hopen</code>, <code>hclose</code></a>,
+<a href="../../ref/hsym/"><code>hsym</code></a>
+<br>
+<a href="../../ref/dotz/"><code>.z</code> namespace</a> for callback functions
+<br> 
+<a href="../../ref/dotq/#addr-iphost-as-int"><code>.Q.addr</code></a> (IP/host as int), 
+<a href="../../ref/dotq/#host-ip-to-hostname"><code>.Q.host</code></a> (IP to hostname), 
+<br>
+<span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M256 141.3v309.3l.5-.2A449 449 0 0 1 428.8 416H448V96h-19.2c-42.2 0-84.1 8.4-123.1 24.6-16.8 7-33.4 13.9-49.7 20.7m-25.1-79.8L256 72l25.1-10.5C327.9 42 378.1 32 428.8 32H464c26.5 0 48 21.5 48 48v352c0 26.5-21.5 48-48 48h-35.2c-50.7 0-100.9 10-147.7 29.5l-12.8 5.3c-7.9 3.3-16.7 3.3-24.6 0l-12.8-5.3C184.1 490 133.9 480 83.2 480H48c-26.5 0-48-21.5-48-48V80c0-26.5 21.5-48 48-48h35.2c50.7 0 100.9 10 147.7 29.5"/></svg></span>
+<a href="../handles/">Connection handles</a>
+<br>
+<span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="m48 195.8 209.2 86.1c9.8 4 20.2 6.1 30.8 6.1s21-2.1 30.8-6.1l242.4-99.8c9-3.7 14.8-12.4 14.8-22.1s-5.8-18.4-14.8-22.1L318.8 38.1c-9.8-4-20.2-6.1-30.8-6.1s-21 2.1-30.8 6.1L14.8 137.9C5.8 141.6 0 150.3 0 160v296c0 13.3 10.7 24 24 24s24-10.7 24-24zm48 71.7V384c0 53 86 96 192 96s192-43 192-96V267.4l-142.9 58.9c-15.6 6.4-32.2 9.7-49.1 9.7s-33.5-3.3-49.1-9.7L96 267.4z"/></svg></span>
+<a href="../kb/serialization.md">Serialization examples</a>
+<br>
+<span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="m48 195.8 209.2 86.1c9.8 4 20.2 6.1 30.8 6.1s21-2.1 30.8-6.1l242.4-99.8c9-3.7 14.8-12.4 14.8-22.1s-5.8-18.4-14.8-22.1L318.8 38.1c-9.8-4-20.2-6.1-30.8-6.1s-21 2.1-30.8 6.1L14.8 137.9C5.8 141.6 0 150.3 0 160v296c0 13.3 10.7 24 24 24s24-10.7 24-24zm48 71.7V384c0 53 86 96 192 96s192-43 192-96V267.4l-142.9 58.9c-15.6 6.4-32.2 9.7-49.1 9.7s-33.5-3.3-49.1-9.7L96 267.4z"/></svg></span>
+<a href="../kb/websockets.md">WebSockets</a>
+<br>
+<span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M256 0a64 64 0 1 1 0 128 64 64 0 1 1 0-128m-32 160h64c35.3 0 64 28.7 64 64v48c0 17.7-14.3 32-32 32h-1.8l-11.1 99.5c-1.8 16.2-15.5 28.5-31.8 28.5h-38.7c-16.3 0-30-12.3-31.8-28.5L193.7 304h-1.8c-17.7 0-32-14.3-32-32v-48c0-35.3 28.7-64 64-64zm188.4 240.2c-16.1-4.2-34.8-7.6-55.4-10.2l5.3-47.7c22.7 2.9 43.7 6.7 62.1 11.5 22.4 5.8 42.6 13.3 57.8 23.3 14.7 9.6 29.8 24.9 29.8 47s-15.1 37.4-29.8 47c-15.2 9.9-35.5 17.5-57.8 23.3-45.1 11.7-105.3 17.8-168.4 17.8s-123.3-6.1-168.4-17.8c-22.4-6-42.6-13.5-57.8-23.4C15.1 461.4 0 446.1 0 424s15.1-37.4 29.8-47c15.2-9.9 35.5-17.5 57.8-23.3 18.5-4.8 39.5-8.6 62.1-11.5L155 390c-20.6 2.6-39.3 6.1-55.4 10.2-56.6 14.6-56.6 32.9 0 47.5 39.9 10.3 95.8 16.2 156.4 16.2s116.5-5.9 156.4-16.2c56.6-14.6 56.6-32.9 0-47.5"/></svg></span>
+<em>Q for Mortals</em>
+<a href="../../../q4m3/11_IO/#116-interprocess-communication">§11.6 Interprocess Communication</a></p>
+<div class="peachq-import-attribution">
+<p>Source adapted from the <a href="https://github.com/KxSystems/docs">Documentation for kdb+ and q</a>
+by KX Systems and contributors, used under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.
+<a href="../../attribution/">Attribution, provenance and independence notice</a>.</p>
+</div>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  <div class="md-copyright__highlight">
+    PeachQ - MIT-licensed open source q, built on Rayforce with DuckDB storage in progress.
+  </div>
+  <a href="../../../about">Built for the community</a> &middot;
+  <a href="../../../contact">Contact</a> &middot;
+  <a href="https://github.com/peachq-org/peachq" target="_blank" rel="noreferrer">GitHub</a>
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.sections", "navigation.top", "content.code.copy", "content.action.edit"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

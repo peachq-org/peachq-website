@@ -1,0 +1,587 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Use the -p command-line option or the \p system command to tell kdb+ to listen to a port. The command-line option and the system command take the same parameters and have the same syntax and semantics.">
+      
+      
+      
+        <link rel="canonical" href="https://peachq.org/docs/basics/listening-port/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../img/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Listening port – Basics – kdb+ and q documentation - PeachQ</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../css/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  
+  <script src="../../../mirror-banner.js"></script>
+  <script>
+    var _paq = window._paq = window._paq || [];
+    /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    (function() {
+      var u="//www.timestored.com/mat/";
+      _paq.push(['setTrackerUrl', u+'matomo.php']);
+      _paq.push(['setSiteId', '4']);
+      var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+      g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+    })();
+  </script>
+
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#listening-port" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../" title="PeachQ" class="md-header__button md-logo" aria-label="PeachQ" data-md-component="logo">
+      
+  <img src="../../../img/peachq-logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <a class="md-ellipsis peachq-wordmark" href="../../../">
+            Peach<span class="peachq-wordmark__q">Q</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    
+    <nav class="peachq-nav" aria-label="Site">
+      
+      
+      
+        
+        <a class="peachq-nav__link" href="../../../repl">Try Live</a>
+      
+        
+        <a class="peachq-nav__link" href="../../../download">Download</a>
+      
+        
+        <a class="peachq-nav__link" href="../../../compatibility">Compatibility</a>
+      
+        
+        <a class="peachq-nav__link" href="../../../roadmap">Roadmap</a>
+      
+        
+        <a class="peachq-nav__link" href="../../../news/">News</a>
+      
+        
+        <a class="peachq-nav__link" href="../../../about">About</a>
+      
+        
+        <a class="peachq-nav__link" href="../../../contact">Contact</a>
+      
+      <a class="peachq-nav__link" href="https://github.com/peachq-org/peachq" target="_blank" rel="noreferrer">GitHub &#8599;</a>
+    </nav>
+
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="PeachQ" class="md-nav__button md-logo" aria-label="PeachQ" data-md-component="logo">
+      
+  <img src="../../../img/peachq-logo.svg" alt="logo">
+
+    </a>
+    PeachQ
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/peachq-org/peachq" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../news/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    News
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#preventing-connections" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Preventing connections
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#load-balancing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Load balancing
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ephemeral-port" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ephemeral port
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#port-range" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Port range
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#multi-threaded-input-mode" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Multi-threaded input mode
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#unix-domain-socket" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Unix domain socket
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#security" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Security
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/peachq-org/peachq-website/edit/main/content/docs/basics/listening-port.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+
+
+<h1 id="listening-port">Listening port<a class="headerlink" href="#listening-port" title="Permanent link">&para;</a></h1>
+<p>Use the <a href="../cmdline/#-p-listening-port"><code>-p</code> command-line option</a> or the <a href="../syscmds/#p-listening-port"><code>\p</code> system command</a> to tell kdb+ to listen to a port. The command-line option and the system command take the same parameters.</p>
+<div class="highlight"><pre><span></span><code>\p [rp,][host:][portnumber|servicename]
+-p [rp,][host:](portnumber|servicename)
+</code></pre></div>
+<p>Where</p>
+<ul>
+<li><code>portnumber</code> is an integer or long infinity</li>
+<li><code>servicename</code> is defined in <code>/etc/services</code></li>
+</ul>
+<p>kdb+ will listen to <code>portnumber</code> or the port number of <code>servicename</code>. The port must be available and the process must have permission for the port.</p>
+<p><code>host</code> can be a hostname or IP address. When omitted, it will listen on all interfaces.</p>
+<div class="admonition tip">
+<p class="admonition-title">If you know the process is for clients on the localhost only, choose localhost:port for maximum security.</p>
+</div>
+<p>As of 4.1t 2022.11.01 (or 4.0 2022.10.26) a port range can be specified in place of a portnumber. The range of ports is inclusive and tried in a random order. A service name can be used instead of each port number. Using 0W to choose a free ephemeral port can be more efficient (where suitable).</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="o">\</span><span class="n">p</span><span class="w"> </span><span class="il">80</span><span class="o">/</span><span class="il">85</span>
+<span class="gp">q)</span><span class="o">\</span><span class="n">p</span>
+<span class="il">81</span>
+</code></pre></div>
+<p>Where no parameter is specified in the system command, the listening port is reported.
+The default is 0 (no listening port).</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="o">\</span><span class="n">p</span>
+<span class="mi">0i</span>
+</code></pre></div>
+<p>Given a servicename, q will look up its port number in <code>/etc/services</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="o">\</span><span class="n">p</span><span class="w"> </span><span class="n">commplex</span><span class="o">-</span><span class="n">main</span><span class="w">  </span><span class="c1">/ servicename</span>
+<span class="gp">q)</span><span class="o">\</span><span class="n">p</span>
+<span class="mi">5000i</span>
+</code></pre></div>
+<h2 id="preventing-connections">Preventing connections<a class="headerlink" href="#preventing-connections" title="Permanent link">&para;</a></h2>
+<p>To stop the process listening on a port at runtime, instruct it to listen on port 0:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="o">\</span><span class="n">p</span><span class="w"> </span><span class="il">0</span>
+</code></pre></div>
+<p>By default, kdb+ won't listen to a port unless a port is specified.</p>
+<h2 id="load-balancing">Load balancing<a class="headerlink" href="#load-balancing" title="Permanent link">&para;</a></h2>
+<p>Optional parameter <code>rp</code> enables the use of the <code>SO_REUSEPORT</code> socket option, which is available in newer versions of many operating systems, including Linux (kernel version 3.9 and later). This socket option allows multiple sockets (kdb+ processes) to listen on the same IP address and port combination. The kernel then load-balances incoming connections across the processes. (Since V3.5.)</p>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="m48 195.8 209.2 86.1c9.8 4 20.2 6.1 30.8 6.1s21-2.1 30.8-6.1l242.4-99.8c9-3.7 14.8-12.4 14.8-22.1s-5.8-18.4-14.8-22.1L318.8 38.1c-9.8-4-20.2-6.1-30.8-6.1s-21 2.1-30.8 6.1L14.8 137.9C5.8 141.6 0 150.3 0 160v296c0 13.3 10.7 24 24 24s24-10.7 24-24zm48 71.7V384c0 53 86 96 192 96s192-43 192-96V267.4l-142.9 58.9c-15.6 6.4-32.2 9.7-49.1 9.7s-33.5-3.3-49.1-9.7L96 267.4z"/></svg></span>
+<a href="../wp/socket-sharding/index.md">Socket sharding with kdb+ and Linux</a></p>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="m48 195.8 209.2 86.1c9.8 4 20.2 6.1 30.8 6.1s21-2.1 30.8-6.1l242.4-99.8c9-3.7 14.8-12.4 14.8-22.1s-5.8-18.4-14.8-22.1L318.8 38.1c-9.8-4-20.2-6.1-30.8-6.1s-21 2.1-30.8 6.1L14.8 137.9C5.8 141.6 0 150.3 0 160v296c0 13.3 10.7 24 24 24s24-10.7 24-24zm48 71.7V384c0 53 86 96 192 96s192-43 192-96V267.4l-142.9 58.9c-15.6 6.4-32.2 9.7-49.1 9.7s-33.5-3.3-49.1-9.7L96 267.4z"/></svg></span>
+<a href="../kb/load-balancing.md">A load-balancing kdb+ server</a></p>
+<h2 id="ephemeral-port">Ephemeral port<a class="headerlink" href="#ephemeral-port" title="Permanent link">&para;</a></h2>
+<p>A <code>portnumber</code> of <code>0W</code> means pick a random available port within the range 32768–60999.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="o">\</span><span class="n">p</span><span class="w"> </span><span class="il">5010</span><span class="w">     </span><span class="c1">/ set port 5010</span>
+<span class="gp">q)</span><span class="o">\</span><span class="n">p</span>
+<span class="il">5010</span>
+<span class="gp">q)</span><span class="o">\</span><span class="n">p</span><span class="w"> </span><span class="m">0W</span><span class="w">       </span><span class="c1">/ pick a random available port within the range 32768 - 60999</span>
+<span class="gp">q)</span><span class="o">\</span><span class="n">p</span>
+<span class="il">45512</span>
+<span class="gp">q)</span><span class="o">\</span><span class="n">p</span><span class="w"> </span><span class="il">0</span><span class="w">        </span><span class="c1">/ turn off listening port</span>
+</code></pre></div>
+<h2 id="port-range">Port range<a class="headerlink" href="#port-range" title="Permanent link">&para;</a></h2>
+<p>An inclusive range of ports can be used in place of a <code>portnumber</code>, to randomly use an available port within the given range (since V3.5/3.6 2023.03.13,V4.0 2022.10.26,V4.1 2022.11.01). A service name can be used instead of a port number within the range. Note that the ephemeral port option also provides the ability to choose from a range of ports.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="o">\</span><span class="n">p</span><span class="w"> </span><span class="il">2000</span><span class="o">/</span><span class="il">2010</span><span class="w">            </span><span class="c1">/ use a free port between 2000 and 2010</span>
+<span class="gp">q)</span><span class="o">\</span><span class="n">p</span><span class="w"> </span><span class="o">-</span><span class="il">2000</span><span class="o">/</span><span class="il">2010</span><span class="w">           </span><span class="c1">/ use a free port between 2000 and 2010 in multithreaded mode</span>
+<span class="gp">q)</span><span class="o">\</span><span class="n">p</span><span class="w"> </span><span class="nv">myhost</span><span class="o">:</span><span class="il">2000</span><span class="o">/</span><span class="il">2010</span><span class="w">     </span><span class="c1">/ use a free port between 2000 and 2010, using given hostname</span>
+</code></pre></div>
+<h2 id="multi-threaded-input-mode">Multi-threaded input mode<a class="headerlink" href="#multi-threaded-input-mode" title="Permanent link">&para;</a></h2>
+<p>A negative port sets a multi-threaded port and if used it must be the initial and only mode of operation, 
+i.e. do not dynamically switch between positive port and negative port.</p>
+<p>When active, each IPC connection will create a new thread for its sole use.
+Each connection uses its own heap with a minimum of 64MB, the real amount depending on the working space required by the query being executed. 
+<a href="../syscmds/#ts-time-and-space"><code>\ts</code></a> can be used to find the memory requirement of a query.
+It is designed for serving in-memory static data to an externally constrained number of clients. It is not intended for use as a gateway, or serving mutable data.</p>
+<p>Note that there are a number of restrictions in multithreaded mode:</p>
+<ul>
+<li>queries are unable to update globals</li>
+<li><a href="../../ref/dotz/#zpo-open">.z.po</a> is not called on connect</li>
+<li><a href="../../ref/dotz/#zpc-close">.z.pc</a> is not called on disconnect</li>
+<li><a href="../../ref/dotz/#zw-handles">.z.W</a> has a view on main thread sockets only</li>
+<li>Cannot send async message</li>
+<li>Views can be recalculated from the main thread only</li>
+<li>Uncompressed pages will not be shared between threads (i.e. same situation as with starting a separate hdb for each request). </li>
+</ul>
+<p>The main thread is allowed to update globals. The main thread is responsible for reading from stdin (i.e. the console) and executing any loaded scripts on start-up.
+It also invokes <a href="../../ref/dotz/#zts-timer">.z.ts</a> on <a href="../syscmds/#t-timer">timer expiry</a>. 
+Any connections made via IPC from the main thread, can be monitored
+for callbacks (for example via an <a href="../kb/callbacks.md">async callback</a>) which in turn can update globals.
+While the main thread is processing an update (for example, a timer firing or console input) none of the connection threads will be processing any input.
+Updates should not be frequent, as they wait for completion of exiting queries and block new queries (using multiple-read single-write lock), thus slowing processing speeds. 
+If an attempt is made to update globals from threads other than main, a <code>'no update</code> error is issued.</p>
+<p>Multithreaded input mode supports WebSockets and HTTP (but not TLS) since 4.1t 2021.03.30. 
+TLS support available since 4.1t 2023.12.14. A custom <a href="../../ref/dotz/#zph-http-get">.z.ph</a> which does not update global state should be used with HTTP.</p>
+<p>The use of sockets from within those threads is allowed only for the one-shot sync request and HTTP client request (TLS/SSL support added in 4.1t 2023.11.10). 
+These can be inefficient, as it opens, queries and closes each time. Erroneous socket usage is blocked and signals a nosocket error.</p>
+<p>In multithreaded input mode, the seed for the random-number generator used for threads other than the main thread is based on the socket descriptor for that connection; 
+these threads are transient – destroyed when the socket is closed, and no context is carried over for new threads/connections.</p>
+<h2 id="unix-domain-socket">Unix domain socket<a class="headerlink" href="#unix-domain-socket" title="Permanent link">&para;</a></h2>
+<p>Setting the listening port with <code>-p 5000</code>  in addition to listening on TCP port 5000, also creates a UDS (Unix domain socket) on <code>/tmp/kx.5000</code>.
+You can disable listening on the UDS, or change the default path from <code>/tmp</code> using environment variable <code>QUDSPATH</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="o">/</span><span class="w"> </span><span class="n">disable</span><span class="w"> </span><span class="n">listening</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="n">unix</span><span class="w"> </span><span class="n">domain</span><span class="w"> </span><span class="n">socket</span>
+<span class="gp">q)</span><span class="nb">system</span><span class="s2">"p 0"</span><span class="p">;</span><span class="ow">setenv</span><span class="p">[</span><span class="ss">`QUDSPATH</span><span class="p">;</span><span class="s2">""</span><span class="p">];</span><span class="nb">system</span><span class="s2">"p 6000"</span>
+<span class="gp">q)</span><span class="o">/</span><span class="w"> </span><span class="n">use</span><span class="w"> </span><span class="c1">/home/kdbuser as path</span>
+<span class="gp">q)</span><span class="nb">system</span><span class="s2">"p 0"</span><span class="p">;</span><span class="ow">setenv</span><span class="p">[</span><span class="ss">`QUDSPATH</span><span class="p">;</span><span class="s2">"/home/kdbuser"</span><span class="p">];</span><span class="nb">system</span><span class="s2">"p 6000"</span>
+</code></pre></div>
+<p>V3.5+ uses abstract namespace for Unix domain sockets on Linux to avoid file-permission issues in <code>/tmp</code>.</p>
+<p>N.B. hence V3.5 cannot connect to V3.4 using UDS.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="ow">hopen</span><span class="ss">`:unix</span><span class="o">://</span><span class="il">5000</span>
+</code></pre></div>
+<p>On macOS:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="o">\</span><span class="n">p</span><span class="w"> </span><span class="il">5000</span>
+<span class="gp">q)</span><span class="o">\</span><span class="n">ls</span><span class="w"> </span><span class="c1">/tmp/kx*</span>
+<span class="s2">"/tmp/kx.5000"</span>
+<span class="gp">q)</span><span class="nb">system</span><span class="s2">"p 0"</span><span class="p">;</span><span class="ow">setenv</span><span class="p">[</span><span class="ss">`QUDSPATH</span><span class="p">;</span><span class="s2">""</span><span class="p">];</span><span class="nb">system</span><span class="s2">"p 5000"</span>
+<span class="gp">q)</span><span class="o">\</span><span class="n">ls</span><span class="w"> </span><span class="c1">/tmp/kx*</span>
+<span class="nv">ls</span><span class="o">:</span><span class="w"> </span><span class="c1">/tmp/kx*: No such file or directory</span>
+<span class="o">'</span><span class="n">os</span>
+<span class="gp">q)</span><span class="nb">system</span><span class="s2">"p 0"</span><span class="p">;</span><span class="ow">setenv</span><span class="p">[</span><span class="ss">`QUDSPATH</span><span class="p">;</span><span class="s2">"/tmp/kxuds"</span><span class="p">];</span><span class="nb">system</span><span class="s2">"p 5000"</span>
+<span class="o">'</span><span class="n">cannot</span><span class="w"> </span><span class="n">listen</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="n">uds</span><span class="w"> </span><span class="c1">/tmp/kxuds/kx.5000. OS reports: No such file or directory</span>
+<span class="w">  </span><span class="p">[</span><span class="il">0</span><span class="p">]</span><span class="w">  </span><span class="nb">system</span><span class="s2">"p 0"</span><span class="p">;</span><span class="ow">setenv</span><span class="p">[</span><span class="ss">`QUDSPATH</span><span class="p">;</span><span class="s2">"/tmp/kxuds"</span><span class="p">];</span><span class="nb">system</span><span class="s2">"p 5000"</span>
+<span class="w">                                                  </span><span class="o">^</span>
+<span class="gp">q)</span><span class="o">\</span><span class="n">mkdir</span><span class="w"> </span><span class="c1">/tmp/kxuds</span>
+<span class="gp">q)</span><span class="nb">system</span><span class="s2">"p 0"</span><span class="p">;</span><span class="ow">setenv</span><span class="p">[</span><span class="ss">`QUDSPATH</span><span class="p">;</span><span class="s2">"/tmp/kxuds"</span><span class="p">];</span><span class="nb">system</span><span class="s2">"p 5000"</span>
+<span class="gp">q)</span><span class="o">\</span><span class="n">ls</span><span class="w"> </span><span class="c1">/tmp/kxuds</span>
+<span class="s2">"kx.5000"</span>
+</code></pre></div>
+<h2 id="security">Security<a class="headerlink" href="#security" title="Permanent link">&para;</a></h2>
+<p>Once you open a port in q session, it is open to all connections, including HTTP requests. </p>
+<div class="admonition tip">
+<p class="admonition-title">In a production environment secure any process with an open port.</p>
+</div>
+<hr />
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M384 512H96c-53 0-96-43-96-96V96C0 43 43 0 96 0h304c26.5 0 48 21.5 48 48v288c0 20.9-13.4 38.7-32 45.3V448c17.7 0 32 14.3 32 32s-14.3 32-32 32zM96 384c-17.7 0-32 14.3-32 32s14.3 32 32 32h256v-64zm32-232c0 13.3 10.7 24 24 24h176c13.3 0 24-10.7 24-24s-10.7-24-24-24H152c-13.3 0-24 10.7-24 24m24 72c-13.3 0-24 10.7-24 24s10.7 24 24 24h176c13.3 0 24-10.7 24-24s-10.7-24-24-24z"/></svg></span>
+<a href="../../ref/hopen/"><code>hopen</code></a>
+<br>
+<span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M256 141.3v309.3l.5-.2A449 449 0 0 1 428.8 416H448V96h-19.2c-42.2 0-84.1 8.4-123.1 24.6-16.8 7-33.4 13.9-49.7 20.7m-25.1-79.8L256 72l25.1-10.5C327.9 42 378.1 32 428.8 32H464c26.5 0 48 21.5 48 48v352c0 26.5-21.5 48-48 48h-35.2c-50.7 0-100.9 10-147.7 29.5l-12.8 5.3c-7.9 3.3-16.7 3.3-24.6 0l-12.8-5.3C184.1 490 133.9 480 83.2 480H48c-26.5 0-48-21.5-48-48V80c0-26.5 21.5-48 48-48h35.2c50.7 0 100.9 10 147.7 29.5"/></svg></span>
+Command-line options <a href="../cmdline/#-e-tls-server-mode"><code>-e</code></a>,
+<a href="../cmdline/#-p-listening-port"><code>-p</code></a>; 
+system command <a href="../syscmds/#p-listening-port"><code>\p</code></a></p>
+<div class="peachq-import-attribution">
+<p>Source adapted from the <a href="https://github.com/KxSystems/docs">Documentation for kdb+ and q</a>
+by KX Systems and contributors, used under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.
+<a href="../../attribution/">Attribution, provenance and independence notice</a>.</p>
+</div>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  <div class="md-copyright__highlight">
+    PeachQ - MIT-licensed open source q, built on Rayforce with DuckDB storage in progress.
+  </div>
+  <a href="../../../about">Built for the community</a> &middot;
+  <a href="../../../contact">Contact</a> &middot;
+  <a href="https://github.com/peachq-org/peachq" target="_blank" rel="noreferrer">GitHub</a>
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.sections", "navigation.top", "content.code.copy", "content.action.edit"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

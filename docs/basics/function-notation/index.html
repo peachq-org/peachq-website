@@ -1,0 +1,663 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Function notation enables the definition of functions. Function notation is also known as the lambda notation and the defined functions as lambdas.">
+      
+      
+        <meta name="author" content="Stephen Taylor">
+      
+      
+        <link rel="canonical" href="https://peachq.org/docs/basics/function-notation/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../img/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Function notation – Basics – kdb+ and q documentation - PeachQ</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../css/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  
+  <script src="../../../mirror-banner.js"></script>
+  <script>
+    var _paq = window._paq = window._paq || [];
+    /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    (function() {
+      var u="//www.timestored.com/mat/";
+      _paq.push(['setTrackerUrl', u+'matomo.php']);
+      _paq.push(['setSiteId', '4']);
+      var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+      g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+    })();
+  </script>
+
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#function-notation" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../" title="PeachQ" class="md-header__button md-logo" aria-label="PeachQ" data-md-component="logo">
+      
+  <img src="../../../img/peachq-logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <a class="md-ellipsis peachq-wordmark" href="../../../">
+            Peach<span class="peachq-wordmark__q">Q</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    
+    <nav class="peachq-nav" aria-label="Site">
+      
+      
+      
+        
+        <a class="peachq-nav__link" href="../../../repl">Try Live</a>
+      
+        
+        <a class="peachq-nav__link" href="../../../download">Download</a>
+      
+        
+        <a class="peachq-nav__link" href="../../../compatibility">Compatibility</a>
+      
+        
+        <a class="peachq-nav__link" href="../../../roadmap">Roadmap</a>
+      
+        
+        <a class="peachq-nav__link" href="../../../news/">News</a>
+      
+        
+        <a class="peachq-nav__link" href="../../../about">About</a>
+      
+        
+        <a class="peachq-nav__link" href="../../../contact">Contact</a>
+      
+      <a class="peachq-nav__link" href="https://github.com/peachq-org/peachq" target="_blank" rel="noreferrer">GitHub &#8599;</a>
+    </nav>
+
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="PeachQ" class="md-nav__button md-logo" aria-label="PeachQ" data-md-component="logo">
+      
+  <img src="../../../img/peachq-logo.svg" alt="logo">
+
+    </a>
+    PeachQ
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/peachq-org/peachq" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../news/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    News
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#signature" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Signature
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Signature">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pattern-matching" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pattern matching
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rank" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rank
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#result" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Result
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#explicit-return" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Explicit return
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#abort" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Abort
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#name-scope" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Name scope
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#multiline-definition" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Multiline definition
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#variables-and-constants" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Variables and constants
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/peachq-org/peachq-website/edit/main/content/docs/basics/function-notation.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+
+
+<h1 id="function-notation">Function notation<a class="headerlink" href="#function-notation" title="Permanent link">&para;</a></h1>
+<p>Function notation enables the definition of functions.
+Function notation is also known as the <em>lambda notation</em> and the defined functions as <em>lambdas</em>.</p>
+<div class="admonition note">
+<p class="admonition-title">Anonymity</p>
+<p>Although the term <em>lambda</em> originated elsewhere as a name for an anonymous function, we use it to denote any function defined using the lambda notation.</p>
+<p>In this usage a lambda assigned a name is still a lambda.
+For example, if <code>plus:{x+y}</code>, then <code>plus</code> is a lambda.</p>
+<p>Lambdas have datatype 100.</p>
+</div>
+<p>A lambda is defined as a pair of braces (curly brackets) enclosing an optional <em>signature</em> (a list of up to 8 argument names) followed by a zero or more expressions separated by semicolons.</p>
+<h2 id="signature">Signature<a class="headerlink" href="#signature" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="p">{[</span><span class="n">a</span><span class="p">;</span><span class="n">b</span><span class="p">]</span><span class="w"> </span><span class="nv">a2</span><span class="o">:</span><span class="n">a</span><span class="o">*</span><span class="n">a</span><span class="p">;</span><span class="w"> </span><span class="nv">b2</span><span class="o">:</span><span class="n">b</span><span class="o">*</span><span class="n">b</span><span class="p">;</span><span class="w"> </span><span class="n">a2</span><span class="o">+</span><span class="n">b2</span><span class="o">+</span><span class="il">2</span><span class="o">*</span><span class="n">a</span><span class="o">*</span><span class="n">b</span><span class="p">}[</span><span class="il">20</span><span class="p">;</span><span class="il">4</span><span class="p">]</span><span class="w">  </span><span class="c1">/ binary function</span>
+<span class="il">576</span>
+</code></pre></div>
+<p>Functions with 3 or fewer arguments may omit the signature and instead use default argument names <code>x</code>, <code>y</code> and <code>z</code>.</p>
+<p>A lambda with a signature is <em>signed</em>; without, <em>unsigned</em>.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="p">{[</span><span class="n">x</span><span class="p">;</span><span class="n">y</span><span class="p">](</span><span class="n">x</span><span class="o">*</span><span class="n">x</span><span class="p">)</span><span class="o">+</span><span class="p">(</span><span class="n">y</span><span class="o">*</span><span class="n">y</span><span class="p">)</span><span class="o">+</span><span class="il">2</span><span class="o">*</span><span class="n">x</span><span class="o">*</span><span class="n">y</span><span class="p">}[</span><span class="il">20</span><span class="p">;</span><span class="il">4</span><span class="p">]</span><span class="w">  </span><span class="c1">/ signed lambda</span>
+<span class="il">576</span>
+<span class="gp">q)</span><span class="p">{(</span><span class="n">x</span><span class="o">*</span><span class="n">x</span><span class="p">)</span><span class="o">+</span><span class="p">(</span><span class="n">y</span><span class="o">*</span><span class="n">y</span><span class="p">)</span><span class="o">+</span><span class="il">2</span><span class="o">*</span><span class="n">x</span><span class="o">*</span><span class="n">y</span><span class="p">}[</span><span class="il">20</span><span class="p">;</span><span class="il">4</span><span class="p">]</span><span class="w">       </span><span class="c1">/ unsigned lambda</span>
+<span class="il">576</span>
+</code></pre></div>
+<div class="admonition tip">
+<p class="admonition-title">Use <code>x</code>, <code>y</code>, and <code>z</code> only as names of the first three arguments</p>
+<p>Using other names for the first arguments of a lambda often helps the reader. But using <code>x</code>, <code>y</code>, or <code>z</code> for any other argument sows confusion.</p>
+</div>
+<h3 id="pattern-matching">Pattern matching<a class="headerlink" href="#pattern-matching" title="Permanent link">&para;</a></h3>
+<p>The function signature can include patterns - see <a href="../pattern/#function-parameters">pattern matching</a>.</p>
+<h2 id="rank">Rank<a class="headerlink" href="#rank" title="Permanent link">&para;</a></h2>
+<p>The <a href="../glossary/#rank">rank</a> of a function is the number of arguments it takes.</p>
+<p>The rank of a signed lambda is the number of names in its signature.</p>
+<p>The rank of an unsigned lambda is the here highest-numbered of the three default argument names <code>x</code> (1), <code>y</code> (2) and <code>z</code> (3) used in the function definition.</p>
+<div class="highlight"><pre><span></span><code><span class="p">{[</span><span class="n">h</span><span class="p">;</span><span class="n">l</span><span class="p">;</span><span class="n">o</span><span class="p">;</span><span class="n">c</span><span class="p">]</span><span class="mf">.5</span><span class="o">*</span><span class="p">(</span><span class="n">h</span><span class="o">-</span><span class="n">l</span><span class="p">;</span><span class="n">c</span><span class="o">-</span><span class="n">o</span><span class="p">)}</span><span class="w">      </span><span class="c1">/ rank 4</span>
+<span class="p">{</span><span class="n">x</span><span class="o">+</span><span class="n">y</span><span class="o">*</span><span class="il">10</span><span class="p">}</span><span class="w">                     </span><span class="c1">/ rank 2</span>
+<span class="p">{</span><span class="n">x</span><span class="o">+</span><span class="n">z</span><span class="o">*</span><span class="il">10</span><span class="p">}</span><span class="w">                     </span><span class="c1">/ rank 3</span>
+</code></pre></div>
+<h2 id="result">Result<a class="headerlink" href="#result" title="Permanent link">&para;</a></h2>
+<p>The result of the lambda is the result of the last statement evaluated. If the last statement is empty, the result is the generic null, which is not displayed.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="nf">f</span><span class="o">:</span><span class="p">{</span><span class="il">2</span><span class="o">*</span><span class="n">x</span><span class="p">;}</span><span class="w">      </span><span class="c1">/ last statement is empty</span>
+<span class="gp">q)</span><span class="n">f</span><span class="w"> </span><span class="il">10</span><span class="w">          </span><span class="c1">/ no result shown</span>
+<span class="gp">q)</span><span class="p">(</span><span class="o">::</span><span class="p">)</span><span class="o">~</span><span class="n">f</span><span class="w"> </span><span class="il">10</span><span class="w">     </span><span class="c1">/ matches generic null</span>
+<span class="mb">1b</span>
+</code></pre></div>
+<h2 id="explicit-return">Explicit return<a class="headerlink" href="#explicit-return" title="Permanent link">&para;</a></h2>
+<p>To terminate evaluation successfully and return a value, use an empty assignment, which is <code>:</code> with a value to its right and no variable to its left.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="nv">c</span><span class="o">:</span><span class="il">0</span>
+<span class="gp">q)</span><span class="nf">f</span><span class="o">:</span><span class="p">{</span><span class="nv">a</span><span class="o">:</span><span class="il">6</span><span class="p">;</span><span class="nv">b</span><span class="o">:</span><span class="il">7</span><span class="p">;</span><span class="o">:</span><span class="n">a</span><span class="o">*</span><span class="n">b</span><span class="p">;</span><span class="nv">c</span><span class="o">::</span><span class="il">98</span><span class="p">}</span>
+<span class="gp">q)</span><span class="n">f</span><span class="w"> </span><span class="il">0</span>
+<span class="il">42</span>
+<span class="gp">q)</span><span class="n">c</span>
+<span class="il">0</span>
+</code></pre></div>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M448 128H270.4c1 5.2 1.6 10.5 1.6 16v16h176c8.8 0 16-7.2 16-16s-7.2-16-16-16m-224 16c0-17.7-14.3-32-32-32h-24c-66.3 0-120 53.7-120 120v48c0 52.5 33.7 97.1 80.7 113.4-.5-3.1-.7-6.2-.7-9.4 0-20 9.2-37.9 23.6-49.7-4.9-9-7.6-19.4-7.6-30.3 0-15.1 5.3-29 14-40-8.8-11-14-24.9-14-40v-40c0-13.3 10.7-24 24-24s24 10.7 24 24v40c0 8.8 7.2 16 16 16s16-7.2 16-16zm-32-80c18 0 34.6 6 48 16h208c35.3 0 64 28.7 64 64s-28.7 64-64 64h-82c1.3 5.1 2 10.5 2 16 0 25.3-14.7 47.2-36 57.6 2.6 7 4 14.5 4 22.4 0 20-9.2 37.9-23.6 49.7 4.9 9 7.6 19.4 7.6 30.3 0 35.3-28.7 64-64 64h-88C75.2 448 0 372.8 0 280v-48C0 139.2 75.2 64 168 64zm64 336c8.8 0 16-7.2 16-16s-7.2-16-16-16h-64c-8.8 0-16 7.2-16 16s7.2 16 16 16zm16-176c0 5.5-.7 10.9-2 16h34c8.8 0 16-7.2 16-16s-7.2-16-16-16h-32zm-24 64h-40c-8.8 0-16 7.2-16 16s7.2 16 16 16h64c8.8 0 16-7.2 16-16s-7.2-16-16-16z"/></svg></span>
+<a href="../control/">Evaluation control</a></p>
+<h2 id="abort">Abort<a class="headerlink" href="#abort" title="Permanent link">&para;</a></h2>
+<p>To abort evaluation immediately, use Signal, which is <code>'</code> with a value to its right.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="nv">c</span><span class="o">:</span><span class="il">0</span>
+<span class="gp">q)</span><span class="nf">g</span><span class="o">:</span><span class="p">{</span><span class="nv">a</span><span class="o">:</span><span class="il">6</span><span class="p">;</span><span class="nv">b</span><span class="o">:</span><span class="il">7</span><span class="p">;</span><span class="ne">'`TheEnd</span><span class="p">;</span><span class="nv">c</span><span class="o">::</span><span class="il">98</span><span class="p">}</span>
+<span class="gp">q)</span><span class="n">g</span><span class="w"> </span><span class="il">0</span>
+<span class="p">{</span><span class="nv">a</span><span class="o">:</span><span class="il">6</span><span class="p">;</span><span class="nv">b</span><span class="o">:</span><span class="il">7</span><span class="p">;</span><span class="ne">'`TheEnd</span><span class="p">;</span><span class="nv">c</span><span class="o">::</span><span class="il">98</span><span class="p">}</span>
+<span class="o">'</span><span class="n">TheEnd</span>
+<span class="gp">q)</span><span class="n">c</span>
+<span class="il">0</span>
+</code></pre></div>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M448 128H270.4c1 5.2 1.6 10.5 1.6 16v16h176c8.8 0 16-7.2 16-16s-7.2-16-16-16m-224 16c0-17.7-14.3-32-32-32h-24c-66.3 0-120 53.7-120 120v48c0 52.5 33.7 97.1 80.7 113.4-.5-3.1-.7-6.2-.7-9.4 0-20 9.2-37.9 23.6-49.7-4.9-9-7.6-19.4-7.6-30.3 0-15.1 5.3-29 14-40-8.8-11-14-24.9-14-40v-40c0-13.3 10.7-24 24-24s24 10.7 24 24v40c0 8.8 7.2 16 16 16s16-7.2 16-16zm-32-80c18 0 34.6 6 48 16h208c35.3 0 64 28.7 64 64s-28.7 64-64 64h-82c1.3 5.1 2 10.5 2 16 0 25.3-14.7 47.2-36 57.6 2.6 7 4 14.5 4 22.4 0 20-9.2 37.9-23.6 49.7 4.9 9 7.6 19.4 7.6 30.3 0 35.3-28.7 64-64 64h-88C75.2 448 0 372.8 0 280v-48C0 139.2 75.2 64 168 64zm64 336c8.8 0 16-7.2 16-16s-7.2-16-16-16h-64c-8.8 0-16 7.2-16 16s7.2 16 16 16zm16-176c0 5.5-.7 10.9-2 16h34c8.8 0 16-7.2 16-16s-7.2-16-16-16h-32zm-24 64h-40c-8.8 0-16 7.2-16 16s7.2 16 16 16h64c8.8 0 16-7.2 16-16s-7.2-16-16-16z"/></svg></span>
+<a href="../errors/">Error handling</a></p>
+<h2 id="name-scope">Name scope<a class="headerlink" href="#name-scope" title="Permanent link">&para;</a></h2>
+<p>Within the context of a function,</p>
+<ul>
+<li>name assignments with <code>:</code> are <em>local</em> to it and end after evaluation</li>
+<li>assignments with <code>::</code> are <em>global</em> (in the session root) and persist after evaluation <em>unless</em> the name assigned is an argument or already defined as a local</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="nv">a</span><span class="o">:</span><span class="nv">b</span><span class="o">:</span><span class="il">0</span><span class="w">                      </span><span class="c1">/ set globals a and b to 0</span>
+<span class="gp">q)</span><span class="nf">f</span><span class="o">:</span><span class="p">{</span><span class="nv">a</span><span class="o">:</span><span class="il">10</span><span class="o">+</span><span class="il">3</span><span class="o">*</span><span class="n">x</span><span class="p">;</span><span class="nv">b</span><span class="o">::</span><span class="il">100</span><span class="o">+</span><span class="n">a</span><span class="p">;}</span><span class="w">     </span><span class="c1">/ f sets local a, global b</span>
+<span class="gp">q)</span><span class="n">f</span><span class="w"> </span><span class="il">1</span><span class="w"> </span><span class="il">2</span><span class="w"> </span><span class="il">3</span><span class="w">                    </span><span class="c1">/ apply f</span>
+<span class="gp">q)</span><span class="n">a</span><span class="w">                          </span><span class="c1">/ global a is unchanged</span>
+<span class="il">0</span>
+<span class="gp">q)</span><span class="n">b</span><span class="w">                          </span><span class="c1">/ global b is updated</span>
+<span class="il">113</span><span class="w"> </span><span class="il">116</span><span class="w"> </span><span class="il">119</span>
+
+<span class="gp">q)</span><span class="nv">b</span><span class="o">:</span><span class="il">42</span>
+<span class="gp">q)</span><span class="p">{[</span><span class="n">a</span><span class="p">;</span><span class="n">b</span><span class="p">]</span><span class="nv">b</span><span class="o">::</span><span class="il">99</span><span class="p">;</span><span class="n">a</span><span class="o">+</span><span class="n">b</span><span class="p">}[</span><span class="il">10</span><span class="p">;</span><span class="il">20</span><span class="p">]</span><span class="w">    </span><span class="c1">/ assignment is local</span>
+<span class="il">109</span>
+<span class="gp">q)</span><span class="n">b</span>
+<span class="il">42</span>
+<span class="gp">q)</span><span class="p">{</span><span class="nv">b</span><span class="o">:</span><span class="n">x</span><span class="o">=</span><span class="n">y</span><span class="p">;</span><span class="nv">b</span><span class="o">::</span><span class="il">99</span><span class="p">;</span><span class="n">x</span><span class="o">+</span><span class="n">b</span><span class="p">}[</span><span class="il">10</span><span class="p">;</span><span class="il">20</span><span class="p">]</span><span class="w">   </span><span class="c1">/ assignment is local</span>
+<span class="il">109</span>
+<span class="gp">q)</span><span class="n">b</span>
+<span class="il">42</span>
+</code></pre></div>
+<p>References to names <em>not</em> assigned locally are resolved in the session root. Local assignments are <em>strictly local</em>: invisible to other functions applied during evaluation.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="nv">a</span><span class="o">:</span><span class="il">42</span><span class="w">           </span><span class="c1">/ assigned in root</span>
+<span class="gp">q)</span><span class="nf">f</span><span class="o">:</span><span class="p">{</span><span class="n">a</span><span class="o">+</span><span class="n">x</span><span class="p">}</span>
+<span class="gp">q)</span><span class="n">f</span><span class="w"> </span><span class="il">1</span><span class="w">            </span><span class="c1">/ f reads a in root</span>
+<span class="il">43</span>
+<span class="gp">q)</span><span class="p">{</span><span class="nv">a</span><span class="o">:</span><span class="il">1000</span><span class="p">;</span><span class="n">f</span><span class="w"> </span><span class="n">x</span><span class="p">}</span><span class="il">1</span><span class="w">  </span><span class="c1">/ f reads a in root</span>
+<span class="il">43</span>
+</code></pre></div>
+<p>Local variables are identified on parsing and initialized as <code>()</code> (empty list). Assignments within code branches (never recommended) can produce unexpected results.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="nv">t</span><span class="o">:</span><span class="p">([]</span><span class="il">0</span><span class="w"> </span><span class="il">1</span><span class="p">)</span>
+<span class="gp">q)</span><span class="p">{</span><span class="ow">select</span><span class="w"> </span><span class="ow">from</span><span class="w"> </span><span class="n">t</span><span class="p">}[]</span><span class="w">                       </span><span class="c1">/ global t</span>
+<span class="n">x</span>
+<span class="o">-</span>
+<span class="il">0</span>
+<span class="il">1</span>
+<span class="gp">q)</span><span class="p">{</span><span class="ow">if</span><span class="p">[</span><span class="n">x</span><span class="p">;</span><span class="nv">t</span><span class="o">:</span><span class="p">([]</span><span class="ss">`a`b</span><span class="p">)];</span><span class="ow">select</span><span class="w"> </span><span class="ow">from</span><span class="w"> </span><span class="n">t</span><span class="p">}</span><span class="w"> </span><span class="mb">1b</span><span class="w">     </span><span class="c1">/ local t</span>
+<span class="n">x</span>
+<span class="o">-</span>
+<span class="n">a</span>
+<span class="n">b</span>
+<span class="gp">q)</span><span class="w"> </span><span class="p">{</span><span class="ow">if</span><span class="p">[</span><span class="n">x</span><span class="p">;</span><span class="nv">t</span><span class="o">:</span><span class="p">([]</span><span class="ss">`a`b</span><span class="p">)];</span><span class="ow">select</span><span class="w"> </span><span class="ow">from</span><span class="w"> </span><span class="n">t</span><span class="p">}</span><span class="w"> </span><span class="mb">0b</span><span class="w">     </span><span class="c1">/ local t is ()</span>
+<span class="o">'</span><span class="nb">type</span>
+<span class="w">  </span><span class="p">[</span><span class="il">4</span><span class="p">]</span><span class="w">  </span><span class="p">{</span><span class="ow">if</span><span class="p">[</span><span class="n">x</span><span class="p">;</span><span class="nv">t</span><span class="o">:</span><span class="p">([]</span><span class="ss">`a`b</span><span class="p">)];</span><span class="ow">select</span><span class="w"> </span><span class="ow">from</span><span class="w"> </span><span class="n">t</span><span class="p">}</span>
+<span class="w">                         </span><span class="o">^</span>
+</code></pre></div>
+<div class="admonition tip">
+<p class="admonition-title">Within lambdas, read and set global variables with <code>get</code> and <code>set</code></p>
+</div>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M384 512H96c-53 0-96-43-96-96V96C0 43 43 0 96 0h304c26.5 0 48 21.5 48 48v288c0 20.9-13.4 38.7-32 45.3V448c17.7 0 32 14.3 32 32s-14.3 32-32 32zM96 384c-17.7 0-32 14.3-32 32s14.3 32 32 32h256v-64zm32-232c0 13.3 10.7 24 24 24h176c13.3 0 24-10.7 24-24s-10.7-24-24-24H152c-13.3 0-24 10.7-24 24m24 72c-13.3 0-24 10.7-24 24s10.7 24 24 24h176c13.3 0 24-10.7 24-24s-10.7-24-24-24z"/></svg></span>
+<a href="../../ref/get/"><code>get</code>, <code>set</code></a></p>
+<h2 id="multiline-definition">Multiline definition<a class="headerlink" href="#multiline-definition" title="Permanent link">&para;</a></h2>
+<p>In scripts function definitions can straddle multiple lines.</p>
+<div class="highlight"><pre><span></span><code><span class="nf">sqsum</span><span class="o">:</span><span class="p">{[</span><span class="n">a</span><span class="p">;</span><span class="n">b</span><span class="p">]</span><span class="w">   </span><span class="c1">/ square of sum</span>
+<span class="w">  </span><span class="nv">a2</span><span class="o">:</span><span class="n">a</span><span class="o">*</span><span class="n">a</span><span class="p">;</span>
+<span class="w">  </span><span class="nv">b2</span><span class="o">:</span><span class="n">b</span><span class="o">*</span><span class="n">b</span><span class="p">;</span>
+<span class="w">  </span><span class="n">a2</span><span class="o">+</span><span class="n">b2</span><span class="o">+</span><span class="il">2</span><span class="o">*</span><span class="n">a</span><span class="o">*</span><span class="n">b</span><span class="w">  </span><span class="c1">/ implicit result</span>
+<span class="w">  </span><span class="p">}</span>
+</code></pre></div>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M256 141.3v309.3l.5-.2A449 449 0 0 1 428.8 416H448V96h-19.2c-42.2 0-84.1 8.4-123.1 24.6-16.8 7-33.4 13.9-49.7 20.7m-25.1-79.8L256 72l25.1-10.5C327.9 42 378.1 32 428.8 32H464c26.5 0 48 21.5 48 48v352c0 26.5-21.5 48-48 48h-35.2c-50.7 0-100.9 10-147.7 29.5l-12.8 5.3c-7.9 3.3-16.7 3.3-24.6 0l-12.8-5.3C184.1 490 133.9 480 83.2 480H48c-26.5 0-48-21.5-48-48V80c0-26.5 21.5-48 48-48h35.2c50.7 0 100.9 10 147.7 29.5"/></svg></span>
+<a href="../syntax/#multiline-expressions">Multiline expressions</a></p>
+<h2 id="variables-and-constants">Variables and constants<a class="headerlink" href="#variables-and-constants" title="Permanent link">&para;</a></h2>
+<p>A lambda definition can include up to:</p>
+<table>
+<thead>
+<tr>
+<th>&nbsp;</th>
+<th>in use</th>
+<th>current</th>
+<th>V3.5</th>
+<th>&lt;V3.5</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>arguments</td>
+<td></td>
+<td>8</td>
+<td>8</td>
+<td>8</td>
+</tr>
+<tr>
+<td>locals</td>
+<td>$m$</td>
+<td>110</td>
+<td>23</td>
+<td>23</td>
+</tr>
+<tr>
+<td>globals</td>
+<td>$n$</td>
+<td>110</td>
+<td>31</td>
+<td>31</td>
+</tr>
+<tr>
+<td>constants</td>
+<td></td>
+<td>$239-(m+n)$</td>
+<td>95</td>
+<td>96</td>
+</tr>
+</tbody>
+</table>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M256 141.3v309.3l.5-.2A449 449 0 0 1 428.8 416H448V96h-19.2c-42.2 0-84.1 8.4-123.1 24.6-16.8 7-33.4 13.9-49.7 20.7m-25.1-79.8L256 72l25.1-10.5C327.9 42 378.1 32 428.8 32H464c26.5 0 48 21.5 48 48v352c0 26.5-21.5 48-48 48h-35.2c-50.7 0-100.9 10-147.7 29.5l-12.8 5.3c-7.9 3.3-16.7 3.3-24.6 0l-12.8-5.3C184.1 490 133.9 480 83.2 480H48c-26.5 0-48-21.5-48-48V80c0-26.5 21.5-48 48-48h35.2c50.7 0 100.9 10 147.7 29.5"/></svg></span>
+<a href="../errors/#parse-errors">Parse errors</a></p>
+<p><div class="peachq-import-attribution" markdown>
+Source adapted from the <a href="https://github.com/KxSystems/docs">Documentation for kdb+ and q</a>
+by KX Systems and contributors, used under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.
+<a href="../../attribution/">Attribution, provenance and independence notice</a>.
+</div></p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  <div class="md-copyright__highlight">
+    PeachQ - MIT-licensed open source q, built on Rayforce with DuckDB storage in progress.
+  </div>
+  <a href="../../../about">Built for the community</a> &middot;
+  <a href="../../../contact">Contact</a> &middot;
+  <a href="https://github.com/peachq-org/peachq" target="_blank" rel="noreferrer">GitHub</a>
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.sections", "navigation.top", "content.code.copy", "content.action.edit"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

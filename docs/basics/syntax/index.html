@@ -1,0 +1,1367 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Syntax of the q programming language">
+      
+      
+        <meta name="author" content="Stephen Taylor">
+      
+      
+        <link rel="canonical" href="https://peachq.org/docs/basics/syntax/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../img/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Syntax | Basics | kdb+ and q documentation - PeachQ</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../css/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  
+  <script src="../../../mirror-banner.js"></script>
+  <script>
+    var _paq = window._paq = window._paq || [];
+    /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    (function() {
+      var u="//www.timestored.com/mat/";
+      _paq.push(['setTrackerUrl', u+'matomo.php']);
+      _paq.push(['setSiteId', '4']);
+      var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+      g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+    })();
+  </script>
+
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#syntax" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../" title="PeachQ" class="md-header__button md-logo" aria-label="PeachQ" data-md-component="logo">
+      
+  <img src="../../../img/peachq-logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <a class="md-ellipsis peachq-wordmark" href="../../../">
+            Peach<span class="peachq-wordmark__q">Q</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    
+    <nav class="peachq-nav" aria-label="Site">
+      
+      
+      
+        
+        <a class="peachq-nav__link" href="../../../repl">Try Live</a>
+      
+        
+        <a class="peachq-nav__link" href="../../../download">Download</a>
+      
+        
+        <a class="peachq-nav__link" href="../../../compatibility">Compatibility</a>
+      
+        
+        <a class="peachq-nav__link" href="../../../roadmap">Roadmap</a>
+      
+        
+        <a class="peachq-nav__link" href="../../../news/">News</a>
+      
+        
+        <a class="peachq-nav__link" href="../../../about">About</a>
+      
+        
+        <a class="peachq-nav__link" href="../../../contact">Contact</a>
+      
+      <a class="peachq-nav__link" href="https://github.com/peachq-org/peachq" target="_blank" rel="noreferrer">GitHub &#8599;</a>
+    </nav>
+
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="PeachQ" class="md-nav__button md-logo" aria-label="PeachQ" data-md-component="logo">
+      
+  <img src="../../../img/peachq-logo.svg" alt="logo">
+
+    </a>
+    PeachQ
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/peachq-org/peachq" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../news/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    News
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#elements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Elements
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tokens" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tokens
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nouns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Nouns
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#list-notation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        List notation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#vector-notation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Vector notation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Vector notation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#strings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Strings
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#table-notation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Table notation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#attributes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Attributes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bracket-notation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bracket notation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Bracket notation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#indexing-tables" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Indexing tables
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conditional-evaluation-and-control-statements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conditional evaluation and control statements
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#function-notation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Function notation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prefix-infix-postfix" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prefix, infix, postfix
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Prefix, infix, postfix">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#infix-and-prefix-notation-have-long-right-scope" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Infix and prefix notation have long right scope
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#postfix-yields-infix" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Postfix yields infix
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prefix-and-vector-notation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prefix and vector notation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#parentheses-around-a-function-with-infix-syntax" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parentheses around a function with infix syntax
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#compound-expressions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Compound expressions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#empty-expressions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Empty expressions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#colon" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Colon
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Colon">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#assign" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Assign
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#explicit-return" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Explicit return
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#colons-in-names" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Colons in names
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#colon-colon" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Colon colon
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#iterators" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Iterators
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#names-and-namespaces" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Names and namespaces
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#iterator-composition" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Iterator composition
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#projecting-the-left-argument-of-an-operator" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Projecting the left argument of an operator
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#precedence-and-order-of-evaluation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Precedence and order of evaluation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#multiline-expressions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Multiline expressions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#spaces" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Spaces
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#comments" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Comments
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#special-constructs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Special constructs
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/peachq-org/peachq-website/edit/main/content/docs/basics/syntax.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+
+
+<h1 id="syntax">Syntax<a class="headerlink" href="#syntax" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p>It is a privilege to learn a language,<br />
+a journey into the immediate<br />
+– <em>Marilyn Hacker</em>, “Learning Distances”</p>
+</blockquote>
+<div class="admonition info">
+<p class="admonition-title">The q-SQL query templates <code>select</code>, <code>exec</code>, <code>update</code>, and <code>delete</code> have their <a href="../qsql/">own syntax</a>.</p>
+</div>
+<h2 id="elements">Elements<a class="headerlink" href="#elements" title="Permanent link">&para;</a></h2>
+<p>The elements of q are </p>
+<ul>
+<li>functions: operators, keywords, lambdas, and extensions</li>
+<li>data structures: atoms, lists, dictionaries, tables, expression lists, and parse trees</li>
+<li>attributes of data structures</li>
+<li>control words</li>
+<li>scripts</li>
+<li>environment variables</li>
+</ul>
+<div class="admonition info">
+<p class="admonition-title">Applicable values</p>
+<p>Lists, dictionaries, file and process handles, and functions of all kinds are all <em>applicable values</em>. An applicable value is a mapping. </p>
+<p>A function maps its domains to its range. 
+A list maps its indexes to its items.
+A dictionary maps its keys to its values.</p>
+</div>
+<h2 id="tokens">Tokens<a class="headerlink" href="#tokens" title="Permanent link">&para;</a></h2>
+<p>All the ASCII symbols have syntactic significance in q. Some denote functions, that is, actions to be taken; some denote nouns, which are acted on by functions; some denote iterators, which modify nouns and functions to produce new functions; some are grouped to form names and constants; and others are punctuation that bound and separate expressions and expression groups.</p>
+<p>The term <strong>token</strong> is used to mean one or more characters that form a syntactic unit. For instance, the tokens in the expression <code>10.86 +/ LIST</code> are the constant <code>10.86</code>, the name <code>LIST</code>, and the symbols <code>+</code> and <code>/</code>. The only tokens that can have more than one character are constants and names and the following.</p>
+<div class="highlight"><pre><span></span><code><span class="o">&lt;=</span><span class="w">   </span><span class="c1">/ less-than-or-equal</span>
+<span class="o">&gt;=</span><span class="w">   </span><span class="c1">/ greater-than-or-equal</span>
+<span class="o">&lt;&gt;</span><span class="w">   </span><span class="c1">/ not-equal</span>
+<span class="o">::</span><span class="w">   </span><span class="c1">/ null, view, set global</span>
+<span class="c1">/:   / each-right</span>
+<span class="o">\:</span><span class="w">   </span><span class="c1">/ each-left</span>
+<span class="o">':</span><span class="w">   </span><span class="c1">/ each-prior, each-parallel</span>
+</code></pre></div>
+<p>When it is necessary to refer to the token to the left or right of another unit, terms like “immediately to the left” and “followed immediately by” mean that there are no spaces between the two tokens.</p>
+<h2 id="nouns">Nouns<a class="headerlink" href="#nouns" title="Permanent link">&para;</a></h2>
+<p>All data are syntactically <strong>nouns</strong>. Data include </p>
+<ul>
+<li>atomic values</li>
+<li>collections of atomic values in lists</li>
+<li>lists of lists, and so on</li>
+</ul>
+<dl>
+<dt>Atomic values</dt>
+<dd>
+<p>include character, integer, floating-point, and temporal values, as well as symbols, functions, dictionaries, and a special atom <code>::</code>, called <em>null</em>. All functions are atomic data. </p>
+</dd>
+<dt>List constants</dt>
+<dd>
+<p>include several forms for the empty list denoting the empty integer list, empty symbol list, and so on. (One-item lists are displayed using the comma to distinguish them from atoms, as in <code>,2</code> the one-item list consisting of the single integer item 2.)</p>
+</dd>
+<dt>Numerical constants</dt>
+<dd>
+<p>(integer and floating-point) are denoted in the usual ways, with both decimal and exponential notation for floating-point numbers. 
+A negative numerical constant is denoted by a minus sign immediately to the left of a positive numerical constant.
+Special atoms for numerical and temporal datatypes (e.g. <code>0W</code> and <code>0N</code>) refer to infinities and “not-a-number” (or “null” in database parlance) concepts. </p>
+</dd>
+<dt>Temporal constants</dt>
+<dd>
+<p>include timestamps, months, dates, datetimes, timespans, minutes, and seconds. </p>
+<div class="highlight"><pre><span></span><code><span class="mf">2017.01</span><span class="w">              </span><span class="c1">/ month   </span>
+<span class="ld">2017.01.18</span><span class="w">           </span><span class="c1">/ date    </span>
+<span class="ld">00:00:00.000</span><span class="il">000000</span><span class="w">   </span><span class="c1">/ timespan</span>
+<span class="ld">00:00</span><span class="w">                </span><span class="c1">/ minute  </span>
+<span class="ld">00:00:00</span><span class="w">             </span><span class="c1">/ second  </span>
+<span class="ld">00:00:00.000</span><span class="w">         </span><span class="c1">/ time    </span>
+</code></pre></div>
+</dd>
+</dl>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M256 141.3v309.3l.5-.2A449 449 0 0 1 428.8 416H448V96h-19.2c-42.2 0-84.1 8.4-123.1 24.6-16.8 7-33.4 13.9-49.7 20.7m-25.1-79.8L256 72l25.1-10.5C327.9 42 378.1 32 428.8 32H464c26.5 0 48 21.5 48 48v352c0 26.5-21.5 48-48 48h-35.2c-50.7 0-100.9 10-147.7 29.5l-12.8 5.3c-7.9 3.3-16.7 3.3-24.6 0l-12.8-5.3C184.1 490 133.9 480 83.2 480H48c-26.5 0-48-21.5-48-48V80c0-26.5 21.5-48 48-48h35.2c50.7 0 100.9 10 147.7 29.5"/></svg></span> 
+<a href="../datatypes/">Datatypes</a></p>
+<dl>
+<dt>Character constants</dt>
+<dd>
+<p>An atomic character constant is denoted by a single character between double quote marks, as in <code>"a"</code>; more than one such character, or none, between double quotes denotes a list of characters. </p>
+</dd>
+<dt>Symbol constants</dt>
+<dd>
+<p>A symbol constant is denoted by a back-quote to the left of a string of characters that form a valid name, as in <code>`a.b_2</code>. </p>
+</dd>
+</dl>
+<!-- 
+The string of characters can be empty; that is, back-quote alone is a valid symbol constant. A symbol constant can also be formed for a string of characters that does not form a valid name by including the string in double-quotes with a back-quote immediately to the left, as in `` `"a-b!"``.
+ -->
+<dl>
+<dt>Dictionaries</dt>
+<dd>
+<p>are <a href="../../ref/dict/">created</a> from lists of a special form. </p>
+</dd>
+<dt>Tables</dt>
+<dd>
+<p>A table is a list of dictionaries, all of which have the same keys. 
+These keys comprise the names of the table columns. </p>
+</dd>
+<dt>Functions</dt>
+<dd>
+<p>can be denoted in several ways; see below. Any notation for a function without its arguments denotes a <strong>constant function atom</strong>, such as <code>+</code> for the Add operator. </p>
+</dd>
+</dl>
+<h2 id="list-notation">List notation<a class="headerlink" href="#list-notation" title="Permanent link">&para;</a></h2>
+<p>A sequence of expressions separated by semicolons and surrounded by left and right parentheses denotes a noun called a <em>list</em>. The expression for the list is called a <em>list expression</em>, and this manner of denoting a list is called <em>list notation</em>. 
+For example:</p>
+<div class="highlight"><pre><span></span><code><span class="p">(</span><span class="il">3</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="il">4</span><span class="p">;</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">_</span><span class="w"> </span><span class="n">b</span><span class="p">;</span><span class="w"> </span><span class="o">-</span><span class="mf">20.45</span><span class="p">)</span>
+</code></pre></div>
+<p>denotes a list. The empty list is denoted by <code>()</code>, but otherwise at least one semicolon is required. When parentheses enclose only one expression they have the common mathematical meaning of bounding a sub-expression within another expression. 
+For example, in</p>
+<div class="highlight"><pre><span></span><code><span class="p">(</span><span class="n">a</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">b</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">c</span>
+</code></pre></div>
+<p>the product <code>a * b</code> is formed first and its result is added to <code>c</code>; the expression <code>(a * b)</code> is not list notation. </p>
+<p>An atom is not a one-item list.
+One-item lists are formed with the <code>enlist</code> function, as in <code>enlist"a"</code> and <code>enlist 3.1416</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="il">3</span><span class="w">           </span><span class="c1">/atom</span>
+<span class="il">3</span>
+<span class="gp">q)</span><span class="ow">enlist</span><span class="w"> </span><span class="il">3</span><span class="w">    </span><span class="c1">/ 1-item list</span>
+<span class="o">,</span><span class="il">3</span>
+</code></pre></div>
+<h2 id="vector-notation">Vector notation<a class="headerlink" href="#vector-notation" title="Permanent link">&para;</a></h2>
+<p>Lists in which all the items have the same datatype play an important role in kdb+. Q gives vector constants a special notation, which varies by datatype. </p>
+<div class="highlight"><pre><span></span><code><span class="mb">01110001b</span><span class="w">                           </span><span class="c1">/ boolean</span>
+<span class="s2">"abcdefg"</span><span class="w">                           </span><span class="c1">/ character</span>
+<span class="ss">`ibm`aapl`msft</span><span class="w">                      </span><span class="c1">/ symbol</span>
+</code></pre></div>
+<p>Numeric and temporal vectors separate items with spaces and if necessary declare their type with a suffixed lower-case character.</p>
+<div class="highlight"><pre><span></span><code><span class="mf">2018.05</span><span class="w"> </span><span class="mf">2018.07</span><span class="w"> </span><span class="ld">2019.01m</span><span class="w">            </span><span class="c1">/ month</span>
+<span class="il">2</span><span class="w"> </span><span class="il">3</span><span class="w"> </span><span class="il">4</span><span class="w"> </span><span class="il">5</span><span class="w"> </span><span class="mi">6h</span><span class="w">                          </span><span class="c1">/ short integer (2 bytes)</span>
+<span class="il">2</span><span class="w"> </span><span class="il">3</span><span class="w"> </span><span class="il">4</span><span class="w"> </span><span class="il">5</span><span class="w"> </span><span class="mi">6i</span><span class="w">                          </span><span class="c1">/ xxxxx integer (4 bytes)</span>
+<span class="il">2</span><span class="w"> </span><span class="il">3</span><span class="w"> </span><span class="il">4</span><span class="w"> </span><span class="il">5</span><span class="w"> </span><span class="il">6</span><span class="w">                           </span><span class="c1">/ long  integer (8 bytes)</span>
+<span class="il">2</span><span class="w"> </span><span class="il">3</span><span class="w"> </span><span class="il">4</span><span class="w"> </span><span class="il">5</span><span class="w"> </span><span class="il">6j</span><span class="w">                          </span><span class="c1">/ long  integer (8 bytes)</span>
+<span class="il">2</span><span class="w"> </span><span class="il">3</span><span class="w"> </span><span class="il">4</span><span class="w"> </span><span class="mf">5.6</span><span class="w">                           </span><span class="c1">/ float         (8 bytes)</span>
+<span class="il">2</span><span class="w"> </span><span class="il">3</span><span class="w"> </span><span class="il">4</span><span class="w"> </span><span class="il">5</span><span class="w"> </span><span class="mf">6f</span><span class="w">                          </span><span class="c1">/ float         (8 bytes)</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>type</th>
+<th>example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>numeric</td>
+<td><code>42 43 44</code></td>
+</tr>
+<tr>
+<td>date</td>
+<td><code>2012.09.15 2012.07.05</code></td>
+</tr>
+<tr>
+<td>char</td>
+<td><code>"abc"</code></td>
+</tr>
+<tr>
+<td>boolean</td>
+<td><code>0101b</code></td>
+</tr>
+<tr>
+<td>symbol</td>
+<td><code>`ibm`att`ora</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="strings">Strings<a class="headerlink" href="#strings" title="Permanent link">&para;</a></h3>
+<p>Char vectors are also known as <em>strings</em>.</p>
+<p>When <code>\</code> is used inside character or string displays, it serves as an escape character.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>\"</code></td>
+<td>double quote</td>
+</tr>
+<tr>
+<td><code>\NNN</code></td>
+<td>character with octal value NNN (3 digits)</td>
+</tr>
+<tr>
+<td><code>\\</code></td>
+<td>backslash</td>
+</tr>
+<tr>
+<td><code>\n</code></td>
+<td>new line</td>
+</tr>
+<tr>
+<td><code>\r</code></td>
+<td>carriage return</td>
+</tr>
+<tr>
+<td><code>\t</code></td>
+<td>horizontal tab</td>
+</tr>
+</tbody>
+</table>
+<h2 id="table-notation">Table notation<a class="headerlink" href="#table-notation" title="Permanent link">&para;</a></h2>
+<p>A table can be written as a list: an expression list followed by one or more expressions.</p>
+<p>An empty expression list indicates a simple table.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="p">([]</span><span class="nv">sym</span><span class="o">:</span><span class="ss">`aapl`msft`goog</span><span class="p">;</span><span class="nv">price</span><span class="o">:</span><span class="il">100</span><span class="w"> </span><span class="il">200</span><span class="w"> </span><span class="il">300</span><span class="p">)</span>
+<span class="n">sym</span><span class="w">  </span><span class="n">price</span>
+<span class="o">----------</span>
+<span class="n">aapl</span><span class="w"> </span><span class="il">100</span>
+<span class="n">msft</span><span class="w"> </span><span class="il">200</span>
+<span class="n">goog</span><span class="w"> </span><span class="il">300</span>
+</code></pre></div>
+<p>The names assigned become the column names. The values assigned must conform: be lists of the same count, or atoms. The empty brackets indicate that the table is <em>simple</em>: it has no key. </p>
+<p>You if you specify the column values as variables without specifying column names, the names of the variables will be used.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="nv">sym</span><span class="o">:</span><span class="ss">`aapl`msft`goog</span>
+<span class="gp">q)</span><span class="nv">price</span><span class="o">:</span><span class="il">100</span><span class="w"> </span><span class="il">200</span><span class="w"> </span><span class="il">300</span>
+<span class="gp">q)</span><span class="p">([]</span><span class="w"> </span><span class="n">sym</span><span class="p">;</span><span class="w"> </span><span class="n">price</span><span class="p">)</span>
+<span class="n">sym</span><span class="w">  </span><span class="n">price</span>
+<span class="o">----------</span>
+<span class="n">aapl</span><span class="w"> </span><span class="il">100</span>
+<span class="n">msft</span><span class="w"> </span><span class="il">200</span>
+<span class="n">goog</span><span class="w"> </span><span class="il">300</span>
+</code></pre></div>
+<p>Some columns can be specified as atoms.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="p">([]</span><span class="w"> </span><span class="nv">sym</span><span class="o">:</span><span class="ss">`aapl`msft`goog</span><span class="p">;</span><span class="w"> </span><span class="nv">price</span><span class="o">:</span><span class="w"> </span><span class="il">300</span><span class="p">)</span>
+<span class="n">sym</span><span class="w">  </span><span class="n">price</span>
+<span class="o">----------</span>
+<span class="n">aapl</span><span class="w"> </span><span class="il">300</span>
+<span class="n">msft</span><span class="w"> </span><span class="il">300</span>
+<span class="n">goog</span><span class="w"> </span><span class="il">300</span>
+</code></pre></div>
+<p>But not all. To define a 1-row table, enlist at least one of the column values.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="p">([]</span><span class="w"> </span><span class="nv">sym</span><span class="o">:</span><span class="ow">enlist</span><span class="ss">`aapl</span><span class="p">;</span><span class="w"> </span><span class="nv">price</span><span class="o">:</span><span class="il">100</span><span class="p">)</span>
+<span class="n">sym</span><span class="w">  </span><span class="n">price</span>
+<span class="o">----------</span>
+<span class="n">aapl</span><span class="w"> </span><span class="il">100</span>
+</code></pre></div>
+<p>The initial expression list can declare one or more columns as a <em>key</em>. The values of the key column/s of a table should be unique. </p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="p">([</span><span class="nv">names</span><span class="o">:</span><span class="ss">`bob`carol`bob`alice</span><span class="p">;</span><span class="nv">city</span><span class="o">:</span><span class="ss">`NYC`CHI`SFO`SFO</span><span class="p">];</span><span class="w"> </span><span class="nv">ages</span><span class="o">:</span><span class="il">42</span><span class="w"> </span><span class="il">39</span><span class="w"> </span><span class="il">51</span><span class="w"> </span><span class="il">44</span><span class="p">)</span>
+<span class="n">names</span><span class="w"> </span><span class="n">city</span><span class="o">|</span><span class="w"> </span><span class="n">ages</span>
+<span class="o">----------|</span><span class="w"> </span><span class="o">----</span>
+<span class="n">bob</span><span class="w">   </span><span class="n">NYC</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="il">42</span>
+<span class="n">carol</span><span class="w"> </span><span class="n">CHI</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="il">39</span>
+<span class="n">bob</span><span class="w">   </span><span class="n">SFO</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="il">51</span>
+<span class="n">alice</span><span class="w"> </span><span class="n">SFO</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="il">44</span>
+</code></pre></div>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M384 512H96c-53 0-96-43-96-96V96C0 43 43 0 96 0h304c26.5 0 48 21.5 48 48v288c0 20.9-13.4 38.7-32 45.3V448c17.7 0 32 14.3 32 32s-14.3 32-32 32zM96 384c-17.7 0-32 14.3-32 32s14.3 32 32 32h256v-64zm32-232c0 13.3 10.7 24 24 24h176c13.3 0 24-10.7 24-24s-10.7-24-24-24H152c-13.3 0-24 10.7-24 24m24 72c-13.3 0-24 10.7-24 24s10.7 24 24 24h176c13.3 0 24-10.7 24-24s-10.7-24-24-24z"/></svg></span> 
+<a href="../../ref/key/"><code>!</code> Key</a>
+<br>
+<span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M256 141.3v309.3l.5-.2A449 449 0 0 1 428.8 416H448V96h-19.2c-42.2 0-84.1 8.4-123.1 24.6-16.8 7-33.4 13.9-49.7 20.7m-25.1-79.8L256 72l25.1-10.5C327.9 42 378.1 32 428.8 32H464c26.5 0 48 21.5 48 48v352c0 26.5-21.5 48-48 48h-35.2c-50.7 0-100.9 10-147.7 29.5l-12.8 5.3c-7.9 3.3-16.7 3.3-24.6 0l-12.8-5.3C184.1 490 133.9 480 83.2 480H48c-26.5 0-48-21.5-48-48V80c0-26.5 21.5-48 48-48h35.2c50.7 0 100.9 10 147.7 29.5"/></svg></span> 
+<a href="../dictsandtables/">Dictionaries and tables</a>
+<br>
+<span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M256 0a64 64 0 1 1 0 128 64 64 0 1 1 0-128m-32 160h64c35.3 0 64 28.7 64 64v48c0 17.7-14.3 32-32 32h-1.8l-11.1 99.5c-1.8 16.2-15.5 28.5-31.8 28.5h-38.7c-16.3 0-30-12.3-31.8-28.5L193.7 304h-1.8c-17.7 0-32-14.3-32-32v-48c0-35.3 28.7-64 64-64zm188.4 240.2c-16.1-4.2-34.8-7.6-55.4-10.2l5.3-47.7c22.7 2.9 43.7 6.7 62.1 11.5 22.4 5.8 42.6 13.3 57.8 23.3 14.7 9.6 29.8 24.9 29.8 47s-15.1 37.4-29.8 47c-15.2 9.9-35.5 17.5-57.8 23.3-45.1 11.7-105.3 17.8-168.4 17.8s-123.3-6.1-168.4-17.8c-22.4-6-42.6-13.5-57.8-23.4C15.1 461.4 0 446.1 0 424s15.1-37.4 29.8-47c15.2-9.9 35.5-17.5 57.8-23.3 18.5-4.8 39.5-8.6 62.1-11.5L155 390c-20.6 2.6-39.3 6.1-55.4 10.2-56.6 14.6-56.6 32.9 0 47.5 39.9 10.3 95.8 16.2 156.4 16.2s116.5-5.9 156.4-16.2c56.6-14.6 56.6-32.9 0-47.5"/></svg></span> 
+<em>Q for Mortals</em>
+<a href="../../../q4m3/8_Tables/">§8. Tables</a></p>
+<h2 id="attributes">Attributes<a class="headerlink" href="#attributes" title="Permanent link">&para;</a></h2>
+<p>Attributes are metadata that apply to lists of special form. 
+They are often used on a dictionary domain or a table column to reduce storage requirements or to speed retrieval.</p>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M384 512H96c-53 0-96-43-96-96V96C0 43 43 0 96 0h304c26.5 0 48 21.5 48 48v288c0 20.9-13.4 38.7-32 45.3V448c17.7 0 32 14.3 32 32s-14.3 32-32 32zM96 384c-17.7 0-32 14.3-32 32s14.3 32 32 32h256v-64zm32-232c0 13.3 10.7 24 24 24h176c13.3 0 24-10.7 24-24s-10.7-24-24-24H152c-13.3 0-24 10.7-24 24m24 72c-13.3 0-24 10.7-24 24s10.7 24 24 24h176c13.3 0 24-10.7 24-24s-10.7-24-24-24z"/></svg></span> 
+<a href="../../ref/set-attribute/">Set Attribute</a>, 
+<a href="../../ref/apply/#step-dictionaries">Step dictionaries</a></p>
+<!-- 
+FIXME move elsewhere
+
+For 64-bit V3.0+, where `n` is the number of items and `d` is the number of distinct (unique) items, the byte overhead in memory is:
+
+example       |         | byte overhead
+--------------|---------|--------------
+`` `s#2 2 3`` | sorted  | `0`
+`` `u#2 4 5`` | unique  | `32*d`
+`` `p#2 2 1`` | parted  | `(48*d)+8*n`
+`` `g#2 1 2`` | grouped | `(16*d)+8*n`
+
+
+Attribute `u` is for unique lists – where all items are distinct.
+
+!!! tip "Grouped and parted"
+
+    Attributes `p` and `g` are useful for lists in memory with a lot of repetition.
+
+    If the data can be sorted such that `p` can be applied, the `p` attribute effects better speedups than `g`, both on disk and in memory.
+
+    The `g` attribute implies an entry’s data may be dispersed – and possibly slow to retrieve from disk.
+
+Some q functions use attributes to work faster:
+
+-    Where-clauses in [`select` and `exec` templates](qsql) run faster with `where =`, `where in` and `where within`
+-    Searching: [`bin`](search.md#bin-binr), [`distinct`](search.md#distinct), [_find_](search.md#find) and [`in`](search.md#in) (if the right argument has an attribute)
+-    Sorting: [`iasc`](sort.md#iasc) and [`idesc`](sort.md#idesc)
+-    Dictionaries: [`group`](dictsandtables.md#group)
+
+ -->
+
+<h2 id="bracket-notation">Bracket notation<a class="headerlink" href="#bracket-notation" title="Permanent link">&para;</a></h2>
+<p>A sequence of expressions separated by semicolons and surrounded by left and right brackets (<code>[</code> and <code>]</code>) denotes either the indexes of a list or the arguments of a function. The expression for the set of indexes or arguments is called an <em>index expression</em> or <em>argument expression</em>, and this manner of denoting a set of indexes or arguments is called <em>bracket notation</em>. </p>
+<p>For example, <code>m[0;0]</code> selects the element in the upper left corner of a matrix <code>m</code>, and <code>f[a;b;c]</code> evaluates the function <code>f</code> with the three arguments <code>a</code>, <code>b</code>, and <code>c</code>. </p>
+<p>Unlike list notation, bracket notation does not require at least one semicolon; one expression between brackets – or none – will do.</p>
+<p>Operators can also be evaluated with bracket notation. For example, <code>+[a;b]</code>means the same as <code>a + b</code>. All operators can be used infix.</p>
+<p>Bracket pairs with nothing between them also have meaning; <code>m[]</code> selects all items of a list <code>m</code> and <code>f[]</code> evaluates the no-argument function <code>f</code>. </p>
+<div class="admonition tip">
+<p class="admonition-title">The similarity of index and argument notation is not accidental.</p>
+</div>
+<h3 id="indexing-tables">Indexing tables<a class="headerlink" href="#indexing-tables" title="Permanent link">&para;</a></h3>
+<p>Tables are indexed first by row; second by column.
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="nv">t</span><span class="o">:</span><span class="p">([]</span><span class="nv">name</span><span class="o">:</span><span class="ss">`Tom`Dick`Harry</span><span class="p">;</span><span class="nv">age</span><span class="o">:</span><span class="il">34</span><span class="w"> </span><span class="il">42</span><span class="w"> </span><span class="il">17</span><span class="p">)</span>
+<span class="gp">q)</span><span class="n">t</span><span class="p">[</span><span class="il">1</span><span class="p">;</span><span class="ss">`age</span><span class="p">]</span>
+<span class="il">42</span>
+</code></pre></div>
+Eliding an index gets all its values.
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="n">t</span><span class="p">[;</span><span class="ss">`age</span><span class="p">]</span>
+<span class="il">34</span><span class="w"> </span><span class="il">42</span><span class="w"> </span><span class="il">17</span>
+
+<span class="gp">q)</span><span class="n">t</span><span class="p">[</span><span class="il">1</span><span class="p">;]</span>
+<span class="n">name</span><span class="o">|</span><span class="w"> </span><span class="ss">`Dick</span>
+<span class="n">age</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="il">42</span>
+</code></pre></div>
+You can elide trailing indexes. (As in projecting a function.)
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="n">t</span><span class="p">[</span><span class="il">1</span><span class="p">]</span><span class="w"> </span>
+<span class="n">name</span><span class="o">|</span><span class="w"> </span><span class="ss">`Dick</span>
+<span class="n">age</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="il">42</span>
+</code></pre></div>
+Table columns are always indexed as symbols; rows as integers. 
+This permits a shorthand:
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="n">t</span><span class="p">[</span><span class="ss">`age</span><span class="p">]</span><span class="w">  </span><span class="c1">/ shorthand for t[;`age]</span>
+<span class="il">34</span><span class="w"> </span><span class="il">42</span><span class="w"> </span><span class="il">17</span>
+<span class="gp">q)</span><span class="n">t</span><span class="ss">`age</span>
+<span class="il">34</span><span class="w"> </span><span class="il">42</span><span class="w"> </span><span class="il">17</span>
+</code></pre></div></p>
+<h2 id="conditional-evaluation-and-control-statements">Conditional evaluation and control statements<a class="headerlink" href="#conditional-evaluation-and-control-statements" title="Permanent link">&para;</a></h2>
+<p>A sequence of expressions separated by semicolons and surrounded by left and right brackets (<code>[</code> and <code>]</code>), where the left bracket is preceded immediately by a <code>$</code>, denotes <a href="../../ref/cond/">conditional evaluation</a>. </p>
+<p>If the word <code>do</code>, <code>if</code>, or <code>while</code> appears instead of the <code>$</code> then that word together with the sequence of expressions denotes a <a href="../control/">control statement</a>. </p>
+<p>The first line below shows conditional evaluation; the next three show control statements:</p>
+<div class="highlight"><pre><span></span><code><span class="w">        </span><span class="o">$</span><span class="p">[</span><span class="n">a</span><span class="p">;</span><span class="n">b</span><span class="p">;</span><span class="n">c</span><span class="p">]</span>
+<span class="w">       </span><span class="ow">do</span><span class="p">[</span><span class="n">a</span><span class="p">;</span><span class="n">b</span><span class="p">;</span><span class="n">c</span><span class="p">]</span>
+<span class="w">       </span><span class="ow">if</span><span class="p">[</span><span class="n">a</span><span class="p">;</span><span class="n">b</span><span class="p">;</span><span class="n">c</span><span class="p">]</span>
+<span class="w">    </span><span class="ow">while</span><span class="p">[</span><span class="n">a</span><span class="p">;</span><span class="n">b</span><span class="p">;</span><span class="n">c</span><span class="p">]</span>
+</code></pre></div>
+<p>Control words are not functions and do not return results.</p>
+<h2 id="function-notation">Function notation<a class="headerlink" href="#function-notation" title="Permanent link">&para;</a></h2>
+<p>A sequence of expressions separated by semicolons and surrounded by left and right braces (<code>{</code> and <code>}</code>) denotes a function. The expression for the function definition is called a <em>function expression</em> or <em>lambda</em>, and this manner of defining a function is called <em>function</em> or <em>lambda notation</em>. </p>
+<p>The first expression in a function expression can be a <em>signature</em>: an argument expression of the form <code>[name1;name2;…;nameN]</code> naming the arguments of the function. Like bracket notation, function notation does not require at least one semicolon; one expression (or none) between braces will do.</p>
+<p>Within a script, a function may be defined across <a href="#multiline-expressions">multiple lines</a>.</p>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M256 141.3v309.3l.5-.2A449 449 0 0 1 428.8 416H448V96h-19.2c-42.2 0-84.1 8.4-123.1 24.6-16.8 7-33.4 13.9-49.7 20.7m-25.1-79.8L256 72l25.1-10.5C327.9 42 378.1 32 428.8 32H464c26.5 0 48 21.5 48 48v352c0 26.5-21.5 48-48 48h-35.2c-50.7 0-100.9 10-147.7 29.5l-12.8 5.3c-7.9 3.3-16.7 3.3-24.6 0l-12.8-5.3C184.1 490 133.9 480 83.2 480H48c-26.5 0-48-21.5-48-48V80c0-26.5 21.5-48 48-48h35.2c50.7 0 100.9 10 147.7 29.5"/></svg></span> 
+<a href="../function-notation/">Function notation</a></p>
+<h2 id="prefix-infix-postfix">Prefix, infix, postfix<a class="headerlink" href="#prefix-infix-postfix" title="Permanent link">&para;</a></h2>
+<p>There are various ways to apply a function to its argument/s.</p>
+<div class="highlight"><pre><span></span><code><span class="n">f</span><span class="p">[</span><span class="n">x</span><span class="p">]</span><span class="w">         </span><span class="c1">/ bracket notation</span>
+<span class="n">f</span><span class="w"> </span><span class="n">x</span><span class="w">          </span><span class="c1">/ prefix</span>
+<span class="n">x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">y</span><span class="w">        </span><span class="c1">/ infix</span>
+<span class="n">f</span><span class="o">\</span><span class="w">           </span><span class="c1">/ postfix</span>
+</code></pre></div>
+<p>In the last example above, the iterator <code>\</code> is applied postfix to the function <code>f</code>, which appears immediately to the left of the iterator. 
+<a href="../../ref/iterators/">Iterators</a> are the only functions that can be applied postfix.</p>
+<p>Bracket and prefix notation are also used to apply a list to its indexes.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="s2">"abcdef"</span><span class="w"> </span><span class="il">1</span><span class="w"> </span><span class="il">0</span><span class="w"> </span><span class="il">3</span>
+<span class="s2">"bad"</span>
+</code></pre></div>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M256 141.3v309.3l.5-.2A449 449 0 0 1 428.8 416H448V96h-19.2c-42.2 0-84.1 8.4-123.1 24.6-16.8 7-33.4 13.9-49.7 20.7m-25.1-79.8L256 72l25.1-10.5C327.9 42 378.1 32 428.8 32H464c26.5 0 48 21.5 48 48v352c0 26.5-21.5 48-48 48h-35.2c-50.7 0-100.9 10-147.7 29.5l-12.8 5.3c-7.9 3.3-16.7 3.3-24.6 0l-12.8-5.3C184.1 490 133.9 480 83.2 480H48c-26.5 0-48-21.5-48-48V80c0-26.5 21.5-48 48-48h35.2c50.7 0 100.9 10 147.7 29.5"/></svg></span> 
+<a href="../application/">Application</a>
+<br>
+<span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M384 512H96c-53 0-96-43-96-96V96C0 43 43 0 96 0h304c26.5 0 48 21.5 48 48v288c0 20.9-13.4 38.7-32 45.3V448c17.7 0 32 14.3 32 32s-14.3 32-32 32zM96 384c-17.7 0-32 14.3-32 32s14.3 32 32 32h256v-64zm32-232c0 13.3 10.7 24 24 24h176c13.3 0 24-10.7 24-24s-10.7-24-24-24H152c-13.3 0-24 10.7-24 24m24 72c-13.3 0-24 10.7-24 24s10.7 24 24 24h176c13.3 0 24-10.7 24-24s-10.7-24-24-24z"/></svg></span> 
+<a href="../../ref/iterators/">Iterators</a></p>
+<h3 id="infix-and-prefix-notation-have-long-right-scope">Infix and prefix notation have long right scope<a class="headerlink" href="#infix-and-prefix-notation-have-long-right-scope" title="Permanent link">&para;</a></h3>
+<p>The right argument of a unary function, or a binary function applied infix,  is the result of evaluating (subject to parentheses) everything to its right.</p>
+<p>The left argument of a binary function applied infix is (subject to parentheses) the value immediately to its left. </p>
+<p><div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="nb">count</span><span class="w"> </span><span class="nb">first</span><span class="w"> </span><span class="p">(</span><span class="il">2</span><span class="w"> </span><span class="il">3</span><span class="w"> </span><span class="il">4</span><span class="p">;</span><span class="il">5</span><span class="w"> </span><span class="il">6</span><span class="p">)</span>
+<span class="il">3</span>
+</code></pre></div>
+Above, the argument of <code>count</code> is <code>first (2 3 4;5 6)</code>; that is, <code>2 3 4</code>.
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="il">2</span><span class="w"> </span><span class="il">3</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="il">4</span><span class="w"> </span><span class="il">5</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="il">6</span><span class="w"> </span><span class="il">7</span>
+<span class="o">-</span><span class="il">4</span><span class="w"> </span><span class="o">-</span><span class="il">6</span>
+</code></pre></div>
+Above, the left argument of Multiply is <code>2 3</code> and its right argument is <code>4 5-6 7</code>; that is, <code>-2 -2</code>.</p>
+<h3 id="postfix-yields-infix">Postfix yields infix<a class="headerlink" href="#postfix-yields-infix" title="Permanent link">&para;</a></h3>
+<p>An iterator applied to an <a href="../glossary/#applicable-value">applicable value</a> derives a function. For example, Scan applied to Add derives the function Add Scan: <code>+\</code>.</p>
+<p>If the iterator is applied postfix, as it almost always is, the derived function has infix syntax.</p>
+<div class="admonition warning">
+<p class="admonition-title">This rule holds <strong>regardless of the rank</strong> of the derived function</p>
+<p>For example, counterintuitively, <code>count'</code> is unary but has infix syntax. </p>
+</div>
+<p>A common consequence is that many derived functions must be parenthesized to be applied postfix. (See below.)</p>
+<h3 id="prefix-and-vector-notation">Prefix and vector notation<a class="headerlink" href="#prefix-and-vector-notation" title="Permanent link">&para;</a></h3>
+<p>Index and argument notation (i.e. bracket notation) are similar. 
+Prefix expressions evaluate unary functions as in <code>til 3</code>. This form of evaluation is permitted for any unary. </p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="p">{</span><span class="n">x</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="il">2</span><span class="p">}</span><span class="w"> </span><span class="il">5</span><span class="w"> </span><span class="il">3</span>
+<span class="il">3</span><span class="w"> </span><span class="il">1</span>
+</code></pre></div>
+<p>This form can also be used for item selection.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="p">(</span><span class="il">1</span><span class="p">;</span><span class="w"> </span><span class="s2">"a"</span><span class="p">;</span><span class="w"> </span><span class="mf">3.5</span><span class="p">;</span><span class="w"> </span><span class="ss">`xyz</span><span class="p">)</span><span class="w"> </span><span class="il">2</span>
+<span class="mf">3.5</span>
+</code></pre></div>
+<p>Juxtaposition is also used in vector notation.</p>
+<div class="highlight"><pre><span></span><code><span class="mf">3.4</span><span class="w"> </span><span class="il">57</span><span class="w"> </span><span class="mf">1.2e20</span>
+</code></pre></div>
+<p>The items in vector notation bind more tightly than the tokens in function call and item selection. For example, <code>{x - 2} 5 6</code> is the function <code>{x - 2}</code> applied to the vector <code>5 6</code>, not the function <code>{x - 2}</code> applied to 5, followed by 6.</p>
+<h3 id="parentheses-around-a-function-with-infix-syntax">Parentheses around a function with infix syntax<a class="headerlink" href="#parentheses-around-a-function-with-infix-syntax" title="Permanent link">&para;</a></h3>
+<p>Parentheses around a function with infix syntax capture it as a value and prevent it being parsed as an infix. </p>
+<p>Add Scan <code>+\</code> is variadic and has infix syntax. </p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="o">+\</span><span class="p">[</span><span class="il">1</span><span class="w"> </span><span class="il">2</span><span class="w"> </span><span class="il">3</span><span class="w"> </span><span class="il">4</span><span class="w"> </span><span class="il">5</span><span class="p">]</span><span class="w">                 </span><span class="c1">/ unary</span>
+<span class="il">1</span><span class="w"> </span><span class="il">3</span><span class="w"> </span><span class="il">6</span><span class="w"> </span><span class="il">10</span><span class="w"> </span><span class="il">15</span>
+<span class="gp">q)</span><span class="o">+\</span><span class="p">[</span><span class="il">1000</span><span class="p">;</span><span class="il">1</span><span class="w"> </span><span class="il">2</span><span class="w"> </span><span class="il">3</span><span class="w"> </span><span class="il">4</span><span class="w"> </span><span class="il">5</span><span class="p">]</span><span class="w">            </span><span class="c1">/ unary</span>
+<span class="il">1001</span><span class="w"> </span><span class="il">1003</span><span class="w"> </span><span class="il">1006</span><span class="w"> </span><span class="il">1010</span><span class="w"> </span><span class="il">1015</span>
+<span class="gp">q)</span><span class="il">1000</span><span class="o">+\</span><span class="il">1</span><span class="w"> </span><span class="il">2</span><span class="w"> </span><span class="il">3</span><span class="w"> </span><span class="il">4</span><span class="w"> </span><span class="il">5</span><span class="w">               </span><span class="c1">/ binary, applied infix</span>
+<span class="il">1001</span><span class="w"> </span><span class="il">1003</span><span class="w"> </span><span class="il">1006</span><span class="w"> </span><span class="il">1010</span><span class="w"> </span><span class="il">1015</span>
+</code></pre></div>
+<p>Captured as a value by parentheses, it remains variadic, but can be applied postfix as a unary.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="p">(</span><span class="o">+\</span><span class="p">)[</span><span class="il">1000</span><span class="p">;</span><span class="il">1</span><span class="w"> </span><span class="il">2</span><span class="w"> </span><span class="il">3</span><span class="w"> </span><span class="il">4</span><span class="w"> </span><span class="il">5</span><span class="p">]</span><span class="w">          </span><span class="c1">/ binary</span>
+<span class="il">1001</span><span class="w"> </span><span class="il">1003</span><span class="w"> </span><span class="il">1006</span><span class="w"> </span><span class="il">1010</span><span class="w"> </span><span class="il">1015</span>
+<span class="gp">q)</span><span class="p">(</span><span class="o">+\</span><span class="p">)</span><span class="il">1</span><span class="w"> </span><span class="il">2</span><span class="w"> </span><span class="il">3</span><span class="w"> </span><span class="il">4</span><span class="w"> </span><span class="il">5</span><span class="w">                 </span><span class="c1">/ unary, applied postfix</span>
+<span class="il">1</span><span class="w"> </span><span class="il">3</span><span class="w"> </span><span class="il">6</span><span class="w"> </span><span class="il">10</span><span class="w"> </span><span class="il">15</span>
+</code></pre></div>
+<p>Captured as a value, a function with infix syntax can be passed as an argument to another function.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="nb">scan</span><span class="w"> </span><span class="il">1</span><span class="w"> </span><span class="il">2</span><span class="w"> </span><span class="il">3</span><span class="w"> </span><span class="il">4</span><span class="w"> </span><span class="il">5</span><span class="w">            </span><span class="c1">/ * is binary and infix</span>
+<span class="il">1</span><span class="w"> </span><span class="il">2</span><span class="w"> </span><span class="il">6</span><span class="w"> </span><span class="il">24</span><span class="w"> </span><span class="il">120</span>
+<span class="gp">q)</span><span class="nv">n</span><span class="o">:</span><span class="p">(</span><span class="s2">"the "</span><span class="p">;(</span><span class="s2">"quick "</span><span class="p">;</span><span class="s2">"brown "</span><span class="p">;(</span><span class="s2">"fox "</span><span class="p">;</span><span class="s2">"jumps "</span><span class="p">;</span><span class="s2">"over "</span><span class="p">);</span><span class="s2">"the "</span><span class="p">);(</span><span class="s2">"lazy "</span><span class="p">;</span><span class="s2">"dog."</span><span class="p">))</span>
+<span class="gp">q)</span><span class="p">(</span><span class="o">,/</span><span class="p">)</span><span class="w"> </span><span class="nb">over</span><span class="w"> </span><span class="n">n</span><span class="w">                   </span><span class="c1">/ ,/ is variadic and infix</span>
+<span class="s2">"the quick brown fox jumps over the lazy dog."</span>
+</code></pre></div>
+<p>For functions without infix syntax, parentheses are unnecessary.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="nb">raze</span><span class="w"> </span><span class="nb">over</span><span class="w"> </span><span class="n">n</span>
+<span class="s2">"the quick brown fox jumps over the lazy dog."</span>
+<span class="gp">q)</span><span class="p">{</span><span class="o">,/</span><span class="p">[</span><span class="n">x</span><span class="p">]}</span><span class="nb">over</span><span class="w"> </span><span class="n">n</span>
+<span class="s2">"the quick brown fox jumps over the lazy dog."</span>
+</code></pre></div>
+<h2 id="compound-expressions">Compound expressions<a class="headerlink" href="#compound-expressions" title="Permanent link">&para;</a></h2>
+<p>Function expressions, index expressions, argument expressions and list expressions are collectively referred to as <em>compound expressions</em>.</p>
+<h2 id="empty-expressions">Empty expressions<a class="headerlink" href="#empty-expressions" title="Permanent link">&para;</a></h2>
+<p>An empty expression occurs in a compound expression wherever the place of an individual expression is either empty or all blanks. For example, the second and fourth expressions in the list expression <code>(a+b;;c-d;)</code> are empty expressions. Empty expressions in both list expressions and function expressions actually represent a special atomic value called <em>null</em>.</p>
+<h2 id="colon">Colon<a class="headerlink" href="#colon" title="Permanent link">&para;</a></h2>
+<h3 id="assign">Assign<a class="headerlink" href="#assign" title="Permanent link">&para;</a></h3>
+<p>The most common use of colon is to <a href="../../ref/assign/">name values</a>.</p>
+<h3 id="explicit-return">Explicit return<a class="headerlink" href="#explicit-return" title="Permanent link">&para;</a></h3>
+<p>Within a lambda (function definition) a colon followed by a value terminates evaluation of the function, and the value is returned as its result. </p>
+<p>The <a href="../function-notation/#explicit-return">explicit return</a> is a common form when detecting edge cases, e.g.</p>
+<div class="highlight"><pre><span></span><code><span class="o">...</span>
+<span class="ow">if</span><span class="p">[</span><span class="nb">type</span><span class="p">[</span><span class="n">x</span><span class="p">]</span><span class="o">&lt;</span><span class="il">0</span><span class="p">;</span><span class="w"> </span><span class="o">:</span><span class="n">x</span><span class="p">];</span><span class="w">  </span><span class="c1">/ if atom, return it</span>
+<span class="o">...</span>
+</code></pre></div>
+<h3 id="colons-in-names">Colons in names<a class="headerlink" href="#colons-in-names" title="Permanent link">&para;</a></h3>
+<p>The functions associated with I/O and <a href="../ipc/">interprocess communication</a> are denoted by a colon following a digit, as in <code>0:</code> and <code>1:</code>.</p>
+<p>The q operators are all binary functions.
+They inherit unary forms from k, denoted by a colon suffix, e.g. (<code>#:</code>).
+Use of these forms in q programs is <a href="../exposed-infrastructure/#unary-forms">deprecated</a>. </p>
+<h2 id="colon-colon">Colon colon<a class="headerlink" href="#colon-colon" title="Permanent link">&para;</a></h2>
+<p>A pair of colons with a name to its left and an expression on the right</p>
+<ul>
+<li>within a function expression, denotes global assignment, that is, assignment to a global name (<code>{… ; x::3 ; …}</code>)</li>
+<li>outside a function expression, defines a <a href="../learn/views.md">view</a></li>
+</ul>
+<h2 id="iterators">Iterators<a class="headerlink" href="#iterators" title="Permanent link">&para;</a></h2>
+<p>Iterators are higher-order operators. Their arguments are applicable values (functions, process handles, lists, and dictionaries) and their results are derived functions that iterate the application of the value. </p>
+<p>Three symbols, and three symbol pairs, denote iterators:</p>
+<table>
+<thead>
+<tr>
+<th>token</th>
+<th>semantics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>'</code></td>
+<td>Case and Each</td>
+</tr>
+<tr>
+<td><code>':</code></td>
+<td>Each Prior, Each Parallel</td>
+</tr>
+<tr>
+<td><code>/:</code> and <code>\:</code></td>
+<td>Each Right and Each Left</td>
+</tr>
+<tr>
+<td><code>/</code> and <code>\</code></td>
+<td>Converge, Do, While, Reduce</td>
+</tr>
+</tbody>
+</table>
+<p>Any of these in combination with the value immediately to its left, derives a new function. </p>
+<p>The derived function is a variant of the value modified by the iterator. 
+For example, <code>+</code> is Add and <code>+/</code> is <em>sum</em>.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="p">(</span><span class="o">+/</span><span class="p">)</span><span class="il">1</span><span class="w"> </span><span class="il">2</span><span class="w"> </span><span class="il">3</span><span class="w"> </span><span class="il">4</span><span class="w">       </span><span class="c1">/ sum the list 1 2 3 4</span>
+<span class="il">10</span>
+<span class="gp">q)</span><span class="il">16</span><span class="w"> </span><span class="o">+/</span><span class="w"> </span><span class="il">1</span><span class="w"> </span><span class="il">2</span><span class="w"> </span><span class="il">3</span><span class="w"> </span><span class="il">4</span><span class="w">     </span><span class="c1">/ sum the list with starting value 16</span>
+<span class="il">26</span>
+</code></pre></div>
+<p>Any notation for a derived function without its arguments (e.g. <code>+/</code>) denotes a constant function atom. </p>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M256 141.3v309.3l.5-.2A449 449 0 0 1 428.8 416H448V96h-19.2c-42.2 0-84.1 8.4-123.1 24.6-16.8 7-33.4 13.9-49.7 20.7m-25.1-79.8L256 72l25.1-10.5C327.9 42 378.1 32 428.8 32H464c26.5 0 48 21.5 48 48v352c0 26.5-21.5 48-48 48h-35.2c-50.7 0-100.9 10-147.7 29.5l-12.8 5.3c-7.9 3.3-16.7 3.3-24.6 0l-12.8-5.3C184.1 490 133.9 480 83.2 480H48c-26.5 0-48-21.5-48-48V80c0-26.5 21.5-48 48-48h35.2c50.7 0 100.9 10 147.7 29.5"/></svg></span> 
+<a href="../application/">Application</a> for how to apply iterators</p>
+<h2 id="names-and-namespaces">Names and namespaces<a class="headerlink" href="#names-and-namespaces" title="Permanent link">&para;</a></h2>
+<p>Names consist of the upper- and lower-case alphabetic characters, the numeric characters, dot (<code>.</code>) and underscore (<code>_</code>). The first character in a name cannot be numeric or the underscore.</p>
+<div class="admonition warning">
+<p class="admonition-title">Underscores in names</p>
+<p>While q permits the use of underscores in names, this usage is <strong>strongly deprecated</strong> because it is easily confused with <a href="../../ref/drop/">Drop</a>.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="nv">foo_bar</span><span class="o">:</span><span class="il">42</span>
+<span class="gp">q)</span><span class="nv">foo</span><span class="o">:</span><span class="il">3</span>
+<span class="gp">q)</span><span class="nv">bar</span><span class="o">:</span><span class="nb">til</span><span class="w"> </span><span class="il">6</span>
+</code></pre></div>
+<p>Is <code>foo_bar</code> now <code>42</code> or <code>3 4 5</code>?</p>
+</div>
+<p>A name is unique in its namespace. 
+A kdb+ session has a default namespace, and child namespaces, nested arbitrarily deep. 
+This hierarchy is known as the <em>K-tree</em>. 
+Namespaces are identified by a leading dot in their names.</p>
+<p>kdb+ includes namespaces <code>.h</code>, <code>.j</code>, <code>.q</code>, <code>.Q</code>, and <code>.z</code>. 
+(All namespaces with one-character names are reserved for use by KX.)</p>
+<p>Names with dots are <em>compound</em> names, and the segments between dots are <em>simple</em> names. All simple names in a compound name have meaning relative to the K-tree, and the dots denote the K-tree relationships among them.
+Two dots cannot occur together in a name. Compound names beginning with a dot are called <em>absolute</em> names, and all others are <em>relative</em> names.</p>
+<h2 id="iterator-composition">Iterator composition<a class="headerlink" href="#iterator-composition" title="Permanent link">&para;</a></h2>
+<p>A derived function is <em>composed</em> by any string of iterators with an applicable value to the left and no spaces between any of the iterator glyphs or between the value and the leftmost iterator glyph. For example, <code>+\/:\:</code> composes a well-formed function. The meaning of such a sequence of symbols is understood from left to right. The leftmost iterator (<code>\</code>) modifies the operator (<code>+</code>) to create a new function. The next iterator to the right of that one (<code>/:</code>) modifies the new function to create another new function, and so on, all the way to the iterator at the right end.</p>
+<h2 id="projecting-the-left-argument-of-an-operator">Projecting the left argument of an operator<a class="headerlink" href="#projecting-the-left-argument-of-an-operator" title="Permanent link">&para;</a></h2>
+<p>If the left argument of an operator is present but the right argument is not, the argument and operator symbol together denote a <em>projection</em>. For example, <code>3 +</code> denotes the unary function “3 plus”, which in the expression <code>(3 +) 4</code> is applied to 4 to give 7.</p>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M256 141.3v309.3l.5-.2A449 449 0 0 1 428.8 416H448V96h-19.2c-42.2 0-84.1 8.4-123.1 24.6-16.8 7-33.4 13.9-49.7 20.7m-25.1-79.8L256 72l25.1-10.5C327.9 42 378.1 32 428.8 32H464c26.5 0 48 21.5 48 48v352c0 26.5-21.5 48-48 48h-35.2c-50.7 0-100.9 10-147.7 29.5l-12.8 5.3c-7.9 3.3-16.7 3.3-24.6 0l-12.8-5.3C184.1 490 133.9 480 83.2 480H48c-26.5 0-48-21.5-48-48V80c0-26.5 21.5-48 48-48h35.2c50.7 0 100.9 10 147.7 29.5"/></svg></span>
+<a href="../application/#projection">Application and projection</a></p>
+<h2 id="precedence-and-order-of-evaluation">Precedence and order of evaluation<a class="headerlink" href="#precedence-and-order-of-evaluation" title="Permanent link">&para;</a></h2>
+<p>All functions in expressions have the same precedence, and with the exception of certain compound expressions the order of evaluation is strictly right to left. </p>
+<div class="highlight"><pre><span></span><code><span class="n">a</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">+</span><span class="n">c</span>
+</code></pre></div>
+<p>is <code>a*(b+c)</code>, not <code>(a*b)+c</code>.</p>
+<p>This rule applies to each expression within a compound expression and, other than the exceptions noted below, to the set of expressions as well. That is, the rightmost expression is evaluated first, then the one to its left, and so on to the leftmost one. </p>
+<p>For example, in the following pair of expressions, the first one assigns the value 10 to <code>x</code>. In the second one, the rightmost expression uses the value of <code>x</code> assigned above; the center expression assigns the value 20 to <code>x</code>, and that value is used in the leftmost expression:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="nv">x</span><span class="o">:</span><span class="w"> </span><span class="il">10</span>
+<span class="gp">q)</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="il">5</span><span class="p">;</span><span class="w"> </span><span class="nv">x</span><span class="o">:</span><span class="w"> </span><span class="il">20</span><span class="p">;</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="il">5</span><span class="p">)</span>
+<span class="il">25</span><span class="w"> </span><span class="il">20</span><span class="w"> </span><span class="il">5</span>
+</code></pre></div>
+<p>The sets of expressions in index expressions and argument expressions are also evaluated from right to left. However, in function expressions, conditional evaluations, and control statements the sets of expressions are evaluated left to right. </p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="nf">f</span><span class="o">:</span><span class="p">{</span><span class="nv">a</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="il">10</span><span class="p">;</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">a</span><span class="p">;</span><span class="w"> </span><span class="nv">a</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="il">20</span><span class="p">}</span>
+<span class="gp">q)</span><span class="n">f</span><span class="p">[</span><span class="il">5</span><span class="p">]</span>
+<span class="il">15</span>
+</code></pre></div>
+<p>The reason for this order of evaluation is that the function <code>f</code> written on one line above is identical to:</p>
+<div class="highlight"><pre><span></span><code><span class="nf">f</span><span class="o">:</span><span class="p">{</span><span class="w"> </span>
+<span class="w">  </span><span class="nv">a</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="il">10</span><span class="p">;</span>
+<span class="w">  </span><span class="o">:</span><span class="n">x</span><span class="o">+</span><span class="w"> </span><span class="n">a</span><span class="p">;</span>
+<span class="w">  </span><span class="nv">a</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="il">20</span><span class="w"> </span><span class="p">}</span>
+</code></pre></div>
+<p>It would be neither intuitive nor suitable behavior to have functions executed from the bottom up. (Note that in the context of function expressions, unary colon is Return.)</p>
+<h2 id="multiline-expressions">Multiline expressions<a class="headerlink" href="#multiline-expressions" title="Permanent link">&para;</a></h2>
+<p>Individual expressions can occupy more than one line in a script. Expressions can be broken after the semicolons that separate the individual expressions within compound expressions; it is necessary only to indent the continuation with one or more spaces.
+For example:</p>
+<div class="highlight"><pre><span></span><code><span class="p">(</span><span class="n">a</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">b</span><span class="p">;</span>
+<span class="w">  </span><span class="p">;</span>
+<span class="w">  </span><span class="n">c</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">d</span><span class="p">)</span>
+</code></pre></div>
+<p>is the 3-item list <code>(a+b;;c-d)</code>. </p>
+<p>Note that whenever a set of expressions is evaluated left to right, such as those in a function expression, if those expressions occupy more than one line then the lines are evaluated from top to bottom.</p>
+<h2 id="spaces">Spaces<a class="headerlink" href="#spaces" title="Permanent link">&para;</a></h2>
+<p>Any number of spaces are usually permitted between tokens in expressions, and usually the spaces are not required. The exceptions are:</p>
+<ul>
+<li>No spaces are permitted between the symbols <ul>
+<li><code>'</code> and <code>:</code> when denoting the iterator <code>':</code></li>
+<li><code>\</code> and <code>:</code> when denoting the iterator <code>\:</code></li>
+<li><code>/</code> and <code>:</code> when denoting the iterator <code>/:</code></li>
+<li>a digit and <code>:</code> when denoting a function such as <code>0:</code></li>
+<li><code>:</code> and <code>:</code> for assignments of the form <code>name :: value</code></li>
+</ul>
+</li>
+<li>No spaces are permitted between an iterator glyph and the value or
+iterator symbol to its left.</li>
+<li>No spaces are permitted between an operator glyph and a colon to its right whose purpose is to denote assignment.</li>
+<li>If a <code>/</code> is meant to denote the left end of a comment then it must be preceded by a blank (or newline); otherwise it will be taken to be part of an iterator.</li>
+<li>Both the underscore character (<code>_</code>) and dot character (<code>.</code>) denote operators and can also be part of a name. The default choice is part of a name. A space is therefore required between an underscore or dot and a name to its left or right when denoting a function.</li>
+<li>At least one space is required between neighboring numeric constants in vector notation.</li>
+<li>A minus sign (<code>-</code>) denotes both an operator and part of the format of negative constants. A minus sign is part of a negative constant if it is next to a positive constant and there are no spaces between, except that a minus sign is always considered to be the function if the token to the left is a name, a constant, a right parenthesis or a right bracket, and there is no space between that token and the minus sign. The following examples illustrate the various cases:</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="n">x</span><span class="o">-</span><span class="il">1</span><span class="w">            </span><span class="c1">/ x minus 1</span>
+<span class="n">x</span><span class="w"> </span><span class="o">-</span><span class="il">1</span><span class="w">           </span><span class="c1">/ x applied to -1</span>
+<span class="mf">3.5</span><span class="o">-</span><span class="il">1</span><span class="w">          </span><span class="c1">/ 3.5 minus 1</span>
+<span class="mf">3.5</span><span class="w"> </span><span class="o">-</span><span class="il">1</span><span class="w">         </span><span class="c1">/ numeric list with two elements </span>
+<span class="n">x</span><span class="p">[</span><span class="il">1</span><span class="p">]</span><span class="o">-</span><span class="il">1</span><span class="w">         </span><span class="c1">/ x[1] minus 1</span>
+<span class="p">(</span><span class="n">a</span><span class="o">+</span><span class="n">b</span><span class="p">)</span><span class="o">-</span><span class="w"> </span><span class="il">1</span><span class="w">       </span><span class="c1">/ (a+b) minus 1</span>
+</code></pre></div>
+<h2 id="comments">Comments<a class="headerlink" href="#comments" title="Permanent link">&para;</a></h2>
+<p>Line, trailing, and multiline comments are ignored by the interpreter.</p>
+<p><code>/</code> will comment out the rest of the line. </p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="o">/</span><span class="n">Oh</span><span class="w"> </span><span class="n">what</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">lovely</span><span class="w"> </span><span class="n">day</span>
+<span class="gp">q)</span><span class="il">2</span><span class="o">+</span><span class="il">2</span><span class="w">  </span><span class="c1">/I know this one</span>
+<span class="il">4</span>
+</code></pre></div>
+<p>unless embedded within a string or preceded by a system command.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="nb">count</span><span class="s2">"2/3"</span>
+<span class="il">3</span>
+<span class="gp">q)</span><span class="o">\</span><span class="n">l</span><span class="w"> </span><span class="c1">/data/files</span>
+</code></pre></div>
+<p>Sections of script can be commented out with matching singleton <code>/</code> and <code>\</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="cm">/</span>
+<span class="cm">    Oh what a beautiful morning</span>
+<span class="cm">    Oh what a wonderful day</span>
+<span class="cm">\</span>
+</code></pre></div>
+<p>When not terminating a multi-line comment, a singleton <code>\</code> will exit the script.</p>
+<div class="highlight"><pre><span></span><code><span class="nv">a</span><span class="o">:</span><span class="il">42</span>
+<span class="o">\</span>
+<span class="n">ignore</span><span class="w"> </span><span class="n">this</span><span class="w"> </span><span class="nb">and</span><span class="w"> </span><span class="n">what</span><span class="w"> </span><span class="n">follows</span>
+<span class="n">the</span><span class="w"> </span><span class="n">restroom</span><span class="w"> </span><span class="n">at</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">end</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">universe</span>
+</code></pre></div>
+<h2 id="special-constructs">Special constructs<a class="headerlink" href="#special-constructs" title="Permanent link">&para;</a></h2>
+<p>Back-slash, colon and single-quote (<code>/ \ : '</code>) all have special meanings outside ordinary expressions, denoting <a href="../syscmds/">system commands</a> and <a href="../debug/">debugging controls</a>.</p>
+<div class="peachq-import-attribution">
+<p>Source adapted from the <a href="https://github.com/KxSystems/docs">Documentation for kdb+ and q</a>
+by KX Systems and contributors, used under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.
+<a href="../../attribution/">Attribution, provenance and independence notice</a>.</p>
+</div>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  <div class="md-copyright__highlight">
+    PeachQ - MIT-licensed open source q, built on Rayforce with DuckDB storage in progress.
+  </div>
+  <a href="../../../about">Built for the community</a> &middot;
+  <a href="../../../contact">Contact</a> &middot;
+  <a href="https://github.com/peachq-org/peachq" target="_blank" rel="noreferrer">GitHub</a>
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.sections", "navigation.top", "content.code.copy", "content.action.edit"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

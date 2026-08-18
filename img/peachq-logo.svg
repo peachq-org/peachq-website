@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-labelledby="title desc">
+<title id="title">PeachQ logo</title>
+<desc id="desc">A peach shaped like the letter Q with a green leaf and brown stem.</desc>
+<defs>
+  <linearGradient id="peachMain" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#ffc08f"/>
+    <stop offset="0.55" stop-color="#ff9b72"/>
+    <stop offset="1" stop-color="#f36f69"/>
+  </linearGradient>
+  <linearGradient id="peachSide" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#ffad79"/>
+    <stop offset="1" stop-color="#ed5f63"/>
+  </linearGradient>
+  <linearGradient id="leaf" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#b9d95d"/>
+    <stop offset="0.48" stop-color="#72a93d"/>
+    <stop offset="1" stop-color="#36782e"/>
+  </linearGradient>
+  <linearGradient id="stem" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#c47a3a"/>
+    <stop offset="1" stop-color="#75411f"/>
+  </linearGradient>
+</defs>
+<path d="M69 25C79 10 96 8 108 13C102 27 88 36 70 36C67 32 67 28 69 25Z" fill="url(#leaf)" stroke="#386a2a" stroke-width="1.6" stroke-linejoin="round"/>
+<path d="M72 32C83 26 93 20 103 15" fill="none" stroke="#d7ec86" stroke-width="1.5" stroke-linecap="round" opacity=".7"/>
+<path d="M62 33C63 24 60 18 56 15C58 12 61 11 64 13C70 18 72 25 69 35Z" fill="url(#stem)" stroke="#70401f" stroke-width="1.4" stroke-linejoin="round"/>
+<path d="M59 31C37 28 20 40 17 62C14 84 25 104 46 112C57 116 68 115 77 109C66 104 59 93 58 78C57 61 64 48 76 41C72 35 66 32 59 31Z" fill="url(#peachSide)" stroke="#d95c58" stroke-width="1.8" stroke-linejoin="round"/>
+<path fill-rule="evenodd" d="M65 30C85 30 101 44 105 64C109 84 102 100 92 108L105 117C98 123 88 122 79 114C72 117 65 119 57 118C34 116 19 100 18 76C17 51 33 32 56 30C59 30 62 30 65 30ZM67 49C56 49 49 60 49 76C49 91 56 101 67 101C72 101 77 99 80 95L72 89C77 86 82 87 86 89C89 84 91 80 91 75C91 59 82 49 67 49Z" fill="url(#peachMain)" stroke="#d75f5b" stroke-width="1.8" stroke-linejoin="round"/>
+<path d="M35 43C26 54 23 68 26 82C29 96 37 105 49 110" fill="none" stroke="#ffd1aa" stroke-width="2.2" stroke-linecap="round" opacity=".75"/>
+<path d="M58 33C48 42 43 54 42 69C41 87 47 101 58 111" fill="none" stroke="#ef7067" stroke-width="2" stroke-linecap="round" opacity=".65"/>
+</svg>

@@ -1,0 +1,1395 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="The functional forms of delete, exec, select and update are particularly useful for programmatically-generated queries, such as when column names are dynamically produced.">
+      
+      
+        <meta name="author" content="['Peter Storeng', 'Stephen Taylor', 'Simon Shanks']">
+      
+      
+        <link rel="canonical" href="https://peachq.org/docs/basics/funsql/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../img/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Functional qSQL | Basics | kdb+ and q documentation - PeachQ</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../css/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  
+  <script src="../../../mirror-banner.js"></script>
+  <script>
+    var _paq = window._paq = window._paq || [];
+    /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    (function() {
+      var u="//www.timestored.com/mat/";
+      _paq.push(['setTrackerUrl', u+'matomo.php']);
+      _paq.push(['setSiteId', '4']);
+      var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+      g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+    })();
+  </script>
+
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#functional-qsql" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../" title="PeachQ" class="md-header__button md-logo" aria-label="PeachQ" data-md-component="logo">
+      
+  <img src="../../../img/peachq-logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <a class="md-ellipsis peachq-wordmark" href="../../../">
+            Peach<span class="peachq-wordmark__q">Q</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    
+    <nav class="peachq-nav" aria-label="Site">
+      
+      
+      
+        
+        <a class="peachq-nav__link" href="../../../repl">Try Live</a>
+      
+        
+        <a class="peachq-nav__link" href="../../../download">Download</a>
+      
+        
+        <a class="peachq-nav__link" href="../../../compatibility">Compatibility</a>
+      
+        
+        <a class="peachq-nav__link" href="../../../roadmap">Roadmap</a>
+      
+        
+        <a class="peachq-nav__link" href="../../../news/">News</a>
+      
+        
+        <a class="peachq-nav__link" href="../../../about">About</a>
+      
+        
+        <a class="peachq-nav__link" href="../../../contact">Contact</a>
+      
+      <a class="peachq-nav__link" href="https://github.com/peachq-org/peachq" target="_blank" rel="noreferrer">GitHub &#8599;</a>
+    </nav>
+
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="PeachQ" class="md-nav__button md-logo" aria-label="PeachQ" data-md-component="logo">
+      
+  <img src="../../../img/peachq-logo.svg" alt="logo">
+
+    </a>
+    PeachQ
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/peachq-org/peachq" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../news/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    News
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#call-by-name" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Call by name
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#select" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ? Select
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="? Select">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#select-distinct" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Select distinct
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rank-5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rank 5
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rank-6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rank 6
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exec" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ? Exec
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="? Exec">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#no-grouping" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        No grouping
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#group-by-column" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Group by column
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#group-by-columns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Group by columns
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#group-by-a-dictionary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Group by a dictionary
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#simple-exec" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ? Simple Exec
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#update" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ! Update
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#delete" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ! Delete
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conversion-using-parse" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conversion using parse
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Conversion using parse">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#issues-converting-to-functional-form" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Issues converting to functional form
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Issues converting to functional form">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#parse-trees-and-eval" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parse trees and eval
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#variable-representation-in-parse-trees" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Variable representation in parse trees
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#explicit-definitions-in-q-are-shown-in-full" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Explicit definitions in .q are shown in full
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-solution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The solution
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The solution">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fifth-and-sixth-arguments" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fifth and sixth arguments
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/peachq-org/peachq-website/edit/main/content/docs/basics/funsql.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+
+
+<h1 id="functional-qsql">Functional qSQL<a class="headerlink" href="#functional-qsql" title="Permanent link">&para;</a></h1>
+<p>The functional forms of <a href="../../ref/delete/"><code>delete</code></a>, <a href="../../ref/exec/"><code>exec</code></a>, <a href="../../ref/select/"><code>select</code></a> and <a href="../../ref/update/"><code>update</code></a> are particularly useful for programmatically-generated queries, such as when column names are dynamically produced. </p>
+<p>Functional form is an alternative to using a <a href="../qsql/">qSQL template</a> to construct a query. For example, the following are equivalent:
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="ow">select</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="ow">from</span><span class="w"> </span><span class="n">t</span>
+<span class="gp">q)</span><span class="o">?</span><span class="p">[</span><span class="n">t</span><span class="p">;();</span><span class="mb">0b</span><span class="p">;(</span><span class="ow">enlist</span><span class="w"> </span><span class="ss">`n</span><span class="p">)</span><span class="o">!</span><span class="ow">enlist</span><span class="w"> </span><span class="ss">`n</span><span class="p">]</span>
+</code></pre></div></p>
+<div class="admonition info">
+<p class="admonition-title">Performance</p>
+<p>The q interpreter parses <code>delete</code>, <code>exec</code>, <code>select</code>, and <code>update</code> into their equivalent functional forms, so there is no performance difference.</p>
+</div>
+<p>The functional forms are</p>
+<div class="highlight"><pre><span></span><code>![t;c;b;a]              /update and delete
+
+?[t;i;p]                /simple exec
+
+?[t;c;b;a]              /select or exec
+?[t;c;b;a;n]            /select up to n records
+?[t;c;b;a;n;(g;cn)]     /select up to n records sorted by g on cn
+</code></pre></div>
+<p>where: </p>
+<ul>
+<li><code>t</code>  is a table, or the name of a table as a symbol atom. </li>
+<li><code>c</code> is the <a href="../qsql/#where-phrase">Where phrase</a>, a list of constraints.<br />
+Every constraint in <code>c</code> is a <a href="../parsetrees/">parse tree</a> representing an expression to be evaluated; the result of each being a boolean vector. The parse tree consists of a function followed by a list of its arguments, each an expression containing column names and other variables. Represented by symbols, it distinguishes actual symbol constants by enlisting them. The function is applied to the arguments, producing a boolean vector that selects the rows. The selection is performed in the order of the items in <code>c</code>, from left to right: only rows selected by one constraint are evaluated by the next.</li>
+</ul>
+<!-- : Every item in `c` is a triple consisting of a boolean- or int- valued binary function together with its arguments, each an expression containing column names and other variables. The function is applied to the two arguments, producing a boolean vector. The resulting boolean vector selects the rows that yield non-zero results. The selection is performed in the order of the items in `c`, from left to right. -->
+<ul>
+<li><code>b</code> is the <a href="../../ref/select/#by-phrase">By phrase</a>.<br />
+The domain of dictionary <code>b</code> is a list of symbols that are the key names for the grouping. Its range is a list of column expressions (parse trees) whose results are used to construct the groups. The grouping is ordered by the domain items, from major to minor.
+<code>b</code> is one of:<ul>
+<li>the general empty list <code>()</code></li>
+<li>boolean atom: <code>0b</code> for no grouping; <code>1b</code> for distinct</li>
+<li>a symbol atom or list naming table column/s</li>
+<li>a dictionary of group-by specifications   </li>
+</ul>
+</li>
+<li><code>a</code> is the <a href="../../ref/select/#select-phrase">Select phrase</a>.
+The domain of dictionary <code>a</code> is a list of symbols containing the names of the produced columns. <a href="../qsql/">QSQL query templates</a> assign default column names in the result, but here each result column must be named explicitly.<br />
+Each item of its range is an evaluation list consisting of a function and its argument(s), each of which is a column name or another such result list. For each evaluation list, the function is applied to the specified value(s) for each row and the result is returned. The evaluation lists are resolved recursively when operations are nested.<br />
+<code>a</code> is one of<ul>
+<li>the general empty list <code>()</code></li>
+<li>a symbol atom: the name of a table column</li>
+<li>a parse tree</li>
+<li>a dictionary of select specifications (aggregations)</li>
+</ul>
+</li>
+<li><code>i</code> is a list of indexes</li>
+<li><code>p</code> is a <a href="../parsetrees/">parse tree</a></li>
+<li><code>n</code> is a non-negative integer or infinity, indicating the maximum number of records to be returned</li>
+<li><code>g</code> is a unary grade function</li>
+</ul>
+<h2 id="call-by-name">Call by name<a class="headerlink" href="#call-by-name" title="Permanent link">&para;</a></h2>
+<p>Columns in <code>a</code>, <code>b</code> and <code>c</code> appear as symbols.</p>
+<p>To distinguish symbol atoms and vectors from columns, enlist them.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="nv">t</span><span class="o">:</span><span class="p">([]</span><span class="w"> </span><span class="nv">c1</span><span class="o">:</span><span class="ss">`a`b`a`c`a`b`c</span><span class="p">;</span><span class="w"> </span><span class="nv">c2</span><span class="o">:</span><span class="il">10</span><span class="o">*</span><span class="il">1</span><span class="o">+</span><span class="nb">til</span><span class="w"> </span><span class="il">7</span><span class="p">;</span><span class="w"> </span><span class="nv">c3</span><span class="o">:</span><span class="mf">1.1</span><span class="o">*</span><span class="il">1</span><span class="o">+</span><span class="nb">til</span><span class="w"> </span><span class="il">7</span><span class="p">)</span>
+
+<span class="gp">q)</span><span class="ow">select</span><span class="w"> </span><span class="ow">from</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="nb">where</span><span class="w"> </span><span class="n">c2</span><span class="o">&gt;</span><span class="il">35</span><span class="o">,</span><span class="n">c1</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="ss">`b`c</span>
+<span class="n">c1</span><span class="w"> </span><span class="n">c2</span><span class="w"> </span><span class="n">c3</span>
+<span class="o">---------</span>
+<span class="n">c</span><span class="w">  </span><span class="il">40</span><span class="w"> </span><span class="mf">4.4</span>
+<span class="n">b</span><span class="w">  </span><span class="il">60</span><span class="w"> </span><span class="mf">6.6</span>
+<span class="n">c</span><span class="w">  </span><span class="il">70</span><span class="w"> </span><span class="mf">7.7</span>
+
+<span class="gp">q)</span><span class="o">?</span><span class="p">[</span><span class="n">t</span><span class="p">;</span><span class="w"> </span><span class="p">((</span><span class="o">&gt;</span><span class="p">;</span><span class="ss">`c2</span><span class="p">;</span><span class="il">35</span><span class="p">);(</span><span class="ow">in</span><span class="p">;</span><span class="ss">`c1</span><span class="p">;</span><span class="ow">enlist</span><span class="p">[</span><span class="ss">`b`c</span><span class="p">]));</span><span class="w"> </span><span class="mb">0b</span><span class="p">;</span><span class="w"> </span><span class="p">()]</span>
+<span class="n">c1</span><span class="w"> </span><span class="n">c2</span><span class="w"> </span><span class="n">c3</span>
+<span class="o">---------</span>
+<span class="n">c</span><span class="w">  </span><span class="il">40</span><span class="w"> </span><span class="mf">4.4</span>
+<span class="n">b</span><span class="w">  </span><span class="il">60</span><span class="w"> </span><span class="mf">6.6</span>
+<span class="n">c</span><span class="w">  </span><span class="il">70</span><span class="w"> </span><span class="mf">7.7</span>
+</code></pre></div>
+<p>Note above that </p>
+<ul>
+<li>the columns <code>c1</code> and <code>c2</code> appear as symbol atoms</li>
+<li>the symbol vector <code>`b`c</code> appears as <code>enlist[`b`c]</code></li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">Use <a href="../../ref/enlist/"><code>enlist</code></a> to create singletons to ensure appropriate entities are lists.</p>
+</div>
+<p>Different types of <code>a</code> and <code>b</code> return different types of result for Select and Exec.</p>
+<div class="highlight"><pre><span></span><code>           | b
+a          | bool    ()         sym/s   dict
+-----------|----------------------------------------
+()         | table    dict       -       keyed table
+sym        | -        vector     dict    dict
+parse tree | -        vector     dict    dict
+dict       | table    vector/s   table   table 
+</code></pre></div>
+<h2 id="select"><code>?</code> Select<a class="headerlink" href="#select" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>?[t;c;b;a]
+</code></pre></div>
+<p>Where <code>t</code>, <code>c</code>, <code>b</code>, and <code>a</code> are as above, returns a table.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="nb">show</span><span class="w"> </span><span class="nv">t</span><span class="o">:</span><span class="p">([]</span><span class="nv">n</span><span class="o">:</span><span class="ss">`x`y`x`z`z`y</span><span class="p">;</span><span class="nv">p</span><span class="o">:</span><span class="il">0</span><span class="w"> </span><span class="il">15</span><span class="w"> </span><span class="il">12</span><span class="w"> </span><span class="il">20</span><span class="w"> </span><span class="il">25</span><span class="w"> </span><span class="il">14</span><span class="p">)</span>
+<span class="n">n</span><span class="w"> </span><span class="n">p</span>
+<span class="o">----</span>
+<span class="n">x</span><span class="w"> </span><span class="il">0</span>
+<span class="n">y</span><span class="w"> </span><span class="il">15</span>
+<span class="n">x</span><span class="w"> </span><span class="il">12</span>
+<span class="n">z</span><span class="w"> </span><span class="il">20</span>
+<span class="n">z</span><span class="w"> </span><span class="il">25</span>
+<span class="n">y</span><span class="w"> </span><span class="il">14</span>
+
+<span class="gp">q)</span><span class="ow">select</span><span class="w"> </span><span class="nv">m</span><span class="o">:</span><span class="ow">max</span><span class="w"> </span><span class="n">p</span><span class="o">,</span><span class="nv">s</span><span class="o">:</span><span class="ow">sum</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="ow">by</span><span class="w"> </span><span class="nv">name</span><span class="o">:</span><span class="n">n</span><span class="w"> </span><span class="ow">from</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="nb">where</span><span class="w"> </span><span class="n">p</span><span class="o">&gt;</span><span class="il">0</span><span class="o">,</span><span class="n">n</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="ss">`x`y</span>
+<span class="n">name</span><span class="o">|</span><span class="w"> </span><span class="n">m</span><span class="w">  </span><span class="n">s</span>
+<span class="o">----|</span><span class="w"> </span><span class="o">-----</span>
+<span class="n">x</span><span class="w">   </span><span class="o">|</span><span class="w"> </span><span class="il">12</span><span class="w"> </span><span class="il">12</span>
+<span class="n">y</span><span class="w">   </span><span class="o">|</span><span class="w"> </span><span class="il">15</span><span class="w"> </span><span class="il">29</span>
+</code></pre></div>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M384 512H96c-53 0-96-43-96-96V96C0 43 43 0 96 0h304c26.5 0 48 21.5 48 48v288c0 20.9-13.4 38.7-32 45.3V448c17.7 0 32 14.3 32 32s-14.3 32-32 32zM96 384c-17.7 0-32 14.3-32 32s14.3 32 32 32h256v-64zm32-232c0 13.3 10.7 24 24 24h176c13.3 0 24-10.7 24-24s-10.7-24-24-24H152c-13.3 0-24 10.7-24 24m24 72c-13.3 0-24 10.7-24 24s10.7 24 24 24h176c13.3 0 24-10.7 24-24s-10.7-24-24-24z"/></svg></span>
+<a href="../../ref/select/"><code>select</code></a></p>
+<p>Following is the equivalent functional form. Note the use of <a href="../../ref/enlist/"><code>enlist</code></a> to create singletons, ensuring that appropriate entities are lists.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="nv">c</span><span class="o">:</span><span class="w"> </span><span class="p">((</span><span class="o">&gt;</span><span class="p">;</span><span class="ss">`p</span><span class="p">;</span><span class="il">0</span><span class="p">);(</span><span class="ow">in</span><span class="p">;</span><span class="ss">`n</span><span class="p">;</span><span class="ow">enlist</span><span class="w"> </span><span class="ss">`x`y</span><span class="p">))</span>
+<span class="gp">q)</span><span class="nv">b</span><span class="o">:</span><span class="w"> </span><span class="p">(</span><span class="ow">enlist</span><span class="w"> </span><span class="ss">`name</span><span class="p">)</span><span class="o">!</span><span class="ow">enlist</span><span class="w"> </span><span class="ss">`n</span>
+<span class="gp">q)</span><span class="nv">a</span><span class="o">:</span><span class="w"> </span><span class="ss">`m`s</span><span class="o">!</span><span class="p">((</span><span class="ow">max</span><span class="p">;</span><span class="ss">`p</span><span class="p">);(</span><span class="ow">sum</span><span class="p">;</span><span class="ss">`p</span><span class="p">))</span>
+<span class="gp">q)</span><span class="o">?</span><span class="p">[</span><span class="n">t</span><span class="p">;</span><span class="n">c</span><span class="p">;</span><span class="n">b</span><span class="p">;</span><span class="n">a</span><span class="p">]</span>
+<span class="n">name</span><span class="o">|</span><span class="w"> </span><span class="n">m</span><span class="w">  </span><span class="n">s</span>
+<span class="o">----|</span><span class="w"> </span><span class="o">-----</span>
+<span class="n">x</span><span class="w">   </span><span class="o">|</span><span class="w"> </span><span class="il">12</span><span class="w"> </span><span class="il">12</span>
+<span class="n">y</span><span class="w">   </span><span class="o">|</span><span class="w"> </span><span class="il">15</span><span class="w"> </span><span class="il">29</span>
+</code></pre></div>
+<div class="admonition tip">
+<p class="admonition-title">Degenerate cases</p>
+<ul>
+<li>For no constraints, make <code>c</code> the empty list </li>
+<li>For no grouping make <code>b</code> a boolean <code>0b</code> </li>
+<li>For distinct rows make <code>b</code> a boolean <code>1b</code> </li>
+<li>To produce all columns of <code>t</code> in the result, make <code>a</code> the empty list <code>()</code></li>
+</ul>
+<p><code>select from t</code> is equivalent to functional form <code>?[t;();0b;()]</code>.</p>
+</div>
+<h3 id="select-distinct">Select distinct<a class="headerlink" href="#select-distinct" title="Permanent link">&para;</a></h3>
+<p>For special case <a href="../../ref/select/#limit-expression"><code>select distinct</code></a> specify <code>b</code> as <code>1b</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="nv">t</span><span class="o">:</span><span class="p">([]</span><span class="w"> </span><span class="nv">c1</span><span class="o">:</span><span class="ss">`a`b`a`c`b`c</span><span class="p">;</span><span class="w"> </span><span class="nv">c2</span><span class="o">:</span><span class="il">1</span><span class="w"> </span><span class="il">1</span><span class="w"> </span><span class="il">1</span><span class="w"> </span><span class="il">2</span><span class="w"> </span><span class="il">2</span><span class="w"> </span><span class="il">2</span><span class="p">;</span><span class="w"> </span><span class="nv">c3</span><span class="o">:</span><span class="il">10</span><span class="w"> </span><span class="il">20</span><span class="w"> </span><span class="il">30</span><span class="w"> </span><span class="il">40</span><span class="w"> </span><span class="il">50</span><span class="w"> </span><span class="il">60</span><span class="p">)</span>
+
+<span class="gp">q)</span><span class="o">?</span><span class="p">[</span><span class="n">t</span><span class="p">;();</span><span class="w"> </span><span class="mb">1b</span><span class="p">;</span><span class="w"> </span><span class="ss">`c1`c2</span><span class="o">!</span><span class="ss">`c1`c2</span><span class="p">]</span><span class="w">        </span><span class="c1">/ select distinct c1,c2 from t</span>
+<span class="n">c1</span><span class="w"> </span><span class="n">c2</span>
+<span class="o">-----</span>
+<span class="n">a</span><span class="w">  </span><span class="il">1</span>
+<span class="n">b</span><span class="w">  </span><span class="il">1</span>
+<span class="n">c</span><span class="w">  </span><span class="il">2</span>
+<span class="n">b</span><span class="w">  </span><span class="il">2</span>
+</code></pre></div>
+<h3 id="rank-5">Rank 5<a class="headerlink" href="#rank-5" title="Permanent link">&para;</a></h3>
+<p><em>Limit result rows</em></p>
+<div class="highlight"><pre><span></span><code>?[t;c;b;a;n]
+</code></pre></div>
+<p>Returns as for rank 4, but where <code>n</code> is </p>
+<ul>
+<li>an integer or infinity, only the first <code>n</code> rows, or the last if <code>n</code> is negative</li>
+<li>a pair of non-negative integers, up to <code>n[1]</code> rows starting with row <code>n[0]</code></li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="nb">show</span><span class="w"> </span><span class="nv">t</span><span class="o">:</span><span class="p">([]</span><span class="w"> </span><span class="nv">c1</span><span class="o">:</span><span class="ss">`a`b`c`a</span><span class="p">;</span><span class="w"> </span><span class="nv">c2</span><span class="o">:</span><span class="il">10</span><span class="w"> </span><span class="il">20</span><span class="w"> </span><span class="il">30</span><span class="w"> </span><span class="il">40</span><span class="p">)</span>
+<span class="n">c1</span><span class="w"> </span><span class="n">c2</span>
+<span class="o">-----</span>
+<span class="n">a</span><span class="w">  </span><span class="il">10</span>
+<span class="n">b</span><span class="w">  </span><span class="il">20</span>
+<span class="n">c</span><span class="w">  </span><span class="il">30</span>
+<span class="n">a</span><span class="w">  </span><span class="il">40</span>
+
+<span class="gp">q)</span><span class="o">?</span><span class="p">[</span><span class="n">t</span><span class="p">;();</span><span class="mb">0b</span><span class="p">;();</span><span class="o">-</span><span class="il">2</span><span class="p">]</span><span class="w">                   </span><span class="c1">/ select[-2] from t</span>
+<span class="n">c1</span><span class="w"> </span><span class="n">c2</span>
+<span class="o">-----</span>
+<span class="n">c</span><span class="w">  </span><span class="il">30</span>
+<span class="n">a</span><span class="w">  </span><span class="il">40</span>
+
+<span class="gp">q)</span><span class="o">?</span><span class="p">[</span><span class="n">t</span><span class="p">;();</span><span class="mb">0b</span><span class="p">;();</span><span class="il">1</span><span class="w"> </span><span class="il">2</span><span class="p">]</span><span class="w">                 </span><span class="c1">/ select[1 2] from t</span>
+<span class="n">c1</span><span class="w"> </span><span class="n">c2</span>
+<span class="o">-----</span>
+<span class="n">b</span><span class="w">  </span><span class="il">20</span>
+<span class="n">c</span><span class="w">  </span><span class="il">30</span>
+</code></pre></div>
+<h3 id="rank-6">Rank 6<a class="headerlink" href="#rank-6" title="Permanent link">&para;</a></h3>
+<p><em>Limit result rows and sort by a column</em></p>
+<div class="highlight"><pre><span></span><code>?[t;c;b;a;n;(g;cn)]
+</code></pre></div>
+<p>Returns as for rank 5, but where</p>
+<ul>
+<li><code>g</code> is a unary grading function</li>
+<li><code>cn</code> is a column name as a symbol atom</li>
+</ul>
+<p>sorted by <code>g</code> on column <code>cn</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="o">?</span><span class="p">[</span><span class="n">t</span><span class="p">;</span><span class="w"> </span><span class="p">();</span><span class="w"> </span><span class="mb">0b</span><span class="p">;</span><span class="w"> </span><span class="ss">`c1`c2</span><span class="o">!</span><span class="ss">`c1`c2</span><span class="p">;</span><span class="w"> </span><span class="m">0W</span><span class="p">;</span><span class="w"> </span><span class="p">(</span><span class="nb">idesc</span><span class="p">;</span><span class="ss">`c1</span><span class="p">)]</span>
+<span class="n">c1</span><span class="w"> </span><span class="n">c2</span>
+<span class="o">-----</span>
+<span class="n">c</span><span class="w">  </span><span class="il">30</span>
+<span class="n">b</span><span class="w">  </span><span class="il">20</span>
+<span class="n">a</span><span class="w">  </span><span class="il">10</span>
+<span class="n">a</span><span class="w">  </span><span class="il">40</span>
+</code></pre></div>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M256 0a64 64 0 1 1 0 128 64 64 0 1 1 0-128m-32 160h64c35.3 0 64 28.7 64 64v48c0 17.7-14.3 32-32 32h-1.8l-11.1 99.5c-1.8 16.2-15.5 28.5-31.8 28.5h-38.7c-16.3 0-30-12.3-31.8-28.5L193.7 304h-1.8c-17.7 0-32-14.3-32-32v-48c0-35.3 28.7-64 64-64zm188.4 240.2c-16.1-4.2-34.8-7.6-55.4-10.2l5.3-47.7c22.7 2.9 43.7 6.7 62.1 11.5 22.4 5.8 42.6 13.3 57.8 23.3 14.7 9.6 29.8 24.9 29.8 47s-15.1 37.4-29.8 47c-15.2 9.9-35.5 17.5-57.8 23.3-45.1 11.7-105.3 17.8-168.4 17.8s-123.3-6.1-168.4-17.8c-22.4-6-42.6-13.5-57.8-23.4C15.1 461.4 0 446.1 0 424s15.1-37.4 29.8-47c15.2-9.9 35.5-17.5 57.8-23.3 18.5-4.8 39.5-8.6 62.1-11.5L155 390c-20.6 2.6-39.3 6.1-55.4 10.2-56.6 14.6-56.6 32.9 0 47.5 39.9 10.3 95.8 16.2 156.4 16.2s116.5-5.9 156.4-16.2c56.6-14.6 56.6-32.9 0-47.5"/></svg></span>
+<em>Q for Mortals</em>
+<a href="https://code.kx.com/q4m3/9_Queries_q-sql/#9121-functional-select">§9.12.1 Functional select</a></p>
+<h2 id="exec"><code>?</code> Exec<a class="headerlink" href="#exec" title="Permanent link">&para;</a></h2>
+<p><em>A simplified form of Select that returns a list or dictionary rather than a table.</em></p>
+<div class="highlight"><pre><span></span><code>?[t;c;b;a]
+</code></pre></div>
+<p>The constraint specification <code>c</code> (Where) is as for Select.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="nb">show</span><span class="w"> </span><span class="nv">t</span><span class="o">:</span><span class="p">([]</span><span class="w"> </span><span class="nv">c1</span><span class="o">:</span><span class="ss">`a`b`c`c`a`a</span><span class="p">;</span><span class="w"> </span><span class="nv">c2</span><span class="o">:</span><span class="il">10</span><span class="w"> </span><span class="il">20</span><span class="w"> </span><span class="il">30</span><span class="w"> </span><span class="il">30</span><span class="w"> </span><span class="il">40</span><span class="w"> </span><span class="il">40</span><span class="p">;</span><span class="w"> </span>
+<span class="w">    </span><span class="nv">c3</span><span class="o">:</span><span class="w"> </span><span class="mf">1.1</span><span class="w"> </span><span class="mf">2.2</span><span class="w"> </span><span class="mf">3.3</span><span class="w"> </span><span class="mf">3.3</span><span class="w"> </span><span class="mf">4.4</span><span class="w"> </span><span class="mf">3.14159</span><span class="p">;</span><span class="w"> </span><span class="nv">c4</span><span class="o">:</span><span class="ss">`cow`sheep`cat`dog`cow`dog</span><span class="p">)</span>
+<span class="n">c1</span><span class="w"> </span><span class="n">c2</span><span class="w"> </span><span class="n">c3</span><span class="w">      </span><span class="n">c4</span>
+<span class="o">-------------------</span>
+<span class="n">a</span><span class="w">  </span><span class="il">10</span><span class="w"> </span><span class="mf">1.1</span><span class="w">     </span><span class="n">cow</span>
+<span class="n">b</span><span class="w">  </span><span class="il">20</span><span class="w"> </span><span class="mf">2.2</span><span class="w">     </span><span class="n">sheep</span>
+<span class="n">c</span><span class="w">  </span><span class="il">30</span><span class="w"> </span><span class="mf">3.3</span><span class="w">     </span><span class="n">cat</span>
+<span class="n">c</span><span class="w">  </span><span class="il">30</span><span class="w"> </span><span class="mf">3.3</span><span class="w">     </span><span class="n">dog</span>
+<span class="n">a</span><span class="w">  </span><span class="il">40</span><span class="w"> </span><span class="mf">4.4</span><span class="w">     </span><span class="n">cow</span>
+<span class="n">a</span><span class="w">  </span><span class="il">40</span><span class="w"> </span><span class="mf">3.14159</span><span class="w"> </span><span class="n">dog</span>
+</code></pre></div>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M384 512H96c-53 0-96-43-96-96V96C0 43 43 0 96 0h304c26.5 0 48 21.5 48 48v288c0 20.9-13.4 38.7-32 45.3V448c17.7 0 32 14.3 32 32s-14.3 32-32 32zM96 384c-17.7 0-32 14.3-32 32s14.3 32 32 32h256v-64zm32-232c0 13.3 10.7 24 24 24h176c13.3 0 24-10.7 24-24s-10.7-24-24-24H152c-13.3 0-24 10.7-24 24m24 72c-13.3 0-24 10.7-24 24s10.7 24 24 24h176c13.3 0 24-10.7 24-24s-10.7-24-24-24z"/></svg></span>
+<a href="../../ref/exec/"><code>exec</code></a></p>
+<h3 id="no-grouping">No grouping<a class="headerlink" href="#no-grouping" title="Permanent link">&para;</a></h3>
+<p><code>b</code> is the general empty list.</p>
+<div class="highlight"><pre><span></span><code>b   a      result
+--------------------------------------------------------------
+()  ()     the last row of t as a dictionary
+()  sym    the value of that column
+()  dict   a dictionary with keys and values as specified by a
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="o">?</span><span class="p">[</span><span class="n">t</span><span class="p">;</span><span class="w"> </span><span class="p">();</span><span class="w"> </span><span class="p">();</span><span class="w"> </span><span class="p">()]</span><span class="w">                          </span><span class="c1">/ exec last c1,last c2,last c3 from t</span>
+<span class="n">c1</span><span class="o">|</span><span class="w"> </span><span class="ss">`a</span>
+<span class="n">c2</span><span class="o">|</span><span class="w"> </span><span class="il">40</span>
+<span class="n">c3</span><span class="o">|</span><span class="w"> </span><span class="mf">3.14159</span>
+<span class="n">c4</span><span class="o">|</span><span class="w"> </span><span class="ss">`dog</span>
+
+<span class="gp">q)</span><span class="o">?</span><span class="p">[</span><span class="n">t</span><span class="p">;</span><span class="w"> </span><span class="p">();</span><span class="w"> </span><span class="p">();</span><span class="w"> </span><span class="ss">`c1</span><span class="p">]</span><span class="w">                         </span><span class="c1">/ exec c1 from t</span>
+<span class="ss">`a`b`c`c`a`a</span>
+
+<span class="gp">q)</span><span class="o">?</span><span class="p">[</span><span class="n">t</span><span class="p">;</span><span class="w"> </span><span class="p">();</span><span class="w"> </span><span class="p">();</span><span class="w"> </span><span class="ss">`one`two</span><span class="o">!</span><span class="ss">`c1`c2</span><span class="p">]</span><span class="w">             </span><span class="c1">/ exec one:c1,two:c2 from t</span>
+<span class="n">one</span><span class="o">|</span><span class="w"> </span><span class="n">a</span><span class="w">  </span><span class="n">b</span><span class="w">  </span><span class="n">c</span><span class="w">  </span><span class="n">c</span><span class="w">  </span><span class="n">a</span><span class="w">  </span><span class="n">a</span>
+<span class="n">two</span><span class="o">|</span><span class="w"> </span><span class="il">10</span><span class="w"> </span><span class="il">20</span><span class="w"> </span><span class="il">30</span><span class="w"> </span><span class="il">30</span><span class="w"> </span><span class="il">40</span><span class="w"> </span><span class="il">40</span>
+
+<span class="gp">q)</span><span class="o">?</span><span class="p">[</span><span class="n">t</span><span class="p">;</span><span class="w"> </span><span class="p">();</span><span class="w"> </span><span class="p">();</span><span class="w"> </span><span class="ss">`one`two</span><span class="o">!</span><span class="p">(</span><span class="ss">`c1</span><span class="p">;(</span><span class="ow">sum</span><span class="p">;</span><span class="ss">`c2</span><span class="p">))]</span><span class="w">    </span><span class="c1">/ exec one:c1,two:sum c2 from t</span>
+<span class="n">one</span><span class="o">|</span><span class="w"> </span><span class="ss">`a`b`c`c`a`a</span>
+<span class="n">two</span><span class="o">|</span><span class="w"> </span><span class="il">170</span>
+</code></pre></div>
+<h3 id="group-by-column">Group by column<a class="headerlink" href="#group-by-column" title="Permanent link">&para;</a></h3>
+<p><code>b</code> is a column name. The result is a dictionary. </p>
+<p>Where <code>a</code> is a <strong>column name</strong>, in the result</p>
+<ul>
+<li>the keys are distinct values of the column named in <code>b</code> </li>
+<li>the values are lists of corresponding values from the column named in <code>a</code></li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="o">?</span><span class="p">[</span><span class="n">t</span><span class="p">;</span><span class="w"> </span><span class="p">();</span><span class="w"> </span><span class="ss">`c1</span><span class="p">;</span><span class="w"> </span><span class="ss">`c2</span><span class="p">]</span><span class="w">     </span><span class="c1">/ exec c2 by c1 from t</span>
+<span class="n">a</span><span class="o">|</span><span class="w"> </span><span class="il">10</span><span class="w"> </span><span class="il">40</span><span class="w"> </span><span class="il">40</span>
+<span class="n">b</span><span class="o">|</span><span class="w"> </span><span class="o">,</span><span class="il">20</span>
+<span class="n">c</span><span class="o">|</span><span class="w"> </span><span class="il">30</span><span class="w"> </span><span class="il">30</span>
+</code></pre></div>
+<p>Where <code>a</code> is a <strong>dictionary</strong>, in the result</p>
+<ul>
+<li>the key is a table with a single anonymous column containing distinct values of the column named in <code>b</code> </li>
+<li>the value is a table with columns as defined in <code>a</code></li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="o">?</span><span class="p">[</span><span class="n">t</span><span class="p">;</span><span class="w"> </span><span class="p">();</span><span class="w"> </span><span class="ss">`c1</span><span class="p">;</span><span class="w"> </span><span class="ow">enlist</span><span class="p">[</span><span class="ss">`c2</span><span class="p">]</span><span class="o">!</span><span class="ow">enlist</span><span class="ss">`c2</span><span class="p">]</span><span class="w">      </span><span class="c1">/ exec c2:c2 by c1 from t</span>
+<span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">c2</span>
+<span class="o">-|</span><span class="w"> </span><span class="o">--------</span>
+<span class="n">a</span><span class="o">|</span><span class="w"> </span><span class="il">10</span><span class="w"> </span><span class="il">40</span><span class="w"> </span><span class="il">40</span>
+<span class="n">b</span><span class="o">|</span><span class="w"> </span><span class="o">,</span><span class="il">20</span>
+<span class="n">c</span><span class="o">|</span><span class="w"> </span><span class="il">30</span><span class="w"> </span><span class="il">30</span>
+
+<span class="gp">q)</span><span class="o">?</span><span class="p">[</span><span class="n">t</span><span class="p">;</span><span class="w"> </span><span class="p">();</span><span class="w"> </span><span class="ss">`c1</span><span class="p">;</span><span class="w"> </span><span class="ss">`two`three</span><span class="o">!</span><span class="ss">`c2`c3</span><span class="p">]</span><span class="w">          </span><span class="c1">/ exec two:c2,three:c3 by c1 from t</span>
+<span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">two</span><span class="w">      </span><span class="n">three</span>
+<span class="o">-|</span><span class="w"> </span><span class="o">------------------------</span>
+<span class="n">a</span><span class="o">|</span><span class="w"> </span><span class="il">10</span><span class="w"> </span><span class="il">40</span><span class="w"> </span><span class="il">40</span><span class="w"> </span><span class="mf">1.1</span><span class="w"> </span><span class="mf">4.4</span><span class="w"> </span><span class="mf">3.14159</span>
+<span class="n">b</span><span class="o">|</span><span class="w"> </span><span class="o">,</span><span class="il">20</span><span class="w">      </span><span class="o">,</span><span class="mf">2.2</span>
+<span class="n">c</span><span class="o">|</span><span class="w"> </span><span class="il">30</span><span class="w"> </span><span class="il">30</span><span class="w">    </span><span class="mf">3.3</span><span class="w"> </span><span class="mf">3.3</span>
+
+<span class="gp">q)</span><span class="o">?</span><span class="p">[</span><span class="n">t</span><span class="p">;();</span><span class="ss">`c1</span><span class="p">;</span><span class="ss">`m2`s3</span><span class="o">!</span><span class="p">((</span><span class="ow">max</span><span class="p">;</span><span class="ss">`c2</span><span class="p">);(</span><span class="ow">sum</span><span class="p">;</span><span class="ss">`c3</span><span class="p">))]</span><span class="w">  </span><span class="c1">/ exec m2:max c2,s3:sum c3 by c1 from t</span>
+<span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">m2</span><span class="w">  </span><span class="n">s3</span>
+<span class="o">-|</span><span class="w"> </span><span class="o">-----------</span>
+<span class="n">a</span><span class="o">|</span><span class="w"> </span><span class="il">40</span><span class="w">  </span><span class="mf">8.64159</span>
+<span class="n">b</span><span class="o">|</span><span class="w"> </span><span class="il">20</span><span class="w">  </span><span class="mf">2.2</span>
+<span class="n">c</span><span class="o">|</span><span class="w"> </span><span class="il">30</span><span class="w">  </span><span class="mf">6.6</span>
+</code></pre></div>
+<h3 id="group-by-columns">Group by columns<a class="headerlink" href="#group-by-columns" title="Permanent link">&para;</a></h3>
+<p><code>b</code> is a list of column names.</p>
+<p>Where <code>a</code> is a <strong>column name</strong>, returns a dictionary in which</p>
+<ul>
+<li>the key is the empty symbol</li>
+<li>the value is the value of the column/s specified in <code>a</code></li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="o">?</span><span class="p">[</span><span class="n">t</span><span class="p">;</span><span class="w"> </span><span class="p">();</span><span class="w"> </span><span class="ss">`c1`c2</span><span class="p">;</span><span class="w"> </span><span class="ss">`c3</span><span class="p">]</span>
+<span class="o">|</span><span class="w"> </span><span class="mf">1.1</span><span class="w"> </span><span class="mf">2.2</span><span class="w"> </span><span class="mf">3.3</span><span class="w"> </span><span class="mf">3.3</span><span class="w"> </span><span class="mf">4.4</span><span class="w"> </span><span class="mf">3.14159</span>
+
+<span class="gp">q)</span><span class="o">?</span><span class="p">[</span><span class="n">t</span><span class="p">;</span><span class="w"> </span><span class="p">();</span><span class="w"> </span><span class="ss">`c1`c2</span><span class="p">;</span><span class="w"> </span><span class="ss">`c3`c4</span><span class="o">!</span><span class="p">((</span><span class="ow">max</span><span class="p">;</span><span class="ss">`c3</span><span class="p">);(</span><span class="ow">last</span><span class="p">;</span><span class="ss">`c4</span><span class="p">))]</span>
+<span class="o">|</span><span class="w"> </span><span class="n">c3</span><span class="w">  </span><span class="n">c4</span>
+<span class="o">|</span><span class="w"> </span><span class="o">-------</span>
+<span class="o">|</span><span class="w"> </span><span class="mf">4.4</span><span class="w"> </span><span class="n">dog</span>
+</code></pre></div>
+<h3 id="group-by-a-dictionary">Group by a dictionary<a class="headerlink" href="#group-by-a-dictionary" title="Permanent link">&para;</a></h3>
+<p><code>b</code> is a dictionary. Result is a dictionary in which the key is a table with columns as specified by <code>b</code> and </p>
+<div class="highlight"><pre><span></span><code>b     a     result value
+-----------------------------------------------------
+dict  ()    last records of table that match each key
+dict  sym   corresponding values from the column in a
+dict  dict  values as defined in a
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="o">?</span><span class="p">[</span><span class="n">t</span><span class="p">;</span><span class="w"> </span><span class="p">();</span><span class="w"> </span><span class="ss">`one`two</span><span class="o">!</span><span class="ss">`c1`c2</span><span class="p">;</span><span class="w"> </span><span class="p">()]</span>
+<span class="n">one</span><span class="w"> </span><span class="n">two</span><span class="o">|</span><span class="w"> </span><span class="n">c1</span><span class="w"> </span><span class="n">c2</span><span class="w"> </span><span class="n">c3</span><span class="w">      </span><span class="n">c4</span>
+<span class="o">-------|</span><span class="w"> </span><span class="o">-------------------</span>
+<span class="n">a</span><span class="w">   </span><span class="il">10</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">a</span><span class="w">  </span><span class="il">10</span><span class="w"> </span><span class="mf">1.1</span><span class="w">     </span><span class="n">cow</span>
+<span class="n">a</span><span class="w">   </span><span class="il">40</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">a</span><span class="w">  </span><span class="il">40</span><span class="w"> </span><span class="mf">3.14159</span><span class="w"> </span><span class="n">dog</span>
+<span class="n">b</span><span class="w">   </span><span class="il">20</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">b</span><span class="w">  </span><span class="il">20</span><span class="w"> </span><span class="mf">2.2</span><span class="w">     </span><span class="n">sheep</span>
+<span class="n">c</span><span class="w">   </span><span class="il">30</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">c</span><span class="w">  </span><span class="il">30</span><span class="w"> </span><span class="mf">3.3</span><span class="w">     </span><span class="n">dog</span>
+<span class="gp">q)</span><span class="o">/</span><span class="w"> </span><span class="ow">exec</span><span class="w"> </span><span class="ow">last</span><span class="w"> </span><span class="n">c1</span><span class="o">,</span><span class="ow">last</span><span class="w"> </span><span class="n">c2</span><span class="o">,</span><span class="ow">last</span><span class="w"> </span><span class="n">c3</span><span class="o">,</span><span class="ow">last</span><span class="w"> </span><span class="n">c4</span><span class="w"> </span><span class="ow">by</span><span class="w"> </span><span class="nv">one</span><span class="o">:</span><span class="n">c1</span><span class="o">,</span><span class="nv">two</span><span class="o">:</span><span class="n">c2</span><span class="w"> </span><span class="ow">from</span><span class="w"> </span><span class="n">t</span>
+
+<span class="gp">q)</span><span class="o">?</span><span class="p">[</span><span class="n">t</span><span class="p">;</span><span class="w"> </span><span class="p">();</span><span class="w"> </span><span class="ow">enlist</span><span class="p">[</span><span class="ss">`one</span><span class="p">]</span><span class="o">!</span><span class="ow">enlist</span><span class="p">(</span><span class="nb">string</span><span class="p">;</span><span class="ss">`c1</span><span class="p">);</span><span class="w"> </span><span class="p">()]</span>
+<span class="n">one</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">c1</span><span class="w"> </span><span class="n">c2</span><span class="w"> </span><span class="n">c3</span><span class="w">      </span><span class="n">c4</span>
+<span class="o">----|</span><span class="w"> </span><span class="o">-------------------</span>
+<span class="o">,</span><span class="s2">"a"</span><span class="o">|</span><span class="w"> </span><span class="n">a</span><span class="w">  </span><span class="il">40</span><span class="w"> </span><span class="mf">3.14159</span><span class="w"> </span><span class="n">dog</span>
+<span class="o">,</span><span class="s2">"b"</span><span class="o">|</span><span class="w"> </span><span class="n">b</span><span class="w">  </span><span class="il">20</span><span class="w"> </span><span class="mf">2.2</span><span class="w">     </span><span class="n">sheep</span>
+<span class="o">,</span><span class="s2">"c"</span><span class="o">|</span><span class="w"> </span><span class="n">c</span><span class="w">  </span><span class="il">30</span><span class="w"> </span><span class="mf">3.3</span><span class="w">     </span><span class="n">dog</span>
+<span class="gp">q)</span><span class="o">/</span><span class="w"> </span><span class="ow">exec</span><span class="w"> </span><span class="ow">last</span><span class="w"> </span><span class="n">c1</span><span class="o">,</span><span class="ow">last</span><span class="w"> </span><span class="n">c2</span><span class="o">,</span><span class="ow">last</span><span class="w"> </span><span class="n">c3</span><span class="o">,</span><span class="ow">last</span><span class="w"> </span><span class="n">c4</span><span class="w"> </span><span class="ow">by</span><span class="w"> </span><span class="nv">one</span><span class="o">:</span><span class="nb">string</span><span class="w"> </span><span class="n">c1</span><span class="w"> </span><span class="ow">from</span><span class="w"> </span><span class="n">t</span>
+
+<span class="gp">q)</span><span class="o">?</span><span class="p">[</span><span class="n">t</span><span class="p">;</span><span class="w"> </span><span class="p">();</span><span class="w"> </span><span class="ow">enlist</span><span class="p">[</span><span class="ss">`one</span><span class="p">]</span><span class="o">!</span><span class="ow">enlist</span><span class="w"> </span><span class="ss">`c1</span><span class="p">;</span><span class="w"> </span><span class="ss">`c2</span><span class="p">]</span><span class="w">     </span><span class="c1">/ exec c2 by one:c1 from t</span>
+<span class="n">one</span><span class="o">|</span>
+<span class="o">---|</span><span class="w"> </span><span class="o">--------</span>
+<span class="n">a</span><span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="il">10</span><span class="w"> </span><span class="il">40</span><span class="w"> </span><span class="il">40</span>
+<span class="n">b</span><span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="o">,</span><span class="il">20</span>
+<span class="n">c</span><span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="il">30</span><span class="w"> </span><span class="il">30</span>
+
+<span class="gp">q)</span><span class="o">?</span><span class="p">[</span><span class="n">t</span><span class="p">;</span><span class="w"> </span><span class="p">();</span><span class="w"> </span><span class="ss">`one`four</span><span class="o">!</span><span class="ss">`c1`c4</span><span class="p">;</span><span class="w"> </span><span class="ss">`m2`s3</span><span class="o">!</span><span class="p">((</span><span class="ow">max</span><span class="p">;</span><span class="ss">`c2</span><span class="p">);(</span><span class="ow">sum</span><span class="p">;</span><span class="ss">`c3</span><span class="p">))]</span>
+<span class="n">one</span><span class="w"> </span><span class="n">four</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">m2</span><span class="w"> </span><span class="n">s3</span>
+<span class="o">---------|</span><span class="w"> </span><span class="o">----------</span>
+<span class="n">a</span><span class="w">   </span><span class="n">cow</span><span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="il">40</span><span class="w"> </span><span class="mf">5.5</span>
+<span class="n">a</span><span class="w">   </span><span class="n">dog</span><span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="il">40</span><span class="w"> </span><span class="mf">3.14159</span>
+<span class="n">b</span><span class="w">   </span><span class="n">sheep</span><span class="o">|</span><span class="w"> </span><span class="il">20</span><span class="w"> </span><span class="mf">2.2</span>
+<span class="n">c</span><span class="w">   </span><span class="n">cat</span><span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="il">30</span><span class="w"> </span><span class="mf">3.3</span>
+<span class="n">c</span><span class="w">   </span><span class="n">dog</span><span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="il">30</span><span class="w"> </span><span class="mf">3.3</span>
+</code></pre></div>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M256 0a64 64 0 1 1 0 128 64 64 0 1 1 0-128m-32 160h64c35.3 0 64 28.7 64 64v48c0 17.7-14.3 32-32 32h-1.8l-11.1 99.5c-1.8 16.2-15.5 28.5-31.8 28.5h-38.7c-16.3 0-30-12.3-31.8-28.5L193.7 304h-1.8c-17.7 0-32-14.3-32-32v-48c0-35.3 28.7-64 64-64zm188.4 240.2c-16.1-4.2-34.8-7.6-55.4-10.2l5.3-47.7c22.7 2.9 43.7 6.7 62.1 11.5 22.4 5.8 42.6 13.3 57.8 23.3 14.7 9.6 29.8 24.9 29.8 47s-15.1 37.4-29.8 47c-15.2 9.9-35.5 17.5-57.8 23.3-45.1 11.7-105.3 17.8-168.4 17.8s-123.3-6.1-168.4-17.8c-22.4-6-42.6-13.5-57.8-23.4C15.1 461.4 0 446.1 0 424s15.1-37.4 29.8-47c15.2-9.9 35.5-17.5 57.8-23.3 18.5-4.8 39.5-8.6 62.1-11.5L155 390c-20.6 2.6-39.3 6.1-55.4 10.2-56.6 14.6-56.6 32.9 0 47.5 39.9 10.3 95.8 16.2 156.4 16.2s116.5-5.9 156.4-16.2c56.6-14.6 56.6-32.9 0-47.5"/></svg></span>
+<em>Q for Mortals</em>
+<a href="https://code.kx.com/q4m3/9_Queries_q-sql/#9122-functional-exec">§9.12.2 Functional exec</a></p>
+<!-- 
+In the simplest example of a single result column, the By specification is the empty list and the Aggregate specification is a symbol atom.
+
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="nb">show</span><span class="w"> </span><span class="nv">t</span><span class="o">:</span><span class="p">([]</span><span class="nv">n</span><span class="o">:</span><span class="ss">`x`y`x`z`z`y</span><span class="p">;</span><span class="nv">p</span><span class="o">:</span><span class="il">0</span><span class="w"> </span><span class="il">15</span><span class="w"> </span><span class="il">12</span><span class="w"> </span><span class="il">20</span><span class="w"> </span><span class="il">25</span><span class="w"> </span><span class="il">14</span><span class="p">)</span>
+<span class="n">n</span><span class="w"> </span><span class="n">p</span>
+<span class="o">----</span>
+<span class="n">x</span><span class="w"> </span><span class="il">0</span>
+<span class="n">y</span><span class="w"> </span><span class="il">15</span>
+<span class="n">x</span><span class="w"> </span><span class="il">12</span>
+<span class="n">z</span><span class="w"> </span><span class="il">20</span>
+<span class="n">z</span><span class="w"> </span><span class="il">25</span>
+<span class="n">y</span><span class="w"> </span><span class="il">14</span>
+
+<span class="gp">q)</span><span class="ow">exec</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="ow">from</span><span class="w"> </span><span class="n">t</span>
+<span class="ss">`x`y`x`z`z`y</span>
+
+<span class="gp">q)</span><span class="o">?</span><span class="p">[</span><span class="n">t</span><span class="p">;();();</span><span class="ss">`n</span><span class="p">]</span><span class="w">           </span><span class="c1">/ same as previous exec</span>
+<span class="ss">`x`y`x`z`z`y</span>
+</code></pre></div>
+In the same query with multiple columns, the group-by parameter is the empty list and the aggregate parameter is a dictionary as it would be in a Select. The result is a dictionary rather than a table.
+
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="ow">exec</span><span class="w"> </span><span class="n">n</span><span class="o">,</span><span class="n">p</span><span class="w"> </span><span class="ow">from</span><span class="w"> </span><span class="n">t</span>
+<span class="n">n</span><span class="o">|</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="n">y</span><span class="w">  </span><span class="n">x</span><span class="w">  </span><span class="n">z</span><span class="w">  </span><span class="n">z</span><span class="w">  </span><span class="n">y</span>
+<span class="n">p</span><span class="o">|</span><span class="w"> </span><span class="il">0</span><span class="w"> </span><span class="il">15</span><span class="w"> </span><span class="il">12</span><span class="w"> </span><span class="il">20</span><span class="w"> </span><span class="il">25</span><span class="w"> </span><span class="il">14</span>
+
+<span class="gp">q)</span><span class="o">?</span><span class="p">[</span><span class="n">t</span><span class="p">;();();</span><span class="ss">`n`p</span><span class="o">!</span><span class="ss">`n`p</span><span class="p">]</span><span class="w">    </span><span class="c1">/ same as previous exec</span>
+<span class="n">n</span><span class="o">|</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="n">y</span><span class="w">  </span><span class="n">x</span><span class="w">  </span><span class="n">z</span><span class="w">  </span><span class="n">z</span><span class="w">  </span><span class="n">y</span>
+<span class="n">p</span><span class="o">|</span><span class="w"> </span><span class="il">0</span><span class="w"> </span><span class="il">15</span><span class="w"> </span><span class="il">12</span><span class="w"> </span><span class="il">20</span><span class="w"> </span><span class="il">25</span><span class="w"> </span><span class="il">14</span>
+</code></pre></div>
+
+If you wish to group by a single column, specify it as a symbol atom.
+
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="ow">exec</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="ow">by</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="ow">from</span><span class="w"> </span><span class="n">t</span>
+<span class="n">x</span><span class="o">|</span><span class="w"> </span><span class="il">0</span><span class="w">  </span><span class="il">12</span>
+<span class="n">y</span><span class="o">|</span><span class="w"> </span><span class="il">15</span><span class="w"> </span><span class="il">14</span>
+<span class="n">z</span><span class="o">|</span><span class="w"> </span><span class="il">20</span><span class="w"> </span><span class="il">25</span>
+
+<span class="gp">q)</span><span class="o">?</span><span class="p">[</span><span class="n">t</span><span class="p">;();</span><span class="ss">`n</span><span class="p">;</span><span class="ss">`p</span><span class="p">]</span><span class="w">           </span><span class="c1">/ same as previous exec</span>
+<span class="n">x</span><span class="o">|</span><span class="w"> </span><span class="il">0</span><span class="w">  </span><span class="il">12</span>
+<span class="n">y</span><span class="o">|</span><span class="w"> </span><span class="il">15</span><span class="w"> </span><span class="il">14</span>
+<span class="n">z</span><span class="o">|</span><span class="w"> </span><span class="il">20</span><span class="w"> </span><span class="il">25</span>
+</code></pre></div>
+
+More complex examples of Exec <!-- seem to reduce to the equivalent Select.
+ -->
+
+<h2 id="simple-exec"><code>?</code> Simple Exec<a class="headerlink" href="#simple-exec" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>?[t;i;p]
+</code></pre></div>
+<p>Where <code>t</code> is not partitioned, another form of Exec.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="nb">show</span><span class="w"> </span><span class="nv">t</span><span class="o">:</span><span class="p">([]</span><span class="nv">a</span><span class="o">:</span><span class="il">1</span><span class="w"> </span><span class="il">2</span><span class="w"> </span><span class="il">3</span><span class="p">;</span><span class="nv">b</span><span class="o">:</span><span class="il">4</span><span class="w"> </span><span class="il">5</span><span class="w"> </span><span class="il">6</span><span class="p">;</span><span class="nv">c</span><span class="o">:</span><span class="il">7</span><span class="w"> </span><span class="il">9</span><span class="w"> </span><span class="il">0</span><span class="p">)</span>
+<span class="n">a</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="n">c</span>
+<span class="o">-----</span>
+<span class="il">1</span><span class="w"> </span><span class="il">4</span><span class="w"> </span><span class="il">7</span>
+<span class="il">2</span><span class="w"> </span><span class="il">5</span><span class="w"> </span><span class="il">9</span>
+<span class="il">3</span><span class="w"> </span><span class="il">6</span><span class="w"> </span><span class="il">0</span>
+
+<span class="gp">q)</span><span class="o">?</span><span class="p">[</span><span class="n">t</span><span class="p">;</span><span class="il">0</span><span class="w"> </span><span class="il">1</span><span class="w"> </span><span class="il">2</span><span class="p">;</span><span class="ss">`a</span><span class="p">]</span>
+<span class="il">1</span><span class="w"> </span><span class="il">2</span><span class="w"> </span><span class="il">3</span>
+<span class="gp">q)</span><span class="o">?</span><span class="p">[</span><span class="n">t</span><span class="p">;</span><span class="il">0</span><span class="w"> </span><span class="il">1</span><span class="w"> </span><span class="il">2</span><span class="p">;</span><span class="ss">`b</span><span class="p">]</span>
+<span class="il">4</span><span class="w"> </span><span class="il">5</span><span class="w"> </span><span class="il">6</span>
+<span class="gp">q)</span><span class="o">?</span><span class="p">[</span><span class="n">t</span><span class="p">;</span><span class="il">0</span><span class="w"> </span><span class="il">1</span><span class="w"> </span><span class="il">2</span><span class="p">;(</span><span class="ow">last</span><span class="p">;</span><span class="ss">`a</span><span class="p">)]</span>
+<span class="il">3</span>
+<span class="gp">q)</span><span class="o">?</span><span class="p">[</span><span class="n">t</span><span class="p">;</span><span class="il">0</span><span class="w"> </span><span class="il">1</span><span class="p">;(</span><span class="ow">last</span><span class="p">;</span><span class="ss">`a</span><span class="p">)]</span>
+<span class="il">2</span>
+<span class="gp">q)</span><span class="o">?</span><span class="p">[</span><span class="n">t</span><span class="p">;</span><span class="il">0</span><span class="w"> </span><span class="il">1</span><span class="w"> </span><span class="il">2</span><span class="p">;(</span><span class="o">*</span><span class="p">;(</span><span class="ow">min</span><span class="p">;</span><span class="ss">`a</span><span class="p">);(</span><span class="ow">avg</span><span class="p">;</span><span class="ss">`c</span><span class="p">))]</span>
+<span class="mf">5.333333</span>
+</code></pre></div>
+<h2 id="update"><code>!</code> Update<a class="headerlink" href="#update" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>![t;c;b;a]
+</code></pre></div>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M384 512H96c-53 0-96-43-96-96V96C0 43 43 0 96 0h304c26.5 0 48 21.5 48 48v288c0 20.9-13.4 38.7-32 45.3V448c17.7 0 32 14.3 32 32s-14.3 32-32 32zM96 384c-17.7 0-32 14.3-32 32s14.3 32 32 32h256v-64zm32-232c0 13.3 10.7 24 24 24h176c13.3 0 24-10.7 24-24s-10.7-24-24-24H152c-13.3 0-24 10.7-24 24m24 72c-13.3 0-24 10.7-24 24s10.7 24 24 24h176c13.3 0 24-10.7 24-24s-10.7-24-24-24z"/></svg></span>
+<a href="../../ref/update/"><code>update</code></a></p>
+<p>Arguments <code>t</code>, <code>c</code>, <code>b</code>, and <code>a</code> are as for Select. </p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="nb">show</span><span class="w"> </span><span class="nv">t</span><span class="o">:</span><span class="p">([]</span><span class="nv">n</span><span class="o">:</span><span class="ss">`x`y`x`z`z`y</span><span class="p">;</span><span class="nv">p</span><span class="o">:</span><span class="il">0</span><span class="w"> </span><span class="il">15</span><span class="w"> </span><span class="il">12</span><span class="w"> </span><span class="il">20</span><span class="w"> </span><span class="il">25</span><span class="w"> </span><span class="il">14</span><span class="p">)</span>
+<span class="n">n</span><span class="w"> </span><span class="n">p</span>
+<span class="o">----</span>
+<span class="n">x</span><span class="w"> </span><span class="il">0</span>
+<span class="n">y</span><span class="w"> </span><span class="il">15</span>
+<span class="n">x</span><span class="w"> </span><span class="il">12</span>
+<span class="n">z</span><span class="w"> </span><span class="il">20</span>
+<span class="n">z</span><span class="w"> </span><span class="il">25</span>
+<span class="n">y</span><span class="w"> </span><span class="il">14</span>
+
+<span class="gp">q)</span><span class="ow">select</span><span class="w"> </span><span class="nv">m</span><span class="o">:</span><span class="ow">max</span><span class="w"> </span><span class="n">p</span><span class="o">,</span><span class="nv">s</span><span class="o">:</span><span class="ow">sum</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="ow">by</span><span class="w"> </span><span class="nv">name</span><span class="o">:</span><span class="n">n</span><span class="w"> </span><span class="ow">from</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="nb">where</span><span class="w"> </span><span class="n">p</span><span class="o">&gt;</span><span class="il">0</span><span class="o">,</span><span class="n">n</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="ss">`x`y</span>
+<span class="n">name</span><span class="o">|</span><span class="w"> </span><span class="n">m</span><span class="w">  </span><span class="n">s</span>
+<span class="o">----|</span><span class="w"> </span><span class="o">-----</span>
+<span class="n">x</span><span class="w">   </span><span class="o">|</span><span class="w"> </span><span class="il">12</span><span class="w"> </span><span class="il">12</span>
+<span class="n">y</span><span class="w">   </span><span class="o">|</span><span class="w"> </span><span class="il">15</span><span class="w"> </span><span class="il">29</span>
+
+<span class="gp">q)</span><span class="ow">update</span><span class="w"> </span><span class="nv">p</span><span class="o">:</span><span class="ow">max</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="ow">by</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="ow">from</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="nb">where</span><span class="w"> </span><span class="n">p</span><span class="o">&gt;</span><span class="il">0</span>
+<span class="n">n</span><span class="w"> </span><span class="n">p</span>
+<span class="o">----</span>
+<span class="n">x</span><span class="w"> </span><span class="il">0</span>
+<span class="n">y</span><span class="w"> </span><span class="il">15</span>
+<span class="n">x</span><span class="w"> </span><span class="il">12</span>
+<span class="n">z</span><span class="w"> </span><span class="il">25</span>
+<span class="n">z</span><span class="w"> </span><span class="il">25</span>
+<span class="n">y</span><span class="w"> </span><span class="il">15</span>
+
+<span class="gp">q)</span><span class="nv">c</span><span class="o">:</span><span class="w"> </span><span class="ow">enlist</span><span class="w"> </span><span class="p">(</span><span class="o">&gt;</span><span class="p">;</span><span class="ss">`p</span><span class="p">;</span><span class="il">0</span><span class="p">)</span>
+<span class="gp">q)</span><span class="nv">b</span><span class="o">:</span><span class="w"> </span><span class="p">(</span><span class="ow">enlist</span><span class="w"> </span><span class="ss">`n</span><span class="p">)</span><span class="o">!</span><span class="ow">enlist</span><span class="w"> </span><span class="ss">`n</span>
+<span class="gp">q)</span><span class="nv">a</span><span class="o">:</span><span class="w"> </span><span class="p">(</span><span class="ow">enlist</span><span class="w"> </span><span class="ss">`p</span><span class="p">)</span><span class="o">!</span><span class="ow">enlist</span><span class="w"> </span><span class="p">(</span><span class="ow">max</span><span class="p">;</span><span class="ss">`p</span><span class="p">)</span>
+
+<span class="gp">q)</span><span class="o">!</span><span class="p">[</span><span class="n">t</span><span class="p">;</span><span class="n">c</span><span class="p">;</span><span class="n">b</span><span class="p">;</span><span class="n">a</span><span class="p">]</span>
+<span class="n">n</span><span class="w"> </span><span class="n">p</span>
+<span class="o">----</span>
+<span class="n">x</span><span class="w"> </span><span class="il">0</span>
+<span class="n">y</span><span class="w"> </span><span class="il">15</span>
+<span class="n">x</span><span class="w"> </span><span class="il">12</span>
+<span class="n">z</span><span class="w"> </span><span class="il">25</span>
+<span class="n">z</span><span class="w"> </span><span class="il">25</span>
+<span class="n">y</span><span class="w"> </span><span class="il">15</span>
+</code></pre></div>
+<p>The degenerate cases are the same as in Select.</p>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M256 0a64 64 0 1 1 0 128 64 64 0 1 1 0-128m-32 160h64c35.3 0 64 28.7 64 64v48c0 17.7-14.3 32-32 32h-1.8l-11.1 99.5c-1.8 16.2-15.5 28.5-31.8 28.5h-38.7c-16.3 0-30-12.3-31.8-28.5L193.7 304h-1.8c-17.7 0-32-14.3-32-32v-48c0-35.3 28.7-64 64-64zm188.4 240.2c-16.1-4.2-34.8-7.6-55.4-10.2l5.3-47.7c22.7 2.9 43.7 6.7 62.1 11.5 22.4 5.8 42.6 13.3 57.8 23.3 14.7 9.6 29.8 24.9 29.8 47s-15.1 37.4-29.8 47c-15.2 9.9-35.5 17.5-57.8 23.3-45.1 11.7-105.3 17.8-168.4 17.8s-123.3-6.1-168.4-17.8c-22.4-6-42.6-13.5-57.8-23.4C15.1 461.4 0 446.1 0 424s15.1-37.4 29.8-47c15.2-9.9 35.5-17.5 57.8-23.3 18.5-4.8 39.5-8.6 62.1-11.5L155 390c-20.6 2.6-39.3 6.1-55.4 10.2-56.6 14.6-56.6 32.9 0 47.5 39.9 10.3 95.8 16.2 156.4 16.2s116.5-5.9 156.4-16.2c56.6-14.6 56.6-32.9 0-47.5"/></svg></span>
+<em>Q for Mortals</em>
+<a href="https://code.kx.com/q4m3/9_Queries_q-sql/#9123-functional-update">§9.12.3 Functional update</a></p>
+<h2 id="delete"><code>!</code> Delete<a class="headerlink" href="#delete" title="Permanent link">&para;</a></h2>
+<p><em>A simplified form of Update</em></p>
+<div class="highlight"><pre><span></span><code>![t;c;0b;a]
+</code></pre></div>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M384 512H96c-53 0-96-43-96-96V96C0 43 43 0 96 0h304c26.5 0 48 21.5 48 48v288c0 20.9-13.4 38.7-32 45.3V448c17.7 0 32 14.3 32 32s-14.3 32-32 32zM96 384c-17.7 0-32 14.3-32 32s14.3 32 32 32h256v-64zm32-232c0 13.3 10.7 24 24 24h176c13.3 0 24-10.7 24-24s-10.7-24-24-24H152c-13.3 0-24 10.7-24 24m24 72c-13.3 0-24 10.7-24 24s10.7 24 24 24h176c13.3 0 24-10.7 24-24s-10.7-24-24-24z"/></svg></span>
+<a href="../../ref/delete/"><code>delete</code></a></p>
+<p>One of <code>c</code> or <code>a</code> must be empty, the other not. <code>c</code> selects which rows will be removed. <code>a</code> is a symbol vector with the names of columns to be removed.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="nv">t</span><span class="o">:</span><span class="p">([]</span><span class="nv">c1</span><span class="o">:</span><span class="ss">`a`b`c</span><span class="p">;</span><span class="nv">c2</span><span class="o">:</span><span class="ss">`x`y`z</span><span class="p">)</span>
+
+<span class="gp">q)</span><span class="o">/</span><span class="n">following</span><span class="w"> </span><span class="nv">is</span><span class="o">:</span><span class="w"> </span><span class="ow">delete</span><span class="w"> </span><span class="n">c2</span><span class="w"> </span><span class="ow">from</span><span class="w"> </span><span class="n">t</span>
+<span class="gp">q)</span><span class="o">!</span><span class="p">[</span><span class="n">t</span><span class="p">;();</span><span class="mb">0b</span><span class="p">;</span><span class="ow">enlist</span><span class="w"> </span><span class="ss">`c2</span><span class="p">]</span>
+<span class="n">c1</span>
+<span class="o">--</span>
+<span class="n">a</span>
+<span class="n">b</span>
+<span class="n">c</span>
+
+<span class="gp">q)</span><span class="o">/</span><span class="n">following</span><span class="w"> </span><span class="nv">is</span><span class="o">:</span><span class="w"> </span><span class="ow">delete</span><span class="w"> </span><span class="ow">from</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="nb">where</span><span class="w"> </span><span class="n">c2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">`y</span>
+<span class="gp">q)</span><span class="o">!</span><span class="p">[</span><span class="n">t</span><span class="p">;</span><span class="ow">enlist</span><span class="w"> </span><span class="p">(</span><span class="o">=</span><span class="p">;</span><span class="ss">`c2</span><span class="p">;</span><span class="w"> </span><span class="ow">enlist</span><span class="w"> </span><span class="ss">`y</span><span class="p">);</span><span class="mb">0b</span><span class="p">;</span><span class="ss">`symbol</span><span class="o">$</span><span class="p">()]</span>
+<span class="n">c1</span><span class="w"> </span><span class="n">c2</span>
+<span class="o">-----</span>
+<span class="n">a</span><span class="w">  </span><span class="n">x</span>
+<span class="n">c</span><span class="w">  </span><span class="n">z</span>
+</code></pre></div>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M256 0a64 64 0 1 1 0 128 64 64 0 1 1 0-128m-32 160h64c35.3 0 64 28.7 64 64v48c0 17.7-14.3 32-32 32h-1.8l-11.1 99.5c-1.8 16.2-15.5 28.5-31.8 28.5h-38.7c-16.3 0-30-12.3-31.8-28.5L193.7 304h-1.8c-17.7 0-32-14.3-32-32v-48c0-35.3 28.7-64 64-64zm188.4 240.2c-16.1-4.2-34.8-7.6-55.4-10.2l5.3-47.7c22.7 2.9 43.7 6.7 62.1 11.5 22.4 5.8 42.6 13.3 57.8 23.3 14.7 9.6 29.8 24.9 29.8 47s-15.1 37.4-29.8 47c-15.2 9.9-35.5 17.5-57.8 23.3-45.1 11.7-105.3 17.8-168.4 17.8s-123.3-6.1-168.4-17.8c-22.4-6-42.6-13.5-57.8-23.4C15.1 461.4 0 446.1 0 424s15.1-37.4 29.8-47c15.2-9.9 35.5-17.5 57.8-23.3 18.5-4.8 39.5-8.6 62.1-11.5L155 390c-20.6 2.6-39.3 6.1-55.4 10.2-56.6 14.6-56.6 32.9 0 47.5 39.9 10.3 95.8 16.2 156.4 16.2s116.5-5.9 156.4-16.2c56.6-14.6 56.6-32.9 0-47.5"/></svg></span>
+<em>Q for Mortals</em>
+<a href="https://code.kx.com/q4m3/9_Queries_q-sql/#9124-functional-delete">§9.12.4 Functional delete</a></p>
+<h2 id="conversion-using-parse">Conversion using parse<a class="headerlink" href="#conversion-using-parse" title="Permanent link">&para;</a></h2>
+<p>Applying <a href="../parsetrees/">parse</a> to a qSQL statement written as a string will return the internal representation of the functional form. 
+With some manipulation this can then be used to piece together the functional form in q. 
+This generally becomes more difficult as the query becomes more complex and requires a deep understanding of what kdb+ is doing when it parses qSQL form.</p>
+<p>An example of using parse to convert qSQL to its corresponding functional form is as follows:
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="nv">t</span><span class="o">:</span><span class="p">([]</span><span class="nv">c1</span><span class="o">:</span><span class="ss">`a`b`c</span><span class="p">;</span><span class="w"> </span><span class="nv">c2</span><span class="o">:</span><span class="il">10</span><span class="w"> </span><span class="il">20</span><span class="w"> </span><span class="il">30</span><span class="p">)</span>
+<span class="gp">q)</span><span class="nb">parse</span><span class="w"> </span><span class="s2">"select c2:2*c2 from t where c1=`c"</span>
+<span class="o">?</span>
+<span class="ss">`t</span>
+<span class="o">,,</span><span class="p">(</span><span class="o">=</span><span class="p">;</span><span class="ss">`c1</span><span class="p">;</span><span class="o">,</span><span class="ss">`c</span><span class="p">)</span>
+<span class="mb">0b</span>
+<span class="p">(</span><span class="o">,</span><span class="ss">`c2</span><span class="p">)</span><span class="o">!,</span><span class="p">(</span><span class="o">*</span><span class="p">;</span><span class="il">2</span><span class="p">;</span><span class="ss">`c2</span><span class="p">)</span>
+
+<span class="gp">q)</span><span class="o">?</span><span class="p">[</span><span class="ss">`t</span><span class="p">;</span><span class="w"> </span><span class="ow">enlist</span><span class="w"> </span><span class="p">(</span><span class="o">=</span><span class="p">;</span><span class="ss">`c1</span><span class="p">;</span><span class="ow">enlist</span><span class="w"> </span><span class="ss">`c</span><span class="p">);</span><span class="w"> </span><span class="mb">0b</span><span class="p">;</span><span class="w"> </span><span class="p">(</span><span class="ow">enlist</span><span class="w"> </span><span class="ss">`c2</span><span class="p">)</span><span class="o">!</span><span class="ow">enlist</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="p">;</span><span class="il">2</span><span class="p">;</span><span class="ss">`c2</span><span class="p">)]</span>
+<span class="n">c2</span>
+<span class="o">--</span>
+<span class="il">60</span>
+</code></pre></div></p>
+<h3 id="issues-converting-to-functional-form">Issues converting to functional form<a class="headerlink" href="#issues-converting-to-functional-form" title="Permanent link">&para;</a></h3>
+<p>To convert a <code>select</code> query to a functional form one may attempt to
+apply the <code>parse</code> function to the query string:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="nb">parse</span><span class="w"> </span><span class="s2">"select sym,price,size from trade where price&gt;50"</span>
+<span class="o">?</span>
+<span class="ss">`trade</span>
+<span class="o">,,</span><span class="p">(</span><span class="o">&gt;</span><span class="p">;</span><span class="ss">`price</span><span class="p">;</span><span class="il">50</span><span class="p">)</span>
+<span class="mb">0b</span>
+<span class="ss">`sym`price`size</span><span class="o">!</span><span class="ss">`sym`price`size</span>
+</code></pre></div>
+<p>As we know, <code>parse</code> produces a parse tree and since some of the elements may themselves be parse trees we can’t immediately take the output of parse and plug it into the form <code>?[t;c;b;a]</code>. After a little playing around with the result of <code>parse</code> you might eventually figure out that the correct functional form is as follows.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="nv">funcQry</span><span class="o">:?</span><span class="p">[</span><span class="ss">`trade</span><span class="p">;</span><span class="ow">enlist</span><span class="p">(</span><span class="o">&gt;</span><span class="p">;</span><span class="ss">`price</span><span class="p">;</span><span class="il">50</span><span class="p">);</span><span class="mb">0b</span><span class="p">;</span><span class="ss">`sym`price`size</span><span class="o">!</span><span class="w"> </span><span class="ss">`sym`price`size</span><span class="p">]</span>
+
+<span class="gp">q)</span><span class="nv">strQry</span><span class="o">:</span><span class="ow">select</span><span class="w"> </span><span class="n">sym</span><span class="o">,</span><span class="n">price</span><span class="o">,</span><span class="n">size</span><span class="w"> </span><span class="ow">from</span><span class="w"> </span><span class="n">trade</span><span class="w"> </span><span class="nb">where</span><span class="w"> </span><span class="n">price</span><span class="o">&gt;</span><span class="il">50</span><span class="w"> </span><span class="n">q</span><span class="err">)</span>
+<span class="gp">q)</span><span class="n">funcQry</span><span class="o">~</span><span class="n">strQry</span>
+<span class="mb">1b</span>
+</code></pre></div>
+<p>This, however, becomes more difficult as the query statements become more complex:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="nb">parse</span><span class="w"> </span><span class="s2">"select count i from trade where 140&gt;(count;i) fby sym"</span>
+<span class="o">?</span>
+<span class="ss">`trade</span>
+<span class="o">,,</span><span class="p">(</span><span class="o">&gt;</span><span class="p">;</span><span class="il">140</span><span class="p">;(</span><span class="n">k</span><span class="p">){</span><span class="o">@</span><span class="p">[(</span><span class="o">#</span><span class="n">y</span><span class="p">)</span><span class="o">#</span><span class="n">x</span><span class="p">[</span><span class="il">0</span><span class="p">]</span><span class="il">0</span><span class="o">#</span><span class="n">x</span>
+<span class="il">1</span><span class="p">;</span><span class="n">g</span><span class="p">;</span><span class="o">:</span><span class="p">;</span><span class="n">x</span><span class="p">[</span><span class="il">0</span><span class="p">]</span><span class="o">'</span><span class="n">x</span><span class="p">[</span><span class="il">1</span><span class="p">]</span><span class="nv">g</span><span class="o">:.=</span><span class="n">y</span><span class="p">]};(</span><span class="ow">enlist</span><span class="p">;</span><span class="o">#:</span><span class="p">;</span><span class="ss">`i</span><span class="p">);</span><span class="ss">`sym</span><span class="p">)</span><span class="err">)</span>
+<span class="mb">0b</span>
+<span class="p">(</span><span class="o">,</span><span class="ss">`x</span><span class="p">)</span><span class="o">!,</span><span class="p">(</span><span class="o">#:</span><span class="p">;</span><span class="ss">`i</span><span class="p">)</span>
+</code></pre></div>
+<p>In this case, it is not obvious what the functional form of the above query should be, even after applying <code>parse</code>.</p>
+<p>There are three issues with this parse-and-“by eye” method to convert to the equivalent functional form. We will cover these in the next three subsections.</p>
+<h4 id="parse-trees-and-eval">Parse trees and eval<a class="headerlink" href="#parse-trees-and-eval" title="Permanent link">&para;</a></h4>
+<p>The first issue with passing a <code>select</code> query to <code>parse</code> is that each returned item is in unevaluated form. As <a href="../parsetrees/#eval-and-value">discussed here</a>, simply applying <code>value</code> to a parse tree does not work. However, if we evaluate each one of the arguments fully, then there would be no nested parse trees. We could then apply <code>value</code> to the result:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="nb">eval</span><span class="w"> </span><span class="nb">each</span><span class="w"> </span><span class="nb">parse</span><span class="w"> </span><span class="s2">"select count i from trade where 140&gt;(count;i) fby sym"</span>
+<span class="o">?</span>
+<span class="o">+</span><span class="ss">`sym`time`price`size</span><span class="o">!</span><span class="p">(</span><span class="ss">`VOD`IBM`BP`VOD`IBM`IBM`HSBC`VOD`MS..</span>
+<span class="o">,</span><span class="p">(</span><span class="o">&gt;</span><span class="p">;</span><span class="il">140</span><span class="p">;(</span><span class="n">k</span><span class="p">){</span><span class="o">@</span><span class="p">[(</span><span class="o">#</span><span class="n">y</span><span class="p">)</span><span class="o">#</span><span class="n">x</span><span class="p">[</span><span class="il">0</span><span class="p">]</span><span class="il">0</span><span class="o">#</span><span class="n">x</span>
+<span class="il">1</span><span class="p">;</span><span class="n">g</span><span class="p">;</span><span class="o">:</span><span class="p">;</span><span class="n">x</span><span class="p">[</span><span class="il">0</span><span class="p">]</span><span class="o">'</span><span class="n">x</span><span class="p">[</span><span class="il">1</span><span class="p">]</span><span class="nv">g</span><span class="o">:.=</span><span class="n">y</span><span class="p">]};(</span><span class="ow">enlist</span><span class="p">;</span><span class="o">#:</span><span class="p">;</span><span class="ss">`i</span><span class="p">);</span><span class="ss">`sym</span><span class="p">))</span>
+<span class="mb">0b</span>
+<span class="p">(</span><span class="o">,</span><span class="ss">`x</span><span class="p">)</span><span class="o">!,</span><span class="p">(</span><span class="o">#:</span><span class="p">;</span><span class="ss">`i</span><span class="p">)</span>
+</code></pre></div>
+<p>The equivalence below holds for a general qSQL query provided as a string:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="nb">value</span><span class="p">[</span><span class="n">str</span><span class="p">]</span><span class="o">~</span><span class="nb">value</span><span class="w"> </span><span class="nb">eval</span><span class="w"> </span><span class="nb">each</span><span class="w"> </span><span class="nb">parse</span><span class="w"> </span><span class="n">str</span>
+<span class="mb">1b</span>
+</code></pre></div>
+<p>In particular:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="nv">str</span><span class="o">:</span><span class="s2">"select count i from trade where 140&gt;(count;i) fby sym"</span>
+
+<span class="gp">q)</span><span class="nb">value</span><span class="p">[</span><span class="n">str</span><span class="p">]</span><span class="o">~</span><span class="nb">value</span><span class="w"> </span><span class="nb">eval</span><span class="w"> </span><span class="nb">each</span><span class="w"> </span><span class="nb">parse</span><span class="w"> </span><span class="n">str</span>
+<span class="mb">1b</span>
+</code></pre></div>
+<p>In fact, since within the functional form we can refer to the table by name we can make this even clearer. Also, the first item in the result of <code>parse</code> applied to a <code>select</code> query will always be <code>?</code> (or <code>!</code> for a <code>delete</code>or <code>update</code> query) which cannot be evaluated any further. So we don’t need to apply <code>eval</code> to it.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="nv">pTree</span><span class="o">:</span><span class="nb">parse</span><span class="w"> </span><span class="nv">str</span><span class="o">:</span><span class="s2">"select count i from trade where 140&gt;(count;i) fby sym"</span>
+<span class="gp">q)</span><span class="o">@</span><span class="p">[</span><span class="n">pTree</span><span class="p">;</span><span class="il">2</span><span class="w"> </span><span class="il">3</span><span class="w"> </span><span class="il">4</span><span class="p">;</span><span class="nb">eval</span><span class="p">]</span>
+<span class="o">?</span>
+<span class="ss">`trade</span>
+<span class="o">,</span><span class="p">(</span><span class="o">&gt;</span><span class="p">;</span><span class="il">140</span><span class="p">;(</span><span class="n">k</span><span class="p">){</span><span class="o">@</span><span class="p">[(</span><span class="o">#</span><span class="n">y</span><span class="p">)</span><span class="o">#</span><span class="n">x</span><span class="p">[</span><span class="il">0</span><span class="p">]</span><span class="il">0</span><span class="o">#</span><span class="n">x</span>
+<span class="il">1</span><span class="p">;</span><span class="n">g</span><span class="p">;</span><span class="o">:</span><span class="p">;</span><span class="n">x</span><span class="p">[</span><span class="il">0</span><span class="p">]</span><span class="o">'</span><span class="n">x</span><span class="p">[</span><span class="il">1</span><span class="p">]</span><span class="nv">g</span><span class="o">:.=</span><span class="n">y</span><span class="p">]};(</span><span class="ow">enlist</span><span class="p">;</span><span class="o">#:</span><span class="p">;</span><span class="ss">`i</span><span class="p">);</span><span class="ss">`sym</span><span class="p">)</span><span class="err">)</span>
+<span class="mb">0b</span>
+<span class="p">(</span><span class="o">,</span><span class="ss">`x</span><span class="p">)</span><span class="o">!,</span><span class="p">(</span><span class="o">#:</span><span class="p">;</span><span class="ss">`i</span><span class="p">)</span>
+<span class="gp">q)</span><span class="nb">value</span><span class="p">[</span><span class="n">str</span><span class="p">]</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="nb">value</span><span class="w"> </span><span class="o">@</span><span class="p">[</span><span class="n">pTree</span><span class="p">;</span><span class="il">2</span><span class="w"> </span><span class="il">3</span><span class="w"> </span><span class="il">4</span><span class="p">;</span><span class="nb">eval</span><span class="p">]</span>
+<span class="mb">1b</span>
+</code></pre></div>
+<h4 id="variable-representation-in-parse-trees">Variable representation in parse trees<a class="headerlink" href="#variable-representation-in-parse-trees" title="Permanent link">&para;</a></h4>
+<p>Recall that in a parse tree a variable is represented by a symbol containing its name. So to represent a symbol or a list of symbols, you must use <code>enlist</code> on that expression. In k, <code>enlist</code> is the unary form of the comma operator in k:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="nb">parse</span><span class="s2">"3#`a`b`c`d`e`f"</span>
+<span class="o">#</span>
+<span class="il">3</span>
+<span class="o">,</span><span class="ss">`a`b`c`d`e`f</span>
+<span class="gp">q)</span><span class="p">(</span><span class="o">#</span><span class="p">;</span><span class="il">3</span><span class="p">;</span><span class="ow">enlist</span><span class="w"> </span><span class="ss">`a`b`c`d`e`f</span><span class="p">)</span><span class="o">~</span><span class="nb">parse</span><span class="s2">"3#`a`b`c`d`e`f"</span>
+<span class="mb">1b</span>
+</code></pre></div>
+<p>This causes a difficulty as q has no unary syntax for operators.</p>
+<p>Which means the following isn’t a valid q expression and so returns an error.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="p">(</span><span class="o">#</span><span class="p">;</span><span class="il">3</span><span class="p">;</span><span class="o">,</span><span class="ss">`a`b`c`d`e`f</span><span class="p">)</span>
+<span class="o">',</span>
+</code></pre></div>
+<p>In the parse tree we receive we need to somehow distinguish between k’s unary <code>,</code> (which we want to replace with <code>enlist</code>) and the binary Join operator, which we want to leave as it is.</p>
+<h4 id="explicit-definitions-in-q-are-shown-in-full">Explicit definitions in <code>.q</code> are shown in full<a class="headerlink" href="#explicit-definitions-in-q-are-shown-in-full" title="Permanent link">&para;</a></h4>
+<p>The <code>fby</code> in the <code>select</code> query above is represented by its full k
+definition.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="nb">parse</span><span class="w"> </span><span class="s2">"fby"</span>
+<span class="gp">k)</span><span class="p">{</span><span class="o">@</span><span class="p">[(</span><span class="o">#</span><span class="n">y</span><span class="p">)</span><span class="o">#</span><span class="n">x</span><span class="p">[</span><span class="il">0</span><span class="p">]</span><span class="il">0</span><span class="o">#</span><span class="n">x</span><span class="w"> </span><span class="il">1</span><span class="p">;</span><span class="n">g</span><span class="p">;</span><span class="o">:</span><span class="p">;</span><span class="n">x</span><span class="p">[</span><span class="il">0</span><span class="p">]</span><span class="o">'</span><span class="n">x</span><span class="p">[</span><span class="il">1</span><span class="p">]</span><span class="nv">g</span><span class="o">:.=</span><span class="n">y</span><span class="p">]}</span>
+</code></pre></div>
+<p>While using the k form isn’t generally a problem from a functionality perspective, it does however make the resulting functional statement difficult to read.</p>
+<h3 id="the-solution">The solution<a class="headerlink" href="#the-solution" title="Permanent link">&para;</a></h3>
+<p>We will write a function to automate the process of converting a <code>select</code> query into its equivalent functional form.</p>
+<p>This function, <code>buildQuery</code>, will return the functional form as a string.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="n">buildQuery</span><span class="w"> </span><span class="s2">"select count i from trade where 140&gt;(count;i) fby sym"</span>
+<span class="s2">"?[trade;enlist(&gt;;140;(fby;(enlist;count;`i);`sym));0b;</span>
+<span class="s2">  (enlist`x)! enlist (count;`i)]"</span>
+</code></pre></div>
+<p>When executed it will always return the same result as the <code>select</code> query from which it is derived:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="nv">str</span><span class="o">:</span><span class="s2">"select count i from trade where 140&gt;(count;i) fby sym"</span>
+<span class="gp">q)</span><span class="nb">value</span><span class="p">[</span><span class="n">str</span><span class="p">]</span><span class="o">~</span><span class="nb">value</span><span class="w"> </span><span class="n">buildQuery</span><span class="w"> </span><span class="n">str</span>
+<span class="mb">1b</span>
+</code></pre></div>
+<p>And since the same logic applies to <code>exec</code>, <code>update</code> and <code>delete</code> it will be able to convert to their corresponding functional forms also.</p>
+<p>To write this function we will solve the three issues outlined above:</p>
+<ol>
+<li>parse-tree items may be parse trees</li>
+<li>parse trees use k’s unary syntax for operators</li>
+<li>q keywords from <code>.q.</code> are replaced by their k definitions</li>
+</ol>
+<p>The first issue, where some items returned by <code>parse</code> may themselves be parse trees is easily resolved by applying <code>eval</code> to the individual items.</p>
+<p>The second issue is with k’s unary syntax for <code>,</code>. We want to replace it with the q keyword <code>enlist</code>. To do this we define a function that traverses the parse tree and detects if any element is an enlisted list of symbols or an enlisted single symbol. If it finds one we replace it with a string representation of <code>enlist</code> instead of <code>,</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="nf">ereptest</span><span class="o">:</span><span class="p">{</span><span class="w"> </span><span class="c1">//returns a boolean</span>
+<span class="w">  </span><span class="p">(</span><span class="il">1</span><span class="o">=</span><span class="nb">count</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="nb">and</span><span class="w"> </span><span class="p">((</span><span class="il">0</span><span class="o">=</span><span class="nb">type</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="nb">and</span><span class="w"> </span><span class="il">11</span><span class="o">=</span><span class="nb">type</span><span class="w"> </span><span class="nb">first</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="nb">or</span><span class="w"> </span><span class="il">11</span><span class="o">=</span><span class="nb">type</span><span class="w"> </span><span class="n">x</span><span class="p">}</span>
+<span class="nf">ereplace</span><span class="o">:</span><span class="p">{</span><span class="s2">"enlist"</span><span class="o">,.</span><span class="n">Q.s1</span><span class="w"> </span><span class="nb">first</span><span class="w"> </span><span class="n">x</span><span class="p">}</span>
+<span class="nf">funcEn</span><span class="o">:</span><span class="p">{</span><span class="o">$</span><span class="p">[</span><span class="n">ereptest</span><span class="w"> </span><span class="n">x</span><span class="p">;</span><span class="n">ereplace</span><span class="w"> </span><span class="n">x</span><span class="p">;</span><span class="il">0</span><span class="o">=</span><span class="nb">type</span><span class="w"> </span><span class="n">x</span><span class="p">;</span><span class="o">.</span><span class="n">z.s</span><span class="w"> </span><span class="nb">each</span><span class="w"> </span><span class="n">x</span><span class="p">;</span><span class="n">x</span><span class="p">]}</span>
+</code></pre></div>
+<p>Before we replace the item we first need to check it has the
+correct form. We need to test if it is one of:</p>
+<ul>
+<li>An enlisted list of syms. It will have type <code>0h</code>, count 1 and the type of its first item will be <code>11h</code> if and only if it is an enlisted list of syms.</li>
+<li>An enlisted single sym. It will have type <code>11h</code> and count 1 if and only if it is an enlisted single symbol.</li>
+</ul>
+<p>The <code>ereptest</code> function above performs this check, with <code>ereplace</code> performing the replacement.</p>
+<div class="admonition tip">
+<p class="admonition-title">Console size</p>
+<p><code>.Q.s1</code> is dependent on the size of the console so make it larger if necessary.</p>
+</div>
+<p>Since we are going to be checking a parse tree which may contain parse trees nested to arbitrary depth, we need a way to check all the elements down to the base level.</p>
+<p>We observe that a parse tree is a general list, and therefore of type <code>0h</code>. This knowledge combined with the use of <code>.z.s</code> allows us to scan a parse tree recursively. The logic goes: if what you have passed into <code>funcEn</code> is a parse tree then reapply the function to each element.</p>
+<p>To illustrate we examine the following <code>select</code> query.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="nb">show</span><span class="w"> </span><span class="nv">pTree</span><span class="o">:</span><span class="nb">parse</span><span class="w"> </span><span class="s2">"select from trade where sym like </span><span class="se">\"</span><span class="s2">F*</span><span class="se">\"</span><span class="s2">,not sym=`FD"</span>
+<span class="o">?</span>
+<span class="ss">`trade</span>
+<span class="o">,</span><span class="p">((</span><span class="ow">like</span><span class="p">;</span><span class="ss">`sym</span><span class="p">;</span><span class="s2">"F*"</span><span class="p">);(</span><span class="o">~:</span><span class="p">;(</span><span class="o">=</span><span class="p">;</span><span class="ss">`sym</span><span class="p">;</span><span class="o">,</span><span class="ss">`FD</span><span class="p">)))</span><span class="w"> </span><span class="mb">0b</span>
+<span class="p">()</span>
+
+<span class="gp">q)</span><span class="nv">x</span><span class="o">:</span><span class="nb">eval</span><span class="w"> </span><span class="n">pTree</span><span class="w"> </span><span class="il">2</span><span class="w">         </span><span class="c1">//apply eval to Where clause</span>
+</code></pre></div>
+<p>Consider the Where clause in isolation.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="n">x</span><span class="w"> </span><span class="c1">//a 2-list of Where clauses</span>
+<span class="p">(</span><span class="ow">like</span><span class="p">;</span><span class="ss">`sym</span><span class="p">;</span><span class="s2">"F*"</span><span class="p">)</span>
+<span class="p">(</span><span class="o">~:</span><span class="p">;(</span><span class="o">=</span><span class="p">;</span><span class="ss">`sym</span><span class="p">;</span><span class="o">,</span><span class="ss">`FD</span><span class="p">))</span>
+
+<span class="gp">q)</span><span class="n">funcEn</span><span class="w"> </span><span class="n">x</span>
+<span class="p">(</span><span class="ow">like</span><span class="p">;</span><span class="ss">`sym</span><span class="p">;</span><span class="s2">"F*"</span><span class="p">)</span>
+<span class="p">(</span><span class="o">~:</span><span class="p">;(</span><span class="o">=</span><span class="p">;</span><span class="ss">`sym</span><span class="p">;</span><span class="s2">"enlist`FD"</span><span class="p">))</span>
+</code></pre></div>
+<p>Similarly we create a function which will replace k functions with
+their q equivalents in string form, thus addressing the third issue above.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="nf">kreplace</span><span class="o">:</span><span class="p">{[</span><span class="n">x</span><span class="p">]</span><span class="w"> </span><span class="o">$</span><span class="p">[</span><span class="ss">`</span><span class="o">=</span><span class="nv">qval</span><span class="o">:.</span><span class="n">q</span><span class="o">?</span><span class="n">x</span><span class="p">;</span><span class="n">x</span><span class="p">;</span><span class="nb">string</span><span class="w"> </span><span class="n">qval</span><span class="p">]}</span>
+<span class="gp">q)</span><span class="nf">funcK</span><span class="o">:</span><span class="p">{</span><span class="o">$</span><span class="p">[</span><span class="il">0</span><span class="o">=</span><span class="nv">t</span><span class="o">:</span><span class="nb">type</span><span class="w"> </span><span class="n">x</span><span class="p">;</span><span class="o">.</span><span class="n">z.s</span><span class="w"> </span><span class="nb">each</span><span class="w"> </span><span class="n">x</span><span class="p">;</span><span class="n">t</span><span class="o">&lt;</span><span class="mi">100h</span><span class="p">;</span><span class="n">x</span><span class="p">;</span><span class="n">kreplace</span><span class="w"> </span><span class="n">x</span><span class="p">]}</span>
+</code></pre></div>
+<p>Running these functions against our Where clause, we see the k
+representations being converted to q.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="n">x</span>
+<span class="p">(</span><span class="ow">like</span><span class="p">;</span><span class="ss">`sym</span><span class="p">;</span><span class="s2">"F*"</span><span class="p">)</span>
+<span class="p">(</span><span class="o">~:</span><span class="p">;(</span><span class="o">=</span><span class="p">;</span><span class="ss">`sym</span><span class="p">;</span><span class="o">,</span><span class="ss">`FD</span><span class="p">))</span>
+
+<span class="gp">q)</span><span class="n">funcK</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="c1">//replaces ~: with “not”</span>
+<span class="p">(</span><span class="ow">like</span><span class="p">;</span><span class="ss">`sym</span><span class="p">;</span><span class="s2">"F*"</span><span class="p">)</span>
+<span class="p">(</span><span class="s2">"not"</span><span class="p">;(</span><span class="o">=</span><span class="p">;</span><span class="ss">`sym</span><span class="p">;</span><span class="o">,</span><span class="ss">`FD</span><span class="p">))</span>
+</code></pre></div>
+<p>Next, we make a slight change to <code>kreplace</code> and <code>ereplace</code> and combine them.</p>
+<div class="highlight"><pre><span></span><code><span class="nf">kreplace</span><span class="o">:</span><span class="p">{[</span><span class="n">x</span><span class="p">]</span><span class="w"> </span><span class="o">$</span><span class="p">[</span><span class="ss">`</span><span class="o">=</span><span class="nv">qval</span><span class="o">:.</span><span class="n">q</span><span class="o">?</span><span class="n">x</span><span class="p">;</span><span class="n">x</span><span class="p">;</span><span class="s2">"~~"</span><span class="o">,</span><span class="nb">string</span><span class="p">[</span><span class="n">qval</span><span class="p">]</span><span class="o">,</span><span class="s2">"~~"</span><span class="p">]}</span>
+<span class="nf">ereplace</span><span class="o">:</span><span class="p">{</span><span class="s2">"~~enlist"</span><span class="o">,</span><span class="p">(</span><span class="o">.</span><span class="n">Q.s1</span><span class="w"> </span><span class="nb">first</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="o">,</span><span class="s2">"~~"</span><span class="p">}</span>
+<span class="gp">q)</span><span class="n">funcEn</span><span class="w"> </span><span class="n">funcK</span><span class="w"> </span><span class="n">x</span>
+<span class="p">(</span><span class="ow">like</span><span class="p">;</span><span class="ss">`sym</span><span class="p">;</span><span class="s2">"F*"</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="s2">"~~not~~"</span><span class="p">;(</span><span class="o">=</span><span class="p">;</span><span class="ss">`sym</span><span class="p">;</span><span class="s2">"~~enlist`FD~~"</span><span class="p">))</span>
+</code></pre></div>
+<p>The double tilde here is going to act as a tag to allow us to differentiate from actual string elements in the parse tree. This allows us to drop the embedded quotation marks at a later stage inside the <code>buildQuery</code> function:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="nb">ssr</span><span class="o">/</span><span class="p">[;(</span><span class="s2">"</span><span class="se">\"</span><span class="s2">~~"</span><span class="p">;</span><span class="s2">"~~</span><span class="se">\"</span><span class="s2">"</span><span class="p">);(</span><span class="s2">""</span><span class="p">;</span><span class="s2">""</span><span class="p">)]</span><span class="w"> </span><span class="o">.</span><span class="n">Q.s1</span><span class="w"> </span><span class="n">funcEn</span><span class="w"> </span><span class="n">funcK</span><span class="w"> </span><span class="n">x</span>
+<span class="s2">"((like;`sym;</span><span class="se">\"</span><span class="s2">F*</span><span class="se">\"</span><span class="s2">);(not;(=;`sym;enlist`FD)))"</span>
+</code></pre></div>
+<p>thus giving us the correct format for the Where clause in a functional select. By applying the same logic to the rest of the parse tree we can write the <code>buildQuery</code> function.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="n">buildQuery</span><span class="w"> </span><span class="s2">"select from trade where sym like </span><span class="se">\"</span><span class="s2">F*</span><span class="se">\"</span><span class="s2">,not sym=`FD"</span>
+<span class="s2">"?[trade;((like;`sym;</span><span class="se">\"</span><span class="s2">F*</span><span class="se">\"</span><span class="s2">);(not;(=;`sym;enlist`FD)));0b;()]"</span>
+</code></pre></div>
+<p>One thing to take note of is that since we use reverse lookup on the <code>.q</code> namespace and only want one result we occasionally get the wrong keyword back.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="n">buildQuery</span><span class="w"> </span><span class="s2">"update tstamp:ltime tstamp from z"</span>
+<span class="s2">"![z;();0b;(enlist`tstamp)!enlist (reciprocal;`tstamp)]"</span>
+
+<span class="gp">q)</span><span class="o">.</span><span class="n">q</span><span class="ss">`ltime</span>
+<span class="o">%:</span>
+<span class="gp">q)</span><span class="o">.</span><span class="n">q</span><span class="ss">`reciprocal</span>
+<span class="o">%:</span>
+</code></pre></div>
+<p>These instances are rare and a developer should be able to spot when they occur. Of course, the functional form will still work as expected but could confuse readers of the code.</p>
+<h4 id="fifth-and-sixth-arguments">Fifth and sixth arguments<a class="headerlink" href="#fifth-and-sixth-arguments" title="Permanent link">&para;</a></h4>
+<p>Functional select also has ranks 5 and 6; i.e. fifth and sixth arguments.</p>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M448 128H270.4c1 5.2 1.6 10.5 1.6 16v16h176c8.8 0 16-7.2 16-16s-7.2-16-16-16m-224 16c0-17.7-14.3-32-32-32h-24c-66.3 0-120 53.7-120 120v48c0 52.5 33.7 97.1 80.7 113.4-.5-3.1-.7-6.2-.7-9.4 0-20 9.2-37.9 23.6-49.7-4.9-9-7.6-19.4-7.6-30.3 0-15.1 5.3-29 14-40-8.8-11-14-24.9-14-40v-40c0-13.3 10.7-24 24-24s24 10.7 24 24v40c0 8.8 7.2 16 16 16s16-7.2 16-16zm-32-80c18 0 34.6 6 48 16h208c35.3 0 64 28.7 64 64s-28.7 64-64 64h-82c1.3 5.1 2 10.5 2 16 0 25.3-14.7 47.2-36 57.6 2.6 7 4 14.5 4 22.4 0 20-9.2 37.9-23.6 49.7 4.9 9 7.6 19.4 7.6 30.3 0 35.3-28.7 64-64 64h-88C75.2 448 0 372.8 0 280v-48C0 139.2 75.2 64 168 64zm64 336c8.8 0 16-7.2 16-16s-7.2-16-16-16h-64c-8.8 0-16 7.2-16 16s7.2 16 16 16zm16-176c0 5.5-.7 10.9-2 16h34c8.8 0 16-7.2 16-16s-7.2-16-16-16h-32zm-24 64h-40c-8.8 0-16 7.2-16 16s7.2 16 16 16h64c8.8 0 16-7.2 16-16s-7.2-16-16-16z"/></svg></span>
+<em>Q for Mortals</em>: <a href="../../../q4m3/9_Queries_q-sql/#9121-functional-select">§9.12.1 Functional queries</a></p>
+<p>We also cover these with the <code>buildQuery</code> function.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="n">buildQuery</span><span class="w"> </span><span class="s2">"select[10 20] from trade"</span>
+<span class="s2">"?[trade;();0b;();10 20]"</span>
+<span class="gp">q)</span><span class="o">//</span><span class="mi">5t</span><span class="n">h</span><span class="w"> </span><span class="n">parameter</span><span class="w"> </span><span class="n">included</span>
+</code></pre></div>
+<p>The 6th argument is a column and a direction to order the results by. Use <code>&lt;</code> for ascending and <code>&gt;</code> for descending.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="nb">parse</span><span class="s2">"select[10;&lt;price] from trade"</span>
+<span class="o">?</span>
+<span class="ss">`trade</span>
+<span class="p">()</span>
+<span class="mb">0b</span>
+<span class="p">()</span>
+<span class="il">10</span>
+<span class="o">,</span><span class="p">(</span><span class="o">&lt;:</span><span class="p">;</span><span class="ss">`price</span><span class="p">)</span>
+
+<span class="gp">q)</span><span class="o">.</span><span class="n">q</span><span class="o">?</span><span class="p">(</span><span class="o">&lt;:</span><span class="p">;</span><span class="o">&gt;:</span><span class="p">)</span>
+<span class="ss">`hopen`hclose</span>
+
+<span class="gp">q)</span><span class="n">qfind</span><span class="w"> </span><span class="nb">each</span><span class="w"> </span><span class="p">(</span><span class="s2">"&lt;:"</span><span class="p">;</span><span class="s2">"&gt;:"</span><span class="p">)</span><span class="w">   </span><span class="c1">//qfind defined above</span>
+<span class="ow">hopen</span>
+<span class="nb">hclose</span>
+</code></pre></div>
+<p>We see that the k function for the 6th argument of the functional form is <code>&lt;:</code> (ascending) or <code>&gt;:</code> (descending). At first glance this appears to be <code>hopen</code> or <code>hclose</code>. In fact in earlier versions of q, <code>iasc</code> and <code>hopen</code> were equivalent (as were <code>idesc</code> and <code>hclose</code>). The definitions of <code>iasc</code> and <code>idesc</code> were later altered to signal a rank error if not applied to a list.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="nb">iasc</span>
+<span class="gp">k)</span><span class="p">{</span><span class="o">$</span><span class="p">[</span><span class="mi">0h</span><span class="o">&gt;@</span><span class="n">x</span><span class="p">;</span><span class="ne">'`rank</span><span class="p">;</span><span class="o">&lt;</span><span class="n">x</span><span class="p">]}</span>
+
+<span class="gp">q)</span><span class="nb">idesc</span>
+<span class="gp">k)</span><span class="p">{</span><span class="o">$</span><span class="p">[</span><span class="mi">0h</span><span class="o">&gt;@</span><span class="n">x</span><span class="p">;</span><span class="ne">'`rank</span><span class="p">;</span><span class="o">&gt;</span><span class="n">x</span><span class="p">]}</span>
+
+<span class="gp">q)</span><span class="nb">iasc</span><span class="w"> </span><span class="il">7</span>
+<span class="o">'</span><span class="nb">rank</span>
+</code></pre></div>
+<p>Since the columns of a table are lists, it is irrelevant whether the functional form uses the old or new version of <code>iasc</code> or <code>idesc</code>.</p>
+<p>The <code>buildQuery</code> function handles the 6th argument as a special case so will produce <code>iasc</code> or <code>idesc</code> as appropriate.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="n">buildQuery</span><span class="w"> </span><span class="s2">"select[10 20;&gt;price] from trade"</span>
+<span class="s2">"?[trade;();0b;();10 20;(idesc;`price)]"</span>
+</code></pre></div>
+<p>The full <code>buildQuery</code> function code is as follows:</p>
+<div class="highlight"><pre><span></span><code><span class="cp">\c 30 200</span>
+<span class="nf">tidy</span><span class="o">:</span><span class="p">{</span><span class="nb">ssr</span><span class="o">/</span><span class="p">[;(</span><span class="s2">"</span><span class="se">\"</span><span class="s2">~~"</span><span class="p">;</span><span class="s2">"~~</span><span class="se">\"</span><span class="s2">"</span><span class="p">);(</span><span class="s2">""</span><span class="p">;</span><span class="s2">""</span><span class="p">)]</span><span class="w"> </span><span class="o">$</span><span class="p">[</span><span class="s2">","</span><span class="o">=</span><span class="nb">first</span><span class="w"> </span><span class="n">x</span><span class="p">;</span><span class="il">1</span><span class="o">_</span><span class="n">x</span><span class="p">;</span><span class="n">x</span><span class="p">]}</span>
+<span class="nf">strBrk</span><span class="o">:</span><span class="p">{</span><span class="n">y</span><span class="o">,</span><span class="p">(</span><span class="s2">";"</span><span class="w"> </span><span class="nb">sv</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="o">,</span><span class="n">z</span><span class="p">}</span>
+
+<span class="c1">//replace k representation with equivalent q keyword</span>
+<span class="nf">kreplace</span><span class="o">:</span><span class="p">{[</span><span class="n">x</span><span class="p">]</span><span class="w"> </span><span class="o">$</span><span class="p">[</span><span class="ss">`</span><span class="o">=</span><span class="nv">qval</span><span class="o">:.</span><span class="n">q</span><span class="o">?</span><span class="n">x</span><span class="p">;</span><span class="n">x</span><span class="p">;</span><span class="s2">"~~"</span><span class="o">,</span><span class="nb">string</span><span class="p">[</span><span class="n">qval</span><span class="p">]</span><span class="o">,</span><span class="s2">"~~"</span><span class="p">]}</span>
+<span class="nf">funcK</span><span class="o">:</span><span class="p">{</span><span class="o">$</span><span class="p">[</span><span class="il">0</span><span class="o">=</span><span class="nv">t</span><span class="o">:</span><span class="nb">type</span><span class="w"> </span><span class="n">x</span><span class="p">;</span><span class="o">.</span><span class="n">z.s</span><span class="w"> </span><span class="nb">each</span><span class="w"> </span><span class="n">x</span><span class="p">;</span><span class="n">t</span><span class="o">&lt;</span><span class="mi">100h</span><span class="p">;</span><span class="n">x</span><span class="p">;</span><span class="n">kreplace</span><span class="w"> </span><span class="n">x</span><span class="p">]}</span>
+
+<span class="c1">//replace eg ,`FD`ABC`DEF with "enlist`FD`ABC`DEF"</span>
+<span class="nf">ereplace</span><span class="o">:</span><span class="p">{</span><span class="s2">"~~enlist"</span><span class="o">,</span><span class="p">(</span><span class="o">.</span><span class="n">Q.s1</span><span class="w"> </span><span class="nb">first</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="o">,</span><span class="s2">"~~"</span><span class="p">}</span>
+<span class="nf">ereptest</span><span class="o">:</span><span class="p">{(</span><span class="il">1</span><span class="o">=</span><span class="nb">count</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="nb">and</span><span class="w"> </span><span class="p">((</span><span class="il">0</span><span class="o">=</span><span class="nb">type</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="nb">and</span><span class="w"> </span><span class="il">11</span><span class="o">=</span><span class="nb">type</span><span class="w"> </span><span class="nb">first</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="nb">or</span><span class="w"> </span><span class="il">11</span><span class="o">=</span><span class="nb">type</span><span class="w"> </span><span class="n">x</span><span class="p">}</span>
+<span class="nf">funcEn</span><span class="o">:</span><span class="p">{</span><span class="o">$</span><span class="p">[</span><span class="n">ereptest</span><span class="w"> </span><span class="n">x</span><span class="p">;</span><span class="n">ereplace</span><span class="w"> </span><span class="n">x</span><span class="p">;</span><span class="il">0</span><span class="o">=</span><span class="nb">type</span><span class="w"> </span><span class="n">x</span><span class="p">;</span><span class="o">.</span><span class="n">z.s</span><span class="w"> </span><span class="nb">each</span><span class="w"> </span><span class="n">x</span><span class="p">;</span><span class="n">x</span><span class="p">]}</span>
+
+<span class="nf">basic</span><span class="o">:</span><span class="p">{</span><span class="n">tidy</span><span class="w"> </span><span class="o">.</span><span class="n">Q.s1</span><span class="w"> </span><span class="n">funcK</span><span class="w"> </span><span class="n">funcEn</span><span class="w"> </span><span class="n">x</span><span class="p">}</span>
+
+<span class="nf">addbraks</span><span class="o">:</span><span class="p">{</span><span class="s2">"("</span><span class="o">,</span><span class="n">x</span><span class="o">,</span><span class="s2">")"</span><span class="p">}</span>
+
+<span class="c1">//Where clause needs to be a list of Where clauses,</span>
+<span class="c1">//so if only one Where clause, need to enlist.</span>
+<span class="nf">stringify</span><span class="o">:</span><span class="p">{</span><span class="o">$</span><span class="p">[(</span><span class="il">0</span><span class="o">=</span><span class="nb">type</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="nb">and</span><span class="w"> </span><span class="il">1</span><span class="o">=</span><span class="nb">count</span><span class="w"> </span><span class="n">x</span><span class="p">;</span><span class="s2">"enlist "</span><span class="p">;</span><span class="s2">""</span><span class="p">]</span><span class="o">,</span><span class="n">basic</span><span class="w"> </span><span class="n">x</span><span class="p">}</span>
+
+<span class="c1">//if a dictionary, apply to both keys and values</span>
+<span class="nf">ab</span><span class="o">:</span><span class="p">{</span>
+<span class="w">  </span><span class="o">$</span><span class="p">[(</span><span class="il">0</span><span class="o">=</span><span class="nb">count</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="nb">or</span><span class="w"> </span><span class="o">-</span><span class="il">1</span><span class="o">=</span><span class="nb">type</span><span class="w"> </span><span class="n">x</span><span class="p">;</span><span class="w"> </span><span class="o">.</span><span class="n">Q.s1</span><span class="w"> </span><span class="n">x</span><span class="p">;</span>
+<span class="w">    </span><span class="il">99</span><span class="o">=</span><span class="nb">type</span><span class="w"> </span><span class="n">x</span><span class="p">;</span><span class="w"> </span><span class="p">(</span><span class="n">addbraks</span><span class="w"> </span><span class="n">stringify</span><span class="w"> </span><span class="nb">key</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="p">)</span><span class="o">,</span><span class="s2">"!"</span><span class="o">,</span><span class="n">stringify</span><span class="w"> </span><span class="nb">value</span><span class="w"> </span><span class="n">x</span><span class="p">;</span>
+<span class="w">    </span><span class="n">stringify</span><span class="w"> </span><span class="n">x</span><span class="p">]</span><span class="w"> </span><span class="p">}</span>
+
+<span class="nf">inner</span><span class="o">:</span><span class="p">{[</span><span class="n">x</span><span class="p">]</span>
+<span class="w">  </span><span class="nv">idxs</span><span class="o">:</span><span class="il">2</span><span class="w"> </span><span class="il">3</span><span class="w"> </span><span class="il">4</span><span class="w"> </span><span class="il">5</span><span class="w"> </span><span class="il">6</span><span class="w"> </span><span class="nb">inter</span><span class="w"> </span><span class="nv">ainds</span><span class="o">:</span><span class="nb">til</span><span class="w"> </span><span class="nb">count</span><span class="w"> </span><span class="n">x</span><span class="p">;</span>
+<span class="w">  </span><span class="nv">x</span><span class="o">:@</span><span class="p">[</span><span class="n">x</span><span class="p">;</span><span class="n">idxs</span><span class="p">;</span><span class="o">'</span><span class="p">[</span><span class="n">ab</span><span class="p">;</span><span class="nb">eval</span><span class="p">]];</span>
+<span class="w">  </span><span class="ow">if</span><span class="p">[</span><span class="il">6</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">idxs</span><span class="p">;</span><span class="n">x</span><span class="p">[</span><span class="il">6</span><span class="p">]</span><span class="o">:</span><span class="nb">ssr</span><span class="o">/</span><span class="p">[;(</span><span class="s2">"hopen"</span><span class="p">;</span><span class="s2">"hclose"</span><span class="p">);(</span><span class="s2">"iasc"</span><span class="p">;</span><span class="s2">"idesc"</span><span class="p">)]</span><span class="w"> </span><span class="n">x</span><span class="p">[</span><span class="il">6</span><span class="p">]];</span>
+<span class="w">  </span><span class="c1">//for select statements within select statements</span>
+<span class="w">  </span><span class="n">x</span><span class="p">[</span><span class="il">1</span><span class="p">]</span><span class="o">:$</span><span class="p">[</span><span class="o">-</span><span class="il">11</span><span class="o">=</span><span class="nb">type</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="il">1</span><span class="p">;</span><span class="n">x</span><span class="w"> </span><span class="il">1</span><span class="p">;[</span><span class="nv">idxs</span><span class="o">,:</span><span class="il">1</span><span class="p">;</span><span class="o">.</span><span class="n">z.s</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="il">1</span><span class="p">]];</span>
+<span class="w">  </span><span class="nv">x</span><span class="o">:@</span><span class="p">[</span><span class="n">x</span><span class="p">;</span><span class="n">ainds</span><span class="w"> </span><span class="nb">except</span><span class="w"> </span><span class="n">idxs</span><span class="p">;</span><span class="nb">string</span><span class="p">];</span>
+<span class="w">  </span><span class="n">x</span><span class="p">[</span><span class="il">0</span><span class="p">]</span><span class="o">,</span><span class="n">strBrk</span><span class="p">[</span><span class="il">1</span><span class="o">_</span><span class="n">x</span><span class="p">;</span><span class="s2">"["</span><span class="p">;</span><span class="s2">"]"</span><span class="p">]</span><span class="w"> </span><span class="p">}</span>
+
+<span class="nf">buildQuery</span><span class="o">:</span><span class="p">{</span><span class="n">inner</span><span class="w"> </span><span class="nb">parse</span><span class="w"> </span><span class="n">x</span><span class="p">}</span>
+</code></pre></div>
+<hr />
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M256 141.3v309.3l.5-.2A449 449 0 0 1 428.8 416H448V96h-19.2c-42.2 0-84.1 8.4-123.1 24.6-16.8 7-33.4 13.9-49.7 20.7m-25.1-79.8L256 72l25.1-10.5C327.9 42 378.1 32 428.8 32H464c26.5 0 48 21.5 48 48v352c0 26.5-21.5 48-48 48h-35.2c-50.7 0-100.9 10-147.7 29.5l-12.8 5.3c-7.9 3.3-16.7 3.3-24.6 0l-12.8-5.3C184.1 490 133.9 480 83.2 480H48c-26.5 0-48-21.5-48-48V80c0-26.5 21.5-48 48-48h35.2c50.7 0 100.9 10 147.7 29.5"/></svg></span>
+<a href="../qsql/">qSQL</a>
+<br>
+<span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M256 0a64 64 0 1 1 0 128 64 64 0 1 1 0-128m-32 160h64c35.3 0 64 28.7 64 64v48c0 17.7-14.3 32-32 32h-1.8l-11.1 99.5c-1.8 16.2-15.5 28.5-31.8 28.5h-38.7c-16.3 0-30-12.3-31.8-28.5L193.7 304h-1.8c-17.7 0-32-14.3-32-32v-48c0-35.3 28.7-64 64-64zm188.4 240.2c-16.1-4.2-34.8-7.6-55.4-10.2l5.3-47.7c22.7 2.9 43.7 6.7 62.1 11.5 22.4 5.8 42.6 13.3 57.8 23.3 14.7 9.6 29.8 24.9 29.8 47s-15.1 37.4-29.8 47c-15.2 9.9-35.5 17.5-57.8 23.3-45.1 11.7-105.3 17.8-168.4 17.8s-123.3-6.1-168.4-17.8c-22.4-6-42.6-13.5-57.8-23.4C15.1 461.4 0 446.1 0 424s15.1-37.4 29.8-47c15.2-9.9 35.5-17.5 57.8-23.3 18.5-4.8 39.5-8.6 62.1-11.5L155 390c-20.6 2.6-39.3 6.1-55.4 10.2-56.6 14.6-56.6 32.9 0 47.5 39.9 10.3 95.8 16.2 156.4 16.2s116.5-5.9 156.4-16.2c56.6-14.6 56.6-32.9 0-47.5"/></svg></span>
+<em>Q for Mortals</em>
+<a href="https://code.kx.com/q4m3/9_Queries_q-sql/#912-functional-forms">§9.12 Functional Forms</a>
+<br>
+<span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M351.9 280H161c2.9 64.5 17.2 123.9 37.5 167.4 11.4 24.5 23.7 41.8 35.1 52.4 11.2 10.5 18.9 12.2 22.9 12.2s11.7-1.7 22.9-12.2c11.4-10.6 23.7-28 35.1-52.4 20.3-43.5 34.6-102.9 37.5-167.4zm-191-48h190.9c-2.8-64.5-17.1-123.9-37.4-167.4-11.4-24.4-23.7-41.8-35.1-52.4C268.1 1.7 260.4 0 256.4 0s-11.7 1.7-22.9 12.2c-11.4 10.6-23.7 28-35.1 52.4-20.3 43.5-34.6 102.9-37.5 167.4m-48 0c3.5-85.6 25.6-165.1 57.9-217.3C78.7 47.3 10.9 131.2 1.5 232zM1.5 280c9.4 100.8 77.2 184.7 169.3 217.3-32.3-52.2-54.4-131.7-57.9-217.3zm398.4 0c-3.5 85.6-25.6 165.1-57.9 217.3 92.1-32.7 159.9-116.5 169.3-217.3zm111.4-48C501.9 131.2 434.1 47.3 342 14.7c32.3 52.2 54.4 131.7 57.9 217.3z"/></svg></span>
+<a href="http://www.q-ist.com/2012/10/functional-query-functions.html" title="q-ist">Functional Query Functions</a></p>
+<div class="peachq-import-attribution">
+<p>Source adapted from the <a href="https://github.com/KxSystems/docs">Documentation for kdb+ and q</a>
+by KX Systems and contributors, used under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.
+<a href="../../attribution/">Attribution, provenance and independence notice</a>.</p>
+</div>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  <div class="md-copyright__highlight">
+    PeachQ - MIT-licensed open source q, built on Rayforce with DuckDB storage in progress.
+  </div>
+  <a href="../../../about">Built for the community</a> &middot;
+  <a href="../../../contact">Contact</a> &middot;
+  <a href="https://github.com/peachq-org/peachq" target="_blank" rel="noreferrer">GitHub</a>
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.sections", "navigation.top", "content.code.copy", "content.action.edit"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

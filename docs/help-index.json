@@ -1,0 +1,5747 @@
+{
+    "version": 3,
+    "topics": {
+        "!": {
+            "qname": "!",
+            "path": "ref/dict",
+            "anchor": "",
+            "kind": "glyph"
+        },
+        "!:": {
+            "qname": "!:",
+            "path": "ref/assign",
+            "anchor": "assign-through-operator",
+            "kind": "glyph"
+        },
+        "#": {
+            "qname": "#",
+            "path": "ref/take",
+            "anchor": "",
+            "kind": "glyph"
+        },
+        "#:": {
+            "qname": "#:",
+            "path": "ref/assign",
+            "anchor": "assign-through-operator",
+            "kind": "glyph"
+        },
+        "$": {
+            "qname": "$",
+            "path": "ref/cast",
+            "anchor": "",
+            "kind": "glyph"
+        },
+        "$:": {
+            "qname": "$:",
+            "path": "ref/assign",
+            "anchor": "assign-through-operator",
+            "kind": "glyph"
+        },
+        "$[]": {
+            "qname": "$[]",
+            "path": "ref/cond",
+            "anchor": "",
+            "kind": "glyph"
+        },
+        "%": {
+            "qname": "%",
+            "path": "ref/divide",
+            "anchor": "",
+            "kind": "glyph"
+        },
+        "%:": {
+            "qname": "%:",
+            "path": "ref/assign",
+            "anchor": "assign-through-operator",
+            "kind": "glyph"
+        },
+        "&": {
+            "qname": "&",
+            "path": "ref/lesser",
+            "anchor": "",
+            "kind": "glyph"
+        },
+        "&:": {
+            "qname": "&:",
+            "path": "ref/assign",
+            "anchor": "assign-through-operator",
+            "kind": "glyph"
+        },
+        "'": {
+            "qname": "'",
+            "path": "ref/overloads",
+            "anchor": "quote",
+            "kind": "glyph"
+        },
+        "'-w abort": {
+            "qname": "'-w abort",
+            "path": "basics/errors",
+            "anchor": "-w-abort",
+            "kind": "error"
+        },
+        "'-w init via cmd line": {
+            "qname": "'-w init via cmd line",
+            "path": "basics/errors",
+            "anchor": "-w-init-via-cmd-line",
+            "kind": "error"
+        },
+        "':": {
+            "qname": "':",
+            "path": "ref/overloads",
+            "anchor": "quote-colon",
+            "kind": "glyph"
+        },
+        "'Could not initialize ssl": {
+            "qname": "'Could not initialize ssl",
+            "path": "basics/errors",
+            "anchor": "could-not-initialize-ssl",
+            "kind": "error"
+        },
+        "'IJS": {
+            "qname": "'IJS",
+            "path": "basics/errors",
+            "anchor": "IJS",
+            "kind": "error"
+        },
+        "'PKCS5_PBKDF2_HMAC": {
+            "qname": "'PKCS5_PBKDF2_HMAC",
+            "path": "basics/errors",
+            "anchor": "PKCS5_PBKDF2_HMAC",
+            "kind": "error"
+        },
+        "'Q7": {
+            "qname": "'Q7",
+            "path": "basics/errors",
+            "anchor": "Q7",
+            "kind": "error"
+        },
+        "'TLS not enabled": {
+            "qname": "'TLS not enabled",
+            "path": "basics/errors",
+            "anchor": "TLS-not-enabled",
+            "kind": "error"
+        },
+        "'XXX": {
+            "qname": "'XXX",
+            "path": "basics/errors",
+            "anchor": "XXX",
+            "kind": "error"
+        },
+        "'\\l": {
+            "qname": "'\\l",
+            "path": "basics/errors",
+            "anchor": "\\l",
+            "kind": "error"
+        },
+        "'access": {
+            "qname": "'access",
+            "path": "basics/errors",
+            "anchor": "access",
+            "kind": "error"
+        },
+        "'accp": {
+            "qname": "'accp",
+            "path": "basics/errors",
+            "anchor": "accp",
+            "kind": "error"
+        },
+        "'adict": {
+            "qname": "'adict",
+            "path": "basics/errors",
+            "anchor": "adict",
+            "kind": "error"
+        },
+        "'arch": {
+            "qname": "'arch",
+            "path": "basics/errors",
+            "anchor": "arch",
+            "kind": "error"
+        },
+        "'assign": {
+            "qname": "'assign",
+            "path": "basics/errors",
+            "anchor": "assign",
+            "kind": "error"
+        },
+        "'bad lambda": {
+            "qname": "'bad lambda",
+            "path": "basics/errors",
+            "anchor": "bad-lambda",
+            "kind": "error"
+        },
+        "'badmsg": {
+            "qname": "'badmsg",
+            "path": "basics/errors",
+            "anchor": "badmsg",
+            "kind": "error"
+        },
+        "'badtail": {
+            "qname": "'badtail",
+            "path": "basics/errors",
+            "anchor": "badtail",
+            "kind": "error"
+        },
+        "'binary mismatch": {
+            "qname": "'binary mismatch",
+            "path": "basics/errors",
+            "anchor": "binary-mismatch",
+            "kind": "error"
+        },
+        "'can't": {
+            "qname": "'can't",
+            "path": "basics/errors",
+            "anchor": "can't",
+            "kind": "error"
+        },
+        "'cast": {
+            "qname": "'cast",
+            "path": "basics/errors",
+            "anchor": "cast",
+            "kind": "error"
+        },
+        "'close": {
+            "qname": "'close",
+            "path": "basics/errors",
+            "anchor": "close",
+            "kind": "error"
+        },
+        "'con": {
+            "qname": "'con",
+            "path": "basics/errors",
+            "anchor": "con",
+            "kind": "error"
+        },
+        "'cond": {
+            "qname": "'cond",
+            "path": "basics/errors",
+            "anchor": "cond",
+            "kind": "error"
+        },
+        "'conn": {
+            "qname": "'conn",
+            "path": "basics/errors",
+            "anchor": "conn",
+            "kind": "error"
+        },
+        "'d8": {
+            "qname": "'d8",
+            "path": "basics/errors",
+            "anchor": "d8",
+            "kind": "error"
+        },
+        "'decompression error at block [b] in [k]": {
+            "qname": "'decompression error at block [b] in [k]",
+            "path": "basics/errors",
+            "anchor": "decompression-error-at-block-[b]-in",
+            "kind": "error"
+        },
+        "'domain": {
+            "qname": "'domain",
+            "path": "basics/errors",
+            "anchor": "domain",
+            "kind": "error"
+        },
+        "'dup": {
+            "qname": "'dup",
+            "path": "basics/errors",
+            "anchor": "dup",
+            "kind": "error"
+        },
+        "'dup names for cols/groups": {
+            "qname": "'dup names for cols/groups",
+            "path": "basics/errors",
+            "anchor": "dup-names-for-cols/groups",
+            "kind": "error"
+        },
+        "'elim": {
+            "qname": "'elim",
+            "path": "basics/errors",
+            "anchor": "elim",
+            "kind": "error"
+        },
+        "'empty": {
+            "qname": "'empty",
+            "path": "basics/errors",
+            "anchor": "empty",
+            "kind": "error"
+        },
+        "'enable secondary threads via cmd line -s only": {
+            "qname": "'enable secondary threads via cmd line -s only",
+            "path": "basics/errors",
+            "anchor": "enable-secondary-threads-via-cmd-line--s-only",
+            "kind": "error"
+        },
+        "'encryption lib unavailable": {
+            "qname": "'encryption lib unavailable",
+            "path": "basics/errors",
+            "anchor": "encryption-lib-unavailable",
+            "kind": "error"
+        },
+        "'expected response": {
+            "qname": "'expected response",
+            "path": "basics/errors",
+            "anchor": "expected-response",
+            "kind": "error"
+        },
+        "'failed to load TLS certificates": {
+            "qname": "'failed to load TLS certificates",
+            "path": "basics/errors",
+            "anchor": "failed-to-load-TLS-certificates",
+            "kind": "error"
+        },
+        "'from": {
+            "qname": "'from",
+            "path": "basics/errors",
+            "anchor": "from",
+            "kind": "error"
+        },
+        "'hop": {
+            "qname": "'hop",
+            "path": "basics/errors",
+            "anchor": "hop",
+            "kind": "error"
+        },
+        "'hwr": {
+            "qname": "'hwr",
+            "path": "basics/errors",
+            "anchor": "hwr",
+            "kind": "error"
+        },
+        "'insert": {
+            "qname": "'insert",
+            "path": "basics/errors",
+            "anchor": "insert",
+            "kind": "error"
+        },
+        "'invalid": {
+            "qname": "'invalid",
+            "path": "basics/errors",
+            "anchor": "invalid",
+            "kind": "error"
+        },
+        "'invalid password": {
+            "qname": "'invalid password",
+            "path": "basics/errors",
+            "anchor": "invalid-password",
+            "kind": "error"
+        },
+        "'length": {
+            "qname": "'length",
+            "path": "basics/errors",
+            "anchor": "length",
+            "kind": "error"
+        },
+        "'limit": {
+            "qname": "'limit",
+            "path": "basics/errors",
+            "anchor": "limit",
+            "kind": "error"
+        },
+        "'load": {
+            "qname": "'load",
+            "path": "basics/errors",
+            "anchor": "load",
+            "kind": "error"
+        },
+        "'loop": {
+            "qname": "'loop",
+            "path": "basics/errors",
+            "anchor": "loop",
+            "kind": "error"
+        },
+        "'main thread only": {
+            "qname": "'main thread only",
+            "path": "basics/errors",
+            "anchor": "main-thread-only",
+            "kind": "error"
+        },
+        "'match": {
+            "qname": "'match",
+            "path": "basics/errors",
+            "anchor": "match",
+            "kind": "error"
+        },
+        "'mismatch": {
+            "qname": "'mismatch",
+            "path": "basics/errors",
+            "anchor": "mismatch",
+            "kind": "error"
+        },
+        "'mlim": {
+            "qname": "'mlim",
+            "path": "basics/errors",
+            "anchor": "mlim",
+            "kind": "error"
+        },
+        "'mq": {
+            "qname": "'mq",
+            "path": "basics/errors",
+            "anchor": "mq",
+            "kind": "error"
+        },
+        "'name too long": {
+            "qname": "'name too long",
+            "path": "basics/errors",
+            "anchor": "name-too-long",
+            "kind": "error"
+        },
+        "'need zlib to compress": {
+            "qname": "'need zlib to compress",
+            "path": "basics/errors",
+            "anchor": "need-zlib-to-compress",
+            "kind": "error"
+        },
+        "'no append to zipped enums": {
+            "qname": "'no append to zipped enums",
+            "path": "basics/errors",
+            "anchor": "no-append-to-zipped-enums",
+            "kind": "error"
+        },
+        "'noamend": {
+            "qname": "'noamend",
+            "path": "basics/errors",
+            "anchor": "noamend",
+            "kind": "error"
+        },
+        "'nosocket": {
+            "qname": "'nosocket",
+            "path": "basics/errors",
+            "anchor": "nosocket",
+            "kind": "error"
+        },
+        "'noupdate": {
+            "qname": "'noupdate",
+            "path": "basics/errors",
+            "anchor": "noupdate",
+            "kind": "error"
+        },
+        "'nyi": {
+            "qname": "'nyi",
+            "path": "basics/errors",
+            "anchor": "nyi",
+            "kind": "error"
+        },
+        "'os": {
+            "qname": "'os",
+            "path": "basics/errors",
+            "anchor": "os",
+            "kind": "error"
+        },
+        "'par": {
+            "qname": "'par",
+            "path": "basics/errors",
+            "anchor": "par",
+            "kind": "error"
+        },
+        "'parse": {
+            "qname": "'parse",
+            "path": "basics/errors",
+            "anchor": "parse",
+            "kind": "error"
+        },
+        "'part": {
+            "qname": "'part",
+            "path": "basics/errors",
+            "anchor": "part",
+            "kind": "error"
+        },
+        "'path too long": {
+            "qname": "'path too long",
+            "path": "basics/errors",
+            "anchor": "path-too-long",
+            "kind": "error"
+        },
+        "'pread": {
+            "qname": "'pread",
+            "path": "basics/errors",
+            "anchor": "pread",
+            "kind": "error"
+        },
+        "'pwuid": {
+            "qname": "'pwuid",
+            "path": "basics/errors",
+            "anchor": "pwuid",
+            "kind": "error"
+        },
+        "'rank": {
+            "qname": "'rank",
+            "path": "basics/errors",
+            "anchor": "rank",
+            "kind": "error"
+        },
+        "'rb": {
+            "qname": "'rb",
+            "path": "basics/errors",
+            "anchor": "rb",
+            "kind": "error"
+        },
+        "'restricted": {
+            "qname": "'restricted",
+            "path": "basics/errors",
+            "anchor": "restricted",
+            "kind": "error"
+        },
+        "'s-fail": {
+            "qname": "'s-fail",
+            "path": "basics/errors",
+            "anchor": "s-fail",
+            "kind": "error"
+        },
+        "'splay": {
+            "qname": "'splay",
+            "path": "basics/errors",
+            "anchor": "splay",
+            "kind": "error"
+        },
+        "'stack": {
+            "qname": "'stack",
+            "path": "basics/errors",
+            "anchor": "stack",
+            "kind": "error"
+        },
+        "'step": {
+            "qname": "'step",
+            "path": "basics/errors",
+            "anchor": "step",
+            "kind": "error"
+        },
+        "'stop": {
+            "qname": "'stop",
+            "path": "basics/errors",
+            "anchor": "stop",
+            "kind": "error"
+        },
+        "'stype": {
+            "qname": "'stype",
+            "path": "basics/errors",
+            "anchor": "stype",
+            "kind": "error"
+        },
+        "'sys": {
+            "qname": "'sys",
+            "path": "basics/errors",
+            "anchor": "sys",
+            "kind": "error"
+        },
+        "'threadview": {
+            "qname": "'threadview",
+            "path": "basics/errors",
+            "anchor": "threadview",
+            "kind": "error"
+        },
+        "'timeout": {
+            "qname": "'timeout",
+            "path": "basics/errors",
+            "anchor": "timeout",
+            "kind": "error"
+        },
+        "'too many syms": {
+            "qname": "'too many syms",
+            "path": "basics/errors",
+            "anchor": "too-many-syms",
+            "kind": "error"
+        },
+        "'trunc": {
+            "qname": "'trunc",
+            "path": "basics/errors",
+            "anchor": "trunk",
+            "kind": "error"
+        },
+        "'type": {
+            "qname": "'type",
+            "path": "basics/errors",
+            "anchor": "type",
+            "kind": "error"
+        },
+        "'type/attr error amending file": {
+            "qname": "'type/attr error amending file",
+            "path": "basics/errors",
+            "anchor": "type/attr-error-amending-file",
+            "kind": "error"
+        },
+        "'u-fail": {
+            "qname": "'u-fail",
+            "path": "basics/errors",
+            "anchor": "u-fail",
+            "kind": "error"
+        },
+        "'unmappable": {
+            "qname": "'unmappable",
+            "path": "basics/errors",
+            "anchor": "unmappable",
+            "kind": "error"
+        },
+        "'unrecognized key format": {
+            "qname": "'unrecognized key format",
+            "path": "basics/errors",
+            "anchor": "unrecognized-key-format",
+            "kind": "error"
+        },
+        "'upd": {
+            "qname": "'upd",
+            "path": "basics/errors",
+            "anchor": "upd",
+            "kind": "error"
+        },
+        "'utf8": {
+            "qname": "'utf8",
+            "path": "basics/errors",
+            "anchor": "utf8",
+            "kind": "error"
+        },
+        "'value": {
+            "qname": "'value",
+            "path": "basics/errors",
+            "anchor": "value",
+            "kind": "error"
+        },
+        "'vd1": {
+            "qname": "'vd1",
+            "path": "basics/errors",
+            "anchor": "vd1",
+            "kind": "error"
+        },
+        "'view": {
+            "qname": "'view",
+            "path": "basics/errors",
+            "anchor": "view",
+            "kind": "error"
+        },
+        "'wsfull": {
+            "qname": "'wsfull",
+            "path": "basics/errors",
+            "anchor": "wsfull",
+            "kind": "error"
+        },
+        "'wsm": {
+            "qname": "'wsm",
+            "path": "basics/errors",
+            "anchor": "wsm",
+            "kind": "error"
+        },
+        "*": {
+            "qname": "*",
+            "path": "ref/multiply",
+            "anchor": "",
+            "kind": "glyph"
+        },
+        "*:": {
+            "qname": "*:",
+            "path": "ref/assign",
+            "anchor": "assign-through-operator",
+            "kind": "glyph"
+        },
+        "+": {
+            "qname": "+",
+            "path": "ref/add",
+            "anchor": "",
+            "kind": "glyph"
+        },
+        "+:": {
+            "qname": "+:",
+            "path": "ref/assign",
+            "anchor": "assign-through-operator",
+            "kind": "glyph"
+        },
+        ",": {
+            "qname": ",",
+            "path": "ref/join",
+            "anchor": "",
+            "kind": "glyph"
+        },
+        ",:": {
+            "qname": ",:",
+            "path": "ref/assign",
+            "anchor": "assign-through-operator",
+            "kind": "glyph"
+        },
+        "-": {
+            "qname": "-",
+            "path": "ref/subtract",
+            "anchor": "",
+            "kind": "glyph"
+        },
+        "-10!": {
+            "qname": "-10!",
+            "path": "basics/internal",
+            "anchor": "10-x-type-enum",
+            "kind": "internal",
+            "start_line": 116,
+            "end_line": 132
+        },
+        "-11!": {
+            "qname": "-11!",
+            "path": "basics/internal",
+            "anchor": "11-streaming-execute",
+            "kind": "internal",
+            "start_line": 132,
+            "end_line": 164
+        },
+        "-120!": {
+            "qname": "-120!",
+            "path": "basics/internal",
+            "anchor": "120-x-memory-domain",
+            "kind": "internal",
+            "start_line": 534,
+            "end_line": 549
+        },
+        "-14!": {
+            "qname": "-14!",
+            "path": "basics/internal",
+            "anchor": "14-x-quote-escape",
+            "kind": "internal",
+            "start_line": 164,
+            "end_line": 169
+        },
+        "-16!": {
+            "qname": "-16!",
+            "path": "basics/internal",
+            "anchor": "16-x-ref-count",
+            "kind": "internal",
+            "start_line": 169,
+            "end_line": 182
+        },
+        "-18!": {
+            "qname": "-18!",
+            "path": "basics/internal",
+            "anchor": "18-x-compress-bytes",
+            "kind": "internal",
+            "start_line": 182,
+            "end_line": 209
+        },
+        "-19!": {
+            "qname": "-19!",
+            "path": "basics/internal",
+            "anchor": "19-compress-file",
+            "kind": "internal",
+            "start_line": 209,
+            "end_line": 245
+        },
+        "-21!": {
+            "qname": "-21!",
+            "path": "basics/internal",
+            "anchor": "21-x-compression-encryption-stats",
+            "kind": "internal",
+            "start_line": 245,
+            "end_line": 278
+        },
+        "-22!": {
+            "qname": "-22!",
+            "path": "basics/internal",
+            "anchor": "22-x-uncompressed-length",
+            "kind": "internal",
+            "start_line": 278,
+            "end_line": 296
+        },
+        "-23!": {
+            "qname": "-23!",
+            "path": "basics/internal",
+            "anchor": "23-x-memory-map",
+            "kind": "internal",
+            "start_line": 296,
+            "end_line": 304
+        },
+        "-25!": {
+            "qname": "-25!",
+            "path": "basics/internal",
+            "anchor": "25-x-async-broadcast",
+            "kind": "internal",
+            "start_line": 304,
+            "end_line": 349
+        },
+        "-26!": {
+            "qname": "-26!",
+            "path": "basics/internal",
+            "anchor": "26-x-ssl",
+            "kind": "internal",
+            "start_line": 349,
+            "end_line": 375
+        },
+        "-27!": {
+            "qname": "-27!",
+            "path": "basics/internal",
+            "anchor": "27-x-y-ieee754-precision-format",
+            "kind": "internal",
+            "start_line": 375,
+            "end_line": 406
+        },
+        "-30!": {
+            "qname": "-30!",
+            "path": "basics/internal",
+            "anchor": "30-x-deferred-response",
+            "kind": "internal",
+            "start_line": 406,
+            "end_line": 438
+        },
+        "-33!": {
+            "qname": "-33!",
+            "path": "basics/internal",
+            "anchor": "33-x-sha-1-hash",
+            "kind": "internal",
+            "start_line": 438,
+            "end_line": 455
+        },
+        "-36!": {
+            "qname": "-36!",
+            "path": "basics/internal",
+            "anchor": "36-load-master-key",
+            "kind": "internal",
+            "start_line": 455,
+            "end_line": 501
+        },
+        "-38!": {
+            "qname": "-38!",
+            "path": "basics/internal",
+            "anchor": "38-x-socket-table",
+            "kind": "internal",
+            "start_line": 501,
+            "end_line": 534
+        },
+        "-4!": {
+            "qname": "-4!",
+            "path": "basics/internal",
+            "anchor": "4-x-tokens",
+            "kind": "internal",
+            "start_line": 55,
+            "end_line": 91
+        },
+        "-8!": {
+            "qname": "-8!",
+            "path": "basics/internal",
+            "anchor": "8-x-to-bytes",
+            "kind": "internal",
+            "start_line": 91,
+            "end_line": 104
+        },
+        "-9!": {
+            "qname": "-9!",
+            "path": "basics/internal",
+            "anchor": "9-x-from-bytes",
+            "kind": "internal",
+            "start_line": 104,
+            "end_line": 116
+        },
+        "-:": {
+            "qname": "-:",
+            "path": "ref/assign",
+            "anchor": "assign-through-operator",
+            "kind": "glyph"
+        },
+        "-C": {
+            "qname": "-C",
+            "path": "basics/cmdline",
+            "anchor": "c-http-size",
+            "kind": "glyph",
+            "start_line": 110,
+            "end_line": 123
+        },
+        "-E": {
+            "qname": "-E",
+            "path": "basics/cmdline",
+            "anchor": "e-tls-server-mode",
+            "kind": "glyph",
+            "start_line": 137,
+            "end_line": 154
+        },
+        "-L": {
+            "qname": "-L",
+            "path": "basics/cmdline",
+            "anchor": "l-log-sync",
+            "kind": "glyph",
+            "start_line": 180,
+            "end_line": 192
+        },
+        "-P": {
+            "qname": "-P",
+            "path": "basics/cmdline",
+            "anchor": "p-display-precision",
+            "kind": "glyph",
+            "start_line": 253,
+            "end_line": 265
+        },
+        "-S": {
+            "qname": "-S",
+            "path": "basics/cmdline",
+            "anchor": "s-random-seed",
+            "kind": "glyph",
+            "start_line": 327,
+            "end_line": 342
+        },
+        "-T": {
+            "qname": "-T",
+            "path": "basics/cmdline",
+            "anchor": "t-timeout",
+            "kind": "glyph",
+            "start_line": 354,
+            "end_line": 366
+        },
+        "-U": {
+            "qname": "-U",
+            "path": "basics/cmdline",
+            "anchor": "u-usr-pwd",
+            "kind": "glyph",
+            "start_line": 368,
+            "end_line": 421
+        },
+        "-W": {
+            "qname": "-W",
+            "path": "basics/cmdline",
+            "anchor": "w-start-week",
+            "kind": "glyph",
+            "start_line": 451,
+            "end_line": 463
+        },
+        "-b": {
+            "qname": "-b",
+            "path": "basics/cmdline",
+            "anchor": "b-blocked",
+            "kind": "glyph",
+            "start_line": 56,
+            "end_line": 98
+        },
+        "-c": {
+            "qname": "-c",
+            "path": "basics/cmdline",
+            "anchor": "c-console-size",
+            "kind": "glyph",
+            "start_line": 98,
+            "end_line": 110
+        },
+        "-e": {
+            "qname": "-e",
+            "path": "basics/cmdline",
+            "anchor": "e-error-traps",
+            "kind": "glyph",
+            "start_line": 123,
+            "end_line": 137
+        },
+        "-g": {
+            "qname": "-g",
+            "path": "basics/cmdline",
+            "anchor": "g-garbage-collection",
+            "kind": "glyph",
+            "start_line": 154,
+            "end_line": 168
+        },
+        "-l": {
+            "qname": "-l",
+            "path": "basics/cmdline",
+            "anchor": "l-log-updates",
+            "kind": "glyph",
+            "start_line": 168,
+            "end_line": 180
+        },
+        "-m": {
+            "qname": "-m",
+            "path": "basics/cmdline",
+            "anchor": "m-memory-domain",
+            "kind": "glyph",
+            "start_line": 192,
+            "end_line": 213
+        },
+        "-o": {
+            "qname": "-o",
+            "path": "basics/cmdline",
+            "anchor": "o-utc-offset",
+            "kind": "glyph",
+            "start_line": 213,
+            "end_line": 226
+        },
+        "-p": {
+            "qname": "-p",
+            "path": "basics/cmdline",
+            "anchor": "p-listening-port",
+            "kind": "glyph",
+            "start_line": 226,
+            "end_line": 253
+        },
+        "-q": {
+            "qname": "-q",
+            "path": "basics/cmdline",
+            "anchor": "q-quiet-mode",
+            "kind": "glyph",
+            "start_line": 265,
+            "end_line": 300
+        },
+        "-r": {
+            "qname": "-r",
+            "path": "basics/cmdline",
+            "anchor": "r-replicate",
+            "kind": "glyph",
+            "start_line": 300,
+            "end_line": 315
+        },
+        "-s": {
+            "qname": "-s",
+            "path": "basics/cmdline",
+            "anchor": "s-secondary-threads",
+            "kind": "glyph",
+            "start_line": 315,
+            "end_line": 327
+        },
+        "-t": {
+            "qname": "-t",
+            "path": "basics/cmdline",
+            "anchor": "t-timer-ticks",
+            "kind": "glyph",
+            "start_line": 342,
+            "end_line": 354
+        },
+        "-u": {
+            "qname": "-u",
+            "path": "basics/cmdline",
+            "anchor": "u-disable-syscmds",
+            "kind": "glyph",
+            "start_line": 366,
+            "end_line": 368
+        },
+        "-w": {
+            "qname": "-w",
+            "path": "basics/cmdline",
+            "anchor": "w-workspace",
+            "kind": "glyph",
+            "start_line": 421,
+            "end_line": 451
+        },
+        "-z": {
+            "qname": "-z",
+            "path": "basics/cmdline",
+            "anchor": "z-date-format",
+            "kind": "glyph",
+            "start_line": 463,
+            "end_line": 477
+        },
+        ".": {
+            "qname": ".",
+            "path": "ref/apply",
+            "anchor": "",
+            "kind": "glyph"
+        },
+        ".:": {
+            "qname": ".:",
+            "path": "ref/assign",
+            "anchor": "assign-through-operator",
+            "kind": "glyph"
+        },
+        ".Q": {
+            "qname": ".Q",
+            "path": "ref/index",
+            "anchor": "q-dotq-md-utils",
+            "kind": "namespace",
+            "start_line": 261,
+            "end_line": 265
+        },
+        ".Q.A": {
+            "qname": ".Q.A",
+            "path": "ref/dotq",
+            "anchor": "a-upper-case-alphabet",
+            "kind": "namespace",
+            "start_line": 75,
+            "end_line": 79
+        },
+        ".Q.Cf": {
+            "qname": ".Q.Cf",
+            "path": "ref/dotq",
+            "anchor": "cf-create-empty-nested-char-file",
+            "kind": "namespace",
+            "start_line": 315,
+            "end_line": 327
+        },
+        ".Q.D": {
+            "qname": ".Q.D",
+            "path": "ref/dotq",
+            "anchor": "d-partitions",
+            "kind": "namespace",
+            "start_line": 364,
+            "end_line": 389
+        },
+        ".Q.K": {
+            "qname": ".Q.K",
+            "path": "ref/dotq",
+            "anchor": "k-version-date",
+            "kind": "namespace",
+            "start_line": 1440,
+            "end_line": 1459
+        },
+        ".Q.M": {
+            "qname": ".Q.M",
+            "path": "ref/dotq",
+            "anchor": "m-chunk-size",
+            "kind": "namespace",
+            "start_line": 1543,
+            "end_line": 1556
+        },
+        ".Q.MAP": {
+            "qname": ".Q.MAP",
+            "path": "ref/dotq",
+            "anchor": "map-maps-partitions",
+            "kind": "namespace",
+            "start_line": 1556,
+            "end_line": 1593
+        },
+        ".Q.P": {
+            "qname": ".Q.P",
+            "path": "ref/dotq",
+            "anchor": "p-segments",
+            "kind": "namespace",
+            "start_line": 1662,
+            "end_line": 1675
+        },
+        ".Q.PD": {
+            "qname": ".Q.PD",
+            "path": "ref/dotq",
+            "anchor": "pd-partition-locations",
+            "kind": "namespace",
+            "start_line": 1704,
+            "end_line": 1729
+        },
+        ".Q.PV": {
+            "qname": ".Q.PV",
+            "path": "ref/dotq",
+            "anchor": "pv-partition-values",
+            "kind": "namespace",
+            "start_line": 1846,
+            "end_line": 1869
+        },
+        ".Q.V": {
+            "qname": ".Q.V",
+            "path": "ref/dotq",
+            "anchor": "v-table-to-dict",
+            "kind": "namespace",
+            "start_line": 2162,
+            "end_line": 2175
+        },
+        ".Q.Xf": {
+            "qname": ".Q.Xf",
+            "path": "ref/dotq",
+            "anchor": "xf-create-file",
+            "kind": "namespace",
+            "start_line": 2263,
+            "end_line": 2286
+        },
+        ".Q.a": {
+            "qname": ".Q.a",
+            "path": "ref/dotq",
+            "anchor": "a-lower-case-alphabet",
+            "kind": "namespace",
+            "start_line": 77,
+            "end_line": 98
+        },
+        ".Q.addmonths": {
+            "qname": ".Q.addmonths",
+            "path": "ref/dotq",
+            "anchor": "addmonths",
+            "kind": "namespace",
+            "start_line": 98,
+            "end_line": 125
+        },
+        ".Q.addr": {
+            "qname": ".Q.addr",
+            "path": "ref/dotq",
+            "anchor": "addr-ip-host-as-int",
+            "kind": "namespace",
+            "start_line": 125,
+            "end_line": 189
+        },
+        ".Q.an": {
+            "qname": ".Q.an",
+            "path": "ref/dotq",
+            "anchor": "an-all-alphanumerics",
+            "kind": "namespace",
+            "start_line": 79,
+            "end_line": 98
+        },
+        ".Q.atob": {
+            "qname": ".Q.atob",
+            "path": "ref/dotq",
+            "anchor": "atob-b64-decode",
+            "kind": "namespace",
+            "start_line": 189,
+            "end_line": 208
+        },
+        ".Q.b6": {
+            "qname": ".Q.b6",
+            "path": "ref/dotq",
+            "anchor": "b6-bicameral-alphanums",
+            "kind": "namespace",
+            "start_line": 208,
+            "end_line": 223
+        },
+        ".Q.bt": {
+            "qname": ".Q.bt",
+            "path": "ref/dotq",
+            "anchor": "bt-backtrace",
+            "kind": "namespace",
+            "start_line": 223,
+            "end_line": 257
+        },
+        ".Q.btoa": {
+            "qname": ".Q.btoa",
+            "path": "ref/dotq",
+            "anchor": "btoa-b64-encode",
+            "kind": "namespace",
+            "start_line": 257,
+            "end_line": 274
+        },
+        ".Q.bv": {
+            "qname": ".Q.bv",
+            "path": "ref/dotq",
+            "anchor": "bv-build-vp",
+            "kind": "namespace",
+            "start_line": 274,
+            "end_line": 311
+        },
+        ".Q.bvi": {
+            "qname": ".Q.bvi",
+            "path": "ref/dotq",
+            "anchor": "bvi-build-incremental-vp",
+            "kind": "namespace",
+            "start_line": 311,
+            "end_line": 315
+        },
+        ".Q.chk": {
+            "qname": ".Q.chk",
+            "path": "ref/dotq",
+            "anchor": "chk-fill-hdb",
+            "kind": "namespace",
+            "start_line": 327,
+            "end_line": 356
+        },
+        ".Q.cn": {
+            "qname": ".Q.cn",
+            "path": "ref/dotq",
+            "anchor": "cn-count-partitioned-table",
+            "kind": "namespace",
+            "start_line": 356,
+            "end_line": 364
+        },
+        ".Q.dd": {
+            "qname": ".Q.dd",
+            "path": "ref/dotq",
+            "anchor": "dd-join-symbols",
+            "kind": "namespace",
+            "start_line": 389,
+            "end_line": 413
+        },
+        ".Q.def": {
+            "qname": ".Q.def",
+            "path": "ref/dotq",
+            "anchor": "def-command-defaults",
+            "kind": "namespace",
+            "start_line": 413,
+            "end_line": 451
+        },
+        ".Q.dpft": {
+            "qname": ".Q.dpft",
+            "path": "ref/dotq",
+            "anchor": "dpft-save-table",
+            "kind": "namespace",
+            "start_line": 451,
+            "end_line": 455
+        },
+        ".Q.dpfts": {
+            "qname": ".Q.dpfts",
+            "path": "ref/dotq",
+            "anchor": "dpfts-save-table-with-symtable",
+            "kind": "namespace",
+            "start_line": 453,
+            "end_line": 457
+        },
+        ".Q.dpt": {
+            "qname": ".Q.dpt",
+            "path": "ref/dotq",
+            "anchor": "dpt-save-table-unsorted",
+            "kind": "namespace",
+            "start_line": 455,
+            "end_line": 543
+        },
+        ".Q.dpts": {
+            "qname": ".Q.dpts",
+            "path": "ref/dotq",
+            "anchor": "dpts-save-table-unsorted-with-symtable",
+            "kind": "namespace",
+            "start_line": 457,
+            "end_line": 543
+        },
+        ".Q.dsftg": {
+            "qname": ".Q.dsftg",
+            "path": "ref/dotq",
+            "anchor": "dsftg-load-process-save",
+            "kind": "namespace",
+            "start_line": 543,
+            "end_line": 572
+        },
+        ".Q.en": {
+            "qname": ".Q.en",
+            "path": "ref/dotq",
+            "anchor": "en-enumerate-varchar-cols",
+            "kind": "namespace",
+            "start_line": 572,
+            "end_line": 669
+        },
+        ".Q.ens": {
+            "qname": ".Q.ens",
+            "path": "ref/dotq",
+            "anchor": "ens-enumerate-against-domain",
+            "kind": "namespace",
+            "start_line": 574,
+            "end_line": 669
+        },
+        ".Q.f": {
+            "qname": ".Q.f",
+            "path": "ref/dotq",
+            "anchor": "f-precision-format",
+            "kind": "namespace",
+            "start_line": 669,
+            "end_line": 707
+        },
+        ".Q.fc": {
+            "qname": ".Q.fc",
+            "path": "ref/dotq",
+            "anchor": "fc-parallel-on-cut",
+            "kind": "namespace",
+            "start_line": 707,
+            "end_line": 738
+        },
+        ".Q.ff": {
+            "qname": ".Q.ff",
+            "path": "ref/dotq",
+            "anchor": "ff-append-columns",
+            "kind": "namespace",
+            "start_line": 738,
+            "end_line": 783
+        },
+        ".Q.fk": {
+            "qname": ".Q.fk",
+            "path": "ref/dotq",
+            "anchor": "fk-foreign-key",
+            "kind": "namespace",
+            "start_line": 783,
+            "end_line": 793
+        },
+        ".Q.fmt": {
+            "qname": ".Q.fmt",
+            "path": "ref/dotq",
+            "anchor": "fmt-precision-format",
+            "kind": "namespace",
+            "start_line": 793,
+            "end_line": 855
+        },
+        ".Q.fpn": {
+            "qname": ".Q.fpn",
+            "path": "ref/dotq",
+            "anchor": "fpn-pipe-streaming",
+            "kind": "namespace",
+            "start_line": 855,
+            "end_line": 884
+        },
+        ".Q.fps": {
+            "qname": ".Q.fps",
+            "path": "ref/dotq",
+            "anchor": "fps-pipe-streaming",
+            "kind": "namespace",
+            "start_line": 859,
+            "end_line": 884
+        },
+        ".Q.fs": {
+            "qname": ".Q.fs",
+            "path": "ref/dotq",
+            "anchor": "fs-file-streaming",
+            "kind": "namespace",
+            "start_line": 884,
+            "end_line": 932
+        },
+        ".Q.fsn": {
+            "qname": ".Q.fsn",
+            "path": "ref/dotq",
+            "anchor": "fsn-file-streaming",
+            "kind": "namespace",
+            "start_line": 888,
+            "end_line": 932
+        },
+        ".Q.ft": {
+            "qname": ".Q.ft",
+            "path": "ref/dotq",
+            "anchor": "ft-apply-simple",
+            "kind": "namespace",
+            "start_line": 932,
+            "end_line": 981
+        },
+        ".Q.fu": {
+            "qname": ".Q.fu",
+            "path": "ref/dotq",
+            "anchor": "fu-apply-unique",
+            "kind": "namespace",
+            "start_line": 981,
+            "end_line": 1010
+        },
+        ".Q.gc": {
+            "qname": ".Q.gc",
+            "path": "ref/dotq",
+            "anchor": "gc-garbage-collect",
+            "kind": "namespace",
+            "start_line": 1010,
+            "end_line": 1125
+        },
+        ".Q.gz": {
+            "qname": ".Q.gz",
+            "path": "ref/dotq",
+            "anchor": "gz-gzip",
+            "kind": "namespace",
+            "start_line": 1125,
+            "end_line": 1154
+        },
+        ".Q.hdpf": {
+            "qname": ".Q.hdpf",
+            "path": "ref/dotq",
+            "anchor": "hdpf-save-tables",
+            "kind": "namespace",
+            "start_line": 1154,
+            "end_line": 1166
+        },
+        ".Q.hg": {
+            "qname": ".Q.hg",
+            "path": "ref/dotq",
+            "anchor": "hg-http-get",
+            "kind": "namespace",
+            "start_line": 1166,
+            "end_line": 1206
+        },
+        ".Q.host": {
+            "qname": ".Q.host",
+            "path": "ref/dotq",
+            "anchor": "host-ip-to-hostname",
+            "kind": "namespace",
+            "start_line": 1206,
+            "end_line": 1268
+        },
+        ".Q.hp": {
+            "qname": ".Q.hp",
+            "path": "ref/dotq",
+            "anchor": "hp-http-post",
+            "kind": "namespace",
+            "start_line": 1268,
+            "end_line": 1292
+        },
+        ".Q.id": {
+            "qname": ".Q.id",
+            "path": "ref/dotq",
+            "anchor": "id-sanitize",
+            "kind": "namespace",
+            "start_line": 1292,
+            "end_line": 1354
+        },
+        ".Q.ind": {
+            "qname": ".Q.ind",
+            "path": "ref/dotq",
+            "anchor": "ind-partitioned-index",
+            "kind": "namespace",
+            "start_line": 1354,
+            "end_line": 1401
+        },
+        ".Q.j10": {
+            "qname": ".Q.j10",
+            "path": "ref/dotq",
+            "anchor": "j10-encode-binhex",
+            "kind": "namespace",
+            "start_line": 1401,
+            "end_line": 1405
+        },
+        ".Q.j12": {
+            "qname": ".Q.j12",
+            "path": "ref/dotq",
+            "anchor": "j12-encode-base-36",
+            "kind": "namespace",
+            "start_line": 1405,
+            "end_line": 1440
+        },
+        ".Q.k": {
+            "qname": ".Q.k",
+            "path": "ref/dotq",
+            "anchor": "k-version",
+            "kind": "namespace",
+            "start_line": 1442,
+            "end_line": 1459
+        },
+        ".Q.l": {
+            "qname": ".Q.l",
+            "path": "ref/dotq",
+            "anchor": "l-load",
+            "kind": "namespace",
+            "start_line": 1459,
+            "end_line": 1470
+        },
+        ".Q.ld": {
+            "qname": ".Q.ld",
+            "path": "ref/dotq",
+            "anchor": "ld-load-and-group",
+            "kind": "namespace",
+            "start_line": 1470,
+            "end_line": 1485
+        },
+        ".Q.li": {
+            "qname": ".Q.li",
+            "path": "ref/dotq",
+            "anchor": "li-load-partitions",
+            "kind": "namespace",
+            "start_line": 1485,
+            "end_line": 1511
+        },
+        ".Q.lo": {
+            "qname": ".Q.lo",
+            "path": "ref/dotq",
+            "anchor": "lo-load-without",
+            "kind": "namespace",
+            "start_line": 1511,
+            "end_line": 1543
+        },
+        ".Q.m": {
+            "qname": ".Q.m",
+            "path": "ref/dotq",
+            "anchor": "m-reuse-reload-module",
+            "kind": "namespace",
+            "start_line": 1593,
+            "end_line": 1600
+        },
+        ".Q.n": {
+            "qname": ".Q.n",
+            "path": "ref/dotq",
+            "anchor": "n-nums",
+            "kind": "namespace",
+            "start_line": 1606,
+            "end_line": 1626
+        },
+        ".Q.nA": {
+            "qname": ".Q.nA",
+            "path": "ref/dotq",
+            "anchor": "na-alphanums",
+            "kind": "namespace",
+            "start_line": 1608,
+            "end_line": 1626
+        },
+        ".Q.opt": {
+            "qname": ".Q.opt",
+            "path": "ref/dotq",
+            "anchor": "opt-command-parameters",
+            "kind": "namespace",
+            "start_line": 1626,
+            "end_line": 1662
+        },
+        ".Q.par": {
+            "qname": ".Q.par",
+            "path": "ref/dotq",
+            "anchor": "par-get-expected-partition-location",
+            "kind": "namespace",
+            "start_line": 1675,
+            "end_line": 1704
+        },
+        ".Q.pd": {
+            "qname": ".Q.pd",
+            "path": "ref/dotq",
+            "anchor": "pd-modified-partition-locations",
+            "kind": "namespace",
+            "start_line": 1729,
+            "end_line": 1737
+        },
+        ".Q.pf": {
+            "qname": ".Q.pf",
+            "path": "ref/dotq",
+            "anchor": "pf-partition-field",
+            "kind": "namespace",
+            "start_line": 1737,
+            "end_line": 1746
+        },
+        ".Q.pn": {
+            "qname": ".Q.pn",
+            "path": "ref/dotq",
+            "anchor": "pn-partition-counts",
+            "kind": "namespace",
+            "start_line": 1746,
+            "end_line": 1794
+        },
+        ".Q.prf0": {
+            "qname": ".Q.prf0",
+            "path": "ref/dotq",
+            "anchor": "prf0-code-profiler",
+            "kind": "namespace",
+            "start_line": 1794,
+            "end_line": 1819
+        },
+        ".Q.pt": {
+            "qname": ".Q.pt",
+            "path": "ref/dotq",
+            "anchor": "pt-partitioned-tables",
+            "kind": "namespace",
+            "start_line": 1825,
+            "end_line": 1833
+        },
+        ".Q.pv": {
+            "qname": ".Q.pv",
+            "path": "ref/dotq",
+            "anchor": "pv-modified-partition-values",
+            "kind": "namespace",
+            "start_line": 1833,
+            "end_line": 1846
+        },
+        ".Q.qp": {
+            "qname": ".Q.qp",
+            "path": "ref/dotq",
+            "anchor": "qp-is-partitioned",
+            "kind": "namespace",
+            "start_line": 1869,
+            "end_line": 1896
+        },
+        ".Q.qt": {
+            "qname": ".Q.qt",
+            "path": "ref/dotq",
+            "anchor": "qt-is-table",
+            "kind": "namespace",
+            "start_line": 1896,
+            "end_line": 1904
+        },
+        ".Q.res": {
+            "qname": ".Q.res",
+            "path": "ref/dotq",
+            "anchor": "res-keywords",
+            "kind": "namespace",
+            "start_line": 1904,
+            "end_line": 1919
+        },
+        ".Q.rp": {
+            "qname": ".Q.rp",
+            "path": "ref/dotq",
+            "anchor": "rp-resolve-path",
+            "kind": "namespace",
+            "start_line": 1819,
+            "end_line": 1825
+        },
+        ".Q.s": {
+            "qname": ".Q.s",
+            "path": "ref/dotq",
+            "anchor": "s-plain-text",
+            "kind": "namespace",
+            "start_line": 1919,
+            "end_line": 1934
+        },
+        ".Q.s1": {
+            "qname": ".Q.s1",
+            "path": "ref/dotq",
+            "anchor": "s1-string-representation",
+            "kind": "namespace",
+            "start_line": 1934,
+            "end_line": 1945
+        },
+        ".Q.sbt": {
+            "qname": ".Q.sbt",
+            "path": "ref/dotq",
+            "anchor": "sbt-string-backtrace",
+            "kind": "namespace",
+            "start_line": 1945,
+            "end_line": 1957
+        },
+        ".Q.sha1": {
+            "qname": ".Q.sha1",
+            "path": "ref/dotq",
+            "anchor": "sha1-sha-1-encode",
+            "kind": "namespace",
+            "start_line": 1957,
+            "end_line": 1972
+        },
+        ".Q.t": {
+            "qname": ".Q.t",
+            "path": "ref/dotq",
+            "anchor": "t-type-letters",
+            "kind": "namespace",
+            "start_line": 1972,
+            "end_line": 1987
+        },
+        ".Q.trp": {
+            "qname": ".Q.trp",
+            "path": "ref/dotq",
+            "anchor": "trp-extend-trap-at",
+            "kind": "namespace",
+            "start_line": 1987,
+            "end_line": 2055
+        },
+        ".Q.trpd": {
+            "qname": ".Q.trpd",
+            "path": "ref/dotq",
+            "anchor": "trpd-extend-trap",
+            "kind": "namespace",
+            "start_line": 2055,
+            "end_line": 2096
+        },
+        ".Q.ts": {
+            "qname": ".Q.ts",
+            "path": "ref/dotq",
+            "anchor": "ts-time-and-space",
+            "kind": "namespace",
+            "start_line": 2096,
+            "end_line": 2123
+        },
+        ".Q.ty": {
+            "qname": ".Q.ty",
+            "path": "ref/dotq",
+            "anchor": "ty-type",
+            "kind": "namespace",
+            "start_line": 2123,
+            "end_line": 2153
+        },
+        ".Q.u": {
+            "qname": ".Q.u",
+            "path": "ref/dotq",
+            "anchor": "u-date-based",
+            "kind": "namespace",
+            "start_line": 2153,
+            "end_line": 2162
+        },
+        ".Q.v": {
+            "qname": ".Q.v",
+            "path": "ref/dotq",
+            "anchor": "v-value",
+            "kind": "namespace",
+            "start_line": 2175,
+            "end_line": 2187
+        },
+        ".Q.view": {
+            "qname": ".Q.view",
+            "path": "ref/dotq",
+            "anchor": "view-subview",
+            "kind": "namespace",
+            "start_line": 2187,
+            "end_line": 2208
+        },
+        ".Q.vp": {
+            "qname": ".Q.vp",
+            "path": "ref/dotq",
+            "anchor": "vp-missing-partitions",
+            "kind": "namespace",
+            "start_line": 2208,
+            "end_line": 2236
+        },
+        ".Q.w": {
+            "qname": ".Q.w",
+            "path": "ref/dotq",
+            "anchor": "w-memory-stats",
+            "kind": "namespace",
+            "start_line": 2236,
+            "end_line": 2263
+        },
+        ".Q.x": {
+            "qname": ".Q.x",
+            "path": "ref/dotq",
+            "anchor": "x-non-command-parameters",
+            "kind": "namespace",
+            "start_line": 2286,
+            "end_line": 2307
+        },
+        ".Q.x10": {
+            "qname": ".Q.x10",
+            "path": "ref/dotq",
+            "anchor": "x10-decode-binhex",
+            "kind": "namespace",
+            "start_line": 1403,
+            "end_line": 1407
+        },
+        ".Q.x12": {
+            "qname": ".Q.x12",
+            "path": "ref/dotq",
+            "anchor": "x12-decode-base-36",
+            "kind": "namespace",
+            "start_line": 1407,
+            "end_line": 1440
+        },
+        ".h": {
+            "qname": ".h",
+            "path": "ref/index",
+            "anchor": "h-doth-md-markup",
+            "kind": "namespace",
+            "start_line": 249,
+            "end_line": 253
+        },
+        ".h.HOME": {
+            "qname": ".h.HOME",
+            "path": "ref/doth",
+            "anchor": "h-home-webserver-root",
+            "kind": "namespace",
+            "start_line": 505,
+            "end_line": 511
+        },
+        ".h.br": {
+            "qname": ".h.br",
+            "path": "ref/doth",
+            "anchor": "h-br-linebreak",
+            "kind": "namespace",
+            "start_line": 51,
+            "end_line": 55
+        },
+        ".h.c0": {
+            "qname": ".h.c0",
+            "path": "ref/doth",
+            "anchor": "h-c0-web-color",
+            "kind": "namespace",
+            "start_line": 55,
+            "end_line": 59
+        },
+        ".h.c1": {
+            "qname": ".h.c1",
+            "path": "ref/doth",
+            "anchor": "h-c1-web-color",
+            "kind": "namespace",
+            "start_line": 59,
+            "end_line": 63
+        },
+        ".h.cd": {
+            "qname": ".h.cd",
+            "path": "ref/doth",
+            "anchor": "h-cd-csv-from-data",
+            "kind": "namespace",
+            "start_line": 63,
+            "end_line": 88
+        },
+        ".h.code": {
+            "qname": ".h.code",
+            "path": "ref/doth",
+            "anchor": "h-code-code-after-tab",
+            "kind": "namespace",
+            "start_line": 88,
+            "end_line": 108
+        },
+        ".h.d": {
+            "qname": ".h.d",
+            "path": "ref/doth",
+            "anchor": "h-d-delimiter",
+            "kind": "namespace",
+            "start_line": 108,
+            "end_line": 136
+        },
+        ".h.ed": {
+            "qname": ".h.ed",
+            "path": "ref/doth",
+            "anchor": "h-ed-excel-from-data",
+            "kind": "namespace",
+            "start_line": 136,
+            "end_line": 152
+        },
+        ".h.edsn": {
+            "qname": ".h.edsn",
+            "path": "ref/doth",
+            "anchor": "h-edsn-excel-from-tables",
+            "kind": "namespace",
+            "start_line": 152,
+            "end_line": 195
+        },
+        ".h.fram": {
+            "qname": ".h.fram",
+            "path": "ref/doth",
+            "anchor": "h-fram-frame",
+            "kind": "namespace",
+            "start_line": 195,
+            "end_line": 225
+        },
+        ".h.ha": {
+            "qname": ".h.ha",
+            "path": "ref/doth",
+            "anchor": "h-ha-anchor",
+            "kind": "namespace",
+            "start_line": 225,
+            "end_line": 240
+        },
+        ".h.hb": {
+            "qname": ".h.hb",
+            "path": "ref/doth",
+            "anchor": "h-hb-anchor-target",
+            "kind": "namespace",
+            "start_line": 240,
+            "end_line": 253
+        },
+        ".h.hc": {
+            "qname": ".h.hc",
+            "path": "ref/doth",
+            "anchor": "h-hc-escape-lt",
+            "kind": "namespace",
+            "start_line": 253,
+            "end_line": 266
+        },
+        ".h.he": {
+            "qname": ".h.he",
+            "path": "ref/doth",
+            "anchor": "h-he-http-400",
+            "kind": "namespace",
+            "start_line": 266,
+            "end_line": 279
+        },
+        ".h.hn": {
+            "qname": ".h.hn",
+            "path": "ref/doth",
+            "anchor": "h-hn-http-response",
+            "kind": "namespace",
+            "start_line": 279,
+            "end_line": 308
+        },
+        ".h.hp": {
+            "qname": ".h.hp",
+            "path": "ref/doth",
+            "anchor": "h-hp-http-response-pre",
+            "kind": "namespace",
+            "start_line": 308,
+            "end_line": 331
+        },
+        ".h.hr": {
+            "qname": ".h.hr",
+            "path": "ref/doth",
+            "anchor": "h-hr-horizontal-rule",
+            "kind": "namespace",
+            "start_line": 331,
+            "end_line": 344
+        },
+        ".h.ht": {
+            "qname": ".h.ht",
+            "path": "ref/doth",
+            "anchor": "h-ht-marqdown-to-html",
+            "kind": "namespace",
+            "start_line": 344,
+            "end_line": 367
+        },
+        ".h.hta": {
+            "qname": ".h.hta",
+            "path": "ref/doth",
+            "anchor": "h-hta-start-tag",
+            "kind": "namespace",
+            "start_line": 367,
+            "end_line": 380
+        },
+        ".h.htac": {
+            "qname": ".h.htac",
+            "path": "ref/doth",
+            "anchor": "h-htac-element",
+            "kind": "namespace",
+            "start_line": 380,
+            "end_line": 393
+        },
+        ".h.htc": {
+            "qname": ".h.htc",
+            "path": "ref/doth",
+            "anchor": "h-htc-element",
+            "kind": "namespace",
+            "start_line": 393,
+            "end_line": 406
+        },
+        ".h.html": {
+            "qname": ".h.html",
+            "path": "ref/doth",
+            "anchor": "h-html-document",
+            "kind": "namespace",
+            "start_line": 406,
+            "end_line": 432
+        },
+        ".h.http": {
+            "qname": ".h.http",
+            "path": "ref/doth",
+            "anchor": "h-http-hyperlinks",
+            "kind": "namespace",
+            "start_line": 432,
+            "end_line": 445
+        },
+        ".h.hu": {
+            "qname": ".h.hu",
+            "path": "ref/doth",
+            "anchor": "h-hu-uri-escape",
+            "kind": "namespace",
+            "start_line": 445,
+            "end_line": 458
+        },
+        ".h.hug": {
+            "qname": ".h.hug",
+            "path": "ref/doth",
+            "anchor": "h-hug-uri-map",
+            "kind": "namespace",
+            "start_line": 458,
+            "end_line": 466
+        },
+        ".h.hy": {
+            "qname": ".h.hy",
+            "path": "ref/doth",
+            "anchor": "h-hy-http-response-content",
+            "kind": "namespace",
+            "start_line": 466,
+            "end_line": 505
+        },
+        ".h.iso8601": {
+            "qname": ".h.iso8601",
+            "path": "ref/doth",
+            "anchor": "h-iso8601-iso-timestamp",
+            "kind": "namespace",
+            "start_line": 511,
+            "end_line": 524
+        },
+        ".h.jx": {
+            "qname": ".h.jx",
+            "path": "ref/doth",
+            "anchor": "h-jx-table",
+            "kind": "namespace",
+            "start_line": 524,
+            "end_line": 569
+        },
+        ".h.ka": {
+            "qname": ".h.ka",
+            "path": "ref/doth",
+            "anchor": "h-ka-http-keepalive",
+            "kind": "namespace",
+            "start_line": 569,
+            "end_line": 597
+        },
+        ".h.logo": {
+            "qname": ".h.logo",
+            "path": "ref/doth",
+            "anchor": "h-logo-kx-logo",
+            "kind": "namespace",
+            "start_line": 597,
+            "end_line": 601
+        },
+        ".h.nbr": {
+            "qname": ".h.nbr",
+            "path": "ref/doth",
+            "anchor": "h-nbr-no-break",
+            "kind": "namespace",
+            "start_line": 601,
+            "end_line": 614
+        },
+        ".h.pre": {
+            "qname": ".h.pre",
+            "path": "ref/doth",
+            "anchor": "h-pre-pre",
+            "kind": "namespace",
+            "start_line": 614,
+            "end_line": 627
+        },
+        ".h.sa": {
+            "qname": ".h.sa",
+            "path": "ref/doth",
+            "anchor": "h-sa-anchor-style",
+            "kind": "namespace",
+            "start_line": 627,
+            "end_line": 636
+        },
+        ".h.sb": {
+            "qname": ".h.sb",
+            "path": "ref/doth",
+            "anchor": "h-sb-body-style",
+            "kind": "namespace",
+            "start_line": 636,
+            "end_line": 645
+        },
+        ".h.sc": {
+            "qname": ".h.sc",
+            "path": "ref/doth",
+            "anchor": "h-sc-uri-safe",
+            "kind": "namespace",
+            "start_line": 645,
+            "end_line": 656
+        },
+        ".h.td": {
+            "qname": ".h.td",
+            "path": "ref/doth",
+            "anchor": "h-td-tsv-from-data",
+            "kind": "namespace",
+            "start_line": 656,
+            "end_line": 672
+        },
+        ".h.text": {
+            "qname": ".h.text",
+            "path": "ref/doth",
+            "anchor": "h-text-paragraphs",
+            "kind": "namespace",
+            "start_line": 672,
+            "end_line": 685
+        },
+        ".h.tx": {
+            "qname": ".h.tx",
+            "path": "ref/doth",
+            "anchor": "h-tx-filetypes",
+            "kind": "namespace",
+            "start_line": 685,
+            "end_line": 725
+        },
+        ".h.ty": {
+            "qname": ".h.ty",
+            "path": "ref/doth",
+            "anchor": "h-ty-mime-types",
+            "kind": "namespace",
+            "start_line": 725,
+            "end_line": 741
+        },
+        ".h.uh": {
+            "qname": ".h.uh",
+            "path": "ref/doth",
+            "anchor": "h-uh-uri-unescape",
+            "kind": "namespace",
+            "start_line": 741,
+            "end_line": 754
+        },
+        ".h.val": {
+            "qname": ".h.val",
+            "path": "ref/doth",
+            "anchor": "h-val-value",
+            "kind": "namespace",
+            "start_line": 754,
+            "end_line": 767
+        },
+        ".h.xd": {
+            "qname": ".h.xd",
+            "path": "ref/doth",
+            "anchor": "h-xd-xml",
+            "kind": "namespace",
+            "start_line": 767,
+            "end_line": 786
+        },
+        ".h.xmp": {
+            "qname": ".h.xmp",
+            "path": "ref/doth",
+            "anchor": "h-xmp-xmp",
+            "kind": "namespace",
+            "start_line": 786,
+            "end_line": 799
+        },
+        ".h.xs": {
+            "qname": ".h.xs",
+            "path": "ref/doth",
+            "anchor": "h-xs-xml-escape",
+            "kind": "namespace",
+            "start_line": 799,
+            "end_line": 812
+        },
+        ".h.xt": {
+            "qname": ".h.xt",
+            "path": "ref/doth",
+            "anchor": "h-xt-json",
+            "kind": "namespace",
+            "start_line": 812,
+            "end_line": 829
+        },
+        ".j": {
+            "qname": ".j",
+            "path": "ref/index",
+            "anchor": "j-dotj-md-json",
+            "kind": "namespace",
+            "start_line": 253,
+            "end_line": 257
+        },
+        ".j.j": {
+            "qname": ".j.j",
+            "path": "ref/dotj",
+            "anchor": "j-j-serialize",
+            "kind": "namespace",
+            "start_line": 23,
+            "end_line": 31
+        },
+        ".j.jd": {
+            "qname": ".j.jd",
+            "path": "ref/dotj",
+            "anchor": "j-jd-serialize-infinity",
+            "kind": "namespace",
+            "start_line": 31,
+            "end_line": 54
+        },
+        ".j.k": {
+            "qname": ".j.k",
+            "path": "ref/dotj",
+            "anchor": "j-k-deserialize",
+            "kind": "namespace",
+            "start_line": 54,
+            "end_line": 92
+        },
+        ".m": {
+            "qname": ".m",
+            "path": "ref/index",
+            "anchor": "m-dotm-md-modules",
+            "kind": "namespace",
+            "start_line": 257,
+            "end_line": 261
+        },
+        ".q": {
+            "qname": ".q",
+            "path": "basics/funsql",
+            "anchor": "explicit-definitions-in-q-are-shown-in-full",
+            "kind": "namespace",
+            "start_line": 729,
+            "end_line": 742
+        },
+        ".z": {
+            "qname": ".z",
+            "path": "ref/index",
+            "anchor": "z-dotz-md-environment-callbacks",
+            "kind": "namespace",
+            "start_line": 265,
+            "end_line": 268
+        },
+        ".z.D": {
+            "qname": ".z.D",
+            "path": "ref/dotz",
+            "anchor": "z-t-z-t-z-d-z-d-time-date-shortcuts",
+            "kind": "namespace",
+            "start_line": 1234,
+            "end_line": 1253
+        },
+        ".z.H": {
+            "qname": ".z.H",
+            "path": "ref/dotz",
+            "anchor": "z-h-active-sockets",
+            "kind": "namespace",
+            "start_line": 353,
+            "end_line": 366
+        },
+        ".z.K": {
+            "qname": ".z.K",
+            "path": "ref/dotz",
+            "anchor": "z-k-version",
+            "kind": "namespace",
+            "start_line": 409,
+            "end_line": 423
+        },
+        ".z.M": {
+            "qname": ".z.M",
+            "path": "ref/dotz",
+            "anchor": "z-m-module-namespace-name",
+            "kind": "namespace",
+            "start_line": 456,
+            "end_line": 477
+        },
+        ".z.N": {
+            "qname": ".z.N",
+            "path": "ref/dotz",
+            "anchor": "z-n-local-timespan",
+            "kind": "namespace",
+            "start_line": 504,
+            "end_line": 516
+        },
+        ".z.P": {
+            "qname": ".z.P",
+            "path": "ref/dotz",
+            "anchor": "z-p-local-timestamp",
+            "kind": "namespace",
+            "start_line": 555,
+            "end_line": 567
+        },
+        ".z.T": {
+            "qname": ".z.T",
+            "path": "ref/dotz",
+            "anchor": "z-t-z-t-z-d-z-d-time-date-shortcuts",
+            "kind": "namespace",
+            "start_line": 1234,
+            "end_line": 1253
+        },
+        ".z.W": {
+            "qname": ".z.W",
+            "path": "ref/dotz",
+            "anchor": "z-w-handles",
+            "kind": "namespace",
+            "start_line": 973,
+            "end_line": 1014
+        },
+        ".z.X": {
+            "qname": ".z.X",
+            "path": "ref/dotz",
+            "anchor": "z-x-raw-command-line",
+            "kind": "namespace",
+            "start_line": 1087,
+            "end_line": 1112
+        },
+        ".z.Z": {
+            "qname": ".z.Z",
+            "path": "ref/dotz",
+            "anchor": "z-z-local-datetime",
+            "kind": "namespace",
+            "start_line": 1129,
+            "end_line": 1144
+        },
+        ".z.a": {
+            "qname": ".z.a",
+            "path": "ref/dotz",
+            "anchor": "z-a-ip-address",
+            "kind": "namespace",
+            "start_line": 68,
+            "end_line": 114
+        },
+        ".z.ac": {
+            "qname": ".z.ac",
+            "path": "ref/dotz",
+            "anchor": "z-ac-http-auth",
+            "kind": "namespace",
+            "start_line": 114,
+            "end_line": 171
+        },
+        ".z.b": {
+            "qname": ".z.b",
+            "path": "ref/dotz",
+            "anchor": "z-b-view-dependencies",
+            "kind": "namespace",
+            "start_line": 171,
+            "end_line": 188
+        },
+        ".z.bm": {
+            "qname": ".z.bm",
+            "path": "ref/dotz",
+            "anchor": "z-bm-msg-validator",
+            "kind": "namespace",
+            "start_line": 188,
+            "end_line": 210
+        },
+        ".z.c": {
+            "qname": ".z.c",
+            "path": "ref/dotz",
+            "anchor": "z-c-cores",
+            "kind": "namespace",
+            "start_line": 210,
+            "end_line": 214
+        },
+        ".z.d": {
+            "qname": ".z.d",
+            "path": "ref/dotz",
+            "anchor": "z-t-z-t-z-d-z-d-time-date-shortcuts",
+            "kind": "namespace",
+            "start_line": 1234,
+            "end_line": 1253
+        },
+        ".z.e": {
+            "qname": ".z.e",
+            "path": "ref/dotz",
+            "anchor": "z-e-tls-connection-status",
+            "kind": "namespace",
+            "start_line": 214,
+            "end_line": 258
+        },
+        ".z.ex": {
+            "qname": ".z.ex",
+            "path": "ref/dotz",
+            "anchor": "z-ex-failed-primitive",
+            "kind": "namespace",
+            "start_line": 258,
+            "end_line": 266
+        },
+        ".z.exit": {
+            "qname": ".z.exit",
+            "path": "ref/dotz",
+            "anchor": "z-exit-action-on-exit",
+            "kind": "namespace",
+            "start_line": 266,
+            "end_line": 333
+        },
+        ".z.ey": {
+            "qname": ".z.ey",
+            "path": "ref/dotz",
+            "anchor": "z-ey-argument-to-failed-primitive",
+            "kind": "namespace",
+            "start_line": 333,
+            "end_line": 341
+        },
+        ".z.f": {
+            "qname": ".z.f",
+            "path": "ref/dotz",
+            "anchor": "z-f-file",
+            "kind": "namespace",
+            "start_line": 341,
+            "end_line": 353
+        },
+        ".z.h": {
+            "qname": ".z.h",
+            "path": "ref/dotz",
+            "anchor": "z-h-host",
+            "kind": "namespace",
+            "start_line": 366,
+            "end_line": 400
+        },
+        ".z.i": {
+            "qname": ".z.i",
+            "path": "ref/dotz",
+            "anchor": "z-i-pid",
+            "kind": "namespace",
+            "start_line": 400,
+            "end_line": 409
+        },
+        ".z.k": {
+            "qname": ".z.k",
+            "path": "ref/dotz",
+            "anchor": "z-k-release-date",
+            "kind": "namespace",
+            "start_line": 423,
+            "end_line": 437
+        },
+        ".z.l": {
+            "qname": ".z.l",
+            "path": "ref/dotz",
+            "anchor": "z-l-license",
+            "kind": "namespace",
+            "start_line": 437,
+            "end_line": 456
+        },
+        ".z.m": {
+            "qname": ".z.m",
+            "path": "ref/dotz",
+            "anchor": "z-m-module-namespace",
+            "kind": "namespace",
+            "start_line": 477,
+            "end_line": 504
+        },
+        ".z.n": {
+            "qname": ".z.n",
+            "path": "ref/dotz",
+            "anchor": "z-n-utc-timespan",
+            "kind": "namespace",
+            "start_line": 516,
+            "end_line": 532
+        },
+        ".z.o": {
+            "qname": ".z.o",
+            "path": "ref/dotz",
+            "anchor": "z-o-os-version",
+            "kind": "namespace",
+            "start_line": 532,
+            "end_line": 555
+        },
+        ".z.p": {
+            "qname": ".z.p",
+            "path": "ref/dotz",
+            "anchor": "z-p-utc-timestamp",
+            "kind": "namespace",
+            "start_line": 567,
+            "end_line": 582
+        },
+        ".z.pc": {
+            "qname": ".z.pc",
+            "path": "ref/dotz",
+            "anchor": "z-pc-close",
+            "kind": "namespace",
+            "start_line": 582,
+            "end_line": 614
+        },
+        ".z.pd": {
+            "qname": ".z.pd",
+            "path": "ref/dotz",
+            "anchor": "z-pd-peach-handles",
+            "kind": "namespace",
+            "start_line": 614,
+            "end_line": 659
+        },
+        ".z.pg": {
+            "qname": ".z.pg",
+            "path": "ref/dotz",
+            "anchor": "z-pg-get",
+            "kind": "namespace",
+            "start_line": 659,
+            "end_line": 673
+        },
+        ".z.ph": {
+            "qname": ".z.ph",
+            "path": "ref/dotz",
+            "anchor": "z-ph-http-get",
+            "kind": "namespace",
+            "start_line": 673,
+            "end_line": 702
+        },
+        ".z.pi": {
+            "qname": ".z.pi",
+            "path": "ref/dotz",
+            "anchor": "z-pi-input",
+            "kind": "namespace",
+            "start_line": 702,
+            "end_line": 732
+        },
+        ".z.pm": {
+            "qname": ".z.pm",
+            "path": "ref/dotz",
+            "anchor": "z-pm-http-methods",
+            "kind": "namespace",
+            "start_line": 732,
+            "end_line": 757
+        },
+        ".z.po": {
+            "qname": ".z.po",
+            "path": "ref/dotz",
+            "anchor": "z-po-open",
+            "kind": "namespace",
+            "start_line": 757,
+            "end_line": 774
+        },
+        ".z.pp": {
+            "qname": ".z.pp",
+            "path": "ref/dotz",
+            "anchor": "z-pp-http-post",
+            "kind": "namespace",
+            "start_line": 774,
+            "end_line": 800
+        },
+        ".z.pq": {
+            "qname": ".z.pq",
+            "path": "ref/dotz",
+            "anchor": "z-pq-qcon",
+            "kind": "namespace",
+            "start_line": 800,
+            "end_line": 812
+        },
+        ".z.ps": {
+            "qname": ".z.ps",
+            "path": "ref/dotz",
+            "anchor": "z-ps-set",
+            "kind": "namespace",
+            "start_line": 812,
+            "end_line": 836
+        },
+        ".z.pw": {
+            "qname": ".z.pw",
+            "path": "ref/dotz",
+            "anchor": "z-pw-validate-user",
+            "kind": "namespace",
+            "start_line": 836,
+            "end_line": 857
+        },
+        ".z.q": {
+            "qname": ".z.q",
+            "path": "ref/dotz",
+            "anchor": "z-q-quiet-mode",
+            "kind": "namespace",
+            "start_line": 857,
+            "end_line": 863
+        },
+        ".z.r": {
+            "qname": ".z.r",
+            "path": "ref/dotz",
+            "anchor": "z-r-blocked",
+            "kind": "namespace",
+            "start_line": 863,
+            "end_line": 875
+        },
+        ".z.s": {
+            "qname": ".z.s",
+            "path": "ref/dotz",
+            "anchor": "z-s-self",
+            "kind": "namespace",
+            "start_line": 875,
+            "end_line": 894
+        },
+        ".z.t": {
+            "qname": ".z.t",
+            "path": "ref/dotz",
+            "anchor": "z-t-z-t-z-d-z-d-time-date-shortcuts",
+            "kind": "namespace",
+            "start_line": 1234,
+            "end_line": 1253
+        },
+        ".z.ts": {
+            "qname": ".z.ts",
+            "path": "ref/dotz",
+            "anchor": "z-ts-timer",
+            "kind": "namespace",
+            "start_line": 894,
+            "end_line": 919
+        },
+        ".z.u": {
+            "qname": ".z.u",
+            "path": "ref/dotz",
+            "anchor": "z-u-user-id",
+            "kind": "namespace",
+            "start_line": 919,
+            "end_line": 947
+        },
+        ".z.vs": {
+            "qname": ".z.vs",
+            "path": "ref/dotz",
+            "anchor": "z-vs-value-set",
+            "kind": "namespace",
+            "start_line": 947,
+            "end_line": 973
+        },
+        ".z.w": {
+            "qname": ".z.w",
+            "path": "ref/dotz",
+            "anchor": "z-w-handle",
+            "kind": "namespace",
+            "start_line": 1014,
+            "end_line": 1028
+        },
+        ".z.wc": {
+            "qname": ".z.wc",
+            "path": "ref/dotz",
+            "anchor": "z-wc-websocket-close",
+            "kind": "namespace",
+            "start_line": 1028,
+            "end_line": 1050
+        },
+        ".z.wo": {
+            "qname": ".z.wo",
+            "path": "ref/dotz",
+            "anchor": "z-wo-websocket-open",
+            "kind": "namespace",
+            "start_line": 1050,
+            "end_line": 1070
+        },
+        ".z.ws": {
+            "qname": ".z.ws",
+            "path": "ref/dotz",
+            "anchor": "z-ws-websockets",
+            "kind": "namespace",
+            "start_line": 1070,
+            "end_line": 1087
+        },
+        ".z.x": {
+            "qname": ".z.x",
+            "path": "ref/dotz",
+            "anchor": "z-x-argv",
+            "kind": "namespace",
+            "start_line": 1112,
+            "end_line": 1129
+        },
+        ".z.z": {
+            "qname": ".z.z",
+            "path": "ref/dotz",
+            "anchor": "z-z-utc-datetime",
+            "kind": "namespace",
+            "start_line": 1144,
+            "end_line": 1159
+        },
+        ".z.zd": {
+            "qname": ".z.zd",
+            "path": "ref/dotz",
+            "anchor": "z-zd-compression-encryption-defaults",
+            "kind": "namespace",
+            "start_line": 1159,
+            "end_line": 1234
+        },
+        "/": {
+            "qname": "/",
+            "path": "ref/overloads",
+            "anchor": "slash",
+            "kind": "glyph"
+        },
+        "/:": {
+            "qname": "/:",
+            "path": "ref/maps",
+            "anchor": "each-left-and-each-right",
+            "kind": "glyph"
+        },
+        "0:": {
+            "qname": "0:",
+            "path": "ref/file-text",
+            "anchor": "",
+            "kind": "glyph"
+        },
+        "0N": {
+            "qname": "0N",
+            "path": "basics/datatypes",
+            "anchor": "infinities",
+            "kind": "datatype"
+        },
+        "0W": {
+            "qname": "0W",
+            "path": "basics/datatypes",
+            "anchor": "infinities",
+            "kind": "datatype"
+        },
+        "0n": {
+            "qname": "0n",
+            "path": "basics/datatypes",
+            "anchor": "infinities",
+            "kind": "datatype"
+        },
+        "0w": {
+            "qname": "0w",
+            "path": "basics/datatypes",
+            "anchor": "infinities",
+            "kind": "datatype"
+        },
+        "1:": {
+            "qname": "1:",
+            "path": "ref/file-binary",
+            "anchor": "",
+            "kind": "glyph"
+        },
+        "2:": {
+            "qname": "2:",
+            "path": "ref/dynamic-load",
+            "anchor": "",
+            "kind": "glyph"
+        },
+        ":": {
+            "qname": ":",
+            "path": "ref/assign",
+            "anchor": "",
+            "kind": "glyph"
+        },
+        "::": {
+            "qname": "::",
+            "path": "ref/identity",
+            "anchor": "identity",
+            "kind": "glyph",
+            "start_line": 14,
+            "end_line": 74
+        },
+        "<": {
+            "qname": "<",
+            "path": "ref/less-than",
+            "anchor": "",
+            "kind": "glyph"
+        },
+        "<:": {
+            "qname": "<:",
+            "path": "ref/assign",
+            "anchor": "assign-through-operator",
+            "kind": "glyph"
+        },
+        "<>": {
+            "qname": "<>",
+            "path": "ref/not-equal",
+            "anchor": "",
+            "kind": "glyph"
+        },
+        "=": {
+            "qname": "=",
+            "path": "ref/equal",
+            "anchor": "",
+            "kind": "glyph"
+        },
+        "=:": {
+            "qname": "=:",
+            "path": "ref/assign",
+            "anchor": "assign-through-operator",
+            "kind": "glyph"
+        },
+        ">": {
+            "qname": ">",
+            "path": "ref/greater-than",
+            "anchor": "",
+            "kind": "glyph"
+        },
+        ">:": {
+            "qname": ">:",
+            "path": "ref/assign",
+            "anchor": "assign-through-operator",
+            "kind": "glyph"
+        },
+        "?": {
+            "qname": "?",
+            "path": "ref/find",
+            "anchor": "",
+            "kind": "glyph"
+        },
+        "?:": {
+            "qname": "?:",
+            "path": "ref/assign",
+            "anchor": "assign-through-operator",
+            "kind": "glyph"
+        },
+        "?[]": {
+            "qname": "?[]",
+            "path": "ref/vector-conditional",
+            "anchor": "",
+            "kind": "glyph"
+        },
+        "@": {
+            "qname": "@",
+            "path": "ref/apply",
+            "anchor": "apply-at-index-at",
+            "kind": "glyph"
+        },
+        "@:": {
+            "qname": "@:",
+            "path": "ref/assign",
+            "anchor": "assign-through-operator",
+            "kind": "glyph"
+        },
+        "\\": {
+            "qname": "\\",
+            "path": "ref/overloads",
+            "anchor": "backslash",
+            "kind": "glyph"
+        },
+        "\\1": {
+            "qname": "\\1",
+            "path": "basics/syscmds",
+            "anchor": "1-2-redirect",
+            "kind": "system-command",
+            "start_line": 972,
+            "end_line": 1006
+        },
+        "\\2": {
+            "qname": "\\2",
+            "path": "basics/syscmds",
+            "anchor": "1-2-redirect",
+            "kind": "system-command",
+            "start_line": 972,
+            "end_line": 1006
+        },
+        "\\:": {
+            "qname": "\\:",
+            "path": "ref/maps",
+            "anchor": "each-left-and-each-right",
+            "kind": "glyph"
+        },
+        "\\B": {
+            "qname": "\\B",
+            "path": "basics/syscmds",
+            "anchor": "b-pending-views",
+            "kind": "system-command",
+            "start_line": 109,
+            "end_line": 135
+        },
+        "\\C": {
+            "qname": "\\C",
+            "path": "basics/syscmds",
+            "anchor": "c-http-size",
+            "kind": "system-command",
+            "start_line": 181,
+            "end_line": 198
+        },
+        "\\E": {
+            "qname": "\\E",
+            "path": "basics/syscmds",
+            "anchor": "e-tls-server-mode",
+            "kind": "system-command",
+            "start_line": 274,
+            "end_line": 292
+        },
+        "\\P": {
+            "qname": "\\P",
+            "path": "basics/syscmds",
+            "anchor": "p-precision",
+            "kind": "system-command",
+            "start_line": 533,
+            "end_line": 591
+        },
+        "\\S": {
+            "qname": "\\S",
+            "path": "basics/syscmds",
+            "anchor": "s-random-seed",
+            "kind": "system-command",
+            "start_line": 655,
+            "end_line": 708
+        },
+        "\\T": {
+            "qname": "\\T",
+            "path": "basics/syscmds",
+            "anchor": "t-timeout",
+            "kind": "system-command",
+            "start_line": 753,
+            "end_line": 768
+        },
+        "\\W": {
+            "qname": "\\W",
+            "path": "basics/syscmds",
+            "anchor": "w-week-offset",
+            "kind": "system-command",
+            "start_line": 914,
+            "end_line": 927
+        },
+        "\\\\": {
+            "qname": "\\\\",
+            "path": "basics/syscmds",
+            "anchor": "quit",
+            "kind": "system-command",
+            "start_line": 1109,
+            "end_line": 1128
+        },
+        "\\_": {
+            "qname": "\\_",
+            "path": "basics/syscmds",
+            "anchor": "hide-q-code",
+            "kind": "system-command",
+            "start_line": 1006,
+            "end_line": 1053
+        },
+        "\\a": {
+            "qname": "\\a",
+            "path": "basics/syscmds",
+            "anchor": "a-tables",
+            "kind": "system-command",
+            "start_line": 45,
+            "end_line": 84
+        },
+        "\\b": {
+            "qname": "\\b",
+            "path": "basics/syscmds",
+            "anchor": "b-views",
+            "kind": "system-command",
+            "start_line": 84,
+            "end_line": 109
+        },
+        "\\c": {
+            "qname": "\\c",
+            "path": "basics/syscmds",
+            "anchor": "c-console-size",
+            "kind": "system-command",
+            "start_line": 135,
+            "end_line": 181
+        },
+        "\\cd": {
+            "qname": "\\cd",
+            "path": "basics/syscmds",
+            "anchor": "cd-change-directory",
+            "kind": "system-command",
+            "start_line": 198,
+            "end_line": 220
+        },
+        "\\d": {
+            "qname": "\\d",
+            "path": "basics/syscmds",
+            "anchor": "d-directory",
+            "kind": "system-command",
+            "start_line": 220,
+            "end_line": 253
+        },
+        "\\e": {
+            "qname": "\\e",
+            "path": "basics/syscmds",
+            "anchor": "e-error-trap-clients",
+            "kind": "system-command",
+            "start_line": 253,
+            "end_line": 274
+        },
+        "\\f": {
+            "qname": "\\f",
+            "path": "basics/syscmds",
+            "anchor": "f-functions",
+            "kind": "system-command",
+            "start_line": 292,
+            "end_line": 314
+        },
+        "\\g": {
+            "qname": "\\g",
+            "path": "basics/syscmds",
+            "anchor": "g-garbage-collection-mode",
+            "kind": "system-command",
+            "start_line": 314,
+            "end_line": 428
+        },
+        "\\l": {
+            "qname": "\\l",
+            "path": "basics/syscmds",
+            "anchor": "l-load-file-or-directory",
+            "kind": "system-command",
+            "start_line": 428,
+            "end_line": 476
+        },
+        "\\o": {
+            "qname": "\\o",
+            "path": "basics/syscmds",
+            "anchor": "o-offset-from-utc",
+            "kind": "system-command",
+            "start_line": 476,
+            "end_line": 507
+        },
+        "\\p": {
+            "qname": "\\p",
+            "path": "basics/syscmds",
+            "anchor": "p-listening-port",
+            "kind": "system-command",
+            "start_line": 507,
+            "end_line": 533
+        },
+        "\\r": {
+            "qname": "\\r",
+            "path": "basics/syscmds",
+            "anchor": "r-replication-primary",
+            "kind": "system-command",
+            "start_line": 591,
+            "end_line": 606
+        },
+        "\\s": {
+            "qname": "\\s",
+            "path": "basics/syscmds",
+            "anchor": "s-number-of-secondary-threads",
+            "kind": "system-command",
+            "start_line": 617,
+            "end_line": 655
+        },
+        "\\t": {
+            "qname": "\\t",
+            "path": "basics/syscmds",
+            "anchor": "t-timer",
+            "kind": "system-command",
+            "start_line": 708,
+            "end_line": 753
+        },
+        "\\ts": {
+            "qname": "\\ts",
+            "path": "basics/syscmds",
+            "anchor": "ts-time-and-space",
+            "kind": "system-command",
+            "start_line": 768,
+            "end_line": 787
+        },
+        "\\u": {
+            "qname": "\\u",
+            "path": "basics/syscmds",
+            "anchor": "u-reload-user-password-file",
+            "kind": "system-command",
+            "start_line": 787,
+            "end_line": 799
+        },
+        "\\v": {
+            "qname": "\\v",
+            "path": "basics/syscmds",
+            "anchor": "v-variables",
+            "kind": "system-command",
+            "start_line": 799,
+            "end_line": 829
+        },
+        "\\w": {
+            "qname": "\\w",
+            "path": "basics/syscmds",
+            "anchor": "w-workspace",
+            "kind": "system-command",
+            "start_line": 829,
+            "end_line": 914
+        },
+        "\\x": {
+            "qname": "\\x",
+            "path": "basics/syscmds",
+            "anchor": "x-expunge",
+            "kind": "system-command",
+            "start_line": 927,
+            "end_line": 949
+        },
+        "\\z": {
+            "qname": "\\z",
+            "path": "basics/syscmds",
+            "anchor": "z-date-parsing",
+            "kind": "system-command",
+            "start_line": 949,
+            "end_line": 972
+        },
+        "^": {
+            "qname": "^",
+            "path": "ref/fill",
+            "anchor": "",
+            "kind": "glyph"
+        },
+        "^:": {
+            "qname": "^:",
+            "path": "ref/assign",
+            "anchor": "assign-through-operator",
+            "kind": "glyph"
+        },
+        "_": {
+            "qname": "_",
+            "path": "ref/cut",
+            "anchor": "",
+            "kind": "glyph"
+        },
+        "_:": {
+            "qname": "_:",
+            "path": "ref/assign",
+            "anchor": "assign-through-operator",
+            "kind": "glyph"
+        },
+        "abs": {
+            "qname": "abs",
+            "path": "ref/abs",
+            "anchor": "",
+            "kind": "page"
+        },
+        "accumulators": {
+            "qname": "accumulators",
+            "path": "ref/accumulators",
+            "anchor": "",
+            "kind": "page"
+        },
+        "add": {
+            "qname": "add",
+            "path": "ref/add",
+            "anchor": "",
+            "kind": "page"
+        },
+        "aj": {
+            "qname": "aj",
+            "path": "ref/aj",
+            "anchor": "aj-aj0",
+            "kind": "keyword",
+            "start_line": 60,
+            "end_line": 69
+        },
+        "aj0": {
+            "qname": "aj0",
+            "path": "ref/aj",
+            "anchor": "aj-aj0",
+            "kind": "keyword",
+            "start_line": 60,
+            "end_line": 69
+        },
+        "ajf": {
+            "qname": "ajf",
+            "path": "ref/aj",
+            "anchor": "ajf-ajf0",
+            "kind": "keyword",
+            "start_line": 69,
+            "end_line": 81
+        },
+        "ajf0": {
+            "qname": "ajf0",
+            "path": "ref/aj",
+            "anchor": "ajf-ajf0",
+            "kind": "keyword",
+            "start_line": 69,
+            "end_line": 81
+        },
+        "all": {
+            "qname": "all",
+            "path": "ref/all-any",
+            "anchor": "all",
+            "kind": "keyword",
+            "start_line": 7,
+            "end_line": 60
+        },
+        "all-any": {
+            "qname": "all-any",
+            "path": "ref/all-any",
+            "anchor": "",
+            "kind": "page"
+        },
+        "amend": {
+            "qname": "amend",
+            "path": "ref/amend",
+            "anchor": "",
+            "kind": "page"
+        },
+        "and": {
+            "qname": "and",
+            "path": "ref/and",
+            "anchor": "",
+            "kind": "page"
+        },
+        "any": {
+            "qname": "any",
+            "path": "ref/all-any",
+            "anchor": "any",
+            "kind": "keyword",
+            "start_line": 60,
+            "end_line": 119
+        },
+        "application": {
+            "qname": "application",
+            "path": "basics/application",
+            "anchor": "",
+            "kind": "page"
+        },
+        "apply": {
+            "qname": "apply",
+            "path": "ref/apply",
+            "anchor": "",
+            "kind": "page"
+        },
+        "asc": {
+            "qname": "asc",
+            "path": "ref/asc",
+            "anchor": "asc",
+            "kind": "keyword",
+            "start_line": 9,
+            "end_line": 132
+        },
+        "asof": {
+            "qname": "asof",
+            "path": "ref/asof",
+            "anchor": "",
+            "kind": "page"
+        },
+        "assign": {
+            "qname": "assign",
+            "path": "ref/assign",
+            "anchor": "",
+            "kind": "page"
+        },
+        "atomic": {
+            "qname": "atomic",
+            "path": "basics/atomic",
+            "anchor": "",
+            "kind": "page"
+        },
+        "attr": {
+            "qname": "attr",
+            "path": "ref/attr",
+            "anchor": "",
+            "kind": "page"
+        },
+        "avg": {
+            "qname": "avg",
+            "path": "ref/avg",
+            "anchor": "avg",
+            "kind": "keyword",
+            "start_line": 9,
+            "end_line": 58
+        },
+        "avgs": {
+            "qname": "avgs",
+            "path": "ref/avg",
+            "anchor": "avgs",
+            "kind": "keyword",
+            "start_line": 58,
+            "end_line": 81
+        },
+        "bin": {
+            "qname": "bin",
+            "path": "ref/bin",
+            "anchor": "",
+            "kind": "page"
+        },
+        "boolean": {
+            "qname": "boolean",
+            "path": "basics/datatypes",
+            "anchor": "basic-types",
+            "kind": "datatype"
+        },
+        "by": {
+            "qname": "by",
+            "path": "ref/select",
+            "anchor": "by-phrase",
+            "kind": "qsql"
+        },
+        "by-topic": {
+            "qname": "by-topic",
+            "path": "basics/by-topic",
+            "anchor": "",
+            "kind": "page"
+        },
+        "byte": {
+            "qname": "byte",
+            "path": "basics/datatypes",
+            "anchor": "basic-types",
+            "kind": "datatype"
+        },
+        "cast": {
+            "qname": "cast",
+            "path": "ref/cast",
+            "anchor": "",
+            "kind": "page"
+        },
+        "ceiling": {
+            "qname": "ceiling",
+            "path": "ref/ceiling",
+            "anchor": "",
+            "kind": "page"
+        },
+        "char": {
+            "qname": "char",
+            "path": "basics/datatypes",
+            "anchor": "strings",
+            "kind": "datatype"
+        },
+        "cmdline": {
+            "qname": "cmdline",
+            "path": "basics/cmdline",
+            "anchor": "",
+            "kind": "page"
+        },
+        "coalesce": {
+            "qname": "coalesce",
+            "path": "ref/coalesce",
+            "anchor": "",
+            "kind": "page"
+        },
+        "cols": {
+            "qname": "cols",
+            "path": "ref/cols",
+            "anchor": "cols",
+            "kind": "keyword",
+            "start_line": 9,
+            "end_line": 33
+        },
+        "comparison": {
+            "qname": "comparison",
+            "path": "basics/comparison",
+            "anchor": "",
+            "kind": "page"
+        },
+        "compose": {
+            "qname": "compose",
+            "path": "ref/compose",
+            "anchor": "",
+            "kind": "page"
+        },
+        "cond": {
+            "qname": "cond",
+            "path": "ref/cond",
+            "anchor": "",
+            "kind": "page"
+        },
+        "conformable": {
+            "qname": "conformable",
+            "path": "basics/conformable",
+            "anchor": "",
+            "kind": "page"
+        },
+        "control": {
+            "qname": "control",
+            "path": "basics/control",
+            "anchor": "",
+            "kind": "page"
+        },
+        "cor": {
+            "qname": "cor",
+            "path": "ref/cor",
+            "anchor": "",
+            "kind": "page"
+        },
+        "cos": {
+            "qname": "cos",
+            "path": "ref/cos",
+            "anchor": "",
+            "kind": "page"
+        },
+        "count": {
+            "qname": "count",
+            "path": "ref/count",
+            "anchor": "count",
+            "kind": "keyword",
+            "start_line": 9,
+            "end_line": 65
+        },
+        "cov": {
+            "qname": "cov",
+            "path": "ref/cov",
+            "anchor": "cov",
+            "kind": "keyword",
+            "start_line": 8,
+            "end_line": 57
+        },
+        "cross": {
+            "qname": "cross",
+            "path": "ref/maps",
+            "anchor": "left-right-cross",
+            "kind": "keyword",
+            "start_line": 123,
+            "end_line": 165
+        },
+        "csv": {
+            "qname": "csv",
+            "path": "ref/csv",
+            "anchor": "",
+            "kind": "page"
+        },
+        "cut": {
+            "qname": "cut",
+            "path": "ref/cut",
+            "anchor": "cut-keyword",
+            "kind": "keyword",
+            "start_line": 62,
+            "end_line": 89
+        },
+        "datatypes": {
+            "qname": "datatypes",
+            "path": "basics/datatypes",
+            "anchor": "",
+            "kind": "page"
+        },
+        "date": {
+            "qname": "date",
+            "path": "basics/datatypes",
+            "anchor": "temporal",
+            "kind": "datatype"
+        },
+        "datetime": {
+            "qname": "datetime",
+            "path": "basics/datatypes",
+            "anchor": "temporal",
+            "kind": "datatype"
+        },
+        "deal": {
+            "qname": "deal",
+            "path": "ref/deal",
+            "anchor": "",
+            "kind": "page"
+        },
+        "debug": {
+            "qname": "debug",
+            "path": "basics/debug",
+            "anchor": "",
+            "kind": "page"
+        },
+        "delete": {
+            "qname": "delete",
+            "path": "ref/delete",
+            "anchor": "",
+            "kind": "qsql"
+        },
+        "deltas": {
+            "qname": "deltas",
+            "path": "basics/comparison",
+            "anchor": "deltas",
+            "kind": "keyword",
+            "start_line": 227,
+            "end_line": 232
+        },
+        "desc": {
+            "qname": "desc",
+            "path": "ref/desc",
+            "anchor": "desc",
+            "kind": "keyword",
+            "start_line": 10,
+            "end_line": 67
+        },
+        "dev": {
+            "qname": "dev",
+            "path": "ref/dev",
+            "anchor": "dev",
+            "kind": "keyword",
+            "start_line": 9,
+            "end_line": 51
+        },
+        "dict": {
+            "qname": "dict",
+            "path": "ref/dict",
+            "anchor": "",
+            "kind": "page"
+        },
+        "dictionary": {
+            "qname": "dictionary",
+            "path": "basics/datatypes",
+            "anchor": "dictionary-and-table",
+            "kind": "datatype"
+        },
+        "dictsandtables": {
+            "qname": "dictsandtables",
+            "path": "basics/dictsandtables",
+            "anchor": "",
+            "kind": "page"
+        },
+        "differ": {
+            "qname": "differ",
+            "path": "basics/comparison",
+            "anchor": "differ",
+            "kind": "keyword",
+            "start_line": 232,
+            "end_line": 237
+        },
+        "display": {
+            "qname": "display",
+            "path": "ref/display",
+            "anchor": "",
+            "kind": "page"
+        },
+        "distinct": {
+            "qname": "distinct",
+            "path": "ref/select",
+            "anchor": "select-distinct",
+            "kind": "qsql"
+        },
+        "div": {
+            "qname": "div",
+            "path": "ref/div",
+            "anchor": "",
+            "kind": "page"
+        },
+        "divide": {
+            "qname": "divide",
+            "path": "ref/divide",
+            "anchor": "",
+            "kind": "page"
+        },
+        "do": {
+            "qname": "do",
+            "path": "ref/do",
+            "anchor": "",
+            "kind": "page"
+        },
+        "doth": {
+            "qname": "doth",
+            "path": "ref/doth",
+            "anchor": "",
+            "kind": "page"
+        },
+        "dotj": {
+            "qname": "dotj",
+            "path": "ref/dotj",
+            "anchor": "",
+            "kind": "page"
+        },
+        "dotm": {
+            "qname": "dotm",
+            "path": "ref/dotm",
+            "anchor": "",
+            "kind": "page"
+        },
+        "dotq": {
+            "qname": "dotq",
+            "path": "ref/dotq",
+            "anchor": "",
+            "kind": "page"
+        },
+        "dotz": {
+            "qname": "dotz",
+            "path": "ref/dotz",
+            "anchor": "",
+            "kind": "page"
+        },
+        "drop": {
+            "qname": "drop",
+            "path": "ref/drop",
+            "anchor": "",
+            "kind": "page"
+        },
+        "dsave": {
+            "qname": "dsave",
+            "path": "ref/dsave",
+            "anchor": "",
+            "kind": "page"
+        },
+        "dynamic-load": {
+            "qname": "dynamic-load",
+            "path": "ref/dynamic-load",
+            "anchor": "",
+            "kind": "page"
+        },
+        "e": {
+            "qname": "e",
+            "path": "ref/apply",
+            "anchor": "when-e-is-not-a-function",
+            "kind": "keyword",
+            "start_line": 424,
+            "end_line": 457
+        },
+        "each": {
+            "qname": "each",
+            "path": "ref/maps",
+            "anchor": "each-keyword",
+            "kind": "keyword",
+            "start_line": 68,
+            "end_line": 82
+        },
+        "each-left": {
+            "qname": "each-left",
+            "path": "ref/maps",
+            "anchor": "each-left-and-each-right",
+            "kind": "alias"
+        },
+        "each-parallel": {
+            "qname": "each-parallel",
+            "path": "ref/maps",
+            "anchor": "each-parallel",
+            "kind": "alias"
+        },
+        "each-prior": {
+            "qname": "each-prior",
+            "path": "ref/maps",
+            "anchor": "each-prior",
+            "kind": "alias"
+        },
+        "each-right": {
+            "qname": "each-right",
+            "path": "ref/maps",
+            "anchor": "each-left-and-each-right",
+            "kind": "alias"
+        },
+        "ej": {
+            "qname": "ej",
+            "path": "ref/ej",
+            "anchor": "",
+            "kind": "page"
+        },
+        "ema": {
+            "qname": "ema",
+            "path": "ref/ema",
+            "anchor": "",
+            "kind": "page"
+        },
+        "enkey": {
+            "qname": "enkey",
+            "path": "ref/enkey",
+            "anchor": "",
+            "kind": "page"
+        },
+        "enlist": {
+            "qname": "enlist",
+            "path": "ref/enlist",
+            "anchor": "",
+            "kind": "page"
+        },
+        "enum-extend": {
+            "qname": "enum-extend",
+            "path": "ref/enum-extend",
+            "anchor": "",
+            "kind": "page"
+        },
+        "enumerate": {
+            "qname": "enumerate",
+            "path": "ref/enumerate",
+            "anchor": "",
+            "kind": "page"
+        },
+        "enumeration": {
+            "qname": "enumeration",
+            "path": "ref/enumeration",
+            "anchor": "",
+            "kind": "page"
+        },
+        "enumerations": {
+            "qname": "enumerations",
+            "path": "basics/enumerations",
+            "anchor": "",
+            "kind": "page"
+        },
+        "equal": {
+            "qname": "equal",
+            "path": "ref/equal",
+            "anchor": "",
+            "kind": "page"
+        },
+        "error--w-abort": {
+            "qname": "error--w-abort",
+            "path": "basics/errors",
+            "anchor": "-w-abort",
+            "kind": "alias"
+        },
+        "error--w-init-via-cmd-line": {
+            "qname": "error--w-init-via-cmd-line",
+            "path": "basics/errors",
+            "anchor": "-w-init-via-cmd-line",
+            "kind": "alias"
+        },
+        "error-IJS": {
+            "qname": "error-IJS",
+            "path": "basics/errors",
+            "anchor": "IJS",
+            "kind": "alias"
+        },
+        "error-PKCS5_PBKDF2_HMAC": {
+            "qname": "error-PKCS5_PBKDF2_HMAC",
+            "path": "basics/errors",
+            "anchor": "PKCS5_PBKDF2_HMAC",
+            "kind": "alias"
+        },
+        "error-Q7": {
+            "qname": "error-Q7",
+            "path": "basics/errors",
+            "anchor": "Q7",
+            "kind": "alias"
+        },
+        "error-TLS-not-enabled": {
+            "qname": "error-TLS-not-enabled",
+            "path": "basics/errors",
+            "anchor": "TLS-not-enabled",
+            "kind": "alias"
+        },
+        "error-XXX": {
+            "qname": "error-XXX",
+            "path": "basics/errors",
+            "anchor": "XXX",
+            "kind": "alias"
+        },
+        "error-\\l": {
+            "qname": "error-\\l",
+            "path": "basics/errors",
+            "anchor": "\\l",
+            "kind": "alias"
+        },
+        "error-access": {
+            "qname": "error-access",
+            "path": "basics/errors",
+            "anchor": "access",
+            "kind": "alias"
+        },
+        "error-accp": {
+            "qname": "error-accp",
+            "path": "basics/errors",
+            "anchor": "accp",
+            "kind": "alias"
+        },
+        "error-adict": {
+            "qname": "error-adict",
+            "path": "basics/errors",
+            "anchor": "adict",
+            "kind": "alias"
+        },
+        "error-arch": {
+            "qname": "error-arch",
+            "path": "basics/errors",
+            "anchor": "arch",
+            "kind": "alias"
+        },
+        "error-assign": {
+            "qname": "error-assign",
+            "path": "basics/errors",
+            "anchor": "assign",
+            "kind": "alias"
+        },
+        "error-bad-lambda": {
+            "qname": "error-bad-lambda",
+            "path": "basics/errors",
+            "anchor": "bad-lambda",
+            "kind": "alias"
+        },
+        "error-badmsg": {
+            "qname": "error-badmsg",
+            "path": "basics/errors",
+            "anchor": "badmsg",
+            "kind": "alias"
+        },
+        "error-badtail": {
+            "qname": "error-badtail",
+            "path": "basics/errors",
+            "anchor": "badtail",
+            "kind": "alias"
+        },
+        "error-binary-mismatch": {
+            "qname": "error-binary-mismatch",
+            "path": "basics/errors",
+            "anchor": "binary-mismatch",
+            "kind": "alias"
+        },
+        "error-can't": {
+            "qname": "error-can't",
+            "path": "basics/errors",
+            "anchor": "can't",
+            "kind": "alias"
+        },
+        "error-cast": {
+            "qname": "error-cast",
+            "path": "basics/errors",
+            "anchor": "cast",
+            "kind": "alias"
+        },
+        "error-close": {
+            "qname": "error-close",
+            "path": "basics/errors",
+            "anchor": "close",
+            "kind": "alias"
+        },
+        "error-con": {
+            "qname": "error-con",
+            "path": "basics/errors",
+            "anchor": "con",
+            "kind": "alias"
+        },
+        "error-cond": {
+            "qname": "error-cond",
+            "path": "basics/errors",
+            "anchor": "cond",
+            "kind": "alias"
+        },
+        "error-conn": {
+            "qname": "error-conn",
+            "path": "basics/errors",
+            "anchor": "conn",
+            "kind": "alias"
+        },
+        "error-could-not-initialize-ssl": {
+            "qname": "error-could-not-initialize-ssl",
+            "path": "basics/errors",
+            "anchor": "could-not-initialize-ssl",
+            "kind": "alias"
+        },
+        "error-d8": {
+            "qname": "error-d8",
+            "path": "basics/errors",
+            "anchor": "d8",
+            "kind": "alias"
+        },
+        "error-decompression-error-at-block-[b]-in": {
+            "qname": "error-decompression-error-at-block-[b]-in",
+            "path": "basics/errors",
+            "anchor": "decompression-error-at-block-[b]-in",
+            "kind": "alias"
+        },
+        "error-domain": {
+            "qname": "error-domain",
+            "path": "basics/errors",
+            "anchor": "domain",
+            "kind": "alias"
+        },
+        "error-dup": {
+            "qname": "error-dup",
+            "path": "basics/errors",
+            "anchor": "dup",
+            "kind": "alias"
+        },
+        "error-dup-names-for-cols/groups": {
+            "qname": "error-dup-names-for-cols/groups",
+            "path": "basics/errors",
+            "anchor": "dup-names-for-cols/groups",
+            "kind": "alias"
+        },
+        "error-elim": {
+            "qname": "error-elim",
+            "path": "basics/errors",
+            "anchor": "elim",
+            "kind": "alias"
+        },
+        "error-empty": {
+            "qname": "error-empty",
+            "path": "basics/errors",
+            "anchor": "empty",
+            "kind": "alias"
+        },
+        "error-enable-secondary-threads-via-cmd-line--s-only": {
+            "qname": "error-enable-secondary-threads-via-cmd-line--s-only",
+            "path": "basics/errors",
+            "anchor": "enable-secondary-threads-via-cmd-line--s-only",
+            "kind": "alias"
+        },
+        "error-encryption-lib-unavailable": {
+            "qname": "error-encryption-lib-unavailable",
+            "path": "basics/errors",
+            "anchor": "encryption-lib-unavailable",
+            "kind": "alias"
+        },
+        "error-expected-response": {
+            "qname": "error-expected-response",
+            "path": "basics/errors",
+            "anchor": "expected-response",
+            "kind": "alias"
+        },
+        "error-failed-to-load-TLS-certificates": {
+            "qname": "error-failed-to-load-TLS-certificates",
+            "path": "basics/errors",
+            "anchor": "failed-to-load-TLS-certificates",
+            "kind": "alias"
+        },
+        "error-from": {
+            "qname": "error-from",
+            "path": "basics/errors",
+            "anchor": "from",
+            "kind": "alias"
+        },
+        "error-hop": {
+            "qname": "error-hop",
+            "path": "basics/errors",
+            "anchor": "hop",
+            "kind": "alias"
+        },
+        "error-hwr": {
+            "qname": "error-hwr",
+            "path": "basics/errors",
+            "anchor": "hwr",
+            "kind": "alias"
+        },
+        "error-insert": {
+            "qname": "error-insert",
+            "path": "basics/errors",
+            "anchor": "insert",
+            "kind": "alias"
+        },
+        "error-invalid": {
+            "qname": "error-invalid",
+            "path": "basics/errors",
+            "anchor": "invalid",
+            "kind": "alias"
+        },
+        "error-invalid-password": {
+            "qname": "error-invalid-password",
+            "path": "basics/errors",
+            "anchor": "invalid-password",
+            "kind": "alias"
+        },
+        "error-length": {
+            "qname": "error-length",
+            "path": "basics/errors",
+            "anchor": "length",
+            "kind": "alias"
+        },
+        "error-limit": {
+            "qname": "error-limit",
+            "path": "basics/errors",
+            "anchor": "limit",
+            "kind": "alias"
+        },
+        "error-load": {
+            "qname": "error-load",
+            "path": "basics/errors",
+            "anchor": "load",
+            "kind": "alias"
+        },
+        "error-loop": {
+            "qname": "error-loop",
+            "path": "basics/errors",
+            "anchor": "loop",
+            "kind": "alias"
+        },
+        "error-main-thread-only": {
+            "qname": "error-main-thread-only",
+            "path": "basics/errors",
+            "anchor": "main-thread-only",
+            "kind": "alias"
+        },
+        "error-match": {
+            "qname": "error-match",
+            "path": "basics/errors",
+            "anchor": "match",
+            "kind": "alias"
+        },
+        "error-mismatch": {
+            "qname": "error-mismatch",
+            "path": "basics/errors",
+            "anchor": "mismatch",
+            "kind": "alias"
+        },
+        "error-mlim": {
+            "qname": "error-mlim",
+            "path": "basics/errors",
+            "anchor": "mlim",
+            "kind": "alias"
+        },
+        "error-mq": {
+            "qname": "error-mq",
+            "path": "basics/errors",
+            "anchor": "mq",
+            "kind": "alias"
+        },
+        "error-name-too-long": {
+            "qname": "error-name-too-long",
+            "path": "basics/errors",
+            "anchor": "name-too-long",
+            "kind": "alias"
+        },
+        "error-need-zlib-to-compress": {
+            "qname": "error-need-zlib-to-compress",
+            "path": "basics/errors",
+            "anchor": "need-zlib-to-compress",
+            "kind": "alias"
+        },
+        "error-no-append-to-zipped-enums": {
+            "qname": "error-no-append-to-zipped-enums",
+            "path": "basics/errors",
+            "anchor": "no-append-to-zipped-enums",
+            "kind": "alias"
+        },
+        "error-noamend": {
+            "qname": "error-noamend",
+            "path": "basics/errors",
+            "anchor": "noamend",
+            "kind": "alias"
+        },
+        "error-nosocket": {
+            "qname": "error-nosocket",
+            "path": "basics/errors",
+            "anchor": "nosocket",
+            "kind": "alias"
+        },
+        "error-noupdate": {
+            "qname": "error-noupdate",
+            "path": "basics/errors",
+            "anchor": "noupdate",
+            "kind": "alias"
+        },
+        "error-nyi": {
+            "qname": "error-nyi",
+            "path": "basics/errors",
+            "anchor": "nyi",
+            "kind": "alias"
+        },
+        "error-os": {
+            "qname": "error-os",
+            "path": "basics/errors",
+            "anchor": "os",
+            "kind": "alias"
+        },
+        "error-par": {
+            "qname": "error-par",
+            "path": "basics/errors",
+            "anchor": "par",
+            "kind": "alias"
+        },
+        "error-parse": {
+            "qname": "error-parse",
+            "path": "basics/errors",
+            "anchor": "parse",
+            "kind": "alias"
+        },
+        "error-part": {
+            "qname": "error-part",
+            "path": "basics/errors",
+            "anchor": "part",
+            "kind": "alias"
+        },
+        "error-path-too-long": {
+            "qname": "error-path-too-long",
+            "path": "basics/errors",
+            "anchor": "path-too-long",
+            "kind": "alias"
+        },
+        "error-pread": {
+            "qname": "error-pread",
+            "path": "basics/errors",
+            "anchor": "pread",
+            "kind": "alias"
+        },
+        "error-pwuid": {
+            "qname": "error-pwuid",
+            "path": "basics/errors",
+            "anchor": "pwuid",
+            "kind": "alias"
+        },
+        "error-rank": {
+            "qname": "error-rank",
+            "path": "basics/errors",
+            "anchor": "rank",
+            "kind": "alias"
+        },
+        "error-rb": {
+            "qname": "error-rb",
+            "path": "basics/errors",
+            "anchor": "rb",
+            "kind": "alias"
+        },
+        "error-restricted": {
+            "qname": "error-restricted",
+            "path": "basics/errors",
+            "anchor": "restricted",
+            "kind": "alias"
+        },
+        "error-s-fail": {
+            "qname": "error-s-fail",
+            "path": "basics/errors",
+            "anchor": "s-fail",
+            "kind": "alias"
+        },
+        "error-splay": {
+            "qname": "error-splay",
+            "path": "basics/errors",
+            "anchor": "splay",
+            "kind": "alias"
+        },
+        "error-stack": {
+            "qname": "error-stack",
+            "path": "basics/errors",
+            "anchor": "stack",
+            "kind": "alias"
+        },
+        "error-step": {
+            "qname": "error-step",
+            "path": "basics/errors",
+            "anchor": "step",
+            "kind": "alias"
+        },
+        "error-stop": {
+            "qname": "error-stop",
+            "path": "basics/errors",
+            "anchor": "stop",
+            "kind": "alias"
+        },
+        "error-stype": {
+            "qname": "error-stype",
+            "path": "basics/errors",
+            "anchor": "stype",
+            "kind": "alias"
+        },
+        "error-sys": {
+            "qname": "error-sys",
+            "path": "basics/errors",
+            "anchor": "sys",
+            "kind": "alias"
+        },
+        "error-threadview": {
+            "qname": "error-threadview",
+            "path": "basics/errors",
+            "anchor": "threadview",
+            "kind": "alias"
+        },
+        "error-timeout": {
+            "qname": "error-timeout",
+            "path": "basics/errors",
+            "anchor": "timeout",
+            "kind": "alias"
+        },
+        "error-too-many-syms": {
+            "qname": "error-too-many-syms",
+            "path": "basics/errors",
+            "anchor": "too-many-syms",
+            "kind": "alias"
+        },
+        "error-trunk": {
+            "qname": "error-trunk",
+            "path": "basics/errors",
+            "anchor": "trunk",
+            "kind": "alias"
+        },
+        "error-type": {
+            "qname": "error-type",
+            "path": "basics/errors",
+            "anchor": "type",
+            "kind": "alias"
+        },
+        "error-type/attr-error-amending-file": {
+            "qname": "error-type/attr-error-amending-file",
+            "path": "basics/errors",
+            "anchor": "type/attr-error-amending-file",
+            "kind": "alias"
+        },
+        "error-u-fail": {
+            "qname": "error-u-fail",
+            "path": "basics/errors",
+            "anchor": "u-fail",
+            "kind": "alias"
+        },
+        "error-unmappable": {
+            "qname": "error-unmappable",
+            "path": "basics/errors",
+            "anchor": "unmappable",
+            "kind": "alias"
+        },
+        "error-unrecognized-key-format": {
+            "qname": "error-unrecognized-key-format",
+            "path": "basics/errors",
+            "anchor": "unrecognized-key-format",
+            "kind": "alias"
+        },
+        "error-upd": {
+            "qname": "error-upd",
+            "path": "basics/errors",
+            "anchor": "upd",
+            "kind": "alias"
+        },
+        "error-utf8": {
+            "qname": "error-utf8",
+            "path": "basics/errors",
+            "anchor": "utf8",
+            "kind": "alias"
+        },
+        "error-value": {
+            "qname": "error-value",
+            "path": "basics/errors",
+            "anchor": "value",
+            "kind": "alias"
+        },
+        "error-vd1": {
+            "qname": "error-vd1",
+            "path": "basics/errors",
+            "anchor": "vd1",
+            "kind": "alias"
+        },
+        "error-view": {
+            "qname": "error-view",
+            "path": "basics/errors",
+            "anchor": "view",
+            "kind": "alias"
+        },
+        "error-wsfull": {
+            "qname": "error-wsfull",
+            "path": "basics/errors",
+            "anchor": "wsfull",
+            "kind": "alias"
+        },
+        "error-wsm": {
+            "qname": "error-wsm",
+            "path": "basics/errors",
+            "anchor": "wsm",
+            "kind": "alias"
+        },
+        "errors": {
+            "qname": "errors",
+            "path": "basics/errors",
+            "anchor": "",
+            "kind": "page"
+        },
+        "eval": {
+            "qname": "eval",
+            "path": "ref/eval",
+            "anchor": "eval",
+            "kind": "keyword",
+            "start_line": 13,
+            "end_line": 40
+        },
+        "except": {
+            "qname": "except",
+            "path": "ref/except",
+            "anchor": "",
+            "kind": "page"
+        },
+        "exec": {
+            "qname": "exec",
+            "path": "ref/exec",
+            "anchor": "",
+            "kind": "qsql"
+        },
+        "exit": {
+            "qname": "exit",
+            "path": "basics/control",
+            "anchor": "exit",
+            "kind": "keyword",
+            "start_line": 190,
+            "end_line": 194
+        },
+        "exp": {
+            "qname": "exp",
+            "path": "ref/exp",
+            "anchor": "exp",
+            "kind": "keyword",
+            "start_line": 9,
+            "end_line": 82
+        },
+        "exposed-infrastructure": {
+            "qname": "exposed-infrastructure",
+            "path": "basics/exposed-infrastructure",
+            "anchor": "",
+            "kind": "page"
+        },
+        "fby": {
+            "qname": "fby",
+            "path": "ref/fby",
+            "anchor": "",
+            "kind": "page"
+        },
+        "file-binary": {
+            "qname": "file-binary",
+            "path": "ref/file-binary",
+            "anchor": "",
+            "kind": "page"
+        },
+        "file-text": {
+            "qname": "file-text",
+            "path": "ref/file-text",
+            "anchor": "",
+            "kind": "page"
+        },
+        "files": {
+            "qname": "files",
+            "path": "basics/files",
+            "anchor": "",
+            "kind": "page"
+        },
+        "fill": {
+            "qname": "fill",
+            "path": "ref/fill",
+            "anchor": "",
+            "kind": "page"
+        },
+        "fills": {
+            "qname": "fills",
+            "path": "ref/fill",
+            "anchor": "fills",
+            "kind": "keyword",
+            "start_line": 104,
+            "end_line": 162
+        },
+        "find": {
+            "qname": "find",
+            "path": "ref/find",
+            "anchor": "",
+            "kind": "page"
+        },
+        "first": {
+            "qname": "first",
+            "path": "ref/first",
+            "anchor": "first",
+            "kind": "keyword",
+            "start_line": 10,
+            "end_line": 63
+        },
+        "fkeys": {
+            "qname": "fkeys",
+            "path": "ref/fkeys",
+            "anchor": "",
+            "kind": "page"
+        },
+        "flip": {
+            "qname": "flip",
+            "path": "ref/flip",
+            "anchor": "",
+            "kind": "page"
+        },
+        "flip-splayed": {
+            "qname": "flip-splayed",
+            "path": "ref/flip-splayed",
+            "anchor": "",
+            "kind": "page"
+        },
+        "float": {
+            "qname": "float",
+            "path": "basics/datatypes",
+            "anchor": "basic-types",
+            "kind": "datatype"
+        },
+        "floor": {
+            "qname": "floor",
+            "path": "ref/floor",
+            "anchor": "",
+            "kind": "page"
+        },
+        "from": {
+            "qname": "from",
+            "path": "basics/qsql",
+            "anchor": "from-phrase",
+            "kind": "qsql"
+        },
+        "function-notation": {
+            "qname": "function-notation",
+            "path": "basics/function-notation",
+            "anchor": "",
+            "kind": "page"
+        },
+        "funsql": {
+            "qname": "funsql",
+            "path": "basics/funsql",
+            "anchor": "",
+            "kind": "page"
+        },
+        "get": {
+            "qname": "get",
+            "path": "ref/get",
+            "anchor": "get",
+            "kind": "keyword",
+            "start_line": 11,
+            "end_line": 67
+        },
+        "getenv": {
+            "qname": "getenv",
+            "path": "ref/getenv",
+            "anchor": "getenv",
+            "kind": "keyword",
+            "start_line": 12,
+            "end_line": 30
+        },
+        "glossary": {
+            "qname": "glossary",
+            "path": "basics/glossary",
+            "anchor": "",
+            "kind": "page"
+        },
+        "greater": {
+            "qname": "greater",
+            "path": "ref/greater",
+            "anchor": "",
+            "kind": "page"
+        },
+        "greater-than": {
+            "qname": "greater-than",
+            "path": "ref/greater-than",
+            "anchor": "",
+            "kind": "page"
+        },
+        "group": {
+            "qname": "group",
+            "path": "ref/group",
+            "anchor": "",
+            "kind": "page"
+        },
+        "gtime": {
+            "qname": "gtime",
+            "path": "ref/gtime",
+            "anchor": "gtime",
+            "kind": "keyword",
+            "start_line": 12,
+            "end_line": 31
+        },
+        "guid": {
+            "qname": "guid",
+            "path": "basics/datatypes",
+            "anchor": "guid",
+            "kind": "datatype"
+        },
+        "handles": {
+            "qname": "handles",
+            "path": "basics/handles",
+            "anchor": "",
+            "kind": "page"
+        },
+        "hclose": {
+            "qname": "hclose",
+            "path": "ref/hopen",
+            "anchor": "hclose",
+            "kind": "keyword",
+            "start_line": 156,
+            "end_line": 207
+        },
+        "hcount": {
+            "qname": "hcount",
+            "path": "ref/hcount",
+            "anchor": "",
+            "kind": "page"
+        },
+        "hdel": {
+            "qname": "hdel",
+            "path": "ref/hdel",
+            "anchor": "",
+            "kind": "page"
+        },
+        "hopen": {
+            "qname": "hopen",
+            "path": "ref/hopen",
+            "anchor": "hopen",
+            "kind": "keyword",
+            "start_line": 22,
+            "end_line": 156
+        },
+        "hsym": {
+            "qname": "hsym",
+            "path": "ref/hsym",
+            "anchor": "",
+            "kind": "page"
+        },
+        "i": {
+            "qname": "i",
+            "path": "ref/apply",
+            "anchor": "nulls-in-i",
+            "kind": "keyword",
+            "start_line": 202,
+            "end_line": 228
+        },
+        "iasc": {
+            "qname": "iasc",
+            "path": "ref/asc",
+            "anchor": "iasc",
+            "kind": "keyword",
+            "start_line": 132,
+            "end_line": 172
+        },
+        "identity": {
+            "qname": "identity",
+            "path": "ref/identity",
+            "anchor": "",
+            "kind": "page"
+        },
+        "idesc": {
+            "qname": "idesc",
+            "path": "ref/desc",
+            "anchor": "idesc",
+            "kind": "keyword",
+            "start_line": 67,
+            "end_line": 94
+        },
+        "if": {
+            "qname": "if",
+            "path": "ref/if",
+            "anchor": "",
+            "kind": "page"
+        },
+        "ij": {
+            "qname": "ij",
+            "path": "ref/ij",
+            "anchor": "",
+            "kind": "page"
+        },
+        "implicit-iteration": {
+            "qname": "implicit-iteration",
+            "path": "basics/implicit-iteration",
+            "anchor": "",
+            "kind": "page"
+        },
+        "in": {
+            "qname": "in",
+            "path": "ref/in",
+            "anchor": "",
+            "kind": "page"
+        },
+        "index": {
+            "qname": "index",
+            "path": "ref/index",
+            "anchor": "",
+            "kind": "page"
+        },
+        "insert": {
+            "qname": "insert",
+            "path": "ref/insert",
+            "anchor": "",
+            "kind": "page"
+        },
+        "int": {
+            "qname": "int",
+            "path": "basics/datatypes",
+            "anchor": "basic-types",
+            "kind": "datatype"
+        },
+        "inter": {
+            "qname": "inter",
+            "path": "ref/inter",
+            "anchor": "",
+            "kind": "page"
+        },
+        "internal": {
+            "qname": "internal",
+            "path": "basics/internal",
+            "anchor": "",
+            "kind": "page"
+        },
+        "inv": {
+            "qname": "inv",
+            "path": "ref/inv",
+            "anchor": "",
+            "kind": "page"
+        },
+        "ipc": {
+            "qname": "ipc",
+            "path": "basics/ipc",
+            "anchor": "",
+            "kind": "page"
+        },
+        "iteration": {
+            "qname": "iteration",
+            "path": "basics/iteration",
+            "anchor": "",
+            "kind": "page"
+        },
+        "iterators": {
+            "qname": "iterators",
+            "path": "ref/iterators",
+            "anchor": "",
+            "kind": "page"
+        },
+        "join": {
+            "qname": "join",
+            "path": "ref/join",
+            "anchor": "",
+            "kind": "page"
+        },
+        "joins": {
+            "qname": "joins",
+            "path": "basics/joins",
+            "anchor": "",
+            "kind": "page"
+        },
+        "key": {
+            "qname": "key",
+            "path": "ref/key",
+            "anchor": "",
+            "kind": "page"
+        },
+        "keys": {
+            "qname": "keys",
+            "path": "ref/keys",
+            "anchor": "keys",
+            "kind": "keyword",
+            "start_line": 13,
+            "end_line": 36
+        },
+        "last": {
+            "qname": "last",
+            "path": "ref/first",
+            "anchor": "last",
+            "kind": "keyword",
+            "start_line": 63,
+            "end_line": 85
+        },
+        "less-than": {
+            "qname": "less-than",
+            "path": "ref/less-than",
+            "anchor": "",
+            "kind": "page"
+        },
+        "lesser": {
+            "qname": "lesser",
+            "path": "ref/lesser",
+            "anchor": "",
+            "kind": "page"
+        },
+        "like": {
+            "qname": "like",
+            "path": "basics/regex",
+            "anchor": "like",
+            "kind": "keyword",
+            "start_line": 159,
+            "end_line": 178
+        },
+        "listening-port": {
+            "qname": "listening-port",
+            "path": "basics/listening-port",
+            "anchor": "",
+            "kind": "page"
+        },
+        "lj": {
+            "qname": "lj",
+            "path": "ref/lj",
+            "anchor": "",
+            "kind": "page"
+        },
+        "load": {
+            "qname": "load",
+            "path": "ref/load",
+            "anchor": "load",
+            "kind": "keyword",
+            "start_line": 9,
+            "end_line": 73
+        },
+        "log": {
+            "qname": "log",
+            "path": "ref/log",
+            "anchor": "log",
+            "kind": "keyword",
+            "start_line": 9,
+            "end_line": 79
+        },
+        "long": {
+            "qname": "long",
+            "path": "basics/datatypes",
+            "anchor": "basic-types",
+            "kind": "datatype"
+        },
+        "lower": {
+            "qname": "lower",
+            "path": "ref/lower",
+            "anchor": "",
+            "kind": "page"
+        },
+        "lsq": {
+            "qname": "lsq",
+            "path": "ref/lsq",
+            "anchor": "",
+            "kind": "page"
+        },
+        "ltime": {
+            "qname": "ltime",
+            "path": "ref/gtime",
+            "anchor": "ltime",
+            "kind": "keyword",
+            "start_line": 31,
+            "end_line": 49
+        },
+        "maps": {
+            "qname": "maps",
+            "path": "ref/maps",
+            "anchor": "",
+            "kind": "page"
+        },
+        "match": {
+            "qname": "match",
+            "path": "ref/match",
+            "anchor": "",
+            "kind": "page"
+        },
+        "math": {
+            "qname": "math",
+            "path": "basics/math",
+            "anchor": "",
+            "kind": "page"
+        },
+        "mavg": {
+            "qname": "mavg",
+            "path": "ref/avg",
+            "anchor": "mavg",
+            "kind": "keyword",
+            "start_line": 81,
+            "end_line": 136
+        },
+        "max": {
+            "qname": "max",
+            "path": "ref/max",
+            "anchor": "max",
+            "kind": "keyword",
+            "start_line": 7,
+            "end_line": 41
+        },
+        "maxs": {
+            "qname": "maxs",
+            "path": "ref/max",
+            "anchor": "maxs",
+            "kind": "keyword",
+            "start_line": 41,
+            "end_line": 69
+        },
+        "mcount": {
+            "qname": "mcount",
+            "path": "ref/count",
+            "anchor": "mcount",
+            "kind": "keyword",
+            "start_line": 65,
+            "end_line": 120
+        },
+        "md5": {
+            "qname": "md5",
+            "path": "ref/md5",
+            "anchor": "",
+            "kind": "page"
+        },
+        "mdev": {
+            "qname": "mdev",
+            "path": "ref/dev",
+            "anchor": "mdev",
+            "kind": "keyword",
+            "start_line": 51,
+            "end_line": 142
+        },
+        "med": {
+            "qname": "med",
+            "path": "ref/med",
+            "anchor": "",
+            "kind": "page"
+        },
+        "meta": {
+            "qname": "meta",
+            "path": "ref/meta",
+            "anchor": "",
+            "kind": "page"
+        },
+        "metadata": {
+            "qname": "metadata",
+            "path": "basics/metadata",
+            "anchor": "",
+            "kind": "page"
+        },
+        "min": {
+            "qname": "min",
+            "path": "ref/min",
+            "anchor": "min",
+            "kind": "keyword",
+            "start_line": 9,
+            "end_line": 38
+        },
+        "mins": {
+            "qname": "mins",
+            "path": "ref/min",
+            "anchor": "mins",
+            "kind": "keyword",
+            "start_line": 38,
+            "end_line": 61
+        },
+        "minute": {
+            "qname": "minute",
+            "path": "basics/datatypes",
+            "anchor": "temporal",
+            "kind": "datatype"
+        },
+        "mmax": {
+            "qname": "mmax",
+            "path": "ref/max",
+            "anchor": "mmax",
+            "kind": "keyword",
+            "start_line": 69,
+            "end_line": 120
+        },
+        "mmin": {
+            "qname": "mmin",
+            "path": "ref/min",
+            "anchor": "mmin",
+            "kind": "keyword",
+            "start_line": 61,
+            "end_line": 85
+        },
+        "mmu": {
+            "qname": "mmu",
+            "path": "ref/mmu",
+            "anchor": "",
+            "kind": "page"
+        },
+        "mod": {
+            "qname": "mod",
+            "path": "ref/mod",
+            "anchor": "",
+            "kind": "page"
+        },
+        "month": {
+            "qname": "month",
+            "path": "basics/datatypes",
+            "anchor": "temporal",
+            "kind": "datatype"
+        },
+        "msum": {
+            "qname": "msum",
+            "path": "ref/sum",
+            "anchor": "msum",
+            "kind": "keyword",
+            "start_line": 117,
+            "end_line": 141
+        },
+        "multiply": {
+            "qname": "multiply",
+            "path": "ref/multiply",
+            "anchor": "",
+            "kind": "page"
+        },
+        "namespaces": {
+            "qname": "namespaces",
+            "path": "basics/namespaces",
+            "anchor": "",
+            "kind": "page"
+        },
+        "neg": {
+            "qname": "neg",
+            "path": "ref/neg",
+            "anchor": "",
+            "kind": "page"
+        },
+        "next": {
+            "qname": "next",
+            "path": "ref/next",
+            "anchor": "next",
+            "kind": "keyword",
+            "start_line": 20,
+            "end_line": 51
+        },
+        "not": {
+            "qname": "not",
+            "path": "ref/not",
+            "anchor": "",
+            "kind": "page"
+        },
+        "not-equal": {
+            "qname": "not-equal",
+            "path": "ref/not-equal",
+            "anchor": "",
+            "kind": "page"
+        },
+        "null": {
+            "qname": "null",
+            "path": "ref/null",
+            "anchor": "",
+            "kind": "page"
+        },
+        "or": {
+            "qname": "or",
+            "path": "ref/or",
+            "anchor": "",
+            "kind": "page"
+        },
+        "over": {
+            "qname": "over",
+            "path": "ref/accumulators",
+            "anchor": "keywords-scan-and-over",
+            "kind": "keyword",
+            "start_line": 302,
+            "end_line": 321
+        },
+        "overloads": {
+            "qname": "overloads",
+            "path": "ref/overloads",
+            "anchor": "",
+            "kind": "page"
+        },
+        "pad": {
+            "qname": "pad",
+            "path": "ref/pad",
+            "anchor": "",
+            "kind": "page"
+        },
+        "parse": {
+            "qname": "parse",
+            "path": "ref/parse",
+            "anchor": "",
+            "kind": "page"
+        },
+        "parsetrees": {
+            "qname": "parsetrees",
+            "path": "basics/parsetrees",
+            "anchor": "",
+            "kind": "page"
+        },
+        "pattern": {
+            "qname": "pattern",
+            "path": "basics/pattern",
+            "anchor": "",
+            "kind": "page"
+        },
+        "peach": {
+            "qname": "peach",
+            "path": "ref/each",
+            "anchor": "blocked-within-peach",
+            "kind": "keyword",
+            "start_line": 66,
+            "end_line": 83
+        },
+        "pj": {
+            "qname": "pj",
+            "path": "ref/pj",
+            "anchor": "",
+            "kind": "page"
+        },
+        "prd": {
+            "qname": "prd",
+            "path": "ref/prd",
+            "anchor": "prd",
+            "kind": "keyword",
+            "start_line": 9,
+            "end_line": 38
+        },
+        "prds": {
+            "qname": "prds",
+            "path": "ref/prd",
+            "anchor": "prds",
+            "kind": "keyword",
+            "start_line": 38,
+            "end_line": 64
+        },
+        "precision": {
+            "qname": "precision",
+            "path": "basics/precision",
+            "anchor": "",
+            "kind": "page"
+        },
+        "prev": {
+            "qname": "prev",
+            "path": "ref/next",
+            "anchor": "prev",
+            "kind": "keyword",
+            "start_line": 51,
+            "end_line": 81
+        },
+        "prior": {
+            "qname": "prior",
+            "path": "ref/maps",
+            "anchor": "prior-keyword",
+            "kind": "keyword",
+            "start_line": 285,
+            "end_line": 300
+        },
+        "q": {
+            "qname": "q",
+            "path": "basics/parsetrees",
+            "anchor": "k4-q-and-q-k",
+            "kind": "keyword",
+            "start_line": 40,
+            "end_line": 75
+        },
+        "qsql": {
+            "qname": "qsql",
+            "path": "basics/qsql",
+            "anchor": "",
+            "kind": "page"
+        },
+        "rand": {
+            "qname": "rand",
+            "path": "ref/rand",
+            "anchor": "",
+            "kind": "page"
+        },
+        "rank": {
+            "qname": "rank",
+            "path": "ref/rank",
+            "anchor": "",
+            "kind": "page"
+        },
+        "ratios": {
+            "qname": "ratios",
+            "path": "ref/ratios",
+            "anchor": "",
+            "kind": "page"
+        },
+        "raze": {
+            "qname": "raze",
+            "path": "ref/raze",
+            "anchor": "",
+            "kind": "page"
+        },
+        "read0": {
+            "qname": "read0",
+            "path": "ref/read0",
+            "anchor": "",
+            "kind": "page"
+        },
+        "read1": {
+            "qname": "read1",
+            "path": "ref/read1",
+            "anchor": "",
+            "kind": "page"
+        },
+        "real": {
+            "qname": "real",
+            "path": "basics/datatypes",
+            "anchor": "basic-types",
+            "kind": "datatype"
+        },
+        "reciprocal": {
+            "qname": "reciprocal",
+            "path": "ref/reciprocal",
+            "anchor": "",
+            "kind": "page"
+        },
+        "regex": {
+            "qname": "regex",
+            "path": "basics/regex",
+            "anchor": "",
+            "kind": "page"
+        },
+        "reval": {
+            "qname": "reval",
+            "path": "ref/eval",
+            "anchor": "reval",
+            "kind": "keyword",
+            "start_line": 40,
+            "end_line": 74
+        },
+        "reverse": {
+            "qname": "reverse",
+            "path": "ref/reverse",
+            "anchor": "",
+            "kind": "page"
+        },
+        "rload": {
+            "qname": "rload",
+            "path": "ref/load",
+            "anchor": "rload",
+            "kind": "keyword",
+            "start_line": 73,
+            "end_line": 121
+        },
+        "rotate": {
+            "qname": "rotate",
+            "path": "ref/rotate",
+            "anchor": "",
+            "kind": "page"
+        },
+        "rsave": {
+            "qname": "rsave",
+            "path": "ref/save",
+            "anchor": "rsave",
+            "kind": "keyword",
+            "start_line": 107,
+            "end_line": 159
+        },
+        "save": {
+            "qname": "save",
+            "path": "ref/save",
+            "anchor": "save",
+            "kind": "keyword",
+            "start_line": 10,
+            "end_line": 107
+        },
+        "scan": {
+            "qname": "scan",
+            "path": "ref/accumulators",
+            "anchor": "keywords-scan-and-over",
+            "kind": "keyword",
+            "start_line": 302,
+            "end_line": 321
+        },
+        "scov": {
+            "qname": "scov",
+            "path": "ref/cov",
+            "anchor": "scov",
+            "kind": "keyword",
+            "start_line": 57,
+            "end_line": 118
+        },
+        "sdev": {
+            "qname": "sdev",
+            "path": "ref/dev",
+            "anchor": "sdev",
+            "kind": "keyword",
+            "start_line": 142,
+            "end_line": 198
+        },
+        "second": {
+            "qname": "second",
+            "path": "basics/datatypes",
+            "anchor": "temporal",
+            "kind": "datatype"
+        },
+        "select": {
+            "qname": "select",
+            "path": "ref/select",
+            "anchor": "",
+            "kind": "qsql"
+        },
+        "set": {
+            "qname": "set",
+            "path": "ref/get",
+            "anchor": "set",
+            "kind": "keyword",
+            "start_line": 67,
+            "end_line": 230
+        },
+        "set-attribute": {
+            "qname": "set-attribute",
+            "path": "ref/set-attribute",
+            "anchor": "",
+            "kind": "page"
+        },
+        "setenv": {
+            "qname": "setenv",
+            "path": "ref/getenv",
+            "anchor": "setenv",
+            "kind": "keyword",
+            "start_line": 30,
+            "end_line": 61
+        },
+        "short": {
+            "qname": "short",
+            "path": "basics/datatypes",
+            "anchor": "basic-types",
+            "kind": "datatype"
+        },
+        "show": {
+            "qname": "show",
+            "path": "ref/show",
+            "anchor": "",
+            "kind": "page"
+        },
+        "signal": {
+            "qname": "signal",
+            "path": "ref/signal",
+            "anchor": "",
+            "kind": "page"
+        },
+        "signum": {
+            "qname": "signum",
+            "path": "ref/signum",
+            "anchor": "",
+            "kind": "page"
+        },
+        "simple-exec": {
+            "qname": "simple-exec",
+            "path": "ref/simple-exec",
+            "anchor": "",
+            "kind": "page"
+        },
+        "sin": {
+            "qname": "sin",
+            "path": "ref/sin",
+            "anchor": "",
+            "kind": "page"
+        },
+        "sqrt": {
+            "qname": "sqrt",
+            "path": "ref/sqrt",
+            "anchor": "",
+            "kind": "page"
+        },
+        "ss": {
+            "qname": "ss",
+            "path": "ref/ss",
+            "anchor": "ss",
+            "kind": "keyword",
+            "start_line": 12,
+            "end_line": 41
+        },
+        "ssr": {
+            "qname": "ssr",
+            "path": "ref/ss",
+            "anchor": "ssr",
+            "kind": "keyword",
+            "start_line": 41,
+            "end_line": 83
+        },
+        "string": {
+            "qname": "string",
+            "path": "basics/datatypes",
+            "anchor": "strings",
+            "kind": "datatype"
+        },
+        "sublist": {
+            "qname": "sublist",
+            "path": "ref/sublist",
+            "anchor": "",
+            "kind": "page"
+        },
+        "subtract": {
+            "qname": "subtract",
+            "path": "ref/subtract",
+            "anchor": "",
+            "kind": "page"
+        },
+        "sum": {
+            "qname": "sum",
+            "path": "ref/sum",
+            "anchor": "sum",
+            "kind": "keyword",
+            "start_line": 9,
+            "end_line": 81
+        },
+        "sums": {
+            "qname": "sums",
+            "path": "ref/sum",
+            "anchor": "sums",
+            "kind": "keyword",
+            "start_line": 81,
+            "end_line": 117
+        },
+        "sv": {
+            "qname": "sv",
+            "path": "basics/exposed-infrastructure",
+            "anchor": "sv-and-vs",
+            "kind": "keyword",
+            "start_line": 115,
+            "end_line": 129
+        },
+        "svar": {
+            "qname": "svar",
+            "path": "ref/var",
+            "anchor": "svar",
+            "kind": "keyword",
+            "start_line": 53,
+            "end_line": 95
+        },
+        "symbol": {
+            "qname": "symbol",
+            "path": "basics/datatypes",
+            "anchor": "symbols",
+            "kind": "datatype"
+        },
+        "syntax": {
+            "qname": "syntax",
+            "path": "basics/syntax",
+            "anchor": "",
+            "kind": "page"
+        },
+        "syscmds": {
+            "qname": "syscmds",
+            "path": "basics/syscmds",
+            "anchor": "",
+            "kind": "page"
+        },
+        "system": {
+            "qname": "system",
+            "path": "ref/system",
+            "anchor": "",
+            "kind": "page"
+        },
+        "system-": {
+            "qname": "system-",
+            "path": "basics/syscmds",
+            "anchor": "terminate",
+            "kind": "alias",
+            "start_line": 1053,
+            "end_line": 1090
+        },
+        "system-1": {
+            "qname": "system-1",
+            "path": "basics/syscmds",
+            "anchor": "1-2-redirect",
+            "kind": "alias",
+            "start_line": 972,
+            "end_line": 1006
+        },
+        "system-2": {
+            "qname": "system-2",
+            "path": "basics/syscmds",
+            "anchor": "1-2-redirect",
+            "kind": "alias",
+            "start_line": 972,
+            "end_line": 1006
+        },
+        "system-B": {
+            "qname": "system-B",
+            "path": "basics/syscmds",
+            "anchor": "b-pending-views",
+            "kind": "alias",
+            "start_line": 109,
+            "end_line": 135
+        },
+        "system-C": {
+            "qname": "system-C",
+            "path": "basics/syscmds",
+            "anchor": "c-http-size",
+            "kind": "alias",
+            "start_line": 181,
+            "end_line": 198
+        },
+        "system-E": {
+            "qname": "system-E",
+            "path": "basics/syscmds",
+            "anchor": "e-tls-server-mode",
+            "kind": "alias",
+            "start_line": 274,
+            "end_line": 292
+        },
+        "system-P": {
+            "qname": "system-P",
+            "path": "basics/syscmds",
+            "anchor": "p-precision",
+            "kind": "alias",
+            "start_line": 533,
+            "end_line": 591
+        },
+        "system-S": {
+            "qname": "system-S",
+            "path": "basics/syscmds",
+            "anchor": "s-random-seed",
+            "kind": "alias",
+            "start_line": 655,
+            "end_line": 708
+        },
+        "system-T": {
+            "qname": "system-T",
+            "path": "basics/syscmds",
+            "anchor": "t-timeout",
+            "kind": "alias",
+            "start_line": 753,
+            "end_line": 768
+        },
+        "system-W": {
+            "qname": "system-W",
+            "path": "basics/syscmds",
+            "anchor": "w-week-offset",
+            "kind": "alias",
+            "start_line": 914,
+            "end_line": 927
+        },
+        "system-_": {
+            "qname": "system-_",
+            "path": "basics/syscmds",
+            "anchor": "hide-q-code",
+            "kind": "alias",
+            "start_line": 1006,
+            "end_line": 1053
+        },
+        "system-a": {
+            "qname": "system-a",
+            "path": "basics/syscmds",
+            "anchor": "a-tables",
+            "kind": "alias",
+            "start_line": 45,
+            "end_line": 84
+        },
+        "system-b": {
+            "qname": "system-b",
+            "path": "basics/syscmds",
+            "anchor": "b-views",
+            "kind": "alias",
+            "start_line": 84,
+            "end_line": 109
+        },
+        "system-c": {
+            "qname": "system-c",
+            "path": "basics/syscmds",
+            "anchor": "c-console-size",
+            "kind": "alias",
+            "start_line": 135,
+            "end_line": 181
+        },
+        "system-cd": {
+            "qname": "system-cd",
+            "path": "basics/syscmds",
+            "anchor": "cd-change-directory",
+            "kind": "alias",
+            "start_line": 198,
+            "end_line": 220
+        },
+        "system-d": {
+            "qname": "system-d",
+            "path": "basics/syscmds",
+            "anchor": "d-directory",
+            "kind": "alias",
+            "start_line": 220,
+            "end_line": 253
+        },
+        "system-e": {
+            "qname": "system-e",
+            "path": "basics/syscmds",
+            "anchor": "e-error-trap-clients",
+            "kind": "alias",
+            "start_line": 253,
+            "end_line": 274
+        },
+        "system-f": {
+            "qname": "system-f",
+            "path": "basics/syscmds",
+            "anchor": "f-functions",
+            "kind": "alias",
+            "start_line": 292,
+            "end_line": 314
+        },
+        "system-g": {
+            "qname": "system-g",
+            "path": "basics/syscmds",
+            "anchor": "g-garbage-collection-mode",
+            "kind": "alias",
+            "start_line": 314,
+            "end_line": 428
+        },
+        "system-l": {
+            "qname": "system-l",
+            "path": "basics/syscmds",
+            "anchor": "l-load-file-or-directory",
+            "kind": "alias",
+            "start_line": 428,
+            "end_line": 476
+        },
+        "system-o": {
+            "qname": "system-o",
+            "path": "basics/syscmds",
+            "anchor": "o-offset-from-utc",
+            "kind": "alias",
+            "start_line": 476,
+            "end_line": 507
+        },
+        "system-p": {
+            "qname": "system-p",
+            "path": "basics/syscmds",
+            "anchor": "p-listening-port",
+            "kind": "alias",
+            "start_line": 507,
+            "end_line": 533
+        },
+        "system-r": {
+            "qname": "system-r",
+            "path": "basics/syscmds",
+            "anchor": "r-replication-primary",
+            "kind": "alias",
+            "start_line": 591,
+            "end_line": 606
+        },
+        "system-s": {
+            "qname": "system-s",
+            "path": "basics/syscmds",
+            "anchor": "s-number-of-secondary-threads",
+            "kind": "alias",
+            "start_line": 617,
+            "end_line": 655
+        },
+        "system-t": {
+            "qname": "system-t",
+            "path": "basics/syscmds",
+            "anchor": "t-timer",
+            "kind": "alias",
+            "start_line": 708,
+            "end_line": 753
+        },
+        "system-ts": {
+            "qname": "system-ts",
+            "path": "basics/syscmds",
+            "anchor": "ts-time-and-space",
+            "kind": "alias",
+            "start_line": 768,
+            "end_line": 787
+        },
+        "system-u": {
+            "qname": "system-u",
+            "path": "basics/syscmds",
+            "anchor": "u-reload-user-password-file",
+            "kind": "alias",
+            "start_line": 787,
+            "end_line": 799
+        },
+        "system-v": {
+            "qname": "system-v",
+            "path": "basics/syscmds",
+            "anchor": "v-variables",
+            "kind": "alias",
+            "start_line": 799,
+            "end_line": 829
+        },
+        "system-w": {
+            "qname": "system-w",
+            "path": "basics/syscmds",
+            "anchor": "w-workspace",
+            "kind": "alias",
+            "start_line": 829,
+            "end_line": 914
+        },
+        "system-x": {
+            "qname": "system-x",
+            "path": "basics/syscmds",
+            "anchor": "x-expunge",
+            "kind": "alias",
+            "start_line": 927,
+            "end_line": 949
+        },
+        "system-z": {
+            "qname": "system-z",
+            "path": "basics/syscmds",
+            "anchor": "z-date-parsing",
+            "kind": "alias",
+            "start_line": 949,
+            "end_line": 972
+        },
+        "t2": {
+            "qname": "t2",
+            "path": "ref/aj",
+            "anchor": "select-from-t2",
+            "kind": "keyword",
+            "start_line": 100,
+            "end_line": 145
+        },
+        "table": {
+            "qname": "table",
+            "path": "basics/datatypes",
+            "anchor": "dictionary-and-table",
+            "kind": "datatype"
+        },
+        "tables": {
+            "qname": "tables",
+            "path": "ref/tables",
+            "anchor": "",
+            "kind": "page"
+        },
+        "take": {
+            "qname": "take",
+            "path": "ref/take",
+            "anchor": "",
+            "kind": "page"
+        },
+        "tan": {
+            "qname": "tan",
+            "path": "ref/tan",
+            "anchor": "",
+            "kind": "page"
+        },
+        "til": {
+            "qname": "til",
+            "path": "ref/key",
+            "anchor": "til",
+            "kind": "keyword",
+            "start_line": 181,
+            "end_line": 195
+        },
+        "time": {
+            "qname": "time",
+            "path": "basics/datatypes",
+            "anchor": "temporal",
+            "kind": "datatype"
+        },
+        "timespan": {
+            "qname": "timespan",
+            "path": "basics/datatypes",
+            "anchor": "temporal",
+            "kind": "datatype"
+        },
+        "timestamp": {
+            "qname": "timestamp",
+            "path": "basics/datatypes",
+            "anchor": "temporal",
+            "kind": "datatype"
+        },
+        "tok": {
+            "qname": "tok",
+            "path": "ref/tok",
+            "anchor": "",
+            "kind": "page"
+        },
+        "trim": {
+            "qname": "trim",
+            "path": "ref/trim",
+            "anchor": "",
+            "kind": "page"
+        },
+        "type": {
+            "qname": "type",
+            "path": "ref/type",
+            "anchor": "",
+            "kind": "page"
+        },
+        "uj": {
+            "qname": "uj",
+            "path": "ref/uj",
+            "anchor": "",
+            "kind": "page"
+        },
+        "ungroup": {
+            "qname": "ungroup",
+            "path": "ref/ungroup",
+            "anchor": "",
+            "kind": "page"
+        },
+        "union": {
+            "qname": "union",
+            "path": "ref/union",
+            "anchor": "",
+            "kind": "page"
+        },
+        "update": {
+            "qname": "update",
+            "path": "ref/update",
+            "anchor": "",
+            "kind": "qsql"
+        },
+        "upsert": {
+            "qname": "upsert",
+            "path": "ref/upsert",
+            "anchor": "",
+            "kind": "page"
+        },
+        "value": {
+            "qname": "value",
+            "path": "basics/parsetrees",
+            "anchor": "eval-and-value",
+            "kind": "keyword",
+            "start_line": 124,
+            "end_line": 165
+        },
+        "var": {
+            "qname": "var",
+            "path": "ref/var",
+            "anchor": "var",
+            "kind": "keyword",
+            "start_line": 10,
+            "end_line": 53
+        },
+        "variadic": {
+            "qname": "variadic",
+            "path": "basics/variadic",
+            "anchor": "",
+            "kind": "page"
+        },
+        "vector-conditional": {
+            "qname": "vector-conditional",
+            "path": "ref/vector-conditional",
+            "anchor": "",
+            "kind": "page"
+        },
+        "view": {
+            "qname": "view",
+            "path": "ref/view",
+            "anchor": "view",
+            "kind": "keyword",
+            "start_line": 11,
+            "end_line": 32
+        },
+        "views": {
+            "qname": "views",
+            "path": "ref/view",
+            "anchor": "views",
+            "kind": "keyword",
+            "start_line": 32,
+            "end_line": 56
+        },
+        "vs": {
+            "qname": "vs",
+            "path": "basics/exposed-infrastructure",
+            "anchor": "sv-and-vs",
+            "kind": "keyword",
+            "start_line": 115,
+            "end_line": 129
+        },
+        "wavg": {
+            "qname": "wavg",
+            "path": "ref/avg",
+            "anchor": "wavg",
+            "kind": "keyword",
+            "start_line": 136,
+            "end_line": 209
+        },
+        "where": {
+            "qname": "where",
+            "path": "basics/qsql",
+            "anchor": "where-phrase",
+            "kind": "qsql"
+        },
+        "while": {
+            "qname": "while",
+            "path": "ref/while",
+            "anchor": "",
+            "kind": "page"
+        },
+        "within": {
+            "qname": "within",
+            "path": "ref/within",
+            "anchor": "",
+            "kind": "page"
+        },
+        "wj": {
+            "qname": "wj",
+            "path": "ref/wj",
+            "anchor": "",
+            "kind": "page"
+        },
+        "wsum": {
+            "qname": "wsum",
+            "path": "ref/sum",
+            "anchor": "wsum",
+            "kind": "keyword",
+            "start_line": 141,
+            "end_line": 169
+        },
+        "x": {
+            "qname": "x",
+            "path": "basics/glossary",
+            "anchor": "x",
+            "kind": "keyword",
+            "start_line": 876,
+            "end_line": 880
+        },
+        "xasc": {
+            "qname": "xasc",
+            "path": "ref/asc",
+            "anchor": "xasc",
+            "kind": "keyword",
+            "start_line": 172,
+            "end_line": 283
+        },
+        "xbar": {
+            "qname": "xbar",
+            "path": "ref/xbar",
+            "anchor": "",
+            "kind": "page"
+        },
+        "xcol": {
+            "qname": "xcol",
+            "path": "ref/cols",
+            "anchor": "xcol",
+            "kind": "keyword",
+            "start_line": 33,
+            "end_line": 68
+        },
+        "xcols": {
+            "qname": "xcols",
+            "path": "ref/cols",
+            "anchor": "xcols",
+            "kind": "keyword",
+            "start_line": 68,
+            "end_line": 106
+        },
+        "xdesc": {
+            "qname": "xdesc",
+            "path": "ref/desc",
+            "anchor": "xdesc",
+            "kind": "keyword",
+            "start_line": 94,
+            "end_line": 175
+        },
+        "xexp": {
+            "qname": "xexp",
+            "path": "ref/exp",
+            "anchor": "xexp",
+            "kind": "keyword",
+            "start_line": 82,
+            "end_line": 176
+        },
+        "xgroup": {
+            "qname": "xgroup",
+            "path": "ref/xgroup",
+            "anchor": "",
+            "kind": "page"
+        },
+        "xkey": {
+            "qname": "xkey",
+            "path": "ref/keys",
+            "anchor": "xkey",
+            "kind": "keyword",
+            "start_line": 36,
+            "end_line": 78
+        },
+        "xlog": {
+            "qname": "xlog",
+            "path": "ref/log",
+            "anchor": "xlog",
+            "kind": "keyword",
+            "start_line": 79,
+            "end_line": 182
+        },
+        "xprev": {
+            "qname": "xprev",
+            "path": "ref/next",
+            "anchor": "xprev",
+            "kind": "keyword",
+            "start_line": 81,
+            "end_line": 117
+        },
+        "xrank": {
+            "qname": "xrank",
+            "path": "ref/xrank",
+            "anchor": "",
+            "kind": "page"
+        },
+        "y": {
+            "qname": "y",
+            "path": "basics/glossary",
+            "anchor": "y",
+            "kind": "keyword",
+            "start_line": 880,
+            "end_line": 884
+        },
+        "z": {
+            "qname": "z",
+            "path": "basics/glossary",
+            "anchor": "z",
+            "kind": "keyword",
+            "start_line": 884,
+            "end_line": 889
+        },
+        "|": {
+            "qname": "|",
+            "path": "ref/greater",
+            "anchor": "",
+            "kind": "glyph"
+        },
+        "|:": {
+            "qname": "|:",
+            "path": "ref/assign",
+            "anchor": "assign-through-operator",
+            "kind": "glyph"
+        },
+        "~": {
+            "qname": "~",
+            "path": "ref/match",
+            "anchor": "",
+            "kind": "glyph"
+        },
+        "~:": {
+            "qname": "~:",
+            "path": "ref/assign",
+            "anchor": "assign-through-operator",
+            "kind": "glyph"
+        }
+    }
+}

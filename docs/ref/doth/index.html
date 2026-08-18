@@ -1,0 +1,1441 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="The .h namespace contains objects useful for marking up data for an HTTP response.">
+      
+      
+        <meta name="author" content="KX Systems, Inc., a subsidiary of KX Software Limited">
+      
+      
+        <link rel="canonical" href="https://peachq.org/docs/ref/doth/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../img/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>The .h namespace | Reference | kdb+ and q documentation - PeachQ</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../css/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  
+  <script src="../../../mirror-banner.js"></script>
+  <script>
+    var _paq = window._paq = window._paq || [];
+    /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    (function() {
+      var u="//www.timestored.com/mat/";
+      _paq.push(['setTrackerUrl', u+'matomo.php']);
+      _paq.push(['setSiteId', '4']);
+      var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+      g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+    })();
+  </script>
+
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#the-h-namespace" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../" title="PeachQ" class="md-header__button md-logo" aria-label="PeachQ" data-md-component="logo">
+      
+  <img src="../../../img/peachq-logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <a class="md-ellipsis peachq-wordmark" href="../../../">
+            Peach<span class="peachq-wordmark__q">Q</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    
+    <nav class="peachq-nav" aria-label="Site">
+      
+      
+      
+        
+        <a class="peachq-nav__link" href="../../../repl">Try Live</a>
+      
+        
+        <a class="peachq-nav__link" href="../../../download">Download</a>
+      
+        
+        <a class="peachq-nav__link" href="../../../compatibility">Compatibility</a>
+      
+        
+        <a class="peachq-nav__link" href="../../../roadmap">Roadmap</a>
+      
+        
+        <a class="peachq-nav__link" href="../../../news/">News</a>
+      
+        
+        <a class="peachq-nav__link" href="../../../about">About</a>
+      
+        
+        <a class="peachq-nav__link" href="../../../contact">Contact</a>
+      
+      <a class="peachq-nav__link" href="https://github.com/peachq-org/peachq" target="_blank" rel="noreferrer">GitHub &#8599;</a>
+    </nav>
+
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="PeachQ" class="md-nav__button md-logo" aria-label="PeachQ" data-md-component="logo">
+      
+  <img src="../../../img/peachq-logo.svg" alt="logo">
+
+    </a>
+    PeachQ
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/peachq-org/peachq" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../news/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    News
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#hbr-linebreak" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .h.br (linebreak)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hc0-web-color" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .h.c0 (web color)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hc1-web-color" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .h.c1 (web color)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hcd-csv-from-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .h.cd (CSV from data)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hcode-code-after-tab" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .h.code (code after Tab)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hd-delimiter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .h.d (delimiter)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hed-excel-from-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .h.ed (Excel from data)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hedsn-excel-from-tables" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .h.edsn (Excel from tables)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hfram-frame" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .h.fram (frame)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hha-anchor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .h.ha (anchor)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hhb-anchor-target" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .h.hb (anchor target)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hhc-escape-lt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .h.hc (escape lt)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hhe-http-400" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .h.he (HTTP 400)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hhn-http-response" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .h.hn (HTTP response)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hhp-http-response-pre" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .h.hp (HTTP response pre)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hhr-horizontal-rule" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .h.hr (horizontal rule)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hht-marqdown-to-html" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .h.ht (Marqdown to HTML)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hhta-start-tag" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .h.hta (start tag)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hhtac-element" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .h.htac (element)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hhtc-element" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .h.htc (element)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hhtml-document" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .h.html (document)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hhttp-hyperlinks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .h.http (hyperlinks)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hhu-uri-escape" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .h.hu (URI escape)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hhug-uri-map" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .h.hug (URI map)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hhy-http-response-content" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .h.hy (HTTP response content)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hhome-webserver-root" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .h.HOME (webserver root)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hiso8601-iso-timestamp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .h.iso8601 (ISO timestamp)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hjx-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .h.jx (table)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hka-http-keepalive" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .h.ka (HTTP keepalive)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hlogo-kx-logo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .h.logo (KX logo)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hnbr-no-break" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .h.nbr (no break)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hpre-pre" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .h.pre (pre)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hsa-anchor-style" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .h.sa (anchor style)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hsb-body-style" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .h.sb (body-style)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hsc-uri-safe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .h.sc (URI-safe)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#htd-tsv-from-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .h.td (TSV from data)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#htext-paragraphs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .h.text (paragraphs)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#htx-filetypes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .h.tx (filetypes)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hty-mime-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .h.ty (MIME types)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#huh-uri-unescape" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .h.uh (URI unescape)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hval-value" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .h.val (value)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hxd-xml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .h.xd (XML)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hxmp-xmp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .h.xmp (XMP)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hxs-xml-escape" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .h.xs (XML escape)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hxt-json" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .h.xt (JSON)
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/peachq-org/peachq-website/edit/main/content/docs/ref/doth.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+
+
+<h1 id="the-h-namespace">The <code>.h</code> namespace<a class="headerlink" href="#the-h-namespace" title="Permanent link">&para;</a></h1>
+<p><em>Markup tools</em></p>
+<div class="typewriter">
+<p>Markup (HTML and XML)                Data Serialization
+ <a href="#hbr-linebreak"><code>.h.br</code></a>      linebreak                <a href="#hcd-csv-from-data"><code>.h.cd</code></a>      CSV from data
+ <a href="#hcode-code-after-tab"><code>.h.code</code></a>    code after Tab           <a href="#hd-delimiter"><code>.h.d</code></a>       delimiter
+ <a href="#hfram-frame"><code>.h.fram</code></a>    frame                    <a href="#hed-excel-from-data"><code>.h.ed</code></a>      Excel from data
+ <a href="#hha-anchor"><code>.h.ha</code></a>      anchor                   <a href="#hedsn-excel-from-tables"><code>.h.edsn</code></a>    Excel from tables
+ <a href="#hhb-anchor-target"><code>.h.hb</code></a>      anchor target            <a href="#hht-marqdown-to-html"><code>.h.ht</code></a>      Marqdown to HTML
+ <a href="#hhc-escape-lt"><code>.h.hc</code></a>      escape lt                <a href="#hiso8601-iso-timestamp"><code>.h.iso8601</code></a> ISO timestamp
+ <a href="#hhr-horizontal-rule"><code>.h.hr</code></a>      horizontal rule          <a href="#hjx-table"><code>.h.jx</code></a>      table
+ <a href="#hhta-start-tag"><code>.h.hta</code></a>     start tag                <a href="#htd-tsv-from-data"><code>.h.td</code></a>      TSV from data
+ <a href="#hhtac-element"><code>.h.htac</code></a>    element                  <a href="#htx-filetypes"><code>.h.tx</code></a>      filetypes
+ <a href="#hhtc-element"><code>.h.htc</code></a>     element                  <a href="#hxd-xml"><code>.h.xd</code></a>      XML from data
+ <a href="#hhtml-document"><code>.h.html</code></a>    document                 <a href="#hxt-json"><code>.h.xt</code></a>      JSON
+ <a href="#hhttp-hyperlinks"><code>.h.http</code></a>    hyperlinks
+ <a href="#hlogo-kx-logo"><code>.h.logo</code></a>    KX logo                  Web Console
+ <a href="#hnbr-no-break"><code>.h.nbr</code></a>     no break                 <a href="#hc0-web-color"><code>.h.c0</code></a>    web color
+ <a href="#hpre-pre"><code>.h.pre</code></a>     pre                      <a href="#hc1-web-color"><code>.h.c1</code></a>    web color
+ <a href="#htext-paragraphs"><code>.h.text</code></a>    paragraphs               <a href="#hhome-webserver-root"><code>.h.HOME</code></a>  webserver root
+ <a href="#hxmp-xmp"><code>.h.xmp</code></a>     XMP                      <a href="#hsa-anchor-style"><code>.h.sa</code></a>    anchor style
+ <a href="#hxs-xml-escape"><code>.h.xs</code></a>      XML escape               <a href="#hsb-body-style"><code>.h.sb</code></a>    body style
+                                      <a href="#hval-value"><code>.h.val</code></a>   value
+HTTP
+ <a href="#hhe-http-400"><code>.h.he</code></a>      HTTP 400                URI formatting
+ <a href="#hhn-http-response"><code>.h.hn</code></a>      HTTP response            <a href="#hhu-uri-escape"><code>.h.hu</code></a>      URI escape
+ <a href="#hhp-http-response-pre"><code>.h.hp</code></a>      HTTP response pre        <a href="#hhug-uri-map"><code>.h.hug</code></a>     URI map
+ <a href="#hhy-http-response-content"><code>.h.hy</code></a>      HTTP response content    <a href="#hsc-uri-safe"><code>.h.sc</code></a>      URI-safe
+ <a href="#hka-http-keepalive"><code>.h.ka</code></a>      HTTP keep-alive          <a href="#huh-uri-unescape"><code>.h.uh</code></a>      URI unescape
+ <a href="#hty-mime-types"><code>.h.ty</code></a>      MIME types</p>
+</div>
+<p>The <code>.h</code> <a href="../../basics/namespaces/">namespace</a> contains objects for</p>
+<ul>
+<li>marking up strings as HTML</li>
+<li>converting data into various formats</li>
+<li>composing HTTP responses</li>
+<li>web-console display</li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">The <code>.h</code> namespace is reserved for use by KX, as are all single-letter namespaces.</p>
+<p>Consider all undocumented functions in the namespace as its private API | and do not use them.</p>
+</div>
+<h2 id="hbr-linebreak"><code>.h.br</code> (linebreak)<a class="headerlink" href="#hbr-linebreak" title="Permanent link">&para;</a></h2>
+<p>HTML linebreak (string), defaults to <code>"&lt;br&gt;"</code>.</p>
+<h2 id="hc0-web-color"><code>.h.c0</code> (web color)<a class="headerlink" href="#hc0-web-color" title="Permanent link">&para;</a></h2>
+<p>Color used by the web console (symbol), defaults to <code>`024C7E</code>.</p>
+<h2 id="hc1-web-color"><code>.h.c1</code> (web color)<a class="headerlink" href="#hc1-web-color" title="Permanent link">&para;</a></h2>
+<p>Color used by the web console (symbol), defaults to <code>`958600</code>.</p>
+<h2 id="hcd-csv-from-data"><code>.h.cd</code> (CSV from data)<a class="headerlink" href="#hcd-csv-from-data" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>.h.cd x
+</code></pre></div>
+<p>Where <code>x</code> is a table or a list of columns returns a matrix of comma-separated values.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="o">.</span><span class="n">h.cd</span><span class="w"> </span><span class="p">([]</span><span class="nv">a</span><span class="o">:</span><span class="il">1</span><span class="w"> </span><span class="il">2</span><span class="w"> </span><span class="il">3</span><span class="p">;</span><span class="nv">b</span><span class="o">:</span><span class="ss">`x`y`z</span><span class="p">)</span>
+<span class="s2">"a,b"</span>
+<span class="s2">"1,x"</span>
+<span class="s2">"2,y"</span>
+<span class="s2">"3,z"</span>
+
+<span class="gp">q)</span><span class="o">.</span><span class="n">h.cd</span><span class="w"> </span><span class="p">(</span><span class="ss">`a`b`c</span><span class="p">;</span><span class="il">1</span><span class="w"> </span><span class="il">2</span><span class="w"> </span><span class="il">3</span><span class="p">;</span><span class="s2">"xyz"</span><span class="p">)</span>
+<span class="s2">"a,1,x"</span>
+<span class="s2">"b,2,y"</span>
+<span class="s2">"c,3,z"</span>
+</code></pre></div>
+<p>Columns can be nested vectors, in which case <a href="#hd-delimiter"><code>.h.d</code></a> is used to separate subitems. (Since V4.0 2020.03.17.)</p>
+<p><a href="../file-text/#load-csv">0: load csv</a>, <a href="../save/#save">save</a> (save and format data)</p>
+<h2 id="hcode-code-after-tab"><code>.h.code</code> (code after Tab)<a class="headerlink" href="#hcode-code-after-tab" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>.h.code x
+</code></pre></div>
+<p>Where <code>x</code> is a string with embedded Tab characters, returns the string with alternating segments marked up as</p>
+<ul>
+<li>plain text</li>
+<li><code>code</code> and <code>nobr</code>.</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="o">.</span><span class="n">h.code</span><span class="w"> </span><span class="s2">"foo</span><span class="se">\t</span><span class="s2">bar"</span>
+<span class="s2">"foo &lt;code&gt;&lt;nobr&gt;bar&lt;/nobr&gt;&lt;/code&gt;"</span>
+<span class="gp">q)</span><span class="o">.</span><span class="n">h.code</span><span class="w"> </span><span class="s2">"foo</span><span class="se">\t</span><span class="s2">bar</span><span class="se">\t</span><span class="s2">abc</span><span class="se">\t</span><span class="s2">def"</span>
+<span class="s2">"foo &lt;code&gt;&lt;nobr&gt;bar&lt;/nobr&gt;&lt;/code&gt; abc &lt;code&gt;&lt;nobr&gt;def&lt;/nobr&gt;&lt;/code&gt;"</span>
+<span class="gp">q)</span><span class="o">.</span><span class="n">h.code</span><span class="w"> </span><span class="s2">"foo"</span>
+<span class="s2">"foo"</span>
+</code></pre></div>
+<h2 id="hd-delimiter"><code>.h.d</code> (delimiter)<a class="headerlink" href="#hd-delimiter" title="Permanent link">&para;</a></h2>
+<p>Delimiter used by <a href="#hcd-csv-from-data"><code>.h.cd</code></a> to join subitems of nested lists. Default is <code>" "</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="nb">show</span><span class="w"> </span><span class="nv">t</span><span class="o">:</span><span class="p">([</span><span class="nv">a</span><span class="o">:</span><span class="nb">til</span><span class="w"> </span><span class="il">3</span><span class="p">]</span><span class="nv">b</span><span class="o">:</span><span class="il">3</span><span class="w"> </span><span class="il">3</span><span class="o">#</span><span class="s2">"abc"</span><span class="p">;</span><span class="nv">c</span><span class="o">:</span><span class="il">3</span><span class="w"> </span><span class="il">3</span><span class="o">#</span><span class="il">1</span><span class="w"> </span><span class="il">2</span><span class="w"> </span><span class="il">3</span><span class="p">)</span>
+<span class="n">a</span><span class="o">|</span><span class="w"> </span><span class="n">b</span><span class="w">     </span><span class="n">c</span>
+<span class="o">-|</span><span class="w"> </span><span class="o">-----------</span>
+<span class="il">0</span><span class="o">|</span><span class="w"> </span><span class="s2">"abc"</span><span class="w"> </span><span class="il">1</span><span class="w"> </span><span class="il">2</span><span class="w"> </span><span class="il">3</span>
+<span class="il">1</span><span class="o">|</span><span class="w"> </span><span class="s2">"abc"</span><span class="w"> </span><span class="il">1</span><span class="w"> </span><span class="il">2</span><span class="w"> </span><span class="il">3</span>
+<span class="il">2</span><span class="o">|</span><span class="w"> </span><span class="s2">"abc"</span><span class="w"> </span><span class="il">1</span><span class="w"> </span><span class="il">2</span><span class="w"> </span><span class="il">3</span>
+
+<span class="gp">q)</span><span class="o">.</span><span class="n">h.d</span>
+<span class="s2">" "</span>
+<span class="gp">q)</span><span class="o">.</span><span class="n">h.cd</span><span class="w"> </span><span class="n">t</span>
+<span class="s2">"a,b,c"</span>
+<span class="s2">"0,abc,1 2 3"</span>
+<span class="s2">"1,abc,1 2 3"</span>
+<span class="s2">"2,abc,1 2 3"</span>
+
+<span class="gp">q)</span><span class="nv">.h.d</span><span class="o">:</span><span class="s2">"*"</span>
+<span class="gp">q)</span><span class="o">.</span><span class="n">h.cd</span><span class="w"> </span><span class="n">t</span>
+<span class="s2">"a,b,c"</span>
+<span class="s2">"0,abc,1*2*3"</span>
+<span class="s2">"1,abc,1*2*3"</span>
+<span class="s2">"2,abc,1*2*3"</span>
+</code></pre></div>
+<h2 id="hed-excel-from-data"><code>.h.ed</code> (Excel from data)<a class="headerlink" href="#hed-excel-from-data" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>.h.ed x
+</code></pre></div>
+<p>Where <code>x</code> is a table, returns as a list of strings the XML for an Excel workbook.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="o">.</span><span class="n">h.ed</span><span class="w"> </span><span class="p">([]</span><span class="nv">a</span><span class="o">:</span><span class="il">1</span><span class="w"> </span><span class="il">2</span><span class="w"> </span><span class="il">3</span><span class="p">;</span><span class="nv">b</span><span class="o">:</span><span class="ss">`x`y`z</span><span class="p">)</span>
+<span class="s2">"&lt;?xml version=</span><span class="se">\"</span><span class="s2">1.0</span><span class="se">\"</span><span class="s2">?&gt;&lt;?mso-application progid=</span><span class="se">\"</span><span class="s2">Excel.Sheet</span><span class="se">\"</span><span class="s2">?&gt;"</span>
+<span class="s2">"&lt;Workbook xmlns=</span><span class="se">\"</span><span class="s2">urn:schemas-microsoft-com:office:spreadsheet</span><span class="se">\"</span><span class="s2"> xmlns:o=</span><span class="se">\"</span><span class="s2">u..</span>
+</code></pre></div>
+<p><a href="../save/#save">save</a> (save and format data)</p>
+<h2 id="hedsn-excel-from-tables"><code>.h.edsn</code> (Excel from tables)<a class="headerlink" href="#hedsn-excel-from-tables" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>.h.edsn x!y
+</code></pre></div>
+<p>Where</p>
+<ul>
+<li><code>x</code> is a symbol vector</li>
+<li><code>y</code> is a conformable list of tables</li>
+</ul>
+<p>returns as a list of strings an XML document describing an Excel spreadsheet.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="nb">show</span><span class="w"> </span><span class="nv">t1</span><span class="o">:</span><span class="p">([]</span><span class="nv">sym</span><span class="o">:</span><span class="ss">`a`b`c`d`e`f</span><span class="p">;</span><span class="nv">price</span><span class="o">:</span><span class="mf">36.433</span><span class="w"> </span><span class="mf">30.327</span><span class="w"> </span><span class="mf">31.554</span><span class="w"> </span><span class="mf">29.277</span><span class="w"> </span><span class="mf">30.965</span><span class="w"> </span><span class="mf">33.028</span><span class="p">)</span>
+<span class="n">sym</span><span class="w"> </span><span class="n">price</span>
+<span class="o">----------</span>
+<span class="n">a</span><span class="w">   </span><span class="mf">36.433</span>
+<span class="n">b</span><span class="w">   </span><span class="mf">30.327</span>
+<span class="n">c</span><span class="w">   </span><span class="mf">31.554</span>
+<span class="n">d</span><span class="w">   </span><span class="mf">29.277</span>
+<span class="n">e</span><span class="w">   </span><span class="mf">30.965</span>
+<span class="n">f</span><span class="w">   </span><span class="mf">33.028</span>
+<span class="gp">q)</span><span class="nb">show</span><span class="w"> </span><span class="nv">t2</span><span class="o">:</span><span class="p">([]</span><span class="nv">sym</span><span class="o">:</span><span class="ss">`a`b`c`d`e`f</span><span class="p">;</span><span class="nv">price</span><span class="o">:</span><span class="mf">30.0</span><span class="w"> </span><span class="mf">40.0</span><span class="w"> </span><span class="mf">50.0</span><span class="w"> </span><span class="mf">60.0</span><span class="w"> </span><span class="mf">70.0</span><span class="w"> </span><span class="mf">80.0</span><span class="p">)</span>
+<span class="n">sym</span><span class="w"> </span><span class="n">price</span>
+<span class="o">---------</span>
+<span class="n">a</span><span class="w">   </span><span class="il">30</span>
+<span class="n">b</span><span class="w">   </span><span class="il">40</span>
+<span class="n">c</span><span class="w">   </span><span class="il">50</span>
+<span class="n">d</span><span class="w">   </span><span class="il">60</span>
+<span class="n">e</span><span class="w">   </span><span class="il">70</span>
+<span class="n">f</span><span class="w">   </span><span class="il">80</span>
+<span class="gp">q)</span><span class="o">.</span><span class="n">h.edsn</span><span class="w"> </span><span class="ss">`test1`test2</span><span class="o">!</span><span class="p">(</span><span class="n">t1</span><span class="p">;</span><span class="n">t2</span><span class="p">)</span>
+<span class="s2">"&lt;?xml version=</span><span class="se">\"</span><span class="s2">1.0</span><span class="se">\"</span><span class="s2">?&gt;&lt;?mso-application progid=</span><span class="se">\"</span><span class="s2">Excel.Sheet</span><span class="se">\"</span><span class="s2">?&gt;"</span>
+<span class="s2">"&lt;Workbook xmlns=</span><span class="se">\"</span><span class="s2">urn:schemas-microsoft-com:office:spreadsheet</span><span class="se">\"</span><span class="s2"> xmlns:ss=</span><span class="se">\"</span><span class="s2">..</span>
+<span class="s2">q)`:/Users/sjt/tmp/excel.xls 0: .h.edsn `test1`test2!(t1;t2)</span>
+<span class="s2">`:/Users/sjt/tmp/excel.xls</span>
+</code></pre></div>
+<p><img alt="excel.xls" src="../img/h.edsn.png" title="Excel spreadsheet" /></p>
+<p><a href="../save/#save">save</a> (save and format data)</p>
+<h2 id="hfram-frame"><code>.h.fram</code> (frame)<a class="headerlink" href="#hfram-frame" title="Permanent link">&para;</a></h2>
+<p><em>HTML page with two frames</em></p>
+<div class="highlight"><pre><span></span><code>.h.fram[t;s;(l;r)]
+</code></pre></div>
+<p>Where</p>
+<ul>
+<li><code>t</code> is the page title (string)</li>
+<li><code>s</code> is a list of strings</li>
+<li><code>l</code> and <code>r</code> are respectively the sources of the left and right frames (strings)</li>
+</ul>
+<p>returns as a string an HTML page with two frames in a frameset wide enough to accommodate the lines of <code>s</code>.</p>
+<p>Example: suppose <code>tmp.htm</code> contains the content for the first frame.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="ss">`tmp.txt</span><span class="o">:</span><span class="w"> </span><span class="il">0</span><span class="o">:</span><span class="m">0N</span><span class="o">!</span><span class="nv">s</span><span class="o">:</span><span class="s2">" "</span><span class="nb">sv</span><span class="o">'</span><span class="il">2</span><span class="o">#''</span><span class="nb">string</span><span class="w"> </span><span class="il">5</span><span class="w"> </span><span class="il">10</span><span class="o">#</span><span class="il">50</span><span class="o">?</span><span class="il">100</span>
+<span class="s2">"12 10 11 90 73 90 43 90 84 63"</span>
+<span class="s2">"93 54 38 97 88 58 68 45 22 39"</span>
+<span class="s2">"64 49 82 40 88 77 30 17 23 12"</span>
+<span class="s2">"66 36 37 44 28 20 30 34 77 61"</span>
+<span class="s2">"70 36 12 97 92 99 45 83 94 88"</span>
+<span class="gp">q)</span><span class="o">.</span><span class="n">h.fram</span><span class="p">[</span><span class="s2">"Five rows"</span><span class="p">;</span><span class="n">s</span><span class="p">;(</span><span class="s2">"tmpl.htm"</span><span class="p">;</span><span class="s2">"tmp.txt"</span><span class="p">)]</span>
+<span class="s2">"&lt;html&gt;&lt;head&gt;&lt;title&gt;Five rows&lt;/title&gt;&lt;frameset cols=</span><span class="se">\"</span><span class="s2">316,*</span><span class="se">\"</span><span class="s2">&gt;&lt;frame</span>
+<span class="s2">src=</span><span class="se">\"</span><span class="s2">tmp.htm</span><span class="se">\"</span><span class="s2">&gt;&lt;frame name=v src=</span><span class="se">\"</span><span class="s2">tmp.txt</span><span class="se">\"</span><span class="s2">&gt;&lt;/frameset&gt;&lt;/head&gt;&lt;/html&gt;"</span>
+</code></pre></div>
+<h2 id="hha-anchor"><code>.h.ha</code> (anchor)<a class="headerlink" href="#hha-anchor" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>.h.ha[x;y]
+</code></pre></div>
+<p>Where <code>x</code> is the <code>href</code> attribute as a symbol atom or a string, and <code>y</code> is the link text as a string, returns as a string an HTML <code>A</code> element.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="o">.</span><span class="n">h.ha</span><span class="p">[</span><span class="ss">`http</span><span class="o">://</span><span class="n">www.example.com</span><span class="p">;</span><span class="s2">"Example.com Main Page"</span><span class="p">]</span>
+<span class="s2">"&lt;a href=http://www.example.com&gt;Example.com Main Page&lt;/a&gt;"</span>
+<span class="gp">q)</span><span class="o">.</span><span class="n">h.ha</span><span class="p">[</span><span class="s2">"http://www.example.com"</span><span class="p">;</span><span class="s2">"Example.com Main Page"</span><span class="p">]</span>
+<span class="s2">"&lt;a href=</span><span class="se">\"</span><span class="s2">http://www.example.com</span><span class="se">\"</span><span class="s2">&gt;Example.com Main Page&lt;/a&gt;"</span>
+</code></pre></div>
+<h2 id="hhb-anchor-target"><code>.h.hb</code> (anchor target)<a class="headerlink" href="#hhb-anchor-target" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>.h.hb[x;y]
+</code></pre></div>
+<p>Same as <code>.h.ha</code>, but adds a <code>target=v</code> attribute to the tag.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="o">.</span><span class="n">h.hb</span><span class="p">[</span><span class="s2">"http://www.example.com"</span><span class="p">;</span><span class="s2">"Example.com Main Page"</span><span class="p">]</span>
+<span class="s2">"&lt;a target=v href=</span><span class="se">\"</span><span class="s2">http://www.example.com</span><span class="se">\"</span><span class="s2">&gt;Example.com Main Page&lt;/a&gt;"</span>
+</code></pre></div>
+<h2 id="hhc-escape-lt"><code>.h.hc</code> (escape lt)<a class="headerlink" href="#hhc-escape-lt" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>.h.hc x
+</code></pre></div>
+<p>Where <code>x</code> is a string, returns <code>x</code> with any <code>&lt;</code> chars escaped.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="o">.</span><span class="n">h.hc</span><span class="w"> </span><span class="s2">"&lt;foo&gt;"</span>
+<span class="s2">"&amp;lt;foo&gt;"</span>
+</code></pre></div>
+<h2 id="hhe-http-400"><code>.h.he</code> (HTTP 400)<a class="headerlink" href="#hhe-http-400" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>.h.he x
+</code></pre></div>
+<p>Where <code>x</code> is a string, escapes <code>"&lt;"</code> characters, adds a <code>"'"</code> at the front, and returns an HTTP 400 error (Bad Request) with that content.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="o">.</span><span class="n">h.he</span><span class="w"> </span><span class="s2">"&lt;rubbish&gt;"</span>
+<span class="s2">"HTTP/1.1 400 Bad Request</span><span class="se">\r\n</span><span class="s2">Content-Type: text/plain</span><span class="se">\r\n</span><span class="s2">Connection: close</span><span class="se">\r\.</span><span class="s2">.</span>
+</code></pre></div>
+<h2 id="hhn-http-response"><code>.h.hn</code> (HTTP response)<a class="headerlink" href="#hhn-http-response" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>.h.hn[x;y;z]
+</code></pre></div>
+<p>Where</p>
+<ul>
+<li><code>x</code> is the <a href="https://en.wikipedia.org/wiki/List_of_HTTP_status_codes">HTTP status code</a> (string)</li>
+<li><code>y</code> is a <a href="#hty-mime-types">MIME type</a> (symbol) corresponding to a key from the <a href="#hty-mime-types"><code>.h.ty</code></a> (MIME types) dictionary. If the type is not found in <code>h.ty</code> it defaults to populating the resulting MIME type with <code>application/octet-stream</code>.</li>
+<li><code>z</code> is the content (string). Since 4.1 2025.11.25, a byte vector is also accepted.</li>
+</ul>
+<p>returns as a string an HTTP error response.</p>
+<p>For example, a request for favicon.ico could be programmed to have a 'not found' response using the 404 HTTP code.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="o">.</span><span class="n">h.hn</span><span class="p">[</span><span class="s2">"404"</span><span class="p">;</span><span class="ss">`txt</span><span class="p">;</span><span class="s2">"Not found: favicon.ico"</span><span class="p">]</span>
+<span class="s2">"HTTP/1.1 404</span><span class="se">\r\n</span><span class="s2">Content-Type: text/plain</span><span class="se">\r\n</span><span class="s2">Connection: close</span><span class="se">\r\n</span><span class="s2">Content-Length: 22</span><span class="se">\r\n\r\n</span><span class="s2">Not found: favicon.ico"</span>
+</code></pre></div>
+<p>A request for the binary file 'test.exe' could generate a response using <a href="../read1/">read1</a> to read the binary file before <a href="../cast/">casting</a> the bytes to a string.
+An empty string is passed as a MIME type to <code>.h.hn</code> to allow it to default to <code>application/octet-stream</code>, which is appropriate for a binary file.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="o">.</span><span class="n">h.hn</span><span class="p">[</span><span class="s2">"200"</span><span class="p">;</span><span class="ss">`</span><span class="p">;</span><span class="mi">10h</span><span class="o">$</span><span class="nb">read1</span><span class="ss">`:test.exe</span><span class="p">]</span>
+<span class="s2">"HTTP/1.1 200</span><span class="se">\r\n</span><span class="s2">Content-Type: application/octet-stream</span><span class="se">\r\n</span><span class="s2">Connection: close</span><span class="se">\r\n</span><span class="s2">Content-Length: 164</span><span class="se">\r\n\r\n</span><span class="s2">PK</span><span class="se">\0</span><span class="s2">03</span><span class="se">\0</span><span class="s2">04</span><span class="se">\n\0</span><span class="s2">00</span><span class="se">\0</span><span class="s2">00</span><span class="se">\0</span><span class="s2">00</span><span class="se">\0</span><span class="s2">00</span><span class="se">\0</span><span class="s2">00</span><span class="se">\0</span><span class="s2">04^</span><span class="se">\0</span><span class="s2">05[</span><span class="se">\0</span><span class="s2">33</span><span class="se">\0</span><span class="s2">13</span><span class="se">\2</span><span class="s2">51;</span><span class="se">\0</span><span class="s2">10</span><span class="se">\0</span><span class="s2">00</span><span class="se">\0</span><span class="s2">00</span><span class="se">\0</span><span class="s2">00</span><span class="se">\0</span><span class="s2">10</span><span class="se">\0</span><span class="s2">00</span><span class="se">\0</span><span class="s2">00</span><span class="se">\0</span><span class="s2">00</span><span class="se">\0</span><span class="s2">03</span><span class="se">\0</span><span class="s2">00</span><span class="se">\0</span><span class="s2">34</span><span class="se">\0</span><span class="s2">00txtUT</span><span class="se">\t\0</span><span class="s2">00</span><span class="se">\0</span><span class="s2">03g</span><span class="se">\3</span><span class="s2">41</span><span class="se">\2</span><span class="s2">21h</span><span class="se">\2</span><span class="s2">03</span><span class="se">\3</span><span class="s2">41</span><span class="se">\2</span><span class="s2">21hux</span><span class="se">\0</span><span class="s2">13</span><span class="se">\0</span><span class="s2">00</span><span class="se">\0</span><span class="s2">01</span><span class="se">\0</span><span class="s2">04</span><span class="se">\3</span><span class="s2">65</span><span class="se">\0</span><span class="s2">01</span><span class="se">\0</span><span class="s2">00</span><span class="se">\0</span><span class="s2">00</span><span class="se">\0</span><span class="s2">04</span><span class="se">\0</span><span class="s2">00</span><span class="se">\0</span><span class="s2">00</span><span class="se">\0</span><span class="s2">00</span><span class="se">\0</span><span class="s2">00aaa bbb</span><span class="se">\n</span><span class="s2">PK</span><span class="se">\0</span><span class="s2">01</span><span class="se">\0</span><span class="s2">02</span><span class="se">\0</span><span class="s2">36</span><span class="se">\0</span><span class="s2">03</span><span class="se">\n\0</span><span class="s2">00</span><span class="se">\0</span><span class="s2">00</span><span class="se">\0</span><span class="s2">00</span><span class="se">\0</span><span class="s2">00</span><span class="se">\0</span><span class="s2">00</span><span class="se">\0</span><span class="s2">04^</span><span class="se">\0</span><span class="s2">05[</span><span class="se">\0</span><span class="s2">33</span><span class="se">\0</span><span class="s2">13</span><span class="se">\2</span><span class="s2">51;</span><span class="se">\0</span><span class="s2">10</span><span class="se">\0</span><span class="s2">00</span><span class="se">\0</span><span class="s2">00</span><span class="se">\0</span><span class="s2">00</span><span class="se">\0</span><span class="s2">10</span><span class="se">\0</span><span class="s2">00</span><span class="se">\0</span><span class="s2">00</span><span class="se">\0</span><span class="s2">00</span><span class="se">\0</span><span class="s2">03</span><span class="se">\0</span><span class="s2">00</span><span class="se">\0</span><span class="s2">30</span><span class="se">\0</span><span class="s2">00</span><span class="se">\0</span><span class="s2">00</span><span class="se">\0</span><span class="s2">00</span><span class="se">\0</span><span class="s2">00</span><span class="se">\0</span><span class="s2">00</span><span class="se">\0</span><span class="s2">01</span><span class="se">\0</span><span class="s2">00</span><span class="se">\0</span><span class="s2">00</span><span class="se">\0</span><span class="s2">00</span><span class="se">\2</span><span class="s2">44</span><span class="se">\2</span><span class="s2">01</span><span class="se">\0</span><span class="s2">00</span><span class="se">\0</span><span class="s2">00</span><span class="se">\0</span><span class="s2">00</span><span class="se">\0</span><span class="s2">00txtUT</span><span class="se">\0</span><span class="s2">05</span><span class="se">\0</span><span class="s2">00</span><span class="se">\0</span><span class="s2">03g</span><span class="se">\3</span><span class="s2">41</span><span class="se">\2</span><span class="s2">21hux</span><span class="se">\0</span><span class="s2">13</span><span class="se">\0</span><span class="s2">00</span><span class="se">\0</span><span class="s2">01</span><span class="se">\0</span><span class="s2">04</span><span class="se">\3</span><span class="s2">65</span><span class="se">\0</span><span class="s2">01</span><span class="se">\0</span><span class="s2">00</span><span class="se">\0</span><span class="s2">00</span><span class="se">\0</span><span class="s2">04</span><span class="se">\0</span><span class="s2">00</span><span class="se">\0</span><span class="s2">00</span><span class="se">\0</span><span class="s2">00</span><span class="se">\0</span><span class="s2">00PK</span><span class="se">\0</span><span class="s2">05</span><span class="se">\0</span><span class="s2">06</span><span class="se">\0</span><span class="s2">00</span><span class="se">\0</span><span class="s2">00</span><span class="se">\0</span><span class="s2">00</span><span class="se">\0</span><span class="s2">00</span><span class="se">\0</span><span class="s2">01</span><span class="se">\0</span><span class="s2">00</span><span class="se">\0</span><span class="s2">01</span><span class="se">\0</span><span class="s2">00I</span><span class="se">\0</span><span class="s2">00</span><span class="se">\0</span><span class="s2">00</span><span class="se">\0</span><span class="s2">00E</span><span class="se">\0</span><span class="s2">00</span><span class="se">\0</span><span class="s2">00</span><span class="se">\0</span><span class="s2">00</span><span class="se">\0</span><span class="s2">00</span><span class="se">\0</span><span class="s2">00"</span>
+</code></pre></div>
+<h2 id="hhp-http-response-pre"><code>.h.hp</code> (HTTP response pre)<a class="headerlink" href="#hhp-http-response-pre" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>.h.hp x
+</code></pre></div>
+<p>Where <code>x</code> is a list of strings, returns as a string a valid HTTP response displaying them as a <code>pre</code> element in an HTML document.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="il">1</span><span class="w"> </span><span class="o">.</span><span class="n">h.hp</span><span class="s2">" "</span><span class="nb">sv</span><span class="o">'</span><span class="il">2</span><span class="o">#''</span><span class="nb">string</span><span class="w"> </span><span class="il">5</span><span class="w"> </span><span class="il">10</span><span class="o">#</span><span class="il">50</span><span class="o">?</span><span class="il">100</span><span class="p">;</span>
+<span class="n">HTTP</span><span class="o">/</span><span class="mf">1.1</span><span class="w"> </span><span class="il">200</span><span class="w"> </span><span class="n">OK</span>
+<span class="n">Content</span><span class="o">-</span><span class="nv">Type</span><span class="o">:</span><span class="w"> </span><span class="n">text</span><span class="o">/</span><span class="n">html</span>
+<span class="nv">Connection</span><span class="o">:</span><span class="w"> </span><span class="n">close</span>
+<span class="n">Content</span><span class="o">-</span><span class="nv">Length</span><span class="o">:</span><span class="w"> </span><span class="il">257</span>
+
+<span class="o">&lt;</span><span class="n">html</span><span class="o">&gt;&lt;</span><span class="n">head</span><span class="o">&gt;&lt;</span><span class="n">style</span><span class="o">&gt;</span><span class="n">body</span><span class="p">{</span><span class="nv">font</span><span class="o">:</span><span class="il">10p</span><span class="n">t</span><span class="w"> </span><span class="n">verdana</span><span class="p">;</span><span class="n">text</span><span class="o">-</span><span class="nv">align</span><span class="o">:</span><span class="n">justify</span><span class="p">}</span><span class="o">&lt;/</span><span class="n">style</span><span class="o">&gt;&lt;/</span><span class="n">head</span><span class="o">&gt;&lt;</span><span class="n">body</span><span class="o">&gt;&lt;</span><span class="n">pre</span><span class="o">&gt;</span><span class="il">89</span><span class="w"> </span><span class="il">97</span><span class="w"> </span><span class="il">11</span><span class="w"> </span><span class="il">99</span><span class="w"> </span><span class="il">33</span><span class="w"> </span><span class="il">77</span><span class="w"> </span><span class="il">98</span><span class="w"> </span><span class="il">30</span><span class="w"> </span><span class="il">22</span><span class="w"> </span><span class="il">15</span>
+<span class="il">28</span><span class="w"> </span><span class="il">17</span><span class="w"> </span><span class="il">11</span><span class="w"> </span><span class="il">55</span><span class="w"> </span><span class="il">51</span><span class="w"> </span><span class="il">81</span><span class="w"> </span><span class="il">68</span><span class="w"> </span><span class="il">96</span><span class="w"> </span><span class="il">61</span><span class="w"> </span><span class="il">70</span>
+<span class="il">70</span><span class="w"> </span><span class="il">39</span><span class="w"> </span><span class="il">76</span><span class="w"> </span><span class="il">26</span><span class="w"> </span><span class="il">91</span><span class="w"> </span><span class="il">83</span><span class="w"> </span><span class="il">76</span><span class="w"> </span><span class="il">88</span><span class="w"> </span><span class="il">44</span><span class="w"> </span><span class="il">56</span>
+<span class="il">32</span><span class="w"> </span><span class="il">30</span><span class="w"> </span><span class="il">97</span><span class="w"> </span><span class="il">31</span><span class="w"> </span><span class="il">96</span><span class="w"> </span><span class="il">53</span><span class="w"> </span><span class="il">47</span><span class="w"> </span><span class="il">65</span><span class="w"> </span><span class="il">34</span><span class="w"> </span><span class="il">50</span>
+<span class="il">96</span><span class="w"> </span><span class="il">99</span><span class="w"> </span><span class="il">13</span><span class="w"> </span><span class="il">72</span><span class="w"> </span><span class="il">81</span><span class="w"> </span><span class="il">70</span><span class="w"> </span><span class="il">33</span><span class="w"> </span><span class="il">99</span><span class="w"> </span><span class="il">56</span><span class="w"> </span><span class="il">12</span>
+<span class="o">&lt;/</span><span class="n">pre</span><span class="o">&gt;&lt;/</span><span class="n">body</span><span class="o">&gt;&lt;/</span><span class="n">html</span><span class="o">&gt;</span>
+</code></pre></div>
+<h2 id="hhr-horizontal-rule"><code>.h.hr</code> (horizontal rule)<a class="headerlink" href="#hhr-horizontal-rule" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>.h.hr x
+</code></pre></div>
+<p>Where <code>x</code> is a string, returns a string of the same length filled with <code>"-"</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="o">.</span><span class="n">h.hr</span><span class="w"> </span><span class="s2">"foo"</span>
+<span class="s2">"---"</span>
+</code></pre></div>
+<h2 id="hht-marqdown-to-html"><code>.h.ht</code> (Marqdown to HTML)<a class="headerlink" href="#hht-marqdown-to-html" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>.h.ht x
+</code></pre></div>
+<p>HTML documentation generator: <!-- for <a href="https://kx.com/q/d/">https://kx.com/q/d/</a> -->
+where <code>x</code> is a symbol atom, reads file <code>:src/x.txt</code> and writes file <code>:x.htm</code>.
+(Marqdown is a rudimentary form of Markdown.)</p>
+<ul>
+<li>edit <code>src/mydoc.txt</code></li>
+<li><code>q).h.ht`mydoc</code></li>
+<li>browse <code>mydoc.htm</code> (<code>a/_mydoc.htm</code> is navigation frame, <code>a/mydoc.htm</code> is content frame)</li>
+</ul>
+<p>Basic Marqdown formatting rules:</p>
+<ul>
+<li>Paragraph text starts at the beginning of the line.</li>
+<li>Lines beginning with <code>"."</code> are treated as section headings.</li>
+<li>Lines beginning with <code>"\t"</code> get wrapped in <code>code</code> tags</li>
+<li>Line data beginning with <code>" "</code> get wrapped in <code>xmp</code> tags</li>
+<li>If second line of data starts with <code>"-"</code>, draw a horizontal rule to format the header</li>
+<li>Aligns two-column data if 2nd column starts with <code>"\t "</code></li>
+</ul>
+<h2 id="hhta-start-tag"><code>.h.hta</code> (start tag)<a class="headerlink" href="#hhta-start-tag" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>.h.hta[x;y]
+</code></pre></div>
+<p>Where <code>x</code> is the element as a symbol atom, and <code>y</code> is a dictionary of attributes and values, returns as a string an opening HTML tag for element <code>x</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="o">.</span><span class="n">h.hta</span><span class="p">[</span><span class="ss">`a</span><span class="p">;(</span><span class="ss">`href`target</span><span class="p">)</span><span class="o">!</span><span class="p">(</span><span class="s2">"http://www.example.com"</span><span class="p">;</span><span class="s2">"_blank"</span><span class="p">)]</span>
+<span class="s2">"&lt;a href=</span><span class="se">\"</span><span class="s2">http://www.example.com</span><span class="se">\"</span><span class="s2"> target=</span><span class="se">\"</span><span class="s2">_blank</span><span class="se">\"</span><span class="s2">&gt;"</span>
+</code></pre></div>
+<h2 id="hhtac-element"><code>.h.htac</code> (element)<a class="headerlink" href="#hhtac-element" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>.h.htac[x;y;z]
+</code></pre></div>
+<p>Where <code>x</code> is the element as a symbol atom, <code>y</code> is a dictionary of attributes and their values, and <code>z</code> is the content of the node as a string, returns as a string the HTML element.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="o">.</span><span class="n">h.htac</span><span class="p">[</span><span class="ss">`a</span><span class="p">;(</span><span class="ss">`href`target</span><span class="p">)</span><span class="o">!</span><span class="p">(</span><span class="s2">"http://www.example.com"</span><span class="p">;</span><span class="s2">"_blank"</span><span class="p">);</span><span class="s2">"Example.com Main Page"</span><span class="p">]</span>
+<span class="s2">"&lt;a href=</span><span class="se">\"</span><span class="s2">http://www.example.com</span><span class="se">\"</span><span class="s2"> target=</span><span class="se">\"</span><span class="s2">_blank</span><span class="se">\"</span><span class="s2">&gt;Example.com Main Page&lt;/..</span>
+</code></pre></div>
+<h2 id="hhtc-element"><code>.h.htc</code> (element)<a class="headerlink" href="#hhtc-element" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>.h.htc[x;y]
+</code></pre></div>
+<p>Where <code>x</code> is the HTML element as a symbol atom, and <code>y</code> is the content of the node as a string, returns as a string the HTML node.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="o">.</span><span class="n">h.htc</span><span class="p">[</span><span class="ss">`tag</span><span class="p">;</span><span class="s2">"value"</span><span class="p">]</span>
+<span class="s2">"&lt;tag&gt;value&lt;/tag&gt;"</span>
+</code></pre></div>
+<h2 id="hhtml-document"><code>.h.html</code> (document)<a class="headerlink" href="#hhtml-document" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>.h.html x
+</code></pre></div>
+<p>Where <code>x</code> is the body of an HTML document as a string, returns as a string an HTML document with fixed style rules.</p>
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">style</span><span class="p">&gt;</span>
+<span class="w">      </span><span class="nt">a</span><span class="p">{</span><span class="k">text-decoration</span><span class="p">:</span><span class="kc">none</span><span class="p">}</span><span class="nt">a</span><span class="p">:</span><span class="nd">link</span><span class="p">{</span><span class="k">color</span><span class="p">:</span><span class="mi">024</span><span class="n">C7E</span><span class="p">}</span><span class="nt">a</span><span class="p">:</span><span class="nd">visited</span><span class="p">{</span><span class="k">color</span><span class="p">:</span><span class="mi">024</span><span class="n">C7E</span><span class="p">}</span><span class="nt">a</span><span class="p">:</span><span class="nd">active</span><span class="p">{</span><span class="k">color</span><span class="p">:</span><span class="mi">958600</span><span class="p">}</span><span class="nt">body</span><span class="p">{</span><span class="k">font</span><span class="p">:</span><span class="mi">10</span><span class="kt">pt</span><span class="w"> </span><span class="n">verdana</span><span class="p">;</span><span class="k">text-align</span><span class="p">:</span><span class="kc">justify</span><span class="p">}</span>
+<span class="w">    </span><span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
+   <span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+   <span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+     BODY
+   <span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="o">.</span><span class="n">h.html</span><span class="w"> </span><span class="s2">"&lt;p&gt;Hello world!&lt;/p&gt;"</span>
+<span class="s2">"&lt;html&gt;&lt;head&gt;&lt;style&gt;a{text-decoration:none}a:link{color:024C7E}a:visited{colo..</span>
+</code></pre></div>
+<h2 id="hhttp-hyperlinks"><code>.h.http</code> (hyperlinks)<a class="headerlink" href="#hhttp-hyperlinks" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>.h.http x
+</code></pre></div>
+<p>Where <code>x</code> is a string, returns <code>x</code> with embedded URLs beginning <code>"http://"</code> converted to HTML hyperlinks.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="o">.</span><span class="n">h.http</span><span class="w"> </span><span class="s2">"The main page is http://www.example.com"</span>
+<span class="s2">"The main page is &lt;a href=</span><span class="se">\"</span><span class="s2">http://www.example.com</span><span class="se">\"</span><span class="s2">&gt;http://www.example.com&lt;/..</span>
+</code></pre></div>
+<h2 id="hhu-uri-escape"><code>.h.hu</code> (URI escape)<a class="headerlink" href="#hhu-uri-escape" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>.h.hu x
+</code></pre></div>
+<p>Where <code>x</code> is a string, returns <code>x</code> with URI-unsafe characters replaced with safe equivalents.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="o">.</span><span class="n">h.hu</span><span class="w"> </span><span class="s2">"http://www.kx.com"</span>
+<span class="s2">"http%3a%2f%2fwww.kx.com"</span>
+</code></pre></div>
+<h2 id="hhug-uri-map"><code>.h.hug</code> (URI map)<a class="headerlink" href="#hhug-uri-map" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>.h.hug x
+</code></pre></div>
+<p>Where <code>x</code> is a char vector, returns a mapping from characters to <code>%</code><em>xx</em> escape sequences <em>except</em> for the chars in <code>x</code>, which get mapped to themselves.</p>
+<h2 id="hhy-http-response-content"><code>.h.hy</code> (HTTP response content)<a class="headerlink" href="#hhy-http-response-content" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>.h.hy[x;y]
+</code></pre></div>
+<p>Where</p>
+<ul>
+<li><code>x</code> is a <a href="#hty-mime-types">MIME type</a> (symbol) corresponding to a key from the <a href="#hty-mime-types"><code>.h.ty</code></a> (MIME types) dictionary. If the type is not found in <code>h.ty</code> it defaults to populating the resulting MIME type with <code>application/octet-stream</code>.</li>
+<li><code>y</code> is a string. Since 4.1 2025.11.25, a byte vector is also accepted.</li>
+</ul>
+<p>returns as a string an HTTP response for <code>y</code> as content-type <code>x</code> with a "200 OK" HTTP response status.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="nb">show</span><span class="w"> </span><span class="nv">t</span><span class="o">:</span><span class="p">([]</span><span class="nv">idx</span><span class="o">:</span><span class="w"> </span><span class="il">1</span><span class="w"> </span><span class="il">2</span><span class="w"> </span><span class="il">3</span><span class="w"> </span><span class="il">4</span><span class="w"> </span><span class="il">5</span><span class="p">;</span><span class="nv">val</span><span class="o">:</span><span class="w"> </span><span class="ss">`a`b`c`d`e</span><span class="p">)</span>
+<span class="n">idx</span><span class="w"> </span><span class="n">val</span>
+<span class="o">-------</span>
+<span class="il">1</span><span class="w">   </span><span class="n">a</span>
+<span class="il">2</span><span class="w">   </span><span class="n">b</span>
+<span class="il">3</span><span class="w">   </span><span class="n">c</span>
+<span class="il">4</span><span class="w">   </span><span class="n">d</span>
+<span class="il">5</span><span class="w">   </span><span class="n">e</span>
+<span class="gp">q)</span><span class="nb">show</span><span class="w"> </span><span class="nv">r</span><span class="o">:</span><span class="w"> </span><span class="o">.</span><span class="n">h.hy</span><span class="p">[</span><span class="ss">`json</span><span class="p">]</span><span class="w"> </span><span class="o">.</span><span class="n">j.j</span><span class="w"> </span><span class="il">0</span><span class="o">!</span><span class="w"> </span><span class="ow">select</span><span class="w"> </span><span class="nb">count</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="ow">by</span><span class="w"> </span><span class="n">val</span><span class="w"> </span><span class="ow">from</span><span class="w"> </span><span class="n">t</span>
+<span class="s2">"HTTP/1.1 200 OK</span><span class="se">\r\n</span><span class="s2">Content-Type: application/json</span><span class="se">\r\n</span><span class="s2">Connection: close</span><span class="se">\r\n</span><span class="s2">Co..</span>
+<span class="s2">q)`:test.txt 0: enlist r</span>
+<span class="s2">`:test.txt</span>
+<span class="s2">q)</span><span class="se">\h</span><span class="s2">ead test.txt</span>
+<span class="s2">"</span><span class="n">HTTP</span><span class="o">/</span><span class="mf">1.1</span><span class="w"> </span><span class="il">200</span><span class="w"> </span><span class="n">OK</span><span class="s2">"</span>
+<span class="s2">"</span><span class="n">Content</span><span class="o">-</span><span class="nv">Type</span><span class="o">:</span><span class="w"> </span><span class="n">application</span><span class="o">/</span><span class="n">json</span><span class="s2">"</span>
+<span class="s2">"</span><span class="nv">Connection</span><span class="o">:</span><span class="w"> </span><span class="n">close</span><span class="s2">"</span>
+<span class="s2">"</span><span class="n">Content</span><span class="o">-</span><span class="nv">Length</span><span class="o">:</span><span class="w"> </span><span class="il">99</span><span class="s2">"</span>
+<span class="s2">""</span>
+<span class="s2">"</span><span class="p">[{</span><span class="o">\</span><span class="s2">"val</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">a</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">x</span><span class="se">\"</span><span class="s2">:1},"</span>
+<span class="s2">" {</span><span class="se">\"</span><span class="s2">val</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">b</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">x</span><span class="se">\"</span><span class="s2">:1},"</span>
+<span class="s2">" {</span><span class="se">\"</span><span class="s2">val</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">c</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">x</span><span class="se">\"</span><span class="s2">:1},"</span>
+<span class="s2">" {</span><span class="se">\"</span><span class="s2">val</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">d</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">x</span><span class="se">\"</span><span class="s2">:1},"</span>
+<span class="s2">" {</span><span class="se">\"</span><span class="s2">val</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">e</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">x</span><span class="se">\"</span><span class="s2">:1}]"</span>
+</code></pre></div>
+<h2 id="hhome-webserver-root"><code>.h.HOME</code> (webserver root)<a class="headerlink" href="#hhome-webserver-root" title="Permanent link">&para;</a></h2>
+<p>String: location of the webserver root.</p>
+<p><a href="../kb/http.md">HTTP</a></p>
+<h2 id="hiso8601-iso-timestamp"><code>.h.iso8601</code> (ISO timestamp)<a class="headerlink" href="#hiso8601-iso-timestamp" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>.h.iso8601 x
+</code></pre></div>
+<p>Where <code>x</code> is nanoseconds since 2000.01.01 as an int atom, returns as a string a timestamp in ISO-8601 format.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="o">.</span><span class="n">h.iso8601</span><span class="w"> </span><span class="il">100</span>
+<span class="s2">"2000-01-01T00:00:00.000000100"</span>
+</code></pre></div>
+<h2 id="hjx-table"><code>.h.jx</code> (table)<a class="headerlink" href="#hjx-table" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>.h.jx[x;y]
+</code></pre></div>
+<p>Where <code>x</code> is an int atom, and <code>y</code> is the name of a table, returns a list of strings representing the records of <code>y</code>, starting from row <code>x</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="nv">a</span><span class="o">:</span><span class="p">([]</span><span class="w"> </span><span class="nv">a</span><span class="o">:</span><span class="il">100</span><span class="o">*</span><span class="nb">til</span><span class="w"> </span><span class="il">1000</span><span class="p">;</span><span class="nv">b</span><span class="o">:</span><span class="il">1000</span><span class="o">?</span><span class="il">1000</span><span class="p">;</span><span class="nv">c</span><span class="o">:</span><span class="il">1000</span><span class="o">?</span><span class="il">1000</span><span class="p">)</span>
+<span class="gp">q)</span><span class="p">{(</span><span class="nb">where</span><span class="w"> </span><span class="n">x</span><span class="o">=</span><span class="s2">"&lt;"</span><span class="p">)</span><span class="o">_</span><span class="n">x</span><span class="p">}</span><span class="nb">first</span><span class="w"> </span><span class="o">.</span><span class="n">h.jx</span><span class="p">[</span><span class="il">0</span><span class="p">;</span><span class="ss">`a</span><span class="p">]</span>
+<span class="s2">"&lt;a href=</span><span class="se">\"</span><span class="s2">?[0</span><span class="se">\"</span><span class="s2">&gt;home"</span>
+<span class="s2">"&lt;/a&gt; "</span>
+<span class="s2">"&lt;a href=</span><span class="se">\"</span><span class="s2">?[0</span><span class="se">\"</span><span class="s2">&gt;up"</span>
+<span class="s2">"&lt;/a&gt; "</span>
+<span class="s2">"&lt;a href=</span><span class="se">\"</span><span class="s2">?[32</span><span class="se">\"</span><span class="s2">&gt;down"</span>
+<span class="s2">"&lt;/a&gt; "</span>
+<span class="s2">"&lt;a href=</span><span class="se">\"</span><span class="s2">?[968</span><span class="se">\"</span><span class="s2">&gt;end"</span>
+<span class="s2">"&lt;/a&gt; 1000[0]"</span>
+<span class="gp">q)</span><span class="il">1</span><span class="o">_.</span><span class="n">h.jx</span><span class="p">[</span><span class="il">5</span><span class="p">;</span><span class="ss">`a</span><span class="p">]</span>
+<span class="s2">""</span>
+<span class="s2">"a    b   c  "</span>
+<span class="s2">"------------"</span>
+<span class="s2">"500  904 34 "</span>
+<span class="s2">"600  251 912"</span>
+<span class="s2">"700  584 388"</span>
+<span class="s2">"800  810 873"</span>
+<span class="s2">"900  729 430"</span>
+<span class="s2">"1000 210 148"</span>
+<span class="s2">"1100 645 499"</span>
+<span class="s2">"1200 898 285"</span>
+<span class="s2">"1300 20  279"</span>
+<span class="s2">"1400 686 267"</span>
+<span class="s2">"1500 894 668"</span>
+<span class="s2">"1600 879 611"</span>
+<span class="s2">"1700 350 352"</span>
+<span class="s2">"1800 254 600"</span>
+<span class="s2">"1900 145 257"</span>
+<span class="s2">"2000 666 101"</span>
+<span class="s2">"2100 757 132"</span>
+<span class="s2">"2200 601 910"</span>
+<span class="s2">"2300 794 637"</span>
+<span class="o">..</span>
+</code></pre></div>
+<h2 id="hka-http-keepalive"><code>.h.ka</code> (HTTP keepalive)<a class="headerlink" href="#hka-http-keepalive" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>.h.ka x
+</code></pre></div>
+<p>Where <code>x</code> is an integer representing the idle timeout in units of milliseconds. A value of 0i disables keepalive (i.e. .h.ka then returns "close").</p>
+<p>Returns a string of value <code>close</code> or <code>keep-alive</code> which can be used for the <code>Connection</code> HTTP header field value in the HTTP response.</p>
+<p>Can be used during the processing of an HTTP request to enable <a href="https://en.wikipedia.org/wiki/HTTP_persistent_connection">persistent connections</a> i.e. should be called within an HTTP callback such as <a href="../dotz/#zph-http-get">.z.ph</a>, <a href="../dotz/#zpp-http-post">.z.pp</a>, etc.</p>
+<p>A basic example of showing keep-alive in action for a simple response:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="o">\</span><span class="n">p</span><span class="w"> </span><span class="il">1234</span>
+<span class="gp">q)</span><span class="nf">f</span><span class="o">:</span><span class="p">{[</span><span class="n">x</span><span class="p">;</span><span class="n">y</span><span class="p">]</span><span class="s2">"HTTP/1.1 200 OK</span><span class="se">\r\n</span><span class="s2">Connection : "</span><span class="o">,.</span><span class="n">h.ka</span><span class="p">[</span><span class="n">x</span><span class="o">*</span><span class="mi">1000i</span><span class="p">]</span><span class="o">,</span><span class="s2">"</span><span class="se">\r\n</span><span class="s2">Content-Type: "</span><span class="o">,</span><span class="p">(</span><span class="o">.</span><span class="n">h.ty</span><span class="ss">`txt</span><span class="p">)</span><span class="o">,</span><span class="s2">"</span><span class="se">\r\n</span><span class="s2">Content-Length: "</span><span class="o">,</span><span class="p">(</span><span class="nb">string</span><span class="w"> </span><span class="nb">count</span><span class="w"> </span><span class="n">y</span><span class="p">)</span><span class="o">,</span><span class="s2">"</span><span class="se">\r\n\r\n</span><span class="s2">"</span><span class="o">,</span><span class="n">y</span><span class="p">}</span>
+<span class="gp">q)</span><span class="nf">.z.ph</span><span class="o">:</span><span class="p">{</span><span class="n">f</span><span class="p">[</span><span class="mi">2i</span><span class="p">;</span><span class="s2">"test response</span><span class="se">\n</span><span class="s2">"</span><span class="p">]}</span>
+</code></pre></div>
+<p>Running an HTTP client such as cURL, from the same machine, shows the connection being reused for two requests.</p>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-v<span class="w"> </span>-v<span class="w"> </span>http://localhost:1234<span class="w"> </span>http://localhost:1234
+</code></pre></div>
+<p><a href="../kb/http.md">HTTP</a></p>
+<h2 id="hlogo-kx-logo"><code>.h.logo</code> (KX logo)<a class="headerlink" href="#hlogo-kx-logo" title="Permanent link">&para;</a></h2>
+<p>String: defaults to the KX logo in HTML format.</p>
+<h2 id="hnbr-no-break"><code>.h.nbr</code> (no break)<a class="headerlink" href="#hnbr-no-break" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>.h.nbr x
+</code></pre></div>
+<p>Where <code>x</code> is a string, returns <code>x</code> as the content of a <code>nobr</code> element.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="o">.</span><span class="n">h.nbr</span><span class="w"> </span><span class="s2">"foo bar"</span>
+<span class="s2">"&lt;nobr&gt;foo bar&lt;/nobr&gt;"</span>
+</code></pre></div>
+<h2 id="hpre-pre"><code>.h.pre</code> (pre)<a class="headerlink" href="#hpre-pre" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>.h.pre x
+</code></pre></div>
+<p>Where <code>x</code> is a list of strings, returns <code>x</code> as a string with embedded newlines with a <code>pre</code> HTML element.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="o">.</span><span class="n">h.pre</span><span class="p">(</span><span class="s2">"foo"</span><span class="p">;</span><span class="s2">"bar"</span><span class="p">)</span>
+<span class="s2">"&lt;pre&gt;foo</span><span class="se">\n</span><span class="s2">bar</span><span class="se">\n</span><span class="s2">&lt;/pre&gt;"</span>
+</code></pre></div>
+<h2 id="hsa-anchor-style"><code>.h.sa</code> (anchor style)<a class="headerlink" href="#hsa-anchor-style" title="Permanent link">&para;</a></h2>
+<p>String: CSS style rules used in the web console for anchor elements.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="o">.</span><span class="n">h.sa</span>
+<span class="s2">"a{text-decoration:none}a:link{color:024C7E}a:visited{color:024C7E}a:active{c..</span>
+</code></pre></div>
+<h2 id="hsb-body-style"><code>.h.sb</code> (body-style)<a class="headerlink" href="#hsb-body-style" title="Permanent link">&para;</a></h2>
+<p>String: CSS style rules used in the web console for the HTML body.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="o">.</span><span class="n">h.sb</span>
+<span class="s2">"body{font:10pt verdana;text-align:justify}"</span>
+</code></pre></div>
+<h2 id="hsc-uri-safe"><code>.h.sc</code> (URI-safe)<a class="headerlink" href="#hsc-uri-safe" title="Permanent link">&para;</a></h2>
+<p>String: characters that do not need to be escaped in URIs.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="o">.</span><span class="n">h.sc</span>
+<span class="s2">"$-.+!*'(),abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_0123456789"</span>
+</code></pre></div>
+<p><a href="#hhu-uri-escape"><code>.h.hu</code></a></p>
+<h2 id="htd-tsv-from-data"><code>.h.td</code> (TSV from data)<a class="headerlink" href="#htd-tsv-from-data" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>.h.td x
+</code></pre></div>
+<p>Where <code>x</code> is a table, returns it as a list of tab-separated value strings</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="o">.</span><span class="n">h.td</span><span class="w"> </span><span class="p">([]</span><span class="nv">a</span><span class="o">:</span><span class="il">1</span><span class="w"> </span><span class="il">2</span><span class="w"> </span><span class="il">3</span><span class="p">;</span><span class="nv">b</span><span class="o">:</span><span class="ss">`x`y`z</span><span class="p">)</span>
+<span class="s2">"a</span><span class="se">\t</span><span class="s2">b"</span>
+<span class="s2">"1</span><span class="se">\t</span><span class="s2">x"</span>
+<span class="s2">"2</span><span class="se">\t</span><span class="s2">y"</span>
+<span class="s2">"3</span><span class="se">\t</span><span class="s2">z"</span>
+</code></pre></div>
+<h2 id="htext-paragraphs"><code>.h.text</code> (paragraphs)<a class="headerlink" href="#htext-paragraphs" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>.h.text x
+</code></pre></div>
+<p>Where <code>x</code> is a list of strings, returns as a string, <code>x</code> with each item as the content of a <code>p</code> element.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="o">.</span><span class="n">h.text</span><span class="p">(</span><span class="s2">"foo"</span><span class="p">;</span><span class="s2">"bar"</span><span class="p">)</span>
+<span class="s2">"&lt;p&gt;foo&lt;/p&gt;</span><span class="se">\n</span><span class="s2">&lt;p&gt;bar&lt;/p&gt;</span><span class="se">\n</span><span class="s2">"</span>
+</code></pre></div>
+<h2 id="htx-filetypes"><code>.h.tx</code> (filetypes)<a class="headerlink" href="#htx-filetypes" title="Permanent link">&para;</a></h2>
+<p>Dictionary of file types and corresponding conversion functions (<code>.h.cd</code>, <code>.h.td</code>, <code>.h.xd</code>, <code>.h.ed</code>).</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="o">.</span><span class="n">h.tx</span>
+<span class="n">raw</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="o">,:</span>
+<span class="n">json</span><span class="o">|</span><span class="w"> </span><span class="n">k</span><span class="err">)</span><span class="p">{</span><span class="o">.</span><span class="n">j.j</span><span class="o">'$</span><span class="p">[</span><span class="o">.</span><span class="n">Q.qt</span><span class="w"> </span><span class="n">x</span><span class="p">;</span><span class="il">0</span><span class="o">!</span><span class="n">x</span><span class="p">;</span><span class="n">x</span><span class="p">]}</span>
+<span class="nb">csv</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">k</span><span class="err">)</span><span class="p">{</span><span class="o">.</span><span class="n">q.csv</span><span class="w"> </span><span class="il">0</span><span class="o">:$</span><span class="p">[</span><span class="o">.</span><span class="n">Q.qt</span><span class="w"> </span><span class="n">x</span><span class="p">;</span><span class="o">!</span><span class="p">[</span><span class="n">x</span><span class="p">;();</span><span class="mb">0b</span><span class="p">;(</span><span class="o">!</span><span class="n">t</span><span class="p">)[</span><span class="n">c</span><span class="p">]</span><span class="o">!,:'.</span><span class="n">q.sv</span><span class="p">[</span><span class="n">d</span><span class="p">]</span><span class="o">@/:'$</span><span class="n">v</span><span class="w"> </span><span class="nv">c</span><span class="o">:&amp;</span><span class="p">(</span><span class="o">~</span><span class="n">l</span><span class="o">=-</span><span class="mi">10h</span><span class="p">)</span><span class="o">&amp;</span><span class="il">0</span><span class="o">&gt;</span><span class="nv">l</span><span class="o">:.</span><span class="n">Q.tx</span><span class="o">'</span><span class="nv">v</span><span class="o">:.</span><span class="w"> </span><span class="nv">t</span><span class="o">:+</span><span class="il">0</span><span class="o">!</span><span class="n">x</span><span class="p">];</span><span class="n">x</span><span class="p">]}</span>
+<span class="n">txt</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">k</span><span class="err">)</span><span class="p">{</span><span class="s2">"</span><span class="se">\t</span><span class="s2">"</span><span class="il">0</span><span class="o">:</span><span class="n">x</span><span class="p">}</span>
+<span class="n">xml</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">k</span><span class="err">)</span><span class="p">{</span><span class="nf">g</span><span class="o">:</span><span class="p">{(</span><span class="o">#*</span><span class="n">y</span><span class="p">)</span><span class="o">#'</span><span class="p">(</span><span class="o">,,</span><span class="s2">"&lt;"</span><span class="o">,</span><span class="n">x</span><span class="p">)</span><span class="o">,</span><span class="n">y</span><span class="o">,,,</span><span class="s2">"&lt;/"</span><span class="o">,</span><span class="nv">x</span><span class="o">:</span><span class="p">(</span><span class="o">$</span><span class="n">x</span><span class="p">)</span><span class="o">,</span><span class="s2">"&gt;"</span><span class="p">};(</span><span class="o">,</span><span class="s2">"&lt;R&gt;"</span><span class="p">)</span><span class="o">,</span><span class="p">(</span><span class="o">,/'+</span><span class="n">g</span><span class="p">[</span><span class="ss">`r</span><span class="p">]</span><span class="o">@,/</span><span class="p">(</span><span class="o">!</span><span class="n">x</span><span class="p">)</span><span class="n">g</span><span class="o">'</span><span class="p">{</span><span class="o">,</span><span class="n">xs</span><span class="o">'$</span><span class="p">[</span><span class="mi">11h</span><span class="o">=@</span><span class="n">x</span><span class="p">;</span><span class="o">$</span><span class="n">x</span><span class="p">;</span><span class="n">t</span><span class="o">&amp;</span><span class="mi">77h</span><span class="o">&gt;</span><span class="nv">t</span><span class="o">:@</span><span class="n">x</span><span class="p">;</span><span class="o">$</span><span class="n">x</span><span class="p">;</span><span class="n">x</span><span class="p">]}</span><span class="o">'</span><span class="nv">x</span><span class="o">:+</span><span class="il">0</span><span class="o">!</span><span class="n">x</span><span class="p">)</span><span class="o">,,</span><span class="s2">"&lt;/R&gt;"</span><span class="p">}</span>
+<span class="n">xls</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">k</span><span class="err">)</span><span class="p">{</span><span class="n">ex</span><span class="w"> </span><span class="n">eb</span><span class="w"> </span><span class="n">es</span><span class="p">[</span><span class="ss">`Sheet1</span><span class="p">]</span><span class="n">x</span><span class="p">}</span>
+</code></pre></div>
+<div class="admonition detail">
+<p class="admonition-title">Streaming and static JSON</p>
+<p>The result of <code>.h.tx[`json]</code> is designed for streaming as <a href="http://jsonlines.org/">JSON Lines</a>. For static JSON, enlist its argument:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="o">.</span><span class="n">h.tx</span><span class="p">[</span><span class="ss">`json</span><span class="p">]</span><span class="w"> </span><span class="p">([]</span><span class="w"> </span><span class="il">0</span><span class="w"> </span><span class="il">1</span><span class="p">)</span><span class="w">  </span><span class="c1">/ JSON Lines</span>
+<span class="s2">"{</span><span class="se">\"</span><span class="s2">x</span><span class="se">\"</span><span class="s2">:0}"</span>
+<span class="s2">"{</span><span class="se">\"</span><span class="s2">x</span><span class="se">\"</span><span class="s2">:1}"</span>
+<span class="gp">q)</span><span class="o">.</span><span class="n">h.tx</span><span class="p">[</span><span class="ss">`json</span><span class="p">]</span><span class="w"> </span><span class="ow">enlist</span><span class="w"> </span><span class="p">([]</span><span class="w"> </span><span class="il">0</span><span class="w"> </span><span class="il">1</span><span class="p">)</span><span class="w"> </span><span class="c1">/ static JSON</span>
+<span class="s2">"[{</span><span class="se">\"</span><span class="s2">x</span><span class="se">\"</span><span class="s2">:0},</span><span class="se">\n</span><span class="s2"> {</span><span class="se">\"</span><span class="s2">x</span><span class="se">\"</span><span class="s2">:1}]"</span>
+<span class="gp">q)</span><span class="nb">show</span><span class="w"> </span><span class="nv">t</span><span class="o">:</span><span class="nb">flip</span><span class="ss">`items`sales`prices</span><span class="o">!</span><span class="p">(</span><span class="ss">`nut`bolt`cam`cog</span><span class="p">;</span><span class="il">6</span><span class="w"> </span><span class="il">8</span><span class="w"> </span><span class="il">0</span><span class="w"> </span><span class="il">3</span><span class="p">;</span><span class="il">10</span><span class="w"> </span><span class="il">20</span><span class="w"> </span><span class="il">15</span><span class="w"> </span><span class="il">20</span><span class="p">)</span>
+<span class="n">items</span><span class="w"> </span><span class="n">sales</span><span class="w"> </span><span class="n">prices</span>
+<span class="o">------------------</span>
+<span class="n">nut</span><span class="w">   </span><span class="il">6</span><span class="w">     </span><span class="il">10</span>
+<span class="n">bolt</span><span class="w">  </span><span class="il">8</span><span class="w">     </span><span class="il">20</span>
+<span class="n">cam</span><span class="w">   </span><span class="il">0</span><span class="w">     </span><span class="il">15</span>
+<span class="n">cog</span><span class="w">   </span><span class="il">3</span><span class="w">     </span><span class="il">20</span>
+<span class="gp">q)</span><span class="o">.</span><span class="n">h.tx</span><span class="p">[</span><span class="ss">`json</span><span class="p">]</span><span class="w"> </span><span class="n">t</span><span class="w">  </span><span class="c1">/ JSON Lines</span>
+<span class="s2">"{</span><span class="se">\"</span><span class="s2">items</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">nut</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">sales</span><span class="se">\"</span><span class="s2">:6,</span><span class="se">\"</span><span class="s2">prices</span><span class="se">\"</span><span class="s2">:10}"</span>
+<span class="s2">"{</span><span class="se">\"</span><span class="s2">items</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">bolt</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">sales</span><span class="se">\"</span><span class="s2">:8,</span><span class="se">\"</span><span class="s2">prices</span><span class="se">\"</span><span class="s2">:20}"</span>
+<span class="s2">"{</span><span class="se">\"</span><span class="s2">items</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">cam</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">sales</span><span class="se">\"</span><span class="s2">:0,</span><span class="se">\"</span><span class="s2">prices</span><span class="se">\"</span><span class="s2">:15}"</span>
+<span class="s2">"{</span><span class="se">\"</span><span class="s2">items</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">cog</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">sales</span><span class="se">\"</span><span class="s2">:3,</span><span class="se">\"</span><span class="s2">prices</span><span class="se">\"</span><span class="s2">:20}"</span>
+<span class="gp">q)</span><span class="o">.</span><span class="n">h.tx</span><span class="p">[</span><span class="ss">`json</span><span class="p">]</span><span class="w"> </span><span class="ow">enlist</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="c1">// static JSON</span>
+<span class="s2">"[{</span><span class="se">\"</span><span class="s2">items</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">nut</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">sales</span><span class="se">\"</span><span class="s2">:6,</span><span class="se">\"</span><span class="s2">prices</span><span class="se">\"</span><span class="s2">:10},</span><span class="se">\n</span><span class="s2"> {</span><span class="se">\"</span><span class="s2">items</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">bolt</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">sale..</span>
+</code></pre></div>
+</div>
+<h2 id="hty-mime-types"><code>.h.ty</code> (MIME types)<a class="headerlink" href="#hty-mime-types" title="Permanent link">&para;</a></h2>
+<p>Dictionary of content types and corresponding <a href="https://en.wikipedia.org/wiki/MIME" title="Wikipedia">media types</a>.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="o">.</span><span class="n">h.ty</span>
+<span class="n">htm</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="s2">"text/html"</span>
+<span class="n">html</span><span class="o">|</span><span class="w"> </span><span class="s2">"text/html"</span>
+<span class="nb">csv</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="s2">"text/comma-separated-values"</span>
+<span class="n">txt</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="s2">"text/plain"</span>
+<span class="n">xml</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="s2">"text/plain"</span>
+<span class="n">xls</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="s2">"application/msexcel"</span>
+<span class="n">gif</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="s2">"image/gif"</span>
+<span class="o">..</span>
+</code></pre></div>
+<h2 id="huh-uri-unescape"><code>.h.uh</code> (URI unescape)<a class="headerlink" href="#huh-uri-unescape" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>.h.uh x
+</code></pre></div>
+<p>Where <code>x</code> is a string, returns <code>x</code> with <code>%</code><em>xx</em> hex sequences replaced with character equivalents.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="o">.</span><span class="n">h.uh</span><span class="w"> </span><span class="s2">"http%3a%2f%2fwww.kx.com"</span>
+<span class="s2">"http://www.kx.com"</span>
+</code></pre></div>
+<h2 id="hval-value"><code>.h.val</code> (value)<a class="headerlink" href="#hval-value" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>.h.val x
+</code></pre></div>
+<p><code>.h.val</code> is called by <a href="../dotz/#zph-http-get"><code>.z.ph</code></a> to evaluate a request to the server.</p>
+<p>Its default value is <a href="../value/"><code>value</code></a>.
+Users can override this with a custom evaluation function.</p>
+<p>Since V3.6 and V3.5 2019.11.13.</p>
+<h2 id="hxd-xml"><code>.h.xd</code> (XML)<a class="headerlink" href="#hxd-xml" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>.h.xd x
+</code></pre></div>
+<p>Where <code>x</code> is a table, returns as a list of strings, <code>x</code> as an XML table.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="o">.</span><span class="n">h.xd</span><span class="w"> </span><span class="p">([]</span><span class="nv">a</span><span class="o">:</span><span class="il">1</span><span class="w"> </span><span class="il">2</span><span class="w"> </span><span class="il">3</span><span class="p">;</span><span class="nv">b</span><span class="o">:</span><span class="ss">`x`y`z</span><span class="p">)</span>
+<span class="s2">"&lt;R&gt;"</span>
+<span class="s2">"&lt;r&gt;&lt;a&gt;1&lt;/a&gt;&lt;b&gt;x&lt;/b&gt;&lt;/r&gt;"</span>
+<span class="s2">"&lt;r&gt;&lt;a&gt;2&lt;/a&gt;&lt;b&gt;y&lt;/b&gt;&lt;/r&gt;"</span>
+<span class="s2">"&lt;r&gt;&lt;a&gt;3&lt;/a&gt;&lt;b&gt;z&lt;/b&gt;&lt;/r&gt;"</span>
+<span class="s2">"&lt;/R&gt;"</span>
+</code></pre></div>
+<p><a href="../save/#save">save</a> (save and format data)</p>
+<h2 id="hxmp-xmp"><code>.h.xmp</code> (XMP)<a class="headerlink" href="#hxmp-xmp" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>.h.xmp x
+</code></pre></div>
+<p>Where <code>x</code> is a list of strings, returns as a string <code>x</code> as the newline-separated content of an HTML <code>xmp</code> element.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="o">.</span><span class="n">h.xmp</span><span class="p">(</span><span class="s2">"foo"</span><span class="p">;</span><span class="s2">"bar"</span><span class="p">)</span>
+<span class="s2">"&lt;xmp&gt;foo</span><span class="se">\n</span><span class="s2">bar</span><span class="se">\n</span><span class="s2">&lt;/xmp&gt;"</span>
+</code></pre></div>
+<h2 id="hxs-xml-escape"><code>.h.xs</code> (XML escape)<a class="headerlink" href="#hxs-xml-escape" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>.h.xs x
+</code></pre></div>
+<p>Where <code>x</code> is a string, returns <code>x</code> with characters XML-escaped where necessary.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="o">.</span><span class="n">h.xs</span><span class="w"> </span><span class="s2">"Arthur &amp; Co."</span>
+<span class="s2">"Arthur &amp;amp; Co."</span>
+</code></pre></div>
+<h2 id="hxt-json"><code>.h.xt</code> (JSON)<a class="headerlink" href="#hxt-json" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>.h.xt[x;y]
+</code></pre></div>
+<p>Where <code>x</code> is <code>`json</code> and <code>y</code> is a list of JSON strings, returns <code>y</code> as a list of dictionaries.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="o">.</span><span class="n">h.xt</span><span class="p">[</span><span class="ss">`json</span><span class="p">;(</span><span class="s2">"{</span><span class="se">\"</span><span class="s2">foo</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">bar</span><span class="se">\"</span><span class="s2">}"</span><span class="p">;</span><span class="s2">"{</span><span class="se">\"</span><span class="s2">this</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">that</span><span class="se">\"</span><span class="s2">}"</span><span class="p">)]</span>
+<span class="p">(</span><span class="o">,</span><span class="ss">`foo</span><span class="p">)</span><span class="o">!,</span><span class="s2">"bar"</span>
+<span class="p">(</span><span class="o">,</span><span class="ss">`this</span><span class="p">)</span><span class="o">!,</span><span class="s2">"that"</span>
+<span class="gp">q)</span><span class="nb">first</span><span class="w"> </span><span class="o">.</span><span class="n">h.xt</span><span class="p">[</span><span class="ss">`json</span><span class="p">;(</span><span class="s2">"{</span><span class="se">\"</span><span class="s2">foo</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">bar</span><span class="se">\"</span><span class="s2">}"</span><span class="p">;</span><span class="s2">"{</span><span class="se">\"</span><span class="s2">this</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">that</span><span class="se">\"</span><span class="s2">}"</span><span class="p">)]</span>
+<span class="n">foo</span><span class="o">|</span><span class="w"> </span><span class="s2">"bar"</span>
+</code></pre></div>
+<p><a href="../dotj/"><code>.j</code> namespace</a> (JSON de/serialization), <a href="../save/#save">save</a> (save and format data)</p>
+<div class="peachq-import-attribution">
+<p>Source adapted from the <a href="https://github.com/KxSystems/docs">Documentation for kdb+ and q</a>
+by KX Systems and contributors, used under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.
+<a href="../../attribution/">Attribution, provenance and independence notice</a>.</p>
+</div>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  <div class="md-copyright__highlight">
+    PeachQ - MIT-licensed open source q, built on Rayforce with DuckDB storage in progress.
+  </div>
+  <a href="../../../about">Built for the community</a> &middot;
+  <a href="../../../contact">Contact</a> &middot;
+  <a href="https://github.com/peachq-org/peachq" target="_blank" rel="noreferrer">GitHub</a>
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.sections", "navigation.top", "content.code.copy", "content.action.edit"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

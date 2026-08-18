@@ -1,0 +1,826 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Maps iterators derive uniform functions that apply their values once to each item of a dictionary, a list, or conforming lists.">
+      
+      
+        <meta name="author" content="KX Systems, Inc., a subsidiary of KX Software Limited">
+      
+      
+        <link rel="canonical" href="https://peachq.org/docs/ref/maps/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../img/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Map iterators | Reference | kdb+ and q documentation - PeachQ</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../css/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  
+  <script src="../../../mirror-banner.js"></script>
+  <script>
+    var _paq = window._paq = window._paq || [];
+    /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    (function() {
+      var u="//www.timestored.com/mat/";
+      _paq.push(['setTrackerUrl', u+'matomo.php']);
+      _paq.push(['setSiteId', '4']);
+      var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+      g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+    })();
+  </script>
+
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#map-iterators" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../" title="PeachQ" class="md-header__button md-logo" aria-label="PeachQ" data-md-component="logo">
+      
+  <img src="../../../img/peachq-logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <a class="md-ellipsis peachq-wordmark" href="../../../">
+            Peach<span class="peachq-wordmark__q">Q</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    
+    <nav class="peachq-nav" aria-label="Site">
+      
+      
+      
+        
+        <a class="peachq-nav__link" href="../../../repl">Try Live</a>
+      
+        
+        <a class="peachq-nav__link" href="../../../download">Download</a>
+      
+        
+        <a class="peachq-nav__link" href="../../../compatibility">Compatibility</a>
+      
+        
+        <a class="peachq-nav__link" href="../../../roadmap">Roadmap</a>
+      
+        
+        <a class="peachq-nav__link" href="../../../news/">News</a>
+      
+        
+        <a class="peachq-nav__link" href="../../../about">About</a>
+      
+        
+        <a class="peachq-nav__link" href="../../../contact">Contact</a>
+      
+      <a class="peachq-nav__link" href="https://github.com/peachq-org/peachq" target="_blank" rel="noreferrer">GitHub &#8599;</a>
+    </nav>
+
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="PeachQ" class="md-nav__button md-logo" aria-label="PeachQ" data-md-component="logo">
+      
+  <img src="../../../img/peachq-logo.svg" alt="logo">
+
+    </a>
+    PeachQ
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/peachq-org/peachq" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../news/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    News
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#each" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Each
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Each">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#each-keyword" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        each keyword
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#each-left-and-each-right" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Each Left and Each Right
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Each Left and Each Right">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#left-right-cross" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Left, right, cross
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#each-parallel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Each Parallel
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Each Parallel">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#peach-keyword" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        peach keyword
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#each-prior" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Each Prior
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Each Prior">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#prior-keyword" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        prior keyword
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#case" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Case
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#empty-lists" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Empty lists
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/peachq-org/peachq-website/edit/main/content/docs/ref/maps.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+
+
+<h1 id="map-iterators">Map iterators<a class="headerlink" href="#map-iterators" title="Permanent link">&para;</a></h1>
+<div class="typewriter">
+<p>map                        rank
+ <a href="#each">Each</a>           v'       same as v    <a href="#each-keyword">each</a>
+ <a href="#each-left-and-each-right">Each Left</a>      v2\:        2
+ <a href="#each-left-and-each-right">Each Right</a>     v2/:        2
+ <a href="#each-parallel">Each Parallel</a>  v1':        1         <a href="#peach-keyword">peach</a>
+ <a href="#each-prior">Each Prior</a>     v2':     variadic     <a href="#prior-keyword">prior</a>
+ <a href="#case">Case</a>           i'        1+max i</p>
+<hr />
+<p>v1: value (rank 1)         v: value (rank 1-8)
+v2: value (rank 2)         i: vector of ints≥0</p>
+</div>
+<p>The maps are iterators that derive <a href="../../basics/glossary/#uniform-function"><strong>uniform</strong></a> functions that apply their <a href="../../basics/glossary/#applicable-value">values</a> once to each item of a dictionary, a list, or conforming lists.</p>
+<h2 id="each">Each<a class="headerlink" href="#each" title="Permanent link">&para;</a></h2>
+<p><em>Apply a value item-wise to a dictionary, list, or conforming lists and/or dictionaries.</em></p>
+<div class="highlight"><pre><span></span><code>(v1')x    v1'[x]       v1 each x
+x v2'y    v2'[x;y]
+          v3'[x;y;z]
+</code></pre></div>
+<p>Where <code>v</code> is an applicable value, <code>v'</code> applies <code>v</code> to each item of a list, dictionary or to corresponding items of conforming lists. The derived function has the same rank as <code>v</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="p">(</span><span class="nb">count</span><span class="o">'</span><span class="p">)</span><span class="ss">`a`b`c</span><span class="o">!</span><span class="p">(</span><span class="il">1</span><span class="w"> </span><span class="il">2</span><span class="w"> </span><span class="il">3</span><span class="p">;</span><span class="il">4</span><span class="w"> </span><span class="il">5</span><span class="p">;</span><span class="il">6</span><span class="w"> </span><span class="il">7</span><span class="w"> </span><span class="il">8</span><span class="w"> </span><span class="il">9</span><span class="p">)</span><span class="w">        </span><span class="c1">/ unary</span>
+<span class="n">a</span><span class="o">|</span><span class="w"> </span><span class="il">3</span>
+<span class="n">b</span><span class="o">|</span><span class="w"> </span><span class="il">2</span>
+<span class="n">c</span><span class="o">|</span><span class="w"> </span><span class="il">4</span>
+</code></pre></div>
+<p style="float: right; margin-left: 1em; text-align: center;"><img alt="each-both" src="../../basics/svg/each-both.svg" />
+<br>
+<small><em>Each Both</em></small></p>
+<p>Each applied to a binary value is sometimes called <em>each both</em> and can be applied infix.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="il">1</span><span class="w"> </span><span class="il">2</span><span class="w"> </span><span class="il">3</span><span class="w"> </span><span class="ow">in</span><span class="o">'</span><span class="p">(</span><span class="il">1</span><span class="w"> </span><span class="il">0</span><span class="w"> </span><span class="il">1</span><span class="p">;</span><span class="nb">til</span><span class="w"> </span><span class="il">100</span><span class="p">;</span><span class="il">5</span><span class="w"> </span><span class="il">6</span><span class="w"> </span><span class="il">7</span><span class="p">)</span><span class="w">  </span><span class="c1">/ in' is binary, infix</span>
+<span class="mb">110b</span>
+</code></pre></div>
+<p>Iterations of ternary and higher-rank values are applied with brackets.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="p">{</span><span class="n">x</span><span class="o">+</span><span class="n">y</span><span class="o">*</span><span class="n">z</span><span class="p">}</span><span class="o">'</span><span class="p">[</span><span class="il">1000000</span><span class="p">;</span><span class="il">1</span><span class="w"> </span><span class="il">0</span><span class="w"> </span><span class="il">1</span><span class="p">;</span><span class="il">5000</span><span class="w"> </span><span class="il">6000</span><span class="w"> </span><span class="il">7000</span><span class="p">]</span><span class="w">    </span><span class="c1">/ ternary</span>
+<span class="il">1005000</span><span class="w"> </span><span class="il">1000000</span><span class="w"> </span><span class="il">1007000</span>
+</code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title">Each is redundant with <a href="../../basics/atomic/">atomic functions</a>.</p>
+</div>
+<h3 id="each-keyword"><code>each</code> keyword<a class="headerlink" href="#each-keyword" title="Permanent link">&para;</a></h3>
+<p>The mnemonic keyword <a href="../each/"><code>each</code></a> can be used to apply a unary value without parentheses or brackets.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="p">(</span><span class="nb">count</span><span class="o">'</span><span class="p">)</span><span class="nb">string</span><span class="w"> </span><span class="ss">`Clash`Fixx`The`Who</span>
+<span class="il">5</span><span class="w"> </span><span class="il">4</span><span class="w"> </span><span class="il">3</span><span class="w"> </span><span class="il">3</span>
+<span class="gp">q)</span><span class="nb">count</span><span class="o">'</span><span class="p">[</span><span class="nb">string</span><span class="w"> </span><span class="ss">`Clash`Fixx`The`Who</span><span class="p">]</span>
+<span class="il">5</span><span class="w"> </span><span class="il">4</span><span class="w"> </span><span class="il">3</span><span class="w"> </span><span class="il">3</span>
+<span class="gp">q)</span><span class="nb">count</span><span class="w"> </span><span class="nb">each</span><span class="w"> </span><span class="nb">string</span><span class="w"> </span><span class="ss">`Clash`Fixx`The`Who</span>
+<span class="il">5</span><span class="w"> </span><span class="il">4</span><span class="w"> </span><span class="il">3</span><span class="w"> </span><span class="il">3</span>
+</code></pre></div>
+<h2 id="each-left-and-each-right">Each Left and Each Right<a class="headerlink" href="#each-left-and-each-right" title="Permanent link">&para;</a></h2>
+<p><em>Apply a binary value between one argument and each item of the other.</em></p>
+<div class="highlight"><pre><span></span><code>Each Left     x v2\: y    v2\:[x;y]   |-&gt;   v2[;y] each x
+Each Right    x v2/: y    v2/:[x;y]   |-&gt;   v2[x;] each y
+</code></pre></div>
+<p>The maps Each Left and Each Right take <strong>binary</strong> values and derive binary functions that pair one argument to each item of the other. Effectively, the map projects its value on one argument and applies Each.</p>
+<table>
+<thead>
+<tr>
+<th>&nbsp;</th>
+<th style="text-align: center;">Each Left</th>
+<th style="text-align: center;">Each Right</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>syntax:</td>
+<td style="text-align: center;"><code>x f\:y</code></td>
+<td style="text-align: center;"><code>x f/:y</code></td>
+</tr>
+<tr>
+<td>equivalent:</td>
+<td style="text-align: center;"><code>f[;y] each x</code></td>
+<td style="text-align: center;"><code>f[x;] each y</code></td>
+</tr>
+<tr>
+<td>&nbsp;</td>
+<td style="text-align: center;"><img alt="Each Left" src="../../basics/svg/each-left.svg" /></td>
+<td style="text-align: center;"><img alt="Each Right" src="../../basics/svg/each-right.svg" /></td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="s2">"abcde"</span><span class="o">,\:</span><span class="s2">"XY"</span><span class="w">             </span><span class="c1">/ Each Left</span>
+<span class="s2">"aXY"</span>
+<span class="s2">"bXY"</span>
+<span class="s2">"cXY"</span>
+<span class="s2">"dXY"</span>
+<span class="s2">"eXY"</span>
+<span class="gp">q)</span><span class="s2">"abcde"</span><span class="o">,/:</span><span class="s2">"XY"</span><span class="w">             </span><span class="c1">/ Each Right</span>
+<span class="s2">"abcdeX"</span>
+<span class="s2">"abcdeY"</span>
+<span class="gp">q)</span><span class="n">m</span><span class="w">                          </span><span class="c1">/ binary map</span>
+<span class="s2">"abcd"</span>
+<span class="s2">"efgh"</span>
+<span class="s2">"ijkl"</span>
+<span class="gp">q)</span><span class="n">m</span><span class="p">[</span><span class="il">0</span><span class="w"> </span><span class="il">1</span><span class="p">;</span><span class="il">2</span><span class="w"> </span><span class="il">3</span><span class="p">]</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="il">0</span><span class="w"> </span><span class="il">1</span><span class="w"> </span><span class="nv">m</span><span class="o">\:</span><span class="il">2</span><span class="w"> </span><span class="il">3</span>
+<span class="mb">1b</span>
+<span class="gp">q)</span><span class="il">0</span><span class="w"> </span><span class="il">1</span><span class="w"> </span><span class="nv">m</span><span class="o">/:</span><span class="il">2</span><span class="w"> </span><span class="il">3</span>
+<span class="s2">"cg"</span>
+<span class="s2">"dh"</span>
+<span class="gp">q)</span><span class="p">(</span><span class="nb">flip</span><span class="w"> </span><span class="n">m</span><span class="p">[</span><span class="il">0</span><span class="w"> </span><span class="il">1</span><span class="p">;</span><span class="il">2</span><span class="w"> </span><span class="il">3</span><span class="p">])</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="il">0</span><span class="w"> </span><span class="il">1</span><span class="w"> </span><span class="nv">m</span><span class="o">/:</span><span class="il">2</span><span class="w"> </span><span class="il">3</span>
+<span class="mb">1b</span>
+</code></pre></div>
+<h3 id="left-right-cross">Left, right, <code>cross</code><a class="headerlink" href="#left-right-cross" title="Permanent link">&para;</a></h3>
+<p>Each Left combined with Each Right resembles the result obtained by <a href="../cross/"><code>cross</code></a>.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="nb">show</span><span class="w"> </span><span class="nf">a</span><span class="o">:</span><span class="p">{</span><span class="n">x</span><span class="o">,/:\:</span><span class="n">x</span><span class="p">}</span><span class="nb">til</span><span class="w"> </span><span class="il">3</span>
+<span class="il">0</span><span class="w"> </span><span class="il">0</span><span class="w"> </span><span class="il">0</span><span class="w"> </span><span class="il">1</span><span class="w"> </span><span class="il">0</span><span class="w"> </span><span class="il">2</span>
+<span class="il">1</span><span class="w"> </span><span class="il">0</span><span class="w"> </span><span class="il">1</span><span class="w"> </span><span class="il">1</span><span class="w"> </span><span class="il">1</span><span class="w"> </span><span class="il">2</span>
+<span class="il">2</span><span class="w"> </span><span class="il">0</span><span class="w"> </span><span class="il">2</span><span class="w"> </span><span class="il">1</span><span class="w"> </span><span class="il">2</span><span class="w"> </span><span class="il">2</span>
+<span class="gp">q)</span><span class="nb">show</span><span class="w"> </span><span class="nf">b</span><span class="o">:</span><span class="p">{</span><span class="n">x</span><span class="w"> </span><span class="nb">cross</span><span class="w"> </span><span class="n">x</span><span class="p">}</span><span class="nb">til</span><span class="w"> </span><span class="il">3</span>
+<span class="il">0</span><span class="w"> </span><span class="il">0</span>
+<span class="il">0</span><span class="w"> </span><span class="il">1</span>
+<span class="il">0</span><span class="w"> </span><span class="il">2</span>
+<span class="il">1</span><span class="w"> </span><span class="il">0</span>
+<span class="il">1</span><span class="w"> </span><span class="il">1</span>
+<span class="il">1</span><span class="w"> </span><span class="il">2</span>
+<span class="il">2</span><span class="w"> </span><span class="il">0</span>
+<span class="il">2</span><span class="w"> </span><span class="il">1</span>
+<span class="il">2</span><span class="w"> </span><span class="il">2</span>
+<span class="gp">q)</span><span class="p">{}</span><span class="m">0N</span><span class="o">!</span><span class="n">a</span>
+<span class="p">((</span><span class="il">0</span><span class="w"> </span><span class="il">0</span><span class="p">;</span><span class="il">0</span><span class="w"> </span><span class="il">1</span><span class="p">;</span><span class="il">0</span><span class="w"> </span><span class="il">2</span><span class="p">);(</span><span class="il">1</span><span class="w"> </span><span class="il">0</span><span class="p">;</span><span class="il">1</span><span class="w"> </span><span class="il">1</span><span class="p">;</span><span class="il">1</span><span class="w"> </span><span class="il">2</span><span class="p">);(</span><span class="il">2</span><span class="w"> </span><span class="il">0</span><span class="p">;</span><span class="il">2</span><span class="w"> </span><span class="il">1</span><span class="p">;</span><span class="il">2</span><span class="w"> </span><span class="il">2</span><span class="p">))</span>
+<span class="gp">q)</span><span class="p">{}</span><span class="m">0N</span><span class="o">!</span><span class="n">b</span>
+<span class="p">(</span><span class="il">0</span><span class="w"> </span><span class="il">0</span><span class="p">;</span><span class="il">0</span><span class="w"> </span><span class="il">1</span><span class="p">;</span><span class="il">0</span><span class="w"> </span><span class="il">2</span><span class="p">;</span><span class="il">1</span><span class="w"> </span><span class="il">0</span><span class="p">;</span><span class="il">1</span><span class="w"> </span><span class="il">1</span><span class="p">;</span><span class="il">1</span><span class="w"> </span><span class="il">2</span><span class="p">;</span><span class="il">2</span><span class="w"> </span><span class="il">0</span><span class="p">;</span><span class="il">2</span><span class="w"> </span><span class="il">1</span><span class="p">;</span><span class="il">2</span><span class="w"> </span><span class="il">2</span><span class="p">)</span>
+<span class="gp">q)</span><span class="nb">raze</span><span class="p">[</span><span class="n">a</span><span class="p">]</span><span class="w"> </span><span class="o">~</span><span class="w"> </span><span class="n">b</span>
+<span class="mb">1b</span>
+</code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title">Atoms and lists in the domains of these iterators</p>
+<p>The domains of <code>\:</code> and <code>/:</code> extend beyond binary values to include certain atoms and lists.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="p">(</span><span class="s2">", "</span><span class="o">/:</span><span class="p">)(</span><span class="s2">"quick"</span><span class="p">;</span><span class="s2">"brown"</span><span class="p">;</span><span class="s2">"foxes"</span><span class="p">)</span>
+<span class="s2">"quick, brown, foxes"</span>
+<span class="gp">q)</span><span class="p">(</span><span class="mh">0x0</span><span class="o">\:</span><span class="p">)</span><span class="mf">3.14156</span>
+<span class="mh">0x400921ea35935fc4</span>
+</code></pre></div>
+<p>This is <a href="../../basics/exposed-infrastructure/">exposed infrastructure</a>.
+Use the keywords <a href="../vs/"><code>vs</code></a> and <a href="../sv/"><code>sv</code></a> instead.</p>
+</div>
+<h2 id="each-parallel">Each Parallel<a class="headerlink" href="#each-parallel" title="Permanent link">&para;</a></h2>
+<p style="float: right; margin-left: 1em;"><img alt="Each Parallel" src="../../basics/svg/each-parallel.svg" /></p>
+<p><em>Assign sublists of the argument list to secondary tasks, in which the unary value is applied to each item of the sublist.</em></p>
+<div class="highlight"><pre><span></span><code>(v1':)x   v1':[x]   v1 peach x
+</code></pre></div>
+<p>The Each Parallel map takes a <strong>unary</strong> value as argument and derives a unary function. The iteration <code>v1':</code> divides its list or dictionary argument <code>x</code> between <a href="../../basics/cmdline/#-s-secondary-threads">available secondary tasks</a>. Each secondary task applies <code>v1</code> to each item of its sublist.</p>
+<p><a href="../../basics/cmdline/#-s-secondary-threads">Command-line option <code>-s</code></a>,
+Parallel processing</p>
+<p><div class="highlight"><pre><span></span><code>❯<span class="w"> </span>q<span class="w"> </span>-s<span class="w"> </span><span class="m">2</span>
+kdb+<span class="w"> </span><span class="m">5</span>.0.20251113<span class="w"> </span><span class="m">2025</span>.11.13<span class="w"> </span>Copyright<span class="w"> </span><span class="o">(</span>C<span class="o">)</span><span class="w"> </span><span class="m">1993</span>-2025<span class="w"> </span>Kx<span class="w"> </span>Systems
+...
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="o">\</span><span class="n">s</span>
+<span class="mi">2i</span>
+<span class="gp">q)</span><span class="o">\</span><span class="n">t</span><span class="w"> </span><span class="nb">inv</span><span class="w"> </span><span class="nb">each</span><span class="w"> </span><span class="il">2</span><span class="w"> </span><span class="il">1000</span><span class="w"> </span><span class="il">1000</span><span class="o">#</span><span class="il">2000000</span><span class="o">?</span><span class="mf">1f</span>
+<span class="il">2601</span>
+<span class="gp">q)</span><span class="o">\</span><span class="n">t</span><span class="w"> </span><span class="nb">inv</span><span class="w"> </span><span class="nb">peach</span><span class="w"> </span><span class="il">2</span><span class="w"> </span><span class="il">1000</span><span class="w"> </span><span class="il">1000</span><span class="o">#</span><span class="il">2000000</span><span class="o">?</span><span class="mf">1f</span>
+<span class="il">1462</span>
+</code></pre></div></p>
+<h3 id="peach-keyword"><code>peach</code> keyword<a class="headerlink" href="#peach-keyword" title="Permanent link">&para;</a></h3>
+<p>The binary keyword <a href="../each/"><code>peach</code></a> can be used as a mnemonic alternative.
+The following are equivalent.</p>
+<div class="highlight"><pre><span></span><code><span class="nv">v1</span><span class="o">':</span><span class="p">[</span><span class="n">list</span><span class="p">]</span>
+<span class="p">(</span><span class="nv">v1</span><span class="o">':</span><span class="p">)</span><span class="n">list</span>
+<span class="n">v1</span><span class="w"> </span><span class="nb">peach</span><span class="w"> </span><span class="n">list</span>
+</code></pre></div>
+<div class="admonition tip">
+<p class="admonition-title">Higher-rank values</p>
+<p>To parallelize a value of rank &gt;1, use <a href="../apply/">Apply</a> to evaluate it on a list of arguments.</p>
+<p>Alternatively, define the value as a function that takes a parameter dictionary as argument, and pass the derived function a table of parameters to evaluate.</p>
+</div>
+<p><a href="../dotq/#fc-parallel-on-cut"><code>.Q.fc</code> parallel on cut</a>
+<br></p>
+<p>Parallel processing
+<br></p>
+<p><a href="../kb/partition.md#table-counts">Table counts in a partitioned database</a>
+<br></p>
+<p><em>Q for Mortals</em>
+<a href="../../../q4m3/A_Built-in_Functions/#a68-peach">A.49 <code>peach</code></a></p>
+<h2 id="each-prior">Each Prior<a class="headerlink" href="#each-prior" title="Permanent link">&para;</a></h2>
+<p style="float: right; margin-left: 1em; z-index: 3"><img alt="Each Prior" src="../../basics/svg/each-prior.svg" /></p>
+<p><em>Apply a binary value between each item of a list and its preceding item.</em></p>
+<div class="highlight"><pre><span></span><code>(v2':)x    v2':[x]      (v2)prior x
+x v2':y    v2':[x;y]
+</code></pre></div>
+<p>The Each Prior map takes a <strong>binary</strong> value and derives a variadic function.
+The derived function applies the value between each item of a list or dictionary and the item prior to it.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="p">(</span><span class="o">-':</span><span class="p">)</span><span class="il">1</span><span class="w"> </span><span class="il">1</span><span class="w"> </span><span class="il">2</span><span class="w"> </span><span class="il">3</span><span class="w"> </span><span class="il">5</span><span class="w"> </span><span class="il">8</span><span class="w"> </span><span class="il">13</span>
+<span class="il">1</span><span class="w"> </span><span class="il">0</span><span class="w"> </span><span class="il">1</span><span class="w"> </span><span class="il">1</span><span class="w"> </span><span class="il">2</span><span class="w"> </span><span class="il">3</span><span class="w"> </span><span class="il">5</span>
+</code></pre></div>
+<p>The first item of a list has, by definition, no prior item.
+If the derived function is applied as a binary, its left argument is taken as the ‘seed’ – the value preceding the first item.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="il">1950</span><span class="w"> </span><span class="o">-':</span><span class="w"> </span><span class="ss">`S`J`C</span><span class="o">!</span><span class="il">1952</span><span class="w"> </span><span class="il">1954</span><span class="w"> </span><span class="il">1960</span>
+<span class="n">S</span><span class="o">|</span><span class="w"> </span><span class="il">2</span>
+<span class="n">J</span><span class="o">|</span><span class="w"> </span><span class="il">2</span>
+<span class="n">C</span><span class="o">|</span><span class="w"> </span><span class="il">6</span>
+</code></pre></div>
+<p>If the derived function is applied as a unary, and the value is an operator with an identity element $I$ known to q, $I$ will be used as the seed.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="p">(</span><span class="o">*':</span><span class="p">)</span><span class="il">2</span><span class="w"> </span><span class="il">3</span><span class="w"> </span><span class="il">4</span><span class="w">                        </span><span class="c1">/ 1 is I for *</span>
+<span class="il">2</span><span class="w"> </span><span class="il">6</span><span class="w"> </span><span class="il">12</span>
+<span class="gp">q)</span><span class="p">(</span><span class="o">,':</span><span class="p">)</span><span class="il">2</span><span class="w"> </span><span class="il">3</span><span class="w"> </span><span class="il">4</span><span class="w">                        </span><span class="c1">/ () is I for ,</span>
+<span class="il">2</span>
+<span class="il">3</span><span class="w"> </span><span class="il">2</span>
+<span class="il">4</span><span class="w"> </span><span class="il">3</span>
+<span class="gp">q)</span><span class="p">(</span><span class="o">-':</span><span class="p">)</span><span class="w"> </span><span class="ss">`S`J`C</span><span class="o">!</span><span class="il">1952</span><span class="w"> </span><span class="il">1954</span><span class="w"> </span><span class="il">1960</span><span class="w">       </span><span class="c1">/ 0 is I for -</span>
+<span class="n">S</span><span class="o">|</span><span class="w"> </span><span class="il">1952</span>
+<span class="n">J</span><span class="o">|</span><span class="w"> </span><span class="il">2</span>
+<span class="n">C</span><span class="o">|</span><span class="w"> </span><span class="il">6</span>
+</code></pre></div>
+<p>If the derived function is applied as a unary, and the value is not an operator with a known identity element, a null of the same type as the argument (<code>first 0#x</code>) is used as the seed.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="p">{</span><span class="n">x</span><span class="o">+</span><span class="il">2</span><span class="o">*</span><span class="n">y</span><span class="p">}</span><span class="o">':</span><span class="p">[</span><span class="il">2</span><span class="w"> </span><span class="il">3</span><span class="w"> </span><span class="il">4</span><span class="p">]</span>
+<span class="m">0N</span><span class="w"> </span><span class="il">7</span><span class="w"> </span><span class="il">10</span>
+</code></pre></div>
+<p><em>Q for Mortals</em>
+<a href="../../../q4m3/6_Functions/#679-each-prior">§6.7.9 Each Prior</a></p>
+<h3 id="prior-keyword"><code>prior</code> keyword<a class="headerlink" href="#prior-keyword" title="Permanent link">&para;</a></h3>
+<p>The mnemonic keyword <a href="../prior/"><code>prior</code></a> can be used as an alternative to <code>':</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="p">(</span><span class="o">-':</span><span class="p">)</span><span class="w"> </span><span class="il">5</span><span class="w"> </span><span class="il">16</span><span class="w"> </span><span class="il">42</span><span class="w"> </span><span class="il">103</span>
+<span class="il">5</span><span class="w"> </span><span class="il">11</span><span class="w"> </span><span class="il">26</span><span class="w"> </span><span class="il">61</span>
+<span class="gp">q)</span><span class="p">(</span><span class="o">-</span><span class="p">)</span><span class="w"> </span><span class="nb">prior</span><span class="w"> </span><span class="il">5</span><span class="w"> </span><span class="il">16</span><span class="w"> </span><span class="il">42</span><span class="w"> </span><span class="il">103</span>
+<span class="il">5</span><span class="w"> </span><span class="il">11</span><span class="w"> </span><span class="il">26</span><span class="w"> </span><span class="il">61</span>
+<span class="gp">q)</span><span class="nb">deltas</span><span class="w"> </span><span class="il">5</span><span class="w"> </span><span class="il">16</span><span class="w"> </span><span class="il">42</span><span class="w"> </span><span class="il">103</span>
+<span class="il">5</span><span class="w"> </span><span class="il">11</span><span class="w"> </span><span class="il">26</span><span class="w"> </span><span class="il">61</span>
+</code></pre></div>
+<h2 id="case">Case<a class="headerlink" href="#case" title="Permanent link">&para;</a></h2>
+<p><em>Pick successive items from multiple list arguments: the left argument of the iterator determines from which of the arguments each item is picked.</em></p>
+<div class="highlight"><pre><span></span><code>int'[a;b;c;…]
+</code></pre></div>
+<p>Where</p>
+<ul>
+<li><code>int</code> is an integer vector</li>
+<li>$args$ <code>[a;b;c;…]</code> are the arguments to the derived function</li>
+</ul>
+<p>the derived function <code>int'</code> returns $r$ such that
+$r_i$ is ($args_{int_i})_i$</p>
+<p><img alt="case" src="../../basics/svg/case.svg" /></p>
+<p>The derived function <code>int'</code> has rank <code>max[int]+1</code>.</p>
+<p>Atom arguments are treated as infinitely-repeated values.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="il">0</span><span class="w"> </span><span class="il">1</span><span class="w"> </span><span class="il">0</span><span class="o">'</span><span class="p">[</span><span class="s2">"abc"</span><span class="p">;</span><span class="s2">"xyz"</span><span class="p">]</span>
+<span class="s2">"ayc"</span>
+<span class="gp">q)</span><span class="nv">e</span><span class="o">:</span><span class="ss">`one`two`three`four`five</span>
+<span class="gp">q)</span><span class="nv">f</span><span class="o">:</span><span class="ss">`un`deux`trois`quatre`cinq</span>
+<span class="gp">q)</span><span class="nv">g</span><span class="o">:</span><span class="ss">`eins`zwei`drei`vier`funf</span>
+<span class="gp">q)</span><span class="nv">l</span><span class="o">:</span><span class="ss">`English`French`German</span>
+<span class="gp">q)</span><span class="n">l</span><span class="o">?</span><span class="ss">`German`English`French`French`German</span>
+<span class="il">2</span><span class="w"> </span><span class="il">0</span><span class="w"> </span><span class="il">1</span><span class="w"> </span><span class="il">1</span><span class="w"> </span><span class="il">2</span>
+<span class="gp">q)</span><span class="p">(</span><span class="n">l</span><span class="o">?</span><span class="ss">`German`English`French`French`German</span><span class="p">)</span><span class="o">'</span><span class="p">[</span><span class="n">e</span><span class="p">;</span><span class="n">f</span><span class="p">;</span><span class="n">g</span><span class="p">]</span>
+<span class="ss">`eins`two`trois`quatre`funf</span>
+
+<span class="gp">q)</span><span class="o">/</span><span class="w"> </span><span class="n">Extra</span><span class="w"> </span><span class="n">arguments</span><span class="w"> </span><span class="n">don</span><span class="o">'</span><span class="n">t</span><span class="w"> </span><span class="n">signal</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="nb">rank</span><span class="w"> </span><span class="n">error</span>
+<span class="gp">q)</span><span class="il">0</span><span class="w"> </span><span class="il">2</span><span class="w"> </span><span class="il">0</span><span class="o">'</span><span class="p">[</span><span class="s2">"abc"</span><span class="p">;</span><span class="s2">"xyz"</span><span class="p">;</span><span class="s2">"123"</span><span class="p">;</span><span class="s2">"789"</span><span class="p">]</span>
+<span class="s2">"a2c"</span>
+<span class="gp">q)</span><span class="il">0</span><span class="w"> </span><span class="il">1</span><span class="w"> </span><span class="il">0</span><span class="o">'</span><span class="p">[</span><span class="s2">"a"</span><span class="p">;</span><span class="s2">"xyz"</span><span class="p">]</span><span class="w">  </span><span class="c1">/atom "a" repeated as needed</span>
+<span class="s2">"aya"</span>
+</code></pre></div>
+<p>Dictionaries can be used instead of lists, as long as the lengths of all lists and dictionaries are the same. All dictionaries must have the same keys in the same order.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="il">0</span><span class="w"> </span><span class="il">2</span><span class="w"> </span><span class="il">0</span><span class="o">'</span><span class="p">[</span><span class="ss">`a`b`c</span><span class="o">!</span><span class="s2">"abc"</span><span class="p">;</span><span class="s2">"xyz"</span><span class="p">;</span><span class="s2">"123"</span><span class="p">;</span><span class="ss">`a`b`c</span><span class="o">!</span><span class="s2">"789"</span><span class="p">]</span>
+<span class="s2">"a2c"</span>
+<span class="gp">q)</span><span class="il">0</span><span class="w"> </span><span class="il">2</span><span class="w"> </span><span class="il">0</span><span class="o">'</span><span class="p">[</span><span class="ss">`a`b`c</span><span class="o">!</span><span class="s2">"abc"</span><span class="p">;</span><span class="s2">"xyz"</span><span class="p">;</span><span class="s2">"123"</span><span class="p">;</span><span class="ss">`a`b</span><span class="o">!</span><span class="s2">"78"</span><span class="p">]</span>
+<span class="o">'</span><span class="n">length</span>
+<span class="gp">q)</span><span class="il">0</span><span class="w"> </span><span class="il">2</span><span class="w"> </span><span class="il">0</span><span class="o">'</span><span class="p">[</span><span class="ss">`a`b`c</span><span class="o">!</span><span class="s2">"abc"</span><span class="p">;</span><span class="s2">"xyz"</span><span class="p">;</span><span class="s2">"123"</span><span class="p">;</span><span class="ss">`b`a`c</span><span class="o">!</span><span class="s2">"789"</span><span class="p">]</span>
+<span class="o">'</span><span class="n">domain</span>
+</code></pre></div>
+<p>You can use Case to select between record fields according to a test on some other field.</p>
+<p>Suppose we have lists <code>h</code> and <code>o</code> of home and office phone numbers, and a third list <code>p</code> indicating at which number the subject prefers to be called.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="p">([]</span><span class="nv">pref</span><span class="o">:</span><span class="w"> </span><span class="n">p</span><span class="p">;</span><span class="nv">home</span><span class="o">:</span><span class="w"> </span><span class="n">h</span><span class="p">;</span><span class="w"> </span><span class="nv">office</span><span class="o">:</span><span class="w"> </span><span class="n">o</span><span class="p">;</span><span class="w"> </span><span class="nv">call</span><span class="o">:</span><span class="w"> </span><span class="p">(</span><span class="ss">`home`office</span><span class="o">?</span><span class="n">p</span><span class="p">)</span><span class="o">'</span><span class="p">[</span><span class="n">h</span><span class="p">;</span><span class="n">o</span><span class="p">])</span>
+<span class="n">pref</span><span class="w">   </span><span class="n">home</span><span class="w">             </span><span class="n">office</span><span class="w">           </span><span class="n">call</span>
+<span class="o">---------------------------------------------------------</span>
+<span class="n">home</span><span class="w">   </span><span class="s2">"(973)-902-8196"</span><span class="w"> </span><span class="s2">"(431)-158-8403"</span><span class="w"> </span><span class="s2">"(973)-902-8196"</span>
+<span class="n">office</span><span class="w"> </span><span class="s2">"(448)-242-6173"</span><span class="w"> </span><span class="s2">"(123)-993-9804"</span><span class="w"> </span><span class="s2">"(123)-993-9804"</span>
+<span class="n">office</span><span class="w"> </span><span class="s2">"(649)-678-6937"</span><span class="w"> </span><span class="s2">"(577)-671-6744"</span><span class="w"> </span><span class="s2">"(577)-671-6744"</span>
+<span class="n">home</span><span class="w">   </span><span class="s2">"(677)-200-5231"</span><span class="w"> </span><span class="s2">"(546)-864-5636"</span><span class="w"> </span><span class="s2">"(677)-200-5231"</span>
+<span class="n">home</span><span class="w">   </span><span class="s2">"(463)-653-5120"</span><span class="w"> </span><span class="s2">"(636)-437-2336"</span><span class="w"> </span><span class="s2">"(463)-653-5120"</span>
+</code></pre></div>
+<p>Case is a map.
+Consider the iteration’s arguments as a matrix, of which each row corresponds to an argument.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="nv">a</span><span class="o">:</span><span class="ss">`Kuh`Hund`Katte`Fisch</span>
+<span class="gp">q)</span><span class="nv">b</span><span class="o">:</span><span class="ss">`vache`chien`chat`poisson</span>
+<span class="gp">q)</span><span class="nv">c</span><span class="o">:</span><span class="ss">`cow`dog`cat`fish</span>
+<span class="gp">q)</span><span class="nb">show</span><span class="w"> </span><span class="nv">m</span><span class="o">:</span><span class="p">(</span><span class="n">a</span><span class="p">;</span><span class="n">b</span><span class="p">;</span><span class="n">c</span><span class="p">)</span>
+<span class="n">Kuh</span><span class="w">   </span><span class="n">Hund</span><span class="w">  </span><span class="n">Katte</span><span class="w"> </span><span class="n">Fisch</span>
+<span class="n">vache</span><span class="w"> </span><span class="n">chien</span><span class="w"> </span><span class="n">chat</span><span class="w">  </span><span class="n">poisson</span>
+<span class="n">cow</span><span class="w">   </span><span class="n">dog</span><span class="w">   </span><span class="n">cat</span><span class="w">   </span><span class="n">fish</span>
+</code></pre></div>
+<p>Case iterates the int vector as a mapping from column number to row number.
+It is a simple form of scattered indexing.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="nv">i</span><span class="o">:</span><span class="il">0</span><span class="w"> </span><span class="il">1</span><span class="w"> </span><span class="il">0</span><span class="w"> </span><span class="il">2</span>
+<span class="gp">q)</span><span class="n">i</span><span class="o">,'</span><span class="nb">til</span><span class="w"> </span><span class="nb">count</span><span class="w"> </span><span class="n">i</span>
+<span class="il">0</span><span class="w"> </span><span class="il">0</span>
+<span class="il">1</span><span class="w"> </span><span class="il">1</span>
+<span class="il">0</span><span class="w"> </span><span class="il">2</span>
+<span class="il">2</span><span class="w"> </span><span class="il">3</span>
+<span class="gp">q)</span><span class="n">m</span><span class="w"> </span><span class="o">./:</span><span class="n">i</span><span class="o">,'</span><span class="nb">til</span><span class="w"> </span><span class="nb">count</span><span class="w"> </span><span class="n">i</span>
+<span class="ss">`Kuh`chien`Katte`fish</span>
+<span class="gp">q)</span><span class="n">i</span><span class="o">'</span><span class="p">[</span><span class="n">a</span><span class="p">;</span><span class="n">b</span><span class="p">;</span><span class="n">c</span><span class="p">]</span>
+<span class="ss">`Kuh`chien`Katte`fish</span>
+</code></pre></div>
+<p><a href="../kb/partition.md#table-counts">Table counts in a partitioned database</a></p>
+<h2 id="empty-lists">Empty lists<a class="headerlink" href="#empty-lists" title="Permanent link">&para;</a></h2>
+<p>A map’s derived function is uniform. Applied to an empty right argument it returns an empty list <em>without an evaluation</em>.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="p">()</span><span class="o">~</span><span class="p">{</span><span class="n">x</span><span class="o">+</span><span class="n">y</span><span class="o">*</span><span class="n">z</span><span class="p">}</span><span class="o">'</span><span class="p">[</span><span class="ss">`foo</span><span class="p">;</span><span class="n">mt</span><span class="p">;</span><span class="n">mt</span><span class="p">]</span><span class="w">    </span><span class="c1">/ generic empty list ()</span>
+<span class="mb">1b</span>
+</code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title">Watch out for type changes when evaluating lists of unknown length.</p>
+</div>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="nb">type</span><span class="w"> </span><span class="p">(</span><span class="il">2</span><span class="o">*'</span><span class="p">)</span><span class="nb">til</span><span class="w"> </span><span class="il">5</span>
+<span class="mi">7h</span>
+<span class="gp">q)</span><span class="nb">type</span><span class="w"> </span><span class="p">(</span><span class="il">2</span><span class="o">*'</span><span class="p">)</span><span class="nb">til</span><span class="w"> </span><span class="il">0</span>
+<span class="mi">0h</span>
+<span class="gp">q)</span><span class="nb">type</span><span class="w"> </span><span class="p">(</span><span class="il">2</span><span class="o">*</span><span class="p">)</span><span class="nb">til</span><span class="w"> </span><span class="il">0</span>
+<span class="mi">7h</span>
+</code></pre></div>
+<div class="peachq-import-attribution">
+<p>Source adapted from the <a href="https://github.com/KxSystems/docs">Documentation for kdb+ and q</a>
+by KX Systems and contributors, used under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.
+<a href="../../attribution/">Attribution, provenance and independence notice</a>.</p>
+</div>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  <div class="md-copyright__highlight">
+    PeachQ - MIT-licensed open source q, built on Rayforce with DuckDB storage in progress.
+  </div>
+  <a href="../../../about">Built for the community</a> &middot;
+  <a href="../../../contact">Contact</a> &middot;
+  <a href="https://github.com/peachq-org/peachq" target="_blank" rel="noreferrer">GitHub</a>
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.sections", "navigation.top", "content.code.copy", "content.action.edit"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

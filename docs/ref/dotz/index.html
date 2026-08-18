@@ -1,0 +1,1833 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="The .z namespace contains objects that return or set system information, and callbacks for IPC.">
+      
+      
+        <meta name="author" content="KX Systems, Inc., a subsidiary of KX Software Limited">
+      
+      
+        <link rel="canonical" href="https://peachq.org/docs/ref/dotz/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../img/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>the .z namespace | Reference | kdb+ and q documentation - PeachQ</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../css/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  
+  <script src="../../../mirror-banner.js"></script>
+  <script>
+    var _paq = window._paq = window._paq || [];
+    /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    (function() {
+      var u="//www.timestored.com/mat/";
+      _paq.push(['setTrackerUrl', u+'matomo.php']);
+      _paq.push(['setSiteId', '4']);
+      var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+      g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+    })();
+  </script>
+
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#the-z-namespace" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../" title="PeachQ" class="md-header__button md-logo" aria-label="PeachQ" data-md-component="logo">
+      
+  <img src="../../../img/peachq-logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <a class="md-ellipsis peachq-wordmark" href="../../../">
+            Peach<span class="peachq-wordmark__q">Q</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    
+    <nav class="peachq-nav" aria-label="Site">
+      
+      
+      
+        
+        <a class="peachq-nav__link" href="../../../repl">Try Live</a>
+      
+        
+        <a class="peachq-nav__link" href="../../../download">Download</a>
+      
+        
+        <a class="peachq-nav__link" href="../../../compatibility">Compatibility</a>
+      
+        
+        <a class="peachq-nav__link" href="../../../roadmap">Roadmap</a>
+      
+        
+        <a class="peachq-nav__link" href="../../../news/">News</a>
+      
+        
+        <a class="peachq-nav__link" href="../../../about">About</a>
+      
+        
+        <a class="peachq-nav__link" href="../../../contact">Contact</a>
+      
+      <a class="peachq-nav__link" href="https://github.com/peachq-org/peachq" target="_blank" rel="noreferrer">GitHub &#8599;</a>
+    </nav>
+
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="PeachQ" class="md-nav__button md-logo" aria-label="PeachQ" data-md-component="logo">
+      
+  <img src="../../../img/peachq-logo.svg" alt="logo">
+
+    </a>
+    PeachQ
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/peachq-org/peachq" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../news/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    News
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#za-ip-address" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .z.a (IP address)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#zac-http-auth" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .z.ac (HTTP auth)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#zb-view-dependencies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .z.b (view dependencies)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#zbm-msg-validator" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .z.bm (msg validator)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#zc-cores" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .z.c (cores)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ze-tls-connection-status" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .z.e (TLS connection status)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#zex-failed-primitive" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .z.ex (failed primitive)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#zexit-action-on-exit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .z.exit (action on exit)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#zey-argument-to-failed-primitive" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .z.ey (argument to failed primitive)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#zf-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .z.f (file)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#zh-active-sockets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .z.H (active sockets)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#zh-host" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .z.h (host)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#zi-pid" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .z.i (PID)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#zk-version" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .z.K (version)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#zk-release-date" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .z.k (release date)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#zl-license" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .z.l (license)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#zm-module-namespace-name" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .z.M (module namespace name)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#zm-module-namespace" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .z.m (module namespace)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#zn-local-timespan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .z.N (local timespan)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#zn-utc-timespan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .z.n (UTC timespan)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#zo-os-version" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .z.o (OS version)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#zp-local-timestamp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .z.P (local timestamp)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#zp-utc-timestamp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .z.p (UTC timestamp)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#zpc-close" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .z.pc (close)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#zpd-peach-handles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .z.pd (peach handles)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#zpg-get" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .z.pg (get)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#zph-http-get" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .z.ph (HTTP get)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#zpi-input" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .z.pi (input)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#zpm-http-methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .z.pm (HTTP methods)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#zpo-open" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .z.po (open)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#zpp-http-post" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .z.pp (HTTP post)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#zpq-qcon" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .z.pq (qcon)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#zps-set" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .z.ps (set)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#zpw-validate-user" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .z.pw (validate user)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#zq-quiet-mode" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .z.q (quiet mode)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#zr-blocked" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .z.r (blocked)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#zs-self" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .z.s (self)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#zts-timer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .z.ts (timer)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#zu-user-id" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .z.u (user ID)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#zvs-value-set" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .z.vs (value set)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#zw-handles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .z.W (handles)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#zw-handle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .z.w (handle)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#zwc-websocket-close" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .z.wc (websocket close)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#zwo-websocket-open" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .z.wo (websocket open)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#zws-websockets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .z.ws (websockets)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#zx-raw-command-line" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .z.X (raw command line)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#zx-argv" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .z.x (argv)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#zz-local-datetime" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .z.Z (local datetime)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#zz-utc-datetime" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .z.z (UTC datetime)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#zzd-compressionencryption-defaults" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .z.zd (compression/encryption defaults)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#zt-zt-zd-zd-timedate-shortcuts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        .z.T .z.t .z.D .z.d (time/date shortcuts)
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/peachq-org/peachq-website/edit/main/content/docs/ref/dotz.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+
+
+<h1 id="the-z-namespace">The <code>.z</code> namespace<a class="headerlink" href="#the-z-namespace" title="Permanent link">&para;</a></h1>
+<p><em>Environment and callbacks</em></p>
+<div class="typewriter">
+<p>Environment                              Callbacks
+ <a href="#za-ip-address">.z.a    IP address</a>                       <a href="#zbm-msg-validator">.z.bm    msg validator</a>
+ <a href="#zb-view-dependencies">.z.b    view dependencies</a>                <a href="#zexit-action-on-exit">.z.exit  action on exit</a>
+ <a href="#zc-cores">.z.c    cores</a>                            <a href="#zpc-close">.z.pc    close</a>
+ <a href="#zf-file">.z.f    file</a>                             <a href="#zpd-peach-handles">.z.pd    peach handles</a>
+ <a href="#zh-host">.z.h    host</a>                             <a href="#zpg-get">.z.pg    get</a>
+ <a href="#zi-pid">.z.i    PID</a>                              <a href="#zpi-input">.z.pi    input</a>
+ <a href="#zk-version">.z.K    version</a>                          <a href="#zpo-open">.z.po    open</a>
+ <a href="#zk-release-date">.z.k    release date</a>                     <a href="#zpq-qcon">.z.pq    qcon</a>
+ <a href="#zl-license">.z.l    license</a>                          <a href="#zr-blocked">.z.r     blocked</a>
+ <a href="#zm-module-namespace-name">.z.M    module namespace name</a>            <a href="#zps-set">.z.ps    set</a>
+ <a href="#zm-module-namespace">.z.m    module namespace</a>                 <a href="#zpw-validate-user">.z.pw    validate user</a>
+ <a href="#zo-os-version">.z.o    OS version</a>                       <a href="#zts-timer">.z.ts    timer</a>
+ <a href="#zq-quiet-mode">.z.q    quiet mode</a>                       <a href="#zvs-value-set">.z.vs    value set</a>
+ <a href="#zs-self">.z.s    self</a>
+ <a href="#zu-user-id">.z.u    user ID</a>
+ <a href="#zx-raw-command-line">.z.X/x  raw/parsed command line</a>
+                                         Callbacks (HTTP)
+Environment (Compression/Encryption)      <a href="#zac-http-auth">.z.ac    HTTP auth</a>
+ <a href="#zzd-compressionencryption-defaults">.z.zd   compression/encryption defaults</a>  <a href="#zph-http-get">.z.ph    HTTP get</a>
+                                          <a href="#zpm-http-methods">.z.pm    HTTP methods</a>
+Environment (Connections)                 <a href="#zpp-http-post">.z.pp    HTTP post</a>
+ <a href="#ze-tls-connection-status">.z.e    TLS connection status</a>
+ <a href="#zh-active-sockets">.z.H    active sockets</a>                  Callbacks (WebSockets)
+ <a href="#zw-handles">.z.W/w  handles/handle</a>                   <a href="#zwc-websocket-close">.z.wc    WebSocket close</a>
+                                          <a href="#zwo-websocket-open">.z.wo    WebSocket open</a>
+Environment (Debug)                       <a href="#zws-websockets">.z.ws    WebSockets</a>
+ <a href="#zex-failed-primitive">.z.ex   failed primitive</a>
+ <a href="#zey-argument-to-failed-primitive">.z.ey   arg to failed primitive</a></p>
+<p>Environment (Time/Date)
+ <a href="#zt-zt-zd-zd-timedate-shortcuts">.z.D/d  date shortcuts</a>
+ <a href="#zn-local-timespan">.z.N/n  local/UTC timespan</a>
+ <a href="#zp-local-timestamp">.z.P/p  local/UTC timestamp</a>
+ <a href="#zt-zt-zd-zd-timedate-shortcuts">.z.T/t  time shortcuts</a>
+ <a href="#zz-local-datetime">.z.Z/z  local/UTC datetime</a></p>
+</div>
+<p>The <code>.z</code> <a href="../../basics/namespaces/">namespace</a> contains environment variables and functions, and hooks for callbacks.</p>
+<div class="admonition warning">
+<p class="admonition-title">The <code>.z</code> namespace is reserved for use by KX, as are all single-letter namespaces.</p>
+<p>Consider all undocumented functions in the namespace as exposed infrastructure – and do not use them.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">By default, callbacks are not defined in the session</p>
+<p>After they have been assigned, you can restore the default using <a href="../../basics/syscmds/#x-expunge"><code>\x</code></a> to delete the definition that was made.</p>
+</div>
+<p>Prior to kdb+, <code>.z</code> was a pseudo-namespace that could not be retrieved or enumerated using the language features (such as <code>key `.z</code> or <code>value `.z</code>). In kdb+, <code>.z</code> is a proper namespace that acts like all other namespaces.</p>
+<p><a href="../kb/callbacks.md">Callbacks</a>
+<a href="../kb/using-dotz.md">Using <code>.z</code></a>
+<br></p>
+<p><em>Q for Mortals:</em>
+<a href="../../../q4m3/11_IO/#116-interprocess-communication">§11.8 Interprocess Communication</a></p>
+<h2 id="za-ip-address"><code>.z.a</code> (IP address)<a class="headerlink" href="#za-ip-address" title="Permanent link">&para;</a></h2>
+<p>The IP address as a 32-bit integer</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="o">.</span><span class="n">z.a</span>
+<span class="o">-</span><span class="mi">1408172030i</span>
+</code></pre></div>
+<p>The dotted-decimal string representation can be obtained from an integer using <a href="../vs/#integer-based-ip-address"><code>vs</code></a>.</p>
+<p>The return value depends on whether it is invoked in an IPC callback or not.</p>
+<ul>
+<li>
+<p><strong>Not invoking in an IPC callback</strong>
+   <br>Returns the current IP address associated with the hostname.
+   <br>This pre-populated value is equivalent to passing <a href="#zh-host"><code>.z.h</code></a> to <a href="../dotq/#host-ip-to-hostname"><code>.Q.addr</code></a> to find the IP address of the current host.
+   <div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="o">.</span><span class="n">z.a</span>
+<span class="o">-</span><span class="mi">1408172030i</span>
+<span class="gp">q)</span><span class="o">.</span><span class="n">Q.addr</span><span class="w"> </span><span class="o">.</span><span class="n">z.h</span>
+<span class="o">-</span><span class="mi">1408172030i</span>
+</code></pre></div></p>
+</li>
+<li>
+<p><strong>Invoking in an IPC callback</strong>
+   <br>When invoked inside a <code>.z.p*</code> callback via a TCP/IP connection, it is the IP address of the client session, not the current session.
+   For example, connecting from a remote machine:
+   <div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="nv">h</span><span class="o">:</span><span class="ow">hopen</span><span class="w"> </span><span class="nv">myhost</span><span class="o">:</span><span class="il">1234</span>
+<span class="gp">q)</span><span class="n">h</span><span class="s2">"</span><span class="se">\"</span><span class="s2">i</span><span class="se">\"</span><span class="s2">$0x0 vs .z.a"</span>
+<span class="il">192</span><span class="w"> </span><span class="il">168</span><span class="w"> </span><span class="il">65</span><span class="w"> </span><span class="mi">1i</span>
+</code></pre></div>
+   or from same machine:
+   <div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="nv">h</span><span class="o">:</span><span class="ow">hopen</span><span class="w"> </span><span class="il">1234</span>
+<span class="gp">q)</span><span class="n">h</span><span class="s2">"</span><span class="se">\"</span><span class="s2">i</span><span class="se">\"</span><span class="s2">$0x0 vs .z.a"</span>
+<span class="il">127</span><span class="w"> </span><span class="il">0</span><span class="w"> </span><span class="il">0</span><span class="w"> </span><span class="mi">1i</span>
+</code></pre></div>
+   When invoked via a Unix Domain Socket, it is 0.
+   <div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="nv">h</span><span class="o">:</span><span class="ow">hopen</span><span class="w"> </span><span class="ss">`:unix</span><span class="o">://</span><span class="il">1234</span>
+<span class="gp">q)</span><span class="n">h</span><span class="s2">".z.a"</span>
+<span class="mi">0i</span>
+</code></pre></div></p>
+</li>
+</ul>
+<p><a href="#zh-host"><code>.z.h</code></a> (host), <a href="../dotq/#host-ip-to-hostname"><code>.Q.host</code></a> (IP to hostname)</p>
+<h2 id="zac-http-auth"><code>.z.ac</code> (HTTP auth)<a class="headerlink" href="#zac-http-auth" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>.z.ac:(requestText;requestHeaderAsDictionary)
+</code></pre></div>
+<p>Lets you define custom code to authorize/authenticate an HTTP request.
+e.g. inspect HTTP headers representing oauth tokens, cookies, etc.
+Your custom code can then return different values based on what is discovered.</p>
+<p><code>.z.ac</code> is a unary function, whose single parameter is a two-element list providing the request text and header.</p>
+<div class="admonition note">
+<p class="admonition-title">If .z.ac is not defined, it uses basic access authentication as per <code>(4;"")</code> below</p>
+</div>
+<p>The function should return a two-element list. The list of possible return values is:</p>
+<ul>
+<li>User not authorized/authenticated</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="p">(</span><span class="il">0</span><span class="p">;</span><span class="s2">""</span><span class="p">)</span>
+</code></pre></div>
+<p>User not authorized. Client is sent default 401 HTTP unauthorized response.
+An HTTP callback to handle the request will not be called.</p>
+<ul>
+<li>User authorized/authenticated</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="p">(</span><span class="il">1</span><span class="p">;</span><span class="s2">"username"</span><span class="p">)</span>
+</code></pre></div>
+<p>The provided username is used to set <a href="#zu-user-id"><code>.z.u</code></a>.
+The relevant HTTP callback to handle this request will be allowed.</p>
+<ul>
+<li>User not authorized/authenticated (custom response)</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="p">(</span><span class="il">2</span><span class="p">;</span><span class="s2">"response text"</span><span class="p">)</span>
+</code></pre></div>
+<p>The custom response to be sent should be provided in the "response text" section.
+The response text should be comprised of a valid HTTP response message, for example a 401 response with a customised message.
+An HTTP callback to handle the original request is not called.</p>
+<ul>
+<li>Fallback to basic authentication</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="p">(</span><span class="il">4</span><span class="p">;</span><span class="s2">""</span><span class="p">)</span>
+</code></pre></div>
+<p>Fallback to <a href="https://en.wikipedia.org/wiki/Basic_access_authentication#Client_side">basic access authentication</a>, where the username/password are base64 decoded and processed via the <a href="../../basics/cmdline/#-u-usr-pwd-local"><code>-u</code></a>/<a href="../../basics/cmdline/#-u-usr-pwd"><code>-U</code></a> file and <a href="#zpw-validate-user"><code>.z.pw</code></a> (if defined).
+If the user is not permitted, the client is sent a default 401 HTTP unauthorized response. Since V4.0 2021.07.12.</p>
+<p><a href="../kb/http.md">HTTP</a></p>
+<p><a href="" id="zb-dependencies"></a></p>
+<h2 id="zb-view-dependencies"><code>.z.b</code> (view dependencies)<a class="headerlink" href="#zb-view-dependencies" title="Permanent link">&para;</a></h2>
+<p>The dependency dictionary.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="nv">a</span><span class="o">::</span><span class="n">x</span><span class="o">+</span><span class="n">y</span>
+<span class="gp">q)</span><span class="nv">b</span><span class="o">::</span><span class="n">x</span><span class="o">+</span><span class="il">1</span>
+<span class="gp">q)</span><span class="o">.</span><span class="n">z.b</span>
+<span class="n">x</span><span class="o">|</span><span class="w"> </span><span class="ss">`a`b</span>
+<span class="n">y</span><span class="o">|</span><span class="w"> </span><span class="o">,</span><span class="ss">`a</span>
+</code></pre></div>
+<p><a href="../../basics/syscmds/#b-views"><code>\b</code></a> (views)
+<br></p>
+<p><a href="../learn/views.md">Views</a></p>
+<h2 id="zbm-msg-validator"><code>.z.bm</code> (msg validator)<a class="headerlink" href="#zbm-msg-validator" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>.z.bm:x
+</code></pre></div>
+<p>Where <code>x</code> is a unary function.</p>
+<p>kdb+ before V2.7 was sensitive to being fed malformed data structures, sometimes resulting in a crash, but now validates incoming IPC messages to check that data structures are well formed, reporting <code>'badmsg</code> and disconnecting senders of malformed data structures. The raw message is captured for analysis via the callback <code>.z.bm</code>. The sequence upon receiving such a message is</p>
+<ol>
+<li>calls <code>.z.bm</code> with a 2-item list: <code>(handle;msgBytes)</code></li>
+<li>close the handle and call <code>.z.pc</code></li>
+<li>signals <code>'badmsg</code></li>
+</ol>
+<p>E.g. with the callback defined</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="nf">.z.bm</span><span class="o">:</span><span class="p">{</span><span class="ss">`msg</span><span class="w"> </span><span class="nb">set</span><span class="w"> </span><span class="p">(</span><span class="o">.</span><span class="n">z.p</span><span class="p">;</span><span class="n">x</span><span class="p">);}</span>
+</code></pre></div>
+<p>after a bad msg has been received, the global var <code>msg</code> will contain the timestamp, the handle and the full message. Note that this check validates only the data structures, it cannot validate the data itself.</p>
+<h2 id="zc-cores"><code>.z.c</code> (cores)<a class="headerlink" href="#zc-cores" title="Permanent link">&para;</a></h2>
+<p>The number of physical cores.</p>
+<h2 id="ze-tls-connection-status"><code>.z.e</code> (TLS connection status)<a class="headerlink" href="#ze-tls-connection-status" title="Permanent link">&para;</a></h2>
+<p>TLS details used with the current connection handle. 
+Returns an empty dictionary if the connection is not TLS enabled. </p>
+<p>Displays information on the following:</p>
+<ul>
+<li><code>CIPHER</code> is the name of cipher used for the connection</li>
+<li><code>PROTOCOL</code> is the name of the protocol used for the connection, for example <code>`TLSv1.2</code></li>
+<li><code>CERT</code> is the X509 certificate the peer presented. It is not present if the peer certificate was not provided.</li>
+</ul>
+<p>For example, the following connects to a server, then runs <code>.z.e</code> on the server to gain information on the TLS connection handle used by the client. Therefore <code>CERT</code> is the client certificate (peer of the server). 
+If <a href="../kb/ssl.md#ssl_verify_client"><code>SSL_VERIFY_CLIENT</code></a> is not enabled on the server, the client certificate is not requested by the server, and therefore would not be displayed.</p>
+<p><div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="nv">h</span><span class="o">:</span><span class="ow">hopen</span><span class="w"> </span><span class="ss">`:tcps</span><span class="o">://</span><span class="nv">localhost</span><span class="o">:</span><span class="il">5000</span>
+<span class="gp">q)</span><span class="n">h</span><span class="s2">".z.e"</span>
+<span class="n">CIPHER</span><span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="ss">`AES128</span><span class="o">-</span><span class="n">GCM</span><span class="o">-</span><span class="n">SHA256</span>
+<span class="n">PROTOCOL</span><span class="o">|</span><span class="w"> </span><span class="ss">`TLSv1.2</span>
+<span class="n">CERT</span><span class="w">    </span><span class="o">|</span><span class="w"> </span><span class="ss">`SUBJECT`ISSUER`SERIALNUMBER`NOTVALIDBEFORE`NOTVALIDAFTER`VERIFIED`VERIFYERROR</span><span class="o">!</span><span class="p">(</span><span class="s2">"/C=US/ST=New York/L=Brooklyn/O=Example Brooklyn Company/CN=myname.com"</span><span class="p">;</span><span class="s2">"/C=US/ST=New York/L=Brooklyn/O=Example Brooklyn Company/CN=examplebrooklyn.com"</span><span class="p">;</span><span class="o">,</span><span class="s2">"1"</span><span class="p">;</span><span class="s2">"Jul  6 10:08:57 2021 GMT"</span><span class="p">;</span><span class="s2">"May 15 10:08:57 2031 GMT"</span><span class="p">;</span><span class="mb">1b</span><span class="p">;</span><span class="il">0</span><span class="p">)</span>
+</code></pre></div>
+The following shows the client sending a message to the server, which in turn sends <code>.z.e</code> to the client (using the current connection handle <a href="#zw-handle"><code>.z.w</code></a>), displaying the server certificate used by the client connection.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="nv">h</span><span class="o">:</span><span class="ow">hopen</span><span class="w"> </span><span class="ss">`:tcps</span><span class="o">://</span><span class="nv">localhost</span><span class="o">:</span><span class="il">5000</span>
+<span class="gp">q)</span><span class="n">h</span><span class="s2">".z.w</span><span class="se">\"</span><span class="s2">.z.e</span><span class="se">\"</span><span class="s2">"</span>
+<span class="n">CIPHER</span><span class="w">    </span><span class="o">|</span><span class="w"> </span><span class="ss">`TLS_AES_256_GCM_SHA384</span>
+<span class="n">PROTOCOL</span><span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="ss">`TLSv1.3</span>
+<span class="n">CERT</span><span class="w">      </span><span class="o">|</span><span class="w"> </span><span class="ss">`SUBJECT`ISSUER`SERIALNUMBER`NOTVALIDBEFORE`NOTVALIDAFTER`VERIFIED`VERIFYERROR</span><span class="o">!</span><span class="p">(</span><span class="s2">"/C=US/ST=CA/L=Somewhere/O=Someone/CN=Foobar"</span><span class="p">;</span><span class="s2">"/C=US/ST=CA/L=Somewhere/O=Someone/CN=FoobarCA"</span><span class="p">;</span><span class="s2">"1399A138267E9EB69529717C24FDA451932AE3FD"</span><span class="p">;</span><span class="s2">"Jan 12 17:20:10 2026 GMT"</span><span class="p">;</span><span class="s2">"Jan 12 17:20:10 2027 GMT"</span><span class="p">;</span><span class="mb">1b</span><span class="p">;</span><span class="il">0</span><span class="p">)</span>
+</code></pre></div>
+<p>When called from code executing a client callback function due to a client request, it can be used to gain TLS information on the client connection.
+For example, the following implements the connection open callback (<a href="#zpo-open"><code>.z.po</code></a>) to print TLS information each time a client connects.</p>
+<div class="highlight"><pre><span></span><code><span class="nf">.z.po</span><span class="o">:</span><span class="p">{</span><span class="nb">show</span><span class="s2">"SSL server connection info:"</span><span class="p">;</span><span class="nb">show</span><span class="w"> </span><span class="o">.</span><span class="n">z.e</span><span class="p">;</span><span class="nb">show</span><span class="s2">"SSL client connection info:"</span><span class="p">;</span><span class="nb">show</span><span class="w"> </span><span class="o">.</span><span class="n">z.w</span><span class="s2">".z.e"</span><span class="p">}</span>
+</code></pre></div>
+<p><code>.z.w".z.e"</code> is used to run <code>.z.e</code> on the client (via a <a href="../../basics/ipc/#sync-request-get">sync request</a> over the connection provided by <a href="#zw-handle"><code>.z.w</code></a>)</p>
+<p>Since V3.4 2016.05.16. <code>CERT</code> details of <code>VERIFIED</code>,<code>VERIFYERROR</code> available since 4.1t 2024.02.07.</p>
+<p><a href="../../basics/internal/#-26x-ssl"><code>-26!</code> TLS settings</a></p>
+<h2 id="zex-failed-primitive"><code>.z.ex</code> (failed primitive)<a class="headerlink" href="#zex-failed-primitive" title="Permanent link">&para;</a></h2>
+<p>In a <a href="../../basics/debug/">debugger</a> session, <code>.z.ex</code> is set to the failed primitive.</p>
+<p>Since V3.5 2017.03.15.</p>
+<p><a href="#zey-argument-to-failed-primitive"><code>.z.ey</code></a> (argument to failed primitive)</p>
+<h2 id="zexit-action-on-exit"><code>.z.exit</code> (action on exit)<a class="headerlink" href="#zexit-action-on-exit" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>.z.exit:f
+</code></pre></div>
+<p>Where <code>f</code> is a unary function, <code>f</code> is called with the exit parameter as the argument just before exiting the kdb+ session.</p>
+<p>The exit parameter is the argument to the <a href="../exit/"><code>exit</code></a> function, or 0 if manual exit with <a href="../../basics/syscmds/#quit"><code>\\</code> quit</a></p>
+<div class="admonition important">
+<p class="admonition-title">The handler cannot cancel the exit.</p>
+</div>
+<p><code>.z.exit</code> can be unset with <code>\x .z.exit</code>, which restores the default behavior.</p>
+<p>The default behavior is equivalent to setting <code>.z.exit</code> to <code>{}</code>, i.e. do nothing.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="o">.</span><span class="n">z.exit</span>
+<span class="o">'.</span><span class="n">z.exit</span>
+<span class="gp">q)</span><span class="nf">.z.exit</span><span class="o">:</span><span class="p">{</span><span class="m">0N</span><span class="o">!</span><span class="n">x</span><span class="p">}</span>
+<span class="gp">q)</span><span class="o">\\</span>
+<span class="il">0</span>
+<span class="n">os</span><span class="o">&gt;..</span>
+
+<span class="gp">q)</span><span class="nf">.z.exit</span><span class="o">:</span><span class="p">{</span><span class="m">0N</span><span class="o">!</span><span class="n">x</span><span class="p">}</span>
+<span class="gp">q)</span><span class="ow">exit</span><span class="w"> </span><span class="il">42</span>
+<span class="il">42</span>
+<span class="n">os</span><span class="o">&gt;..</span>
+
+<span class="gp">q)</span><span class="nf">.z.exit</span><span class="o">:</span><span class="p">{</span><span class="m">0N</span><span class="o">!</span><span class="n">x</span><span class="p">}</span>
+<span class="gp">q)</span><span class="ow">exit</span><span class="w"> </span><span class="il">0</span>
+<span class="il">0</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>os&gt;..
+</code></pre></div>
+<p>If the exit behavior has an error (disk full for example if exit tries to save the current state), the session is suspended and exits after completion or manual exit from the suspension.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="nf">.z.exit</span><span class="o">:</span><span class="p">{</span><span class="ss">`thiswontwork</span><span class="o">+</span><span class="n">x</span><span class="p">}</span>
+<span class="gp">q)</span><span class="o">\\</span>
+<span class="p">{</span><span class="ss">`thiswontwork</span><span class="o">+</span><span class="n">x</span><span class="p">}</span>
+<span class="o">'</span><span class="nb">type</span>
+<span class="o">+</span>
+<span class="ss">`thiswontwork</span>
+<span class="il">0</span>
+<span class="gp">q)</span><span class="err">)</span><span class="n">x</span>
+<span class="il">0</span>
+
+<span class="gp">q)</span><span class="err">)</span><span class="ne">'`up</span>
+<span class="o">'</span><span class="n">up</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>os&gt;..
+</code></pre></div>
+<p><a href="#zpc-close"><code>.z.pc</code></a> (port close)
+<br></p>
+<p><a href="../exit/"><code>exit</code></a>
+<br></p>
+<p><a href="../../basics/syscmds/#quit"><code>\\</code> quit</a></p>
+<h2 id="zey-argument-to-failed-primitive"><code>.z.ey</code> (argument to failed primitive)<a class="headerlink" href="#zey-argument-to-failed-primitive" title="Permanent link">&para;</a></h2>
+<p>In a <a href="../../basics/debug/">debugger</a> session, <code>.z.ey</code> is set to the argument to failed primitive.</p>
+<p>Since V3.5 2017.03.15.</p>
+<p><a href="#zex-failed-primitive"><code>.z.ex</code></a> (failed primitive)</p>
+<h2 id="zf-file"><code>.z.f</code> (file)<a class="headerlink" href="#zf-file" title="Permanent link">&para;</a></h2>
+<p>Name of the q script as a symbol.</p>
+<div class="highlight"><pre><span></span><code><span class="o">$</span><span class="w"> </span><span class="n">q</span><span class="w"> </span><span class="n">test.q</span>
+<span class="gp">q)</span><span class="o">.</span><span class="n">z.f</span>
+<span class="ss">`test.q</span>
+</code></pre></div>
+<p><a href="#zx-argv"><code>.z.x</code></a> (argv)</p>
+<h2 id="zh-active-sockets"><code>.z.H</code> (active sockets)<a class="headerlink" href="#zh-active-sockets" title="Permanent link">&para;</a></h2>
+<p>Active sockets as a list (a low-cost method). Since v4.0 2020.06.01.</p>
+<p>List has <a href="../set-attribute/#sorted">sorted attribute</a> applied since v4.1 2024.07.08.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="o">.</span><span class="n">z.H</span><span class="o">~</span><span class="nb">key</span><span class="w"> </span><span class="o">.</span><span class="n">z.W</span>
+<span class="mb">1b</span>
+</code></pre></div>
+<p><a href="#zw-handles"><code>.z.W</code></a> (handles), <a href="#zw-handle"><code>.z.w</code></a> (handle), <a href="../../basics/internal/#-38x-socket-table"><code>-38!</code></a> (socket table)</p>
+<h2 id="zh-host"><code>.z.h</code> (host)<a class="headerlink" href="#zh-host" title="Permanent link">&para;</a></h2>
+<p>The host name as a symbol</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="o">.</span><span class="n">z.h</span>
+<span class="ss">`demo.kx.com</span>
+</code></pre></div>
+<p>If you require a fully qualified domain name, and the command returns a hostname only (with no domain name), this should be resolved by your system administrators.</p>
+<p><strong>Linux</strong></p>
+<p>On Linux this should return the same value as the shell command <code>hostname</code>.
+Linux stores the current hostname in <code>/proc/sys/kernel/hostname</code>. The operating system reads the hostname from <code>/etc/hostname</code>.</p>
+<p><strong>macOS</strong></p>
+<p>On macOS this should return the same value as <code>sysctl kern.hostname</code> or <code>scutil --get HostName</code>.</p>
+<p><strong>Microsoft Windows</strong></p>
+<p>On Windows this should return the same value as <code>hostname</code> via cmd.exe or Powershell,
+which typically gets the hostname from the registry entry <code>HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\ComputerName\ActiveComputerName</code>.
+The <code>req query</code> command can be used to retrieve the current value.</p>
+<div class="highlight"><pre><span></span><code>reg query HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\ComputerName\ActiveComputerName
+</code></pre></div>
+<p>The value can also be viewed and altered via the Control Panel.</p>
+<p><a href="#za-ip-address"><code>.z.a</code></a> (IP address), <a href="../dotq/#addr-iphost-as-int"><code>.Q.addr</code></a> (IP/host as int)</p>
+<h2 id="zi-pid"><code>.z.i</code> (PID)<a class="headerlink" href="#zi-pid" title="Permanent link">&para;</a></h2>
+<p>The process ID as an integer.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="o">.</span><span class="n">z.i</span>
+<span class="il">23219</span>
+</code></pre></div>
+<h2 id="zk-version"><code>.z.K</code> (version)<a class="headerlink" href="#zk-version" title="Permanent link">&para;</a></h2>
+<p>The major version number, as a float, of the version of kdb+ being used.
+(A test version of 2.4t is reported as 2.4)</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="o">.</span><span class="n">z.K</span>
+<span class="mf">2.4</span>
+<span class="gp">q)</span><span class="o">.</span><span class="n">z.k</span>
+<span class="ld">2006.10.30</span>
+</code></pre></div>
+<p><a href="#zk-release-date"><code>.z.k</code></a> (release date)</p>
+<h2 id="zk-release-date"><code>.z.k</code> (release date)<a class="headerlink" href="#zk-release-date" title="Permanent link">&para;</a></h2>
+<p>Date on which the version of kdb+ being used was released.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="o">.</span><span class="n">z.k</span>
+<span class="ld">2006.10.30</span>
+<span class="gp">q)</span>
+</code></pre></div>
+<p>This value is checked against <code>.Q.k</code> as part of the startup to make sure that the executable and the version of q.k being used are compatible.</p>
+<p><a href="#zk-version"><code>.z.K</code></a> (version)</p>
+<h2 id="zl-license"><code>.z.l</code> (license)<a class="headerlink" href="#zl-license" title="Permanent link">&para;</a></h2>
+<p>License information as a list of strings; <code>()</code> for non-commercial 32-bit versions.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="ss">`maxCoresAllowed`expiryDate`updateDate`````bannerText`</span><span class="o">!.</span><span class="n">z.l</span>
+<span class="n">maxCoresAllowed</span><span class="o">|</span><span class="w"> </span><span class="s2">""</span>
+<span class="n">expiryDate</span><span class="w">     </span><span class="o">|</span><span class="w"> </span><span class="s2">"2021.05.27"</span>
+<span class="n">updateDate</span><span class="w">     </span><span class="o">|</span><span class="w"> </span><span class="s2">"2021.05.27"</span>
+<span class="w">               </span><span class="o">|</span><span class="w"> </span><span class="o">,</span><span class="s2">"1"</span>
+<span class="w">               </span><span class="o">|</span><span class="w"> </span><span class="o">,</span><span class="s2">"1"</span>
+<span class="w">               </span><span class="o">|</span><span class="w"> </span><span class="o">,</span><span class="s2">"1"</span>
+<span class="w">               </span><span class="o">|</span><span class="w"> </span><span class="o">,</span><span class="s2">"0"</span>
+<span class="n">bannerText</span><span class="w">     </span><span class="o">|</span><span class="w"> </span><span class="s2">"stephen@kx.com #59875"</span>
+<span class="w">               </span><span class="o">|</span><span class="w"> </span><span class="o">,</span><span class="s2">"0"</span>
+</code></pre></div>
+<p><code>bannerText</code> is the custom text displayed at startup, and always contains the license number as the last token.</p>
+<h2 id="zm-module-namespace-name"><code>.z.M</code> (module namespace name)<a class="headerlink" href="#zm-module-namespace-name" title="Permanent link">&para;</a></h2>
+<p>Since V5.0.</p>
+<p>While loading a module, <code>.z.M</code> contains the name of the local namespace of the module as a symbol. Furthermore, <code>.z.M</code> suffixed with any name returns that name joined to the module namespace name.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="o">-</span><span class="il">1</span><span class="w"> </span><span class="nb">system</span><span class="w"> </span><span class="s2">"cat ~/.kx/mod/foo/init.q"</span><span class="p">;</span>
+<span class="nf">f</span><span class="o">:</span><span class="p">{</span><span class="o">.</span><span class="n">z.M</span><span class="p">}</span>
+<span class="nf">g</span><span class="o">:</span><span class="p">{</span><span class="o">.</span><span class="n">z.M.f</span><span class="p">}</span>
+<span class="nv">export</span><span class="o">:</span><span class="p">([</span><span class="n">f</span><span class="p">;</span><span class="n">g</span><span class="p">])</span>
+
+<span class="gp">q)</span><span class="o">.</span><span class="n">z.M</span>
+<span class="ss">`</span><span class="o">.</span>
+<span class="gp">q)</span><span class="nv">foo</span><span class="o">:</span><span class="n">use</span><span class="ss">`foo</span>
+<span class="gp">q)</span><span class="n">foo.f</span><span class="p">[]</span>
+<span class="ss">`</span><span class="o">.</span><span class="n">m.foo</span>
+<span class="gp">q)</span><span class="n">foo.g</span><span class="p">[]</span>
+<span class="ss">`</span><span class="o">.</span><span class="n">m.foo.f</span>
+</code></pre></div>
+<h2 id="zm-module-namespace"><code>.z.m</code> (module namespace)<a class="headerlink" href="#zm-module-namespace" title="Permanent link">&para;</a></h2>
+<p>Since V5.0.</p>
+<p>While loading a module, <code>.z.m</code> represents the local namespace of the module as a dictionary. Elements can be added, removed and retrieved just like with any dictionary. Functions retain the information about which namespace <code>.z.m</code> refers to, as opposed to it resolving to the current module at the point of invocation.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="o">-</span><span class="il">1</span><span class="w"> </span><span class="nb">system</span><span class="w"> </span><span class="s2">"cat ~/.kx/mod/foo/init.q"</span><span class="p">;</span>
+<span class="c1">// log:{-1 string[.z.P]," ",x}  // doesn't work, since log is a reserved name</span>
+<span class="nf">.z.m.log</span><span class="o">:</span><span class="p">{</span><span class="o">-</span><span class="il">1</span><span class="w"> </span><span class="nb">string</span><span class="p">[</span><span class="o">.</span><span class="n">z.P</span><span class="p">]</span><span class="o">,</span><span class="s2">" "</span><span class="o">,</span><span class="n">x</span><span class="p">}</span>
+<span class="nf">f</span><span class="o">:</span><span class="p">{</span><span class="n">x</span><span class="o">+</span><span class="il">1</span><span class="p">}</span>
+<span class="c1">// upd:{.z.m.log"updating";select f a from ([]a:1 2 3)}  // would look for `f` in the user's namespace</span>
+<span class="nf">upd</span><span class="o">:</span><span class="p">{</span><span class="o">.</span><span class="n">z.m.log</span><span class="s2">"updating"</span><span class="p">;</span><span class="ow">select</span><span class="w"> </span><span class="o">.</span><span class="n">z.m.f</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="ow">from</span><span class="w"> </span><span class="p">([]</span><span class="nv">a</span><span class="o">:</span><span class="il">1</span><span class="w"> </span><span class="il">2</span><span class="w"> </span><span class="il">3</span><span class="p">)}</span>
+<span class="nv">export</span><span class="o">:</span><span class="p">([</span><span class="n">upd</span><span class="p">])</span>
+
+<span class="gp">q)</span><span class="nv">.z.m</span><span class="o">,:</span><span class="n">use</span><span class="ss">`foo</span>
+<span class="gp">q)</span><span class="o">.</span><span class="n">z.m</span>
+<span class="n">upd</span><span class="o">|</span><span class="w"> </span><span class="ss">`</span><span class="o">.</span><span class="n">m.foo.export.upd</span><span class="p">[]</span>
+<span class="gp">q)</span><span class="n">upd</span><span class="p">[]</span>
+<span class="ld">2025.10.08D12:36:17.579634206</span><span class="w"> </span><span class="n">updating</span>
+<span class="n">a</span>
+<span class="o">-</span>
+<span class="il">2</span>
+<span class="il">3</span>
+<span class="il">4</span>
+</code></pre></div>
+<h2 id="zn-local-timespan"><code>.z.N</code> (local timespan)<a class="headerlink" href="#zn-local-timespan" title="Permanent link">&para;</a></h2>
+<p>System local time as timespan in nanoseconds.</p>
+<!-- (V2.6 upwards.) -->
+
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="o">.</span><span class="n">z.N</span>
+<span class="ld">0D23:30:10.827156000</span>
+</code></pre></div>
+<p><a href="#zn-utc-timespan"><code>.z.n</code></a> (UTC timespan), <a href="#zp-local-timestamp"><code>.z.P</code></a> (local timestamp), <a href="#zp-utc-timestamp"><code>.z.p</code></a> (UTC timestamp), <a href="#zz-local-datetime"><code>.z.Z</code></a> (local datetime), <a href="#zz-utc-datetime"><code>.z.z</code></a> (UTC datetime)</p>
+<h2 id="zn-utc-timespan"><code>.z.n</code> (UTC timespan)<a class="headerlink" href="#zn-utc-timespan" title="Permanent link">&para;</a></h2>
+<p>System UTC time as timespan in nanoseconds.</p>
+<!-- (V2.6 upwards.) -->
+
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="o">.</span><span class="n">z.n</span>
+<span class="ld">0D23:30:10.827156000</span>
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Changes since 4.1t 2021.03.30,4.0 2022.07.01</p>
+<p>Linux clock source returns a nanosecond precision timespan</p>
+</div>
+<p><a href="#zn-local-timespan"><code>.z.n</code></a> (local timespan), <a href="#zp-local-timestamp"><code>.z.P</code></a> (local timestamp), <a href="#zp-utc-timestamp"><code>.z.p</code></a> (UTC timestamp), <a href="#zz-local-datetime"><code>.z.Z</code></a> (local datetime), <a href="#zz-utc-datetime"><code>.z.z</code></a> (UTC datetime)</p>
+<h2 id="zo-os-version"><code>.z.o</code> (OS version)<a class="headerlink" href="#zo-os-version" title="Permanent link">&para;</a></h2>
+<p>kdb+ operating system version as a symbol.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="o">.</span><span class="n">z.o</span>
+<span class="ss">`w32</span>
+</code></pre></div>
+<p>Values for V3.5+ are shown below in bold type.</p>
+<table>
+<thead>
+<tr>
+<th>os</th>
+<th>32-bit</th>
+<th>64-bit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Linux</td>
+<td><strong>l32</strong></td>
+<td><strong>l64</strong></td>
+</tr>
+<tr>
+<td>Linux on ARM</td>
+<td></td>
+<td><strong>l64</strong> (reports <strong>l64arm</strong> since 4.1t 2022.09.02)</td>
+</tr>
+<tr>
+<td>macOS</td>
+<td><strong>m32</strong></td>
+<td><strong>m64</strong></td>
+</tr>
+<tr>
+<td>Solaris</td>
+<td>s32</td>
+<td>s64</td>
+</tr>
+<tr>
+<td>Solaris on Intel</td>
+<td><strong>v32</strong></td>
+<td><strong>v64</strong></td>
+</tr>
+<tr>
+<td>Windows</td>
+<td><strong>w32</strong></td>
+<td><strong>w64</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Note this is the version of the kdb+ executable, NOT the OS itself.
+You might run both 32-bit and 64-bit versions of kdb+ on the same machine to support older external interfaces.</p>
+<h2 id="zp-local-timestamp"><code>.z.P</code> (local timestamp)<a class="headerlink" href="#zp-local-timestamp" title="Permanent link">&para;</a></h2>
+<p>System localtime timestamp in nanoseconds.</p>
+<!-- (Since V2.6.) -->
+
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="o">.</span><span class="n">z.P</span>
+<span class="ld">2018.04.30D10:18:31.932126000</span>
+</code></pre></div>
+<p><a href="#zp-utc-timestamp"><code>.z.p</code></a> (UTC timestamp), <a href="#zn-local-timespan"><code>.z.N</code></a> (local timespan), <a href="#zn-utc-timespan"><code>.z.n</code></a> (UTC timespan), <a href="#zz-local-datetime"><code>.z.Z</code></a> (local datetime), <a href="#zz-utc-datetime"><code>.z.z</code></a> (UTC datetime)</p>
+<h2 id="zp-utc-timestamp"><code>.z.p</code> (UTC timestamp)<a class="headerlink" href="#zp-utc-timestamp" title="Permanent link">&para;</a></h2>
+<p>UTC timestamp in nanoseconds.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="o">.</span><span class="n">z.p</span>
+<span class="ld">2018.04.30D09:18:38.117667000</span>
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Changes since 4.1t 2021.03.30,4.0 2022.07.01</p>
+<p>Linux clock source returns a nanosecond precision timestamp</p>
+</div>
+<p><a href="#zp-local-timestamp"><code>.z.P</code></a> (local timestamp), <a href="#zn-local-timespan"><code>.z.N</code></a> (local timespan), <a href="#zn-utc-timespan"><code>.z.n</code></a> (UTC timespan), <a href="#zz-local-datetime"><code>.z.Z</code></a> (local datetime), <a href="#zz-utc-datetime"><code>.z.z</code></a> (UTC datetime)</p>
+<h2 id="zpc-close"><code>.z.pc</code> (close)<a class="headerlink" href="#zpc-close" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>.z.pc:f
+</code></pre></div>
+<p>Where <code>f</code> is a unary function, <code>.z.pc</code> is called <em>after</em> a connection has been closed.</p>
+<p>As the connection has been closed by the time <code>f</code> is called there are strictly no remote values that can be put into <a href="#za-ip-address"><code>.z.a</code></a>, <a href="#zu-user-id"><code>.z.u</code></a> or <a href="#zw-handle"><code>.z.w</code></a> – so the local values are returned.</p>
+<p>To allow you to clean up things like tables of users keyed by handle, the handle that <em>was</em> being used is passed as a parameter to <code>.z.pc</code></p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="o">.</span><span class="n">z.pc</span>
+<span class="o">'.</span><span class="n">z.pc</span>
+<span class="gp">q)</span><span class="nf">.z.pc</span><span class="o">:</span><span class="p">{</span><span class="m">0N</span><span class="o">!</span><span class="p">(</span><span class="o">.</span><span class="n">z.a</span><span class="p">;</span><span class="o">.</span><span class="n">z.u</span><span class="p">;</span><span class="o">.</span><span class="n">z.w</span><span class="p">;</span><span class="n">x</span><span class="p">);</span><span class="n">x</span><span class="p">}</span>
+<span class="gp">q)</span><span class="o">\</span><span class="n">p</span><span class="w"> </span><span class="il">2021</span>
+<span class="gp">q)</span><span class="p">(</span><span class="mi">2130706433i</span><span class="p">;</span><span class="ss">`simon</span><span class="p">;</span><span class="mi">0i</span><span class="p">;</span><span class="mi">4i</span><span class="p">)</span>
+
+<span class="gp">q)</span><span class="o">.</span><span class="n">z.a</span>
+<span class="mi">2130706433i</span>
+<span class="gp">q)</span><span class="o">.</span><span class="n">z.u</span>
+<span class="ss">`simon</span>
+<span class="gp">q)</span><span class="o">.</span><span class="n">z.w</span>
+<span class="mi">0i</span>
+<span class="gp">q)</span>
+</code></pre></div>
+<div class="admonition info">
+<p class="admonition-title"><code>.z.pc</code> is not called by <code>hclose</code>.</p>
+</div>
+<p><a href="#zpo-open"><code>.z.po</code></a> (port open)</p>
+<h2 id="zpd-peach-handles"><code>.z.pd</code> (peach handles)<a class="headerlink" href="#zpd-peach-handles" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>.z.pd: x
+</code></pre></div>
+<p>Where q has been <a href="../../basics/cmdline/#-s-secondary-threads">started with secondary processes for use in parallel processing</a>,  <code>x</code> is</p>
+<ul>
+<li>an int vector of handles to secondary processes</li>
+<li>a function that returns a list of handles to those secondary processes</li>
+</ul>
+<p>For evaluating the function passed to <code>peach</code> or <code>':</code>, kdb+ gets the handles to the secondary processes by calling <a href="#zpd-peach-handles"><code>.z.pd[]</code></a>.</p>
+<div class="admonition danger">
+<p class="admonition-title">The processes with these handles must not be used for other messaging.</p>
+<p>Each Parallel will close them if it receives anything other than a response message.</p>
+</div>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="o">/</span><span class="w"> </span><span class="n">Open</span><span class="w"> </span><span class="n">connections</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="il">4</span><span class="w"> </span><span class="n">processes</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">localhost</span>
+<span class="gp">q)</span><span class="nv">.z.pd</span><span class="o">:</span><span class="ss">`u</span><span class="o">#</span><span class="ow">hopen</span><span class="w"> </span><span class="nb">each</span><span class="w"> </span><span class="il">20000</span><span class="o">+</span><span class="nb">til</span><span class="w"> </span><span class="il">4</span>
+</code></pre></div>
+<p>The int vector (returned by) <code>x</code> <em>must</em> have the <a href="../set-attribute/">unique attribute</a> set.</p>
+<p>A more comprehensive setup might be</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="nf">.z.pd</span><span class="o">:</span><span class="p">{</span><span class="nv">n</span><span class="o">:</span><span class="ow">abs</span><span class="w"> </span><span class="nb">system</span><span class="s2">"s"</span><span class="p">;</span><span class="o">$</span><span class="p">[</span><span class="n">n</span><span class="o">=</span><span class="nb">count</span><span class="w"> </span><span class="n">handles</span><span class="p">;</span><span class="n">handles</span><span class="p">;[</span><span class="nb">hclose</span><span class="w"> </span><span class="nb">each</span><span class="w"> </span><span class="n">handles</span><span class="p">;</span><span class="o">:</span><span class="nv">handles</span><span class="o">::</span><span class="ss">`u</span><span class="o">#</span><span class="ow">hopen</span><span class="w"> </span><span class="nb">each</span><span class="w"> </span><span class="il">20000</span><span class="o">+</span><span class="nb">til</span><span class="w"> </span><span class="n">n</span><span class="p">]]}</span>
+<span class="gp">q)</span><span class="nf">.z.pc</span><span class="o">:</span><span class="p">{</span><span class="nv">handles</span><span class="o">::</span><span class="ss">`u</span><span class="o">#</span><span class="n">handles</span><span class="w"> </span><span class="nb">except</span><span class="w"> </span><span class="n">x</span><span class="p">;}</span>
+<span class="gp">q)</span><span class="nv">handles</span><span class="o">:</span><span class="ss">`u</span><span class="o">#</span><span class="ss">`int</span><span class="o">$</span><span class="p">();</span>
+</code></pre></div>
+<p>Note that (since V3.1) the worker processes are not started automatically by kdb+.</p>
+<div class="admonition warning">
+<p class="admonition-title">Disabled in V4.1t</p>
+<p>Using handles within peach is not supported e.g.</p>
+<div class="highlight"><pre><span></span><code>q)H:hopen each 4#4000;{x""}peach H
+3 4 5 6i
+</code></pre></div>
+<p>One-shot IPC requests can be used within <code>peach</code> instead.</p>
+</div>
+<p><a href="../kb/load-balancing.md">Load balancing</a></p>
+<h2 id="zpg-get"><code>.z.pg</code> (get)<a class="headerlink" href="#zpg-get" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>.z.pg:f
+</code></pre></div>
+<p>Where <code>f</code> is a unary function, called with the object that is passed to the q session via a synchronous request. The return value, if any, is returned to the calling task.</p>
+<p><code>.z.pg</code> can be unset with <code>\x .z.pg</code>, which restores the default behavior.</p>
+<p>The default behavior is equivalent to setting <code>.z.pg</code> to <a href="../value/"><code>value</code></a> and executes in the root context.</p>
+<p><a href="#zps-set"><code>.z.ps</code></a> (set), <a href="../../basics/internal/#-30x-deferred-response"><code>-30!(x)</code></a> (deferred response)</p>
+<h2 id="zph-http-get"><code>.z.ph</code> (HTTP get)<a class="headerlink" href="#zph-http-get" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>.z.ph:f
+</code></pre></div>
+<p>Where <code>f</code> is a unary function, it is evaluated when a synchronous HTTP request is received by the kdb+ session.</p>
+<p><code>.z.ph</code> is passed a single argument, a 2-item list <code>(requestText;requestHeaderAsDictionary)</code>:</p>
+<ul>
+<li><code>requestText</code> is parsed in <code>.z.ph</code> – detecting special cases like requests for CSV, XLS output – and the result is returned to the calling task.</li>
+<li><code>requestHeaderAsDictionary</code> contains a dictionary of <a href="https://en.wikipedia.org/wiki/List_of_HTTP_header_fields">HTTP header</a> names and values as sent by the client. This can be used to return content optimized for particular browsers.</li>
+</ul>
+<p>The function returns a string representation of an HTTP response message e.g. <a href="https://en.wikipedia.org/wiki/HTTP#HTTP/1.1_response_messages">HTTP/1.1 response message format</a>.</p>
+<p>Since V3.6 and V3.5 2019.11.13, the default implementation calls <a href="../doth/#hval-value"><code>.h.val</code></a> instead of <a href="../value/"><code>value</code></a>, allowing users to interpose their own valuation code. It is called with <code>requestText</code> as the argument.</p>
+<p><a href="#zpp-http-post"><code>.z.pp</code></a> (HTTP post), <a href="#zpm-http-methods"><code>.z.pm</code></a> (HTTP methods), <a href="#zac-http-auth"><code>.z.ac</code></a> (HTTP auth)
+<br></p>
+<p><a href="../doth/"><code>.h</code> namespace</a>
+<br></p>
+<p><a href="../kb/http.md">HTTP</a>
+<br></p>
+<p><em>Q for Mortals</em>
+<a href="../../../q4m3/11_IO/#1171-http-connections">§11.10.1 HTTP Connections</a></p>
+<h2 id="zpi-input"><code>.z.pi</code> (input)<a class="headerlink" href="#zpi-input" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>.z.pi:f
+</code></pre></div>
+<p>Where <code>f</code> is a unary function, it is evaluated as the default handler for input.</p>
+<p>As this is called on every line of input it can be used to log all console input, or even to modify the output. For example, if you prefer the more compact <a href="../releases/ChangesIn2.4.md#zpi">V2.3 way of formatting tables</a>, you can reset the output handler.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="nv">aa</span><span class="o">:</span><span class="p">([]</span><span class="nv">a</span><span class="o">:</span><span class="il">1</span><span class="w"> </span><span class="il">2</span><span class="w"> </span><span class="il">3</span><span class="p">;</span><span class="nv">b</span><span class="o">:</span><span class="il">11</span><span class="w"> </span><span class="il">22</span><span class="w"> </span><span class="il">33</span><span class="p">)</span>
+<span class="gp">q)</span><span class="n">aa</span>
+<span class="n">a</span><span class="w"> </span><span class="n">b</span>
+<span class="o">----</span>
+<span class="il">1</span><span class="w"> </span><span class="il">11</span>
+<span class="il">2</span><span class="w"> </span><span class="il">22</span>
+<span class="il">3</span><span class="w"> </span><span class="il">33</span>
+<span class="gp">q)</span><span class="nf">.z.pi</span><span class="o">:</span><span class="p">{</span><span class="m">0N</span><span class="o">!</span><span class="nb">value</span><span class="w"> </span><span class="n">x</span><span class="p">;}</span>
+<span class="gp">q)</span><span class="n">aa</span>
+<span class="o">+</span><span class="ss">`a`b</span><span class="o">!</span><span class="p">(</span><span class="il">1</span><span class="w"> </span><span class="il">2</span><span class="w"> </span><span class="il">3</span><span class="p">;</span><span class="il">11</span><span class="w"> </span><span class="il">22</span><span class="w"> </span><span class="il">33</span><span class="p">)</span>
+<span class="gp">q)</span>
+</code></pre></div>
+<p>To return to the default display, just delete your custom handler</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="o">\</span><span class="n">x</span><span class="w"> </span><span class="o">.</span><span class="n">z.pi</span>
+</code></pre></div>
+<h2 id="zpm-http-methods"><code>.z.pm</code> (HTTP methods)<a class="headerlink" href="#zpm-http-methods" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>.z.pm:f
+</code></pre></div>
+<p>Where f is a unary function, .z.pm is evaluated when the following HTTP request methods are received in the kdb+ session.</p>
+<ul>
+<li>OPTIONS</li>
+<li>PATCH (since V4.1t 2021.03.30)</li>
+<li>PUT (since V4.1t 2021.03.30)</li>
+<li>DELETE (since V4.1t 2021.03.30)</li>
+</ul>
+<p>Each method is passed to <code>f</code> as a 3-item list e.g.</p>
+<div class="highlight"><pre><span></span><code><span class="p">(</span><span class="ss">`OPTIONS</span><span class="p">;</span><span class="n">requestText</span><span class="p">;</span><span class="n">requestHeaderDict</span><span class="p">)</span>
+</code></pre></div>
+<p>For the POST method use <a href="#zpp-http-post">.z.pp</a>, and for GET use <a href="#zph-http-get">.z.ph</a>.</p>
+<p><a href="#zph-http-get"><code>.z.ph</code></a> (HTTP get), <a href="#zpp-http-post"><code>.z.pp</code></a> (HTTP post), <a href="#zac-http-auth"><code>.z.ac</code></a> (HTTP auth)
+<br>
+<a href="../kb/http.md">HTTP</a></p>
+<h2 id="zpo-open"><code>.z.po</code> (open)<a class="headerlink" href="#zpo-open" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>.z.po:f
+</code></pre></div>
+<p>Where <code>f</code> is a unary function, <code>.z.po</code> is evaluated when a connection to a kdb+ session has been initialized, i.e. after it’s been validated against any <a href="../../basics/cmdline/#-u-usr-pwd-local"><code>-u</code></a>/<a href="../../basics/cmdline/#-u-usr-pwd"><code>-U</code></a> file and <code>.z.pw</code> checks.</p>
+<p>Its argument is the handle and is typically used to build a dictionary of handles to session information like the value of <code>.z.a</code>, <code>.z.u</code></p>
+<p><a href="#zpc-close"><code>.z.pc</code></a> (port close),
+<a href="#zpw-validate-user"><code>.z.pw</code></a> (validate user)
+<br></p>
+<p><em>Q for Mortals</em>
+<a href="../../../q4m3/11_IO/#116-interprocess-communication">§11.8 Interprocess Communication</a></p>
+<h2 id="zpp-http-post"><code>.z.pp</code> (HTTP post)<a class="headerlink" href="#zpp-http-post" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>.z.pp:f
+</code></pre></div>
+<p>Where <code>f</code> is a unary function, <code>.z.pp</code> is evaluated when an HTTP POST request is received in the kdb+ session.</p>
+<p>There is no default implementation, but an example would be that it calls <a href="../value/"><code>value</code></a> on the first item of its argument and returns the result to the calling task.</p>
+<p>See <a href="#zph-http-get"><code>.z.ph</code></a> for details of the argument and return value.</p>
+<p>Allows empty requests since 4.1t 2021.03.30 (previously signalled <code>length</code> error).</p>
+<p><a href="#zph-http-get"><code>.z.ph</code></a> (HTTP get), <a href="#zpm-http-methods"><code>.z.pm</code></a> (HTTP methods), <a href="#zac-http-auth"><code>.z.ac</code></a> (HTTP auth)
+<br></p>
+<p><a href="../doth/"><code>.h</code> namespace</a>
+<br></p>
+<p><a href="../kb/http.md">HTTP</a>
+<br></p>
+<p><em>Q for Mortals</em>
+<a href="../../../q4m3/11_IO/#1171-http-connections">§11.10.1 HTTP Connections</a></p>
+<h2 id="zpq-qcon"><code>.z.pq</code> (qcon)<a class="headerlink" href="#zpq-qcon" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>.z.pq:f
+</code></pre></div>
+<p>Remote connections using the ‘qcon’ text protocol are routed to <code>.z.pq</code>, which defaults to calling <code>.z.pi</code>. (Since V3.5+3.6 2019.01.31.)</p>
+<p>This allows a user to handle remote qcon connections (via <code>.z.pq</code>) without defining special handling for console processing (via <code>.z.pi</code>).</p>
+<p><a href="../kb/firewalling.md">Firewalling</a> for locking down message handlers</p>
+<h2 id="zps-set"><code>.z.ps</code> (set)<a class="headerlink" href="#zps-set" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>.z.ps:f
+</code></pre></div>
+<p>Where <code>f</code> is a unary function, <code>.z.ps</code> is evaluated with the object that is passed to this kdb+ session via an asynchronous request. The return value is discarded.</p>
+<p><code>.z.ps</code> can be unset with <code>\x .z.ps</code>, which restores the default behavior.</p>
+<p>The default behavior is equivalent to setting <code>.z.ps</code> to <a href="../value/"><code>value</code></a>.</p>
+<p>Note that <code>.z.ps</code> is used in preference to <code>.z.pg</code> when messages are sent to the local process using handle 0.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="nf">.z.ps</span><span class="o">:</span><span class="p">{[</span><span class="n">x</span><span class="p">]</span><span class="m">0N</span><span class="o">!</span><span class="p">(</span><span class="ss">`zps</span><span class="p">;</span><span class="n">x</span><span class="p">);</span><span class="nb">value</span><span class="w"> </span><span class="n">x</span><span class="p">}</span>
+<span class="gp">q)</span><span class="nf">.z.pg</span><span class="o">:</span><span class="p">{[</span><span class="n">x</span><span class="p">]</span><span class="m">0N</span><span class="o">!</span><span class="p">(</span><span class="ss">`zpg</span><span class="p">;</span><span class="n">x</span><span class="p">);</span><span class="nb">value</span><span class="w"> </span><span class="n">x</span><span class="p">}</span>
+<span class="gp">q)</span><span class="il">0</span><span class="w"> </span><span class="s2">"2+2"</span>
+<span class="p">(</span><span class="ss">`zps</span><span class="p">;</span><span class="s2">"2+2"</span><span class="p">)</span>
+<span class="il">4</span>
+</code></pre></div>
+<p><a href="#zpg-get"><code>.z.pg</code></a> (get)</p>
+<h2 id="zpw-validate-user"><code>.z.pw</code> (validate user)<a class="headerlink" href="#zpw-validate-user" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>.z.pw:f
+</code></pre></div>
+<p>Where <code>f</code> is a binary function, <code>.z.pw</code> is evaluated <em>after</em> the <a href="../../basics/cmdline/#-u-usr-pwd-local"><code>-u</code></a>/<a href="../../basics/cmdline/#-u-usr-pwd"><code>-U</code></a> checks, and <em>before</em> <code>.z.po</code> when opening a new connection to a kdb+ session.</p>
+<p>The arguments are the user ID (as a symbol) and password (as a string) to be verified; the result is a boolean atom.</p>
+<p>As <code>.z.pw</code> is simply a function it can be used to implement rules such as “ordinary users can sign on only between 0800 and 1800 on weekdays” or can go out to external resources like an LDAP directory.</p>
+<p>If <code>.z.pw</code> returns <code>0b</code> the task attempting to establish the connection will get an <code>'access</code> error.</p>
+<p>The default definition is <code>{[user;pswd]1b}</code></p>
+<p><a href="#zpo-open"><code>.z.po</code></a> (port open)
+<br></p>
+<p><a href="../releases/ChangesIn2.4.md#zpw">Changes in 2.4</a></p>
+<h2 id="zq-quiet-mode"><code>.z.q</code> (quiet mode)<a class="headerlink" href="#zq-quiet-mode" title="Permanent link">&para;</a></h2>
+<p><code>1b</code> if Quiet Mode is set, else <code>0b</code>.</p>
+<p><a href="../../basics/cmdline/#-q-quiet-mode">Command-line option <code>-q</code></a></p>
+<h2 id="zr-blocked"><code>.z.r</code> (blocked)<a class="headerlink" href="#zr-blocked" title="Permanent link">&para;</a></h2>
+<p>A boolean, indicating whether an update in the current context would be blocked.</p>
+<p>Returns <code>1b</code></p>
+<ul>
+<li>in <code>reval</code></li>
+<li>where the <a href="../../basics/cmdline/#-b-blocked"><code>-b</code> command-line option</a> has been set</li>
+<li>in a thread other than the main event thread</li>
+</ul>
+<p>Since V4.1t 2021.04.16.</p>
+<h2 id="zs-self"><code>.z.s</code> (self)<a class="headerlink" href="#zs-self" title="Permanent link">&para;</a></h2>
+<p>A reference to the current function.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="p">{</span><span class="o">.</span><span class="n">z.s</span><span class="p">}[]</span>
+<span class="p">{</span><span class="o">.</span><span class="n">z.s</span><span class="p">}</span>
+</code></pre></div>
+<p>Can be used to generate recursive function calls.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="nf">fact</span><span class="o">:</span><span class="p">{</span><span class="o">$</span><span class="p">[</span><span class="n">x</span><span class="o">&lt;=</span><span class="il">0</span><span class="p">;</span><span class="il">1</span><span class="p">;</span><span class="n">x</span><span class="o">*.</span><span class="n">z.s</span><span class="w"> </span><span class="n">x</span><span class="o">-</span><span class="il">1</span><span class="p">]}</span>
+<span class="gp">q)</span><span class="n">fact</span><span class="p">[</span><span class="il">5</span><span class="p">]</span>
+<span class="il">120</span>
+</code></pre></div>
+<p>Note this is purely an example; there are other ways to achieve the same result.</p>
+<h2 id="zts-timer"><code>.z.ts</code> (timer)<a class="headerlink" href="#zts-timer" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>.z.ts:f
+</code></pre></div>
+<p>Where <code>f</code> is a unary function, <code>.z.ts</code> is evaluated on intervals of the timer variable set by system command <code>\t</code>. The timestamp is returned as Greenwich Mean Time (GMT).</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="o">/</span><span class="w"> </span><span class="n">Set</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">timer</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="il">1000</span><span class="w"> </span><span class="n">milliseconds</span>
+<span class="gp">q)</span><span class="o">\</span><span class="n">t</span><span class="w"> </span><span class="il">1000</span>
+<span class="gp">q)</span><span class="o">/</span><span class="w"> </span><span class="n">Argument</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">timestamp</span><span class="w"> </span><span class="n">scheduled</span><span class="w"> </span><span class="n">for</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">callback</span>
+<span class="gp">q)</span><span class="o">/</span><span class="w"> </span><span class="o">.</span><span class="n">z.ts</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">called</span><span class="w"> </span><span class="n">once</span><span class="w"> </span><span class="n">per</span><span class="w"> </span><span class="n">second</span><span class="w"> </span><span class="nb">and</span><span class="w"> </span><span class="n">returns</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">timestamp</span>
+<span class="gp">q)</span><span class="nf">.z.ts</span><span class="o">:</span><span class="p">{</span><span class="m">0N</span><span class="o">!</span><span class="n">x</span><span class="p">}</span>
+<span class="gp">q)</span><span class="ld">2010.12.16D17:12:12.849442000</span>
+<span class="ld">2010.12.16D17:12:13.849442000</span>
+<span class="ld">2010.12.16D17:12:14.849442000</span>
+<span class="ld">2010.12.16D17:12:15.849442000</span>
+<span class="ld">2010.12.16D17:12:16.849442000</span>
+</code></pre></div>
+<p>When kdb+ has completed executing a script passed as a command-line argument, and if there are no open sockets nor a console, kdb+ will exit. The timer alone is not enough to stop the process exiting – it must have an event source which is a file descriptor (socket, console, or some plugin registering a file descriptor and callback via the C API <code>sd1</code> function).</p>
+<p><a href="../../basics/syscmds/#t-timer"><code>\t</code></a></p>
+<h2 id="zu-user-id"><code>.z.u</code> (user ID)<a class="headerlink" href="#zu-user-id" title="Permanent link">&para;</a></h2>
+<p>User ID, as a symbol, associated with the current handle.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="o">.</span><span class="n">z.u</span>
+<span class="ss">`demo</span>
+</code></pre></div>
+<p>For</p>
+<ul>
+<li>handle 0 (console) returns the userid under which the process is running.</li>
+<li>handles &gt; 0 returns either:</li>
+<li>on the server end of a connection, the userid as passed to <code>hopen</code> by the client</li>
+<li>on the client end of a connection, the null symbol <code>`</code></li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="o">.</span><span class="n">z.u</span><span class="w">                  </span><span class="c1">/ console is handle 0</span>
+<span class="ss">`charlie</span>
+<span class="gp">q)</span><span class="il">0</span><span class="s2">".z.u"</span><span class="w">               </span><span class="c1">/ explicitly using handle 0</span>
+<span class="ss">`charlie</span>
+<span class="gp">q)</span><span class="nv">h</span><span class="o">:</span><span class="ow">hopen</span><span class="ss">`:localhost</span><span class="o">:</span><span class="il">5000</span><span class="o">:</span><span class="nv">geoffrey</span><span class="o">:</span><span class="n">geffspasswd</span>
+<span class="gp">q)</span><span class="n">h</span><span class="s2">".z.u"</span><span class="w">               </span><span class="c1">/ server side .z.u is as passed by the client to hopen</span>
+<span class="ss">`geoffrey</span>
+<span class="gp">q)</span><span class="n">h</span><span class="p">({</span><span class="o">.</span><span class="n">z.w</span><span class="s2">".z.u"</span><span class="p">};</span><span class="o">::</span><span class="p">)</span><span class="w">    </span><span class="c1">/ client side returns null symbol</span>
+<span class="ss">`</span>
+</code></pre></div>
+<h2 id="zvs-value-set"><code>.z.vs</code> (value set)<a class="headerlink" href="#zvs-value-set" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>.z.vs:f
+</code></pre></div>
+<p>Where <code>f</code> is a binary function, <code>.z.vs</code> is evaluated <em>after</em> a value is set globally in the default namespace (e.g. <code>a</code>, <code>a.b</code>).</p>
+<p>For function <code>f[x;y]</code>, <code>x</code> is the symbol of the modified variable and <code>y</code> is the index.</p>
+<div class="admonition detail">
+<p class="admonition-title">Applies only to globals in the default namespace</p>
+<p>This is not triggered for function-local variables, nor globals that are not in the default namespace, e.g. those prefixed with a dot such as <code>.a.b</code>.</p>
+<p>This is the same restriction that applies to <a href="../kb/logging.md">logging</a>.</p>
+</div>
+<p>The following example sets <code>.z.vs</code> to display the symbol, the index and the value of the variable.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="nf">.z.vs</span><span class="o">:</span><span class="p">{</span><span class="m">0N</span><span class="o">!</span><span class="p">(</span><span class="n">x</span><span class="p">;</span><span class="n">y</span><span class="p">;</span><span class="nb">value</span><span class="w"> </span><span class="n">x</span><span class="p">)}</span>
+<span class="gp">q)</span><span class="nv">m</span><span class="o">:</span><span class="p">(</span><span class="il">1</span><span class="w"> </span><span class="il">2</span><span class="p">;</span><span class="il">3</span><span class="w"> </span><span class="il">4</span><span class="p">)</span>
+<span class="p">(</span><span class="ss">`m</span><span class="p">;();(</span><span class="il">1</span><span class="w"> </span><span class="il">2</span><span class="p">;</span><span class="il">3</span><span class="w"> </span><span class="il">4</span><span class="p">))</span>
+<span class="gp">q)</span><span class="n">m</span><span class="p">[</span><span class="il">1</span><span class="p">;</span><span class="il">1</span><span class="p">]</span><span class="o">:</span><span class="il">0</span>
+<span class="p">(</span><span class="ss">`m</span><span class="p">;</span><span class="il">1</span><span class="w"> </span><span class="il">1</span><span class="p">;(</span><span class="il">1</span><span class="w"> </span><span class="il">2</span><span class="p">;</span><span class="il">3</span><span class="w"> </span><span class="il">0</span><span class="p">))</span>
+</code></pre></div>
+<h2 id="zw-handles"><code>.z.W</code> (handles)<a class="headerlink" href="#zw-handles" title="Permanent link">&para;</a></h2>
+<p>Dictionary of IPC handles with the number of bytes waiting in their output queues.
+<a href="#zh-active-sockets"><code>.z.H</code></a> is a lower cost method if the size of the output queue is not required.</p>
+<p>The following demonstrates a client connection which has created <a href="../../basics/ipc/#async-message-set">async requests</a>, causing pending data in its connection output queue.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="nv">h</span><span class="o">:</span><span class="ow">hopen</span><span class="w"> </span><span class="o">...</span>
+<span class="gp">q)</span><span class="n">h</span>
+<span class="il">3</span>
+<span class="gp">q)</span><span class="nb">neg</span><span class="p">[</span><span class="n">h</span><span class="p">]({};</span><span class="nb">til</span><span class="w"> </span><span class="il">1000000</span><span class="p">);</span><span class="w"> </span><span class="nb">neg</span><span class="p">[</span><span class="n">h</span><span class="p">]({};</span><span class="nb">til</span><span class="w"> </span><span class="il">10</span><span class="p">);</span><span class="w"> </span><span class="o">.</span><span class="n">z.W</span>
+<span class="il">3</span><span class="o">|</span><span class="w"> </span><span class="il">8000030</span><span class="w"> </span><span class="il">110</span>
+<span class="gp">q)</span><span class="nb">neg</span><span class="p">[</span><span class="n">h</span><span class="p">]({};</span><span class="nb">til</span><span class="w"> </span><span class="il">1000000</span><span class="p">);</span><span class="w"> </span><span class="nb">neg</span><span class="p">[</span><span class="n">h</span><span class="p">]({};</span><span class="nb">til</span><span class="w"> </span><span class="il">10</span><span class="p">);</span><span class="w"> </span><span class="ow">sum</span><span class="w"> </span><span class="nb">each</span><span class="w"> </span><span class="o">.</span><span class="n">z.W</span><span class="w"> </span>
+<span class="il">3</span><span class="o">|</span><span class="w"> </span><span class="il">8000140</span>
+</code></pre></div>
+<p>Since 4.1 2023.09.15, this returns <code>handles!bytes</code> as <code>I!J</code>, instead of the former <code>handles!list</code> of individual msg sizes. Use <code>sum each .z.W</code> if writing code targeting 4.0 and 4.1</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="nv">h</span><span class="o">:</span><span class="ow">hopen</span><span class="w"> </span><span class="o">...</span>
+<span class="gp">q)</span><span class="n">h</span>
+<span class="mi">6i</span>
+<span class="gp">q)</span><span class="nb">neg</span><span class="p">[</span><span class="n">h</span><span class="p">]({};</span><span class="nb">til</span><span class="w"> </span><span class="il">1000000</span><span class="p">);</span><span class="w"> </span><span class="nb">neg</span><span class="p">[</span><span class="n">h</span><span class="p">]({};</span><span class="nb">til</span><span class="w"> </span><span class="il">10</span><span class="p">);</span><span class="w"> </span><span class="o">.</span><span class="n">z.W</span>
+<span class="il">6</span><span class="o">|</span><span class="w"> </span><span class="il">8000140</span>
+<span class="gp">q)</span><span class="nb">neg</span><span class="p">[</span><span class="n">h</span><span class="p">]({};</span><span class="nb">til</span><span class="w"> </span><span class="il">1000000</span><span class="p">);</span><span class="w"> </span><span class="nb">neg</span><span class="p">[</span><span class="n">h</span><span class="p">]({};</span><span class="nb">til</span><span class="w"> </span><span class="il">10</span><span class="p">);</span><span class="w"> </span><span class="ow">sum</span><span class="w"> </span><span class="nb">each</span><span class="w"> </span><span class="o">.</span><span class="n">z.W</span>
+<span class="il">6</span><span class="o">|</span><span class="w"> </span><span class="il">8000140</span>
+</code></pre></div>
+<p>Querying known handles can also be performed using <a href="../../basics/internal/#-38x-socket-table"><code>-38!</code></a>, which can be more performant than using <code>.z.W</code> to return the entire dataset of handles.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="nv">h</span><span class="o">:</span><span class="ow">hopen</span><span class="w"> </span><span class="il">5000</span>
+<span class="gp">q)</span><span class="nb">neg</span><span class="p">[</span><span class="n">h</span><span class="p">]</span><span class="s2">"11+1111111"</span><span class="p">;</span><span class="o">.</span><span class="n">z.W</span><span class="w"> </span><span class="n">h</span>
+<span class="il">24</span>
+<span class="gp">q)</span><span class="nb">neg</span><span class="p">[</span><span class="n">h</span><span class="p">]</span><span class="s2">"11+1111111"</span><span class="p">;(</span><span class="o">-</span><span class="il">38</span><span class="o">!</span><span class="n">h</span><span class="p">)</span><span class="ss">`m</span>
+<span class="il">24</span>
+</code></pre></div>
+<p><a href="#zh-active-sockets"><code>.z.H</code></a> (active sockets), <a href="#zw-handle"><code>.z.w</code></a> (handle), <a href="../../basics/internal/#-38x-socket-table"><code>-38!</code></a> (socket table)</p>
+<h2 id="zw-handle"><code>.z.w</code> (handle)<a class="headerlink" href="#zw-handle" title="Permanent link">&para;</a></h2>
+<p>The current connection handle. When called within the current session console, it will return <code>0i</code>. </p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="o">.</span><span class="n">z.w</span>
+<span class="mi">0i</span>
+</code></pre></div>
+<p>When called from code executing a client callback function due to a client request, for example <a href="#zpg-get"><code>.z.pg</code></a>, it returns the handle of the client connection.
+This can be used for performing tasks such as sending a <a href="../../basics/ipc/#send-messages">sync/async request</a> to the client or recording the handle upon which a request should be later fulfilled.</p>
+<p><a href="#zh-active-sockets"><code>.z.H</code></a> (active sockets), <a href="#zw-handles"><code>.z.W</code></a> (handles), <a href="../../basics/internal/#-38x-socket-table"><code>-38!</code></a> (socket table)</p>
+<h2 id="zwc-websocket-close"><code>.z.wc</code> (websocket close)<a class="headerlink" href="#zwc-websocket-close" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>.z.wc:f
+</code></pre></div>
+<p>Where</p>
+<ul>
+<li><code>f</code> is a unary function</li>
+<li><code>h</code> is the handle to a websocket connection to a kdb+ session</li>
+</ul>
+<p><code>f[h]</code> is evaluated <em>after</em> a websocket connection has been closed.
+(Since V3.3t 2014.11.26.)</p>
+<p>As the connection has been closed by the time <code>.z.wc</code> is called, there are strictly no remote values that can be put into <code>.z.a</code>, <code>.z.u</code> or <code>.z.w</code> so the local values are returned.</p>
+<p>This allows you to clean up things like tables of users keyed by handle.</p>
+<p><a href="#zwo-websocket-open"><code>.z.wo</code></a> (websocket open),
+<a href="#zws-websockets"><code>.z.ws</code></a> (websockets),
+<a href="#zac-http-auth"><code>.z.ac</code></a> (HTTP auth)</p>
+<h2 id="zwo-websocket-open"><code>.z.wo</code> (websocket open)<a class="headerlink" href="#zwo-websocket-open" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>.z.wo:f
+</code></pre></div>
+<p>Where</p>
+<ul>
+<li><code>f</code> is a unary function</li>
+<li><code>h</code> is the handle to a websocket connection to a kdb+ session</li>
+</ul>
+<p><code>f[h]</code> is evaluated when the connection has been initialized, i.e. <em>after</em> it has been validated against any <code>-u</code>/<code>-U</code> file and <code>.z.pw</code> checks.
+(Since V3.3t 2014.11.26)</p>
+<p>The handle argument is typically used by <code>f</code> to build a dictionary of handles to session information such as the value of <code>.z.a</code>, <code>.z.u</code>.</p>
+<p><a href="#zwc-websocket-close"><code>.z.wc</code></a> (websocket close),
+<a href="#zws-websockets"><code>.z.ws</code></a> (websockets),
+<a href="#zac-http-auth"><code>.z.ac</code></a> (HTTP auth)</p>
+<h2 id="zws-websockets"><code>.z.ws</code> (websockets)<a class="headerlink" href="#zws-websockets" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>z.ws:f
+</code></pre></div>
+<p>Where <code>f</code> is a unary function, it is evaluated on a message arriving at a websocket. If the incoming message is a text message the argument is a string; if a binary message, a byte vector.</p>
+<p>Sending a websocket message is limited to async messages only (sync is <code>'nyi</code>). A string will be sent as a text message; a byte vector as a binary message.</p>
+<p><a href="#zwo-websocket-open"><code>.z.wo</code></a> (websocket open),
+<a href="#zwc-websocket-close"><code>.z.wc</code></a> (websocket close),
+<a href="#zac-http-auth"><code>.z.ac</code></a> (HTTP auth)
+<br></p>
+<p><a href="../kb/websockets.md">WebSockets</a></p>
+<h2 id="zx-raw-command-line"><code>.z.X</code> (raw command line)<a class="headerlink" href="#zx-raw-command-line" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>.z.X
+</code></pre></div>
+<p>Returns a list of strings of the raw, unfiltered command line with which kdb+ was invoked, including the name under which q was invoked, as well as single-letter arguments.
+(Since V3.3 2015.02.12)</p>
+<div class="highlight"><pre><span></span><code>q<span class="w"> </span>somefile.q<span class="w"> </span>-customarg<span class="w"> </span><span class="m">42</span><span class="w"> </span>-p<span class="w"> </span>localhost:17200
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="o">.</span><span class="n">z.X</span>
+<span class="o">,</span><span class="s2">"q"</span>
+<span class="s2">"somefile.q"</span>
+<span class="s2">"-customarg"</span>
+<span class="s2">"42"</span>
+<span class="s2">"-p"</span>
+<span class="s2">"localhost:17200"</span>
+</code></pre></div>
+<p><a href="#zx-argv"><code>.z.x</code></a> (argv), <a href="#zf-file"><code>.z.f</code></a> (file), <a href="#zq-quiet-mode"><code>.z.q</code></a> (quiet mode), <a href="../dotq/#opt-command-parameters"><code>.Q.opt</code></a> (command parameters), <a href="../dotq/#def-command-defaults"><code>.Q.def</code></a> (command defaults), <a href="../dotq/#x-non-command-parameters"><code>.Q.x</code></a> (non-command parameters)</p>
+<h2 id="zx-argv"><code>.z.x</code> (argv)<a class="headerlink" href="#zx-argv" title="Permanent link">&para;</a></h2>
+<p>Command-line arguments as a list of strings</p>
+<div class="highlight"><pre><span></span><code><span class="o">$</span><span class="w"> </span><span class="n">q</span><span class="w"> </span><span class="n">test.q</span><span class="w"> </span><span class="o">-</span><span class="n">P</span><span class="w"> </span><span class="il">0</span><span class="w"> </span><span class="o">-</span><span class="n">abc</span><span class="w"> </span><span class="il">123</span>
+<span class="gp">q)</span><span class="o">.</span><span class="n">z.x</span>
+<span class="s2">"-abc"</span>
+<span class="s2">"123"</span>
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">The script name and the single-letter options used by q itself are not included.</p>
+</div>
+<p>Command-line options can be converted to a dictionary using the convenient <a href="../dotq/#opt-command-parameters"><code>.Q.opt</code></a> function.</p>
+<p><a href="#zx-raw-command-line"><code>.z.X</code></a> (raw command line), <a href="#zf-file"><code>.z.f</code></a> (file), <a href="#zq-quiet-mode"><code>.z.q</code></a> (quiet mode), <a href="../dotq/#opt-command-parameters"><code>.Q.opt</code></a> (command parameters), <a href="../dotq/#def-command-defaults"><code>.Q.def</code></a> (command defaults), <a href="../dotq/#x-non-command-parameters"><code>.Q.x</code></a> (non-command parameters)</p>
+<h2 id="zz-local-datetime"><code>.z.Z</code> (local datetime)<a class="headerlink" href="#zz-local-datetime" title="Permanent link">&para;</a></h2>
+<p>Local time as a datetime atom.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="o">.</span><span class="n">z.Z</span>
+<span class="ld">2006.11.13T21:16:14.601</span>
+</code></pre></div>
+<p>The offset from UTC is fetched from the OS: kdb+ does not have its own time-offset database.</p>
+<p>Which avoids problems like <a href="https://it.slashdot.org/story/07/02/25/2038217/software-bug-halts-f-22-flight">this</a>.</p>
+<p><a href="#zz-utc-datetime"><code>.z.z</code></a> (UTC datetime), <a href="#zp-local-timestamp"><code>.z.P</code></a> (local timestamp), <a href="#zp-utc-timestamp"><code>.z.p</code></a> (UTC timestamp), <a href="#zn-local-timespan"><code>.z.N</code></a> (local timespan), <a href="#zn-utc-timespan"><code>.z.n</code></a> (UTC timespan)</p>
+<h2 id="zz-utc-datetime"><code>.z.z</code> (UTC datetime)<a class="headerlink" href="#zz-utc-datetime" title="Permanent link">&para;</a></h2>
+<p>UTC time as a datetime atom.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="o">.</span><span class="n">z.z</span>
+<span class="ld">2006.11.13T21:16:14.601</span>
+</code></pre></div>
+<div class="admonition detail">
+<p class="admonition-title"><code>z.z</code> calls <code>gettimeofday</code> and so has microsecond precision</p>
+</div>
+<p><a href="#zz-local-datetime"><code>.z.Z</code></a> (local datetime), <a href="#zp-local-timestamp"><code>.z.P</code></a> (local timestamp), <a href="#zp-utc-timestamp"><code>.z.p</code></a> (UTC timestamp), <a href="#zn-local-timespan"><code>.z.N</code></a> (local timespan), <a href="#zn-utc-timespan"><code>.z.n</code></a> (UTC timespan)</p>
+<p><a href="" id="zzd-zip-defaults"></a></p>
+<h2 id="zzd-compressionencryption-defaults"><code>.z.zd</code> (compression/encryption defaults)<a class="headerlink" href="#zzd-compressionencryption-defaults" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>.z.zd:(lbs;alg;lvl)
+.z.zd:dict
+</code></pre></div>
+<p>Integers <code>lbs</code>, <code>alg</code>, and <code>lvl</code> are <a href="../kb/file-compression.md">compression parameters</a> and/or <a href="../kb/dare.md#configuration">encryption parameters</a>.
+They set default values for logical block size, compression/encryption algorithm and compression level that apply when saving to files.
+Encryption available since 4.0 2019.12.12.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="nv">.z.zd</span><span class="o">:</span><span class="il">17</span><span class="w"> </span><span class="il">2</span><span class="w"> </span><span class="il">4</span><span class="w">            </span><span class="c1">/ enable compression</span>
+<span class="gp">q)</span><span class="ss">`:fileA</span><span class="w"> </span><span class="nb">set</span><span class="w"> </span><span class="nb">til</span><span class="w"> </span><span class="il">1000</span><span class="w">    </span><span class="c1">/ create file, now compressed as .z.zd set</span>
+<span class="ss">`:fileA</span>
+<span class="gp">q)</span><span class="ss">`:fileB</span><span class="w"> </span><span class="nb">set</span><span class="w"> </span><span class="nb">til</span><span class="w"> </span><span class="il">1000</span><span class="w">    </span><span class="c1">/ create file, now compressed as .z.zd set</span>
+<span class="ss">`:fileB</span>
+<span class="gp">q)</span><span class="o">-</span><span class="il">21</span><span class="o">!</span><span class="ss">`:fileA</span><span class="w">             </span><span class="c1">/ check that file is compressed</span>
+<span class="n">compressedLength</span><span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="il">1611</span>
+<span class="n">uncompressedLength</span><span class="o">|</span><span class="w"> </span><span class="il">8016</span>
+<span class="n">algorithm</span><span class="w">         </span><span class="o">|</span><span class="w"> </span><span class="mi">2i</span>
+<span class="n">logicalBlockSize</span><span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="mi">17i</span>
+<span class="n">zipLevel</span><span class="w">          </span><span class="o">|</span><span class="w"> </span><span class="mi">4i</span>
+<span class="gp">q)</span><span class="o">-</span><span class="il">21</span><span class="o">!</span><span class="ss">`:fileB</span><span class="w">             </span><span class="c1">/ check that file is compressed</span>
+<span class="n">compressedLength</span><span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="il">1611</span>
+<span class="n">uncompressedLength</span><span class="o">|</span><span class="w"> </span><span class="il">8016</span>
+<span class="n">algorithm</span><span class="w">         </span><span class="o">|</span><span class="w"> </span><span class="mi">2i</span>
+<span class="n">logicalBlockSize</span><span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="mi">17i</span>
+<span class="n">zipLevel</span><span class="w">          </span><span class="o">|</span><span class="w"> </span><span class="mi">4i</span>
+</code></pre></div>
+<p><code>.z.zd</code> will not apply when saving to a file with an extension (a file containing a '.' in its filename).
+To enable compression on a file with an extension, use <a href="../get/#compressionencryption"><code>set</code></a> passing the required compression settings.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="nv">.z.zd</span><span class="o">:</span><span class="il">17</span><span class="w"> </span><span class="il">2</span><span class="w"> </span><span class="il">4</span><span class="w">                            </span><span class="c1">/ enable compression</span>
+<span class="gp">q)</span><span class="ss">`:file.something</span><span class="w"> </span><span class="nb">til</span><span class="w"> </span><span class="il">1000</span><span class="w">               </span><span class="c1">/ create file with extension while .z.zd set</span>
+<span class="ss">`:file.something</span>
+<span class="gp">q)</span><span class="o">-</span><span class="il">21</span><span class="o">!</span><span class="ss">`:file.something</span><span class="w">                    </span><span class="c1">/ file not compressed, no compression info</span>
+<span class="gp">q)</span><span class="p">(</span><span class="ss">`:file.something</span><span class="p">;</span><span class="il">17</span><span class="p">;</span><span class="il">2</span><span class="p">;</span><span class="il">4</span><span class="p">)</span><span class="w"> </span><span class="nb">set</span><span class="w"> </span><span class="nb">til</span><span class="w"> </span><span class="il">1000</span><span class="w">  </span><span class="c1">/ create file with extension, pass compression settings on creation</span>
+<span class="ss">`:file.something</span>
+<span class="gp">q)</span><span class="o">-</span><span class="il">21</span><span class="o">!</span><span class="ss">`:file.something</span><span class="w">                    </span><span class="c1">/ file is compressed</span>
+<span class="n">compressedLength</span><span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="il">1611</span>
+<span class="n">uncompressedLength</span><span class="o">|</span><span class="w"> </span><span class="il">8016</span>
+<span class="n">algorithm</span><span class="w">         </span><span class="o">|</span><span class="w"> </span><span class="mi">2i</span>
+<span class="n">logicalBlockSize</span><span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="mi">17i</span>
+<span class="n">zipLevel</span><span class="w">          </span><span class="o">|</span><span class="w"> </span><span class="mi">4i</span>
+</code></pre></div>
+<p>A dictionary can be assigned to <code>.z.zd</code>. The keys of the dictionary are either column names or the null symbol <code>`</code>.
+The value of each entry is an integer vector: <code>lbs</code>, <code>alg</code>, and <code>lvl</code>.
+The null symbol is used as a default for columns that do not match the other keys.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="nb">show</span><span class="w"> </span><span class="nv">dict</span><span class="o">:</span><span class="ss">``a`b</span><span class="o">!</span><span class="p">(</span><span class="il">17</span><span class="w"> </span><span class="il">5</span><span class="w"> </span><span class="il">3</span><span class="p">;</span><span class="il">17</span><span class="w"> </span><span class="il">2</span><span class="w"> </span><span class="il">6</span><span class="p">;</span><span class="il">17</span><span class="w"> </span><span class="il">2</span><span class="w"> </span><span class="il">6</span><span class="p">)</span><span class="w">  </span><span class="c1">/ default compression is `zstd` with level 3</span>
+<span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="il">17</span><span class="w"> </span><span class="il">5</span><span class="w"> </span><span class="il">3</span>
+<span class="n">a</span><span class="o">|</span><span class="w"> </span><span class="il">17</span><span class="w"> </span><span class="il">2</span><span class="w"> </span><span class="il">6</span>
+<span class="n">b</span><span class="o">|</span><span class="w"> </span><span class="il">17</span><span class="w"> </span><span class="il">2</span><span class="w"> </span><span class="il">6</span>
+<span class="gp">q)</span><span class="nv">.z.zd</span><span class="o">:</span><span class="n">dict</span>
+</code></pre></div>
+<p>Settings can be cleared using the <a href="../../basics/syscmds/#x-expunge"><code>\x</code></a> system command.</p>
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="nv">.z.zd</span><span class="o">:</span><span class="il">17</span><span class="w"> </span><span class="il">2</span><span class="w"> </span><span class="il">6</span><span class="w">        </span><span class="c1">/ set zip defaults</span>
+<span class="gp">q)</span><span class="o">\</span><span class="n">x</span><span class="w"> </span><span class="o">.</span><span class="n">z.zd</span><span class="w">            </span><span class="c1">/ clear zip defaults</span>
+</code></pre></div>
+<p><a href="../../basics/internal/#-21x-compressionencryption-stats"><code>-21!x</code></a> (compression/encryption stats), <a href="../get/#set"><code>set</code></a> (per file/dir compression)</p>
+<p><a href="../kb/file-compression.md">File compression</a>
+<br></p>
+<p><a href="../kb/dare.md">Data at rest encryption (DARE)</a></p>
+<h2 id="zt-zt-zd-zd-timedate-shortcuts"><code>.z.T</code> <code>.z.t</code> <code>.z.D</code> <code>.z.d</code> (time/date shortcuts)<a class="headerlink" href="#zt-zt-zd-zd-timedate-shortcuts" title="Permanent link">&para;</a></h2>
+<p>Shorthand forms:</p>
+<div class="highlight"><pre><span></span><code>.z.T  `time$.z.Z     .z.D  `date$.z.Z
+.z.t  `time$.z.z     .z.d  `date$.z.z
+</code></pre></div>
+<p><a href="#zz-local-datetime"><code>.z.Z</code></a> (local datetime), <a href="#zz-utc-datetime"><code>.z.z</code></a> (UTC datetime)</p>
+<hr />
+<p><a href="../kb/callbacks.md">Callbacks</a>,
+<a href="../kb/using-dotz.md">Using <code>.z</code></a>
+<br></p>
+<p><em>Q for Mortals:</em>
+<a href="../../../q4m3/11_IO/#116-interprocess-communication">§11.8 Interprocess Communication</a></p>
+<div class="peachq-import-attribution">
+<p>Source adapted from the <a href="https://github.com/KxSystems/docs">Documentation for kdb+ and q</a>
+by KX Systems and contributors, used under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.
+<a href="../../attribution/">Attribution, provenance and independence notice</a>.</p>
+</div>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  <div class="md-copyright__highlight">
+    PeachQ - MIT-licensed open source q, built on Rayforce with DuckDB storage in progress.
+  </div>
+  <a href="../../../about">Built for the community</a> &middot;
+  <a href="../../../contact">Contact</a> &middot;
+  <a href="https://github.com/peachq-org/peachq" target="_blank" rel="noreferrer">GitHub</a>
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.sections", "navigation.top", "content.code.copy", "content.action.edit"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
