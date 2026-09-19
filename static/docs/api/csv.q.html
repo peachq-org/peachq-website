@@ -1,25 +1,69 @@
-<!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<!doctype html>
+<html lang="en" data-theme="light">
 <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <link rel="shortcut icon" type="image/png" href="../../img/favicon.ico" />
-    <title>csv.q - PeachQ API</title>
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" />
-    <link rel="stylesheet" href="qdoc2.css" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/q.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/shell.min.js"></script>
-      <script>hljs.highlightAll();</script> 
-<link rel="stylesheet" href="peachq-api.css" />
-</head> 
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<!-- Resolves every relative URL below against the site root rather than the
+     requested path. See peachq_install_path(). -->
 
-<body class="wy-body-for-nav" role="document">
+<title>csv.q - PeachQ API</title>
+<link rel="canonical" href="https://peachq.org/docs/api/csv.q.html">
+<link rel="icon" href="../../img/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="16x16" href="../../img/peachq-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../../img/peachq-32x32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../../img/peachq-180x180.png">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" />
+<link rel="stylesheet" href="qdoc2.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/q.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/shell.min.js"></script>
+<script>hljs.highlightAll();</script>
+<link rel="stylesheet" href="../../css/styles.css">
+<link rel="stylesheet" href="peachq-api.css">
+<script src="../../mirror-banner.js" defer></script>
+<!-- Matomo. Self-hosted at timestored.com/mat, so no third-party analytics
+     service sees the traffic. Site 4 is "peachq"; site 1 is TimeStored's own
+     site, and pointing this at 1 filed every PeachQ visit under TimeStored.
+     Keep in sync with overrides/main.html, which carries the same snippet for
+     the MkDocs half of the site; tests/test_pages.sh checks the id matches. -->
+<script>
+  var _paq = window._paq = window._paq || [];
+  /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u="//www.timestored.com/mat/";
+    _paq.push(['setTrackerUrl', u+'matomo.php']);
+    _paq.push(['setSiteId', '4']);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+</head>
+<body class="peachq-api">
+<header class="nav">
+  <div class="container nav-inner">
+    <a class="brand" href="../.././"><img class="logo" src="../../img/peachq-logo.svg" alt="PeachQ logo"><span>Peach<span style="color:var(--peach-strong)">Q</span></span></a>
+    <button class="mobile-menu" type="button" data-mobile-menu aria-expanded="false" aria-controls="siteNav">Menu</button>
+    <nav class="nav-links" id="siteNav">
+      <a href="../../repl" class="nav-cta">Try Live</a>
+      <a href="../../download">Download</a>
+      <a href="../../docs/" class="active">Docs</a>
+      <a href="../../compatibility">Compatibility</a>
+      <a href="../../news/">News</a>
+      <a href="../../about">About</a>
+      <a href="https://github.com/peachq-org/peachq" target="_blank" rel="noreferrer">GitHub ↗</a>
+      <button class="theme-toggle" data-theme-toggle aria-label="Toggle theme"></button>
+    </nav>
+  </div>
+</header>
+<div class="preview-ribbon" aria-hidden="true">Early preview</div>
+
+
 
   <div class="wy-grid-for-nav">
-    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav" id="api-sidebar">
     <div class="wy-side-scroll">
       <div class="wy-side-nav-search">
 <p><a href="../">← PeachQ docs</a></p>
@@ -32,40 +76,25 @@
 
       <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption"><span class="caption-text">Namespaces</span></p>
-              
-              
+
+
 <ul><li class="toctree-l1 current"><a class="reference internal current" href='csv.q.html' >.csv</a></li>
 	<li class="toctree-l1 cls-duckdb-cls"><a class="reference internal cls-duckdb-cls" href='duckdb.q.html' >.duckdb</a></li>
-	<li class="toctree-l1 cls-duckdbi-cls"><a class="reference internal cls-duckdbi-cls" href='duckdb.q.html' >.duckdb.i</a></li>
 	<li class="toctree-l1 cls-ffi-cls"><a class="reference internal cls-ffi-cls" href='ffi.q.html' >.ffi</a></li>
 	<li class="toctree-l1 cls-j-cls"><a class="reference internal cls-j-cls" href='j.q.html' >.j</a></li>
-	<li class="toctree-l1 cls-ji-cls"><a class="reference internal cls-ji-cls" href='j.q.html' >.j.i</a></li>
 	<li class="toctree-l1 cls-massive-cls"><a class="reference internal cls-massive-cls" href='massive.q.html' >.massive</a></li>
-	<li class="toctree-l1 cls-massivei-cls"><a class="reference internal cls-massivei-cls" href='massive.q.html' >.massive.i</a></li>
 	<li class="toctree-l1 cls-parquet-cls"><a class="reference internal cls-parquet-cls" href='parquet.q.html' >.parquet</a></li>
-	<li class="toctree-l1 cls-parqueti-cls"><a class="reference internal cls-parqueti-cls" href='parquet.q.html' >.parquet.i</a></li>
 	<li class="toctree-l1 cls-pq-cls"><a class="reference internal cls-pq-cls" href='pq.q.html' >.pq</a></li>
-	<li class="toctree-l1 cls-pqi-cls"><a class="reference internal cls-pqi-cls" href='pq.q.html' >.pq.i</a></li>
-	<li class="toctree-l1 cls-qpc-cls"><a class="reference internal cls-qpc-cls" href='qpc.q.html' >.qpc</a></li>
-	<li class="toctree-l1 cls-qpci-cls"><a class="reference internal cls-qpci-cls" href='qpc.q.html' >.qpc.i</a></li>
 	<li class="toctree-l1 cls-regexp-cls"><a class="reference internal cls-regexp-cls" href='regexp.q.html' >.regexp</a></li>
-	<li class="toctree-l1 cls-s-cls"><a class="reference internal cls-s-cls" href='duckdb.q.html' >.s</a></li>
-	<li class="toctree-l1 cls-si-cls"><a class="reference internal cls-si-cls" href='duckdb.q.html' >.s.i</a></li>
 	<li class="toctree-l1 cls-str-cls"><a class="reference internal cls-str-cls" href='str.q.html' >.str</a></li>
-	<li class="toctree-l1 cls-stri-cls"><a class="reference internal cls-stri-cls" href='str.q.html' >.str.i</a></li>
 	<li class="toctree-l1 cls-termbox-cls"><a class="reference internal cls-termbox-cls" href='termbox.q.html' >.termbox</a></li>
-	<li class="toctree-l1 cls-termboxattribute-cls"><a class="reference internal cls-termboxattribute-cls" href='termbox.q.html' >.termbox.attribute</a></li>
-	<li class="toctree-l1 cls-termboxcolor-cls"><a class="reference internal cls-termboxcolor-cls" href='termbox.q.html' >.termbox.color</a></li>
-	<li class="toctree-l1 cls-termboxinput-cls"><a class="reference internal cls-termboxinput-cls" href='termbox.q.html' >.termbox.input</a></li>
-	<li class="toctree-l1 cls-termboxoutput-cls"><a class="reference internal cls-termboxoutput-cls" href='termbox.q.html' >.termbox.output</a></li>
 </ul><!--NAMESPACE_END-->
-              
+
               <p class="caption"><span class="caption-text">Files</span></p>
-              
+
 <ul><li class="toctree-l1 current"><a class="reference internal current" href='csv.q.html' >csv.q</a></li>
 	<li class="toctree-l1 cls-duckdb-cls"><a class="reference internal cls-duckdb-cls" href='duckdb.q.html' >duckdb.q</a></li>
 	<li class="toctree-l1 cls-ffi-cls"><a class="reference internal cls-ffi-cls" href='ffi.q.html' >ffi.q</a></li>
-	<li class="toctree-l1 cls-help-db-cls"><a class="reference internal cls-help-db-cls" href='help-db.q.html' >help-db.q</a></li>
 	<li class="toctree-l1 cls-j-cls"><a class="reference internal cls-j-cls" href='j.q.html' >j.q</a></li>
 	<li class="toctree-l1 cls-massive-cls"><a class="reference internal cls-massive-cls" href='massive.q.html' >massive.q</a></li>
 	<li class="toctree-l1 cls-parquet-cls"><a class="reference internal cls-parquet-cls" href='parquet.q.html' >parquet.q</a></li>
@@ -75,16 +104,16 @@
 	<li class="toctree-l1 cls-str-cls"><a class="reference internal cls-str-cls" href='str.q.html' >str.q</a></li>
 	<li class="toctree-l1 cls-termbox-cls"><a class="reference internal cls-termbox-cls" href='termbox.q.html' >termbox.q</a></li>
 </ul><!--FILES_END-->
-              
+
       </div>
     </div>
     </nav>
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
       <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
-          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <button type="button" data-api-menu aria-expanded="false" aria-controls="api-sidebar">☰ API menu</button>
           <a href="./">PeachQ API</a>
-        
+
       </nav>
       <div class="wy-nav-content">
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
@@ -99,40 +128,45 @@
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
-              
-                <h1 id="foobar">csv.q</h1>
-    
 
-    
-	<div id='headerDoc'></div>
+                <h1 id="foobar">csv.q</h1>
+
+
+
+	<div id='headerDoc'>Read delimited text (CSV, TSV) as a table, from a file, a URL or text in memory. `select from `:trades.csv` is the shortest spelling; .csv.read adds a target table, explicit column types and options; .csv.info shows the schema it would sniff.  What a cell means is shared with .j.read (user-docs/loading.md).
+
+<div class='qd-examples'><h3>Examples</h3><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>select from `:https://www.timestored.com/data/sample/dowjones.csv where Date>1960.01.01
+select MIC, CITY from `:https://www.timestored.com/data/sample/iso10383_mic.csv where CITY like "LONDON"
+`:trades.csv 0: csv 0: ([] sym:`a`b; px:1.5 2.5)
+select from `:trades.csv where px>2
+t:.csv.read[`:trades.csv;::;(enlist `sym)!enlist "s";()!()]</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div></div></div>
 	<div id='summary'><h2>Entity Summary</h2><table class='overviewSummary'><tbody>
 <tr><th>Entities</th><th>Short Description</th></tr>
-		<tr><td><a href='#-csv-info'>.csv.info</a></td><td>Report the schema .</td></tr>
-		<tr><td><a href='#-csv-read'>.csv.read</a></td><td>Read delimited text (CSV, TSV) as a table, from a file, a UR</td></tr>
+		<tr><td><a href='#-csv-info'>.csv.info[file;opts]</a></td><td>The schema .csv.read would infer, as the dict its types argument takes, without loading the file.</td></tr>
+		<tr><td><a href='#-csv-read'>.csv.read[file;target;types;opts]</a></td><td>Load delimited text as a table.</td></tr>
 </tbody></table></div>
 	<div class='details'>
 	<h2>Entity Details</h2>
-		<div class='entity' id='-csv-info'><h2>.csv.info</h2><p>Report the schema .csv.read would infer, without loading the file: a dict of column name to type char, in exactly the shape .csv.read takes as its types argument, so it can be edited and fed straight back. ADVISORY on text: where low cardinality suggests a symbol column the dict says "s", even though .csv.read itself never syms a sniffed column - feeding the dict back is what adopts the advice. Reads only the sniff sample (sample_size rows), so it does not validate the rest of the file.  It describes the FILE, so an xcol in opts is accepted and renames nothing here - which is what keeps the answer feedable back.</p><table>
-<tr><th>Examples: </th><td><ul><li><code>.csv.info["a,b\n1,2\n";()!()]</code></li><li><code>.csv.read[`:trades.csv;::;.csv.info[`:trades.csv;()!()];()!()]</code></li><li><code>.csv.info[`:trades.csv;()!()]</code></li><li><code>.csv.info[`:trades.csv;(enlist</code></li></ul></td></tr>
-<tr><th>Parameters: </th><td><ul>
-	<li><strong>file</strong> - (symbol or string or string list) the same source forms .csv.read takes</li>
-	<li><strong>opts</strong> - (dict) the same options dict .csv.read takes</li></ul></td></tr></table></div>
-		<div class='entity' id='-csv-read'><h2>.csv.read</h2><p>Read delimited text (CSV, TSV) as a table, from a file, a URL or text already in memory. `select from `:trades.csv` is the shortest spelling.  .csv.read[file;target;types;opts] also takes a target table (rows insert, its meta fixes the types), the column types as 0: letters ("SFJ"), and an options dict; .csv.info[file;opts] shows the schema it would sniff.  \?loaders has examples; user-docs/csv.md the detail. Load delimited text as a table - from a file, a URL, or text already in memory. A symbol or lambda target answers the summary dict `rows`rejected`chunks`ignored`types; otherwise the table itself.  Types resolve as: explicit types > the existing target table's schema > the sniff - an EXISTING symbol target fixes the per-column types from its meta (keyed targets upsert, unkeyed insert), CSV columns it lacks are dropped and reported under `ignored`, and a headerless file maps to a target positionally: complete map, no projection.  All other conformity (missing columns, types that will not convert) is insert's own contract. THE SOURCE LAW: a SYMBOL is a resource, TEXT is content - never sniffed.  Text is one char vector (the whole payload, embedded newlines and all) or a list of them, DEFINED as join-with-newline-then-parse and NOT one element per record: only that reading rejoins a quoted field split across two elements.  A quoted field may hold newlines or straddle a read boundary and still lands as one cell of one row.  Text chunks at the same buffer_size a file is read at, so `chunks and a lambda target's misc match either way; the BOM strip is the same, and an empty payload signals 'csv, exactly as a zero-byte file does. Column types FREEZE after the sniff sample: a later cell that fails its frozen type signals 'csv, never a silent null and never a mid-load re-promotion.  Sniffed text is always a string column - ask for symbols with types. xcol RENAMES columns on the way in, taking exactly what the q verb xcol takes and applying it BEFORE the target is consulted - so a file headed sym,price loads straight into a table of ticker,px.  types keys on the FILE's names whatever the rename does, and a key naming no column in the file is xcol's own 'length. An option is NEVER silently ignored: an unknown or unimplemented key signals 'option. The DELIMITER is sniffed among "," ";" tab "|" (a candidate qualifies only if every sample row parses to the same field count above one column; most columns wins, ties keep candidate order).  None qualifying, a one-column-SHAPED file loads whole lines as ONE column and anything else is refused with 'csv.  The DIALECT - quote, escape, comment - is never sniffed: guessing it would silently change what the file means. What a cell MEANS is shared with .j.read and written up in the guide user-docs/loading.md - the written-form grammar, \z day order, the sentinel rule, the timezone posture and the 18-type roster.  This reader's own options and behaviour are in user-docs/csv.md, and bad rows in user-docs/bad-rows.md.</p><table>
-<tr><th>Examples: </th><td><ul><li><code>.csv.read[`:trades.csv;`dest;::;(enlist</code></li><li><code>.csv.read["a,b\n1,2\n3,4\n";::;::;()!()]</code></li><li><code>.csv.read[`:big.csv;{[tblData;errData;misc]</code></li><li><code>.csv.read[`:trades.csv;::;(enlist</code></li></ul></td></tr>
-<tr><th>Parameters: </th><td><ul>
-	<li><strong>types</strong> - (dict or string) column syms to type chars from the 18 basic types "bgxhijefcspmdznuvt", e.g. `a`b!"sj", overriding the sniff per column; or a type-char string "sj f" as the complete schema, one char per column.  " " drops a column, "*" keeps it as a string.  An explicit type is a promise: a cell that will not parse under it is a frozen-type miss</li>
-	<li><strong>file</strong> - (symbol or string or string list) `:trades.csv, a URL, or the CSV text itself</li>
-	<li><strong>opts</strong> - (dict) xcol (symbol vector renaming the first columns positionally, or a dict of file name to new name), delim (char), header (boolean), sample_size (long, sniff rows), buffer_size (long, read-chunk bytes), skip (long, default 0: records - not physical lines - dropped off the FRONT before anything else reads them, so every sniff runs on what remains; a blank line counts, a comment line does not, reject records keep physical line numbers), dateformat / timestampformat (string, strptime subset %Y %y %m %d %H %M %S %f %z - an explicit format REPLACES the built-in grammar for its type, \z's day-order reading included; %z is timestampformat-only, reads Z or +-HH[[:]MM] and APPLIES it, storing UTC). THE DIALECT OPTIONS, explicit only: quote (char; default "; "" disables quoting - quotes are ordinary bytes); escape (char; default = the quote char, i.e. RFC "" doubling; inside a quoted field the escape consumes its follower); comment (char; default off) - a line whose FIRST byte is the comment char is skipped whole, an unquoted comment char mid-row truncates the row there, a quoted field protects it; comment lines are never counted and never rejected, though they still advance the physical line numbers. THE TOLERANCE LAW (all default off): a lever governs whether the load SURVIVES a bad row, never whether it is counted - every bad row leaves a reject record (line; column; error class cast/toofewcolumns/toomanycolumns/unquotedvalue/unterminatedquote/padded; raw csvLine) and bumps the summary's `rejected`.  ignore_errors (boolean) skip bad rows; null_padding (boolean) pad short rows with nulls, each padded row recorded; strict_mode (boolean, default 1b) - 0b reads a field whose quotes cannot parse as literal bytes to the next delimiter; store_rejects (boolean) continue AND store the reject records in a global table, replaced per load; rejects_table (symbol, default `reject_errors) names it and implies store_rejects</li>
-	<li><strong>target</strong> - (symbol) a global table name each batch is inserted into (created when absent), or a rank-3 lambda {[tblData;errData;misc] ...} called once per batch - errData is that batch's reject records as a table (line, column, error, csvLine; empty on a clean batch), misc the dict `chunk`rows (0-based batch index; rows landed so far).  :: returns the table.  An explicit types disagreeing with an existing target signals 'mismatch</li></ul></td></tr>
-<tr><th>throws: </th><td>option for an unknown or unimplemented option key; csv for a malformed file or a frozen-type miss; length for an xcol key naming no column, before a row is read - a bad option is never a reject record</td></tr></table></div></div><!--MAIN_END-->
+		<div class='entity' id='-csv-info'><h2>.csv.info[file;opts]</h2><p class='qd-description'>The schema .csv.read would infer, as the dict its types argument takes, without loading the file. Advisory "s" marks a low-cardinality text column .csv.read alone would keep as strings.  Only the sniff sample is read.</p><table class='qd-tags qd-parameters'>
+<tr><th>Return: </th><td>a dict of column name to type char</td></tr>
+<tr><th>Parameters: </th><td><ul class='qd-parameters'>
+	<li><strong>opts</strong> - the options dict .csv.read takes</li></ul></td></tr></table><div class='qd-examples'><h3>Examples</h3><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.csv.info["a,b\n1,x\n";()!()]</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.csv.read["a,b\n1,x\n";::;.csv.info["a,b\n1,x\n";()!()];()!()]</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div></div></div>
+		<div class='entity' id='-csv-read'><h2>.csv.read[file;target;types;opts]</h2><p class='qd-description'>Load delimited text as a table.  A symbol is a resource to open, text is the content itself. Types resolve as: explicit types > an existing target table's schema > the sniff, and are fixed after the sniff sample: a later cell that fails its type signals 'csv.  Sniffed text is a string column; ask for symbols with types. The delimiter is sniffed among , ; tab |; quote, escape and comment are never sniffed.</p><table class='qd-tags qd-parameters'>
+<tr><th>Parameters: </th><td><ul class='qd-parameters'>
+	<li><strong>types</strong> - a dict of column to type char from "bgxhijefcspmdznuvt", or a type-char string for the whole schema, one char per column; " " drops a column, "*" keeps it as a string</li>
+	<li><strong>file</strong> - `:trades.csv, a URL, the CSV text as a string, or a list of strings joined with newlines</li>
+	<li><strong>opts</strong> - a dict; any unknown key signals 'option.  xcol (symbol vector renaming the first columns, or a dict of file name to new name, applied before the target is consulted); delim (char); header (boolean); sample_size (long, sniff rows); buffer_size (long, read-chunk bytes); skip (long, records dropped off the front); dateformat / timestampformat (strptime subset %Y %y %m %d %H %M %S %f %z, replacing the built-in grammar for that type); quote (char, default "; "" disables quoting); escape (char, default the quote char); comment (char, default off). Bad-row levers, all default off: ignore_errors (skip bad rows); null_padding (pad short rows); strict_mode (default 1b; 0b reads unparseable quotes as bytes); store_rejects (keep the reject records in a global table); rejects_table (symbol, default `reject_errors)</li>
+	<li><strong>target</strong> - :: answers the table; a symbol names a global table each batch is inserted into (created when absent, upserted when keyed; its meta fixes the types, columns it lacks are dropped and reported under `ignored); a rank-3 lambda {[tblData;errData;misc] ...} is called per batch - errData the batch's reject records (line column error csvLine), misc the dict `chunk`rows.  A symbol or lambda target answers the summary dict `rows`rejected`chunks`ignored`types</li></ul></td></tr>
+<tr><th>throws: </th><td><ul class='qd-tags'>
+	<li><strong>csv</strong> - a malformed file, an empty payload, or a cell that fails its fixed type</li>
+	<li><strong>mismatch</strong> - explicit types disagreeing with an existing target table</li>
+	<li><strong>length</strong> - an xcol key naming no column</li>
+	<li><strong>option</strong> - an unknown or unimplemented option key</li></ul></td></tr></table><div class='qd-examples'><h3>Examples</h3><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.csv.read["sym,px\na,1.5\nb,2.5\n";::;(enlist `sym)!enlist "s";()!()]</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.csv.read["h\nx\n1\n2\n";::;::;(enlist `skip)!enlist 1]</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.csv.read["a\n1\n2\n";{[tblData;errData;misc] show count tblData};::;()!()]</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div></div></div></div><!--MAIN_END-->
 
-              
+
             </div>
-            
 
           </div><footer>
-<nav class="peachq-api-links" aria-label="PeachQ links"><a href="../">Docs</a> · <a href="../../thanks/">Thanks</a> · <a href="https://github.com/peachq-org/peachq/blob/2f1971a315fbfba84149043ba994ec2d79d8f9d4/lib/csv.q">Source</a></nav>
-<nav class="peachq-api-reports" aria-label="Generation reports"><a href="lint.html">Lint</a> · <a href="lint.csv">Lint CSV</a> · <a href="metrics.html">Metrics</a> · <a href="metrics.csv">Metrics CSV</a></nav>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
         <!-- a href="../foo/" class="btn btn-neutral float-left" title="Foo"><span class="icon icon-circle-arrow-left"></span> Previous</a>
         <a href="../../namespaces/bar/" class="btn btn-neutral float-right" title="Bar">Next <span class="icon icon-circle-arrow-right"></span></a -->
@@ -146,9 +180,9 @@
     <!-- Copyright -->
   </div>
 
-  Built with <a href="https://www.timestored.com/qstudio/help/qdoc">QDoc</a> provided by <a href="https://www.timestored.com/">TimeStored</a>.
+  Built with <a href="https://www.timestored.com/qstudio/help/qdoc">QDoc</a> provided by <a href="https://www.timestored.com/">TimeStored</a>. <nav class="peachq-api-links" aria-label="PeachQ links"><a href="../">Docs</a> · <a href="../../thanks/">Thanks</a> · <a href="source.json">Source</a></nav>
 </footer>
-          
+
         </div>
       </div>
 
@@ -156,23 +190,26 @@
 
   </div>
 
-  <div class="rst-versions" role="note" aria-label="Versions">
-  <span class="rst-current-version" data-toggle="rst-current-version">
-    
-      <!-- span><a href="../foo/" style="color: #fcfcfc">&laquo; Previous</a></span>
-      <span><a href="../../namespaces/bar/" style="color: #fcfcfc">Next &raquo;</a></span -->
-    
-  </span>
-</div>
-    <script src="https://www.timestored.com/qstudio/addon/qdoc/2025-08-07/js/jquery-3.6.0.min.js"></script>
-    <script>var base_url = "../..";</script>
-    <script src="https://www.timestored.com/qstudio/addon/qdoc/2025-08-07/js/theme_extra.js"></script>
-    <script src="https://www.timestored.com/qstudio/addon/qdoc/2025-08-07/js/theme.js"></script>
-    <script>
-        jQuery(function () {
-            SphinxRtdTheme.Navigation.enable(true);
-        });
-    </script>
 
+
+
+
+
+
+
+<script src="peachq-api.js"></script><footer class="footer">
+  <div class="container footer-inner">
+    <div>PeachQ - MIT-licensed open source q, built on Rayforce with DuckDB storage in progress.
+      <a href="../../thanks/">Thanks</a>
+    </div>
+    <nav class="footer-links" aria-label="Footer">
+      <a href="../../repl">Try Live</a><a href="../../download">Download</a><a href="../../docs/">Docs</a>
+      <a href="../../compatibility">Compatibility</a><a href="../../roadmap">Roadmap</a><a href="../../news/">News</a>
+      <a href="../../about">About</a><a href="../../contact">Contact</a>
+      <a href="https://github.com/peachq-org/peachq" target="_blank" rel="noreferrer">GitHub ↗</a>
+    </nav>
+  </div>
+</footer>
+<script src="../../script.js"></script>
 </body>
 </html>

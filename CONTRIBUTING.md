@@ -83,25 +83,47 @@ Run the Bash script manually from this checkout (Java is assumed to be installed
 ```bash
 ./tools/generate-qdocs.sh                 # official PeachQ main
 ./tools/generate-qdocs.sh --ref v0.84      # or a branch, tag or commit
+./tools/generate-qdocs.sh --local-source ../rayforce/lib
 ```
 
-The script downloads qStudio from `https://www.timestored.com/qstudio/files/qstudio.jar`
+The script downloads qStudio from `https://www.timestored.com/qstudio/files/beta/qstudio.jar`
 only when `build/qdocs/cache/qstudio.jar` is missing. Delete that cached JAR to fetch
-it again. Downloads and temporary generation files live under the ignored
+it again, or refresh the cache directly before generating:
+
+```bash
+mkdir -p build/qdocs/cache
+curl -fsSL --retry 2 https://www.timestored.com/qstudio/files/beta/qstudio.jar \
+  -o build/qdocs/cache/qstudio.jar.download &&
+mv build/qdocs/cache/qstudio.jar.download build/qdocs/cache/qstudio.jar
+```
+
+Downloads and temporary generation files live under the ignored
 `build/qdocs/` directory.
 
 The requested ref is resolved to a commit in `peachq-org/peachq` on GitHub, and that
 exact source archive is downloaded. The whole `lib/` folder is passed to qDoc, which
 processes its `.q` files recursively. The local
-C-project checkout is not used. The current qStudio CLI expects the output directory
+C-project checkout is not used by default. With `--local-source DIR`, the script
+instead snapshots `.q` files recursively from that directory, including local edits.
+Relative paths resolve from the calling directory; `--ref` and `--local-source`
+cannot be combined. Local generation records source file SHA-256 hashes in
+`source.json`, and Source links point to that record rather than a GitHub revision.
+The current qStudio CLI expects the output directory
 first and input directory second.
 
 Successful generation replaces `static/docs/api/`, including `source.json` with the
-official source SHA. Failures before installation leave the existing docs intact.
-Lint and metrics reports are included as HTML and CSV, with small footer links;
+official source SHA or local source hashes. Failures before installation leave the existing docs intact.
+Lint and metrics reports are included as HTML and CSV, linked from the API index footer;
 generated `man.q` is not published. The script makes
-small presentation changes and copies `tools/qdocs/peachq-api.css`; edit those inputs
-rather than hand-editing generated HTML. The source comments determine documentation
+small presentation changes. `tools/qdocs/integrate.php` reuses `static/template.php`
+for the site header and footer, with API styles and mobile navigation in
+`tools/qdocs/peachq-api.css` and `peachq-api.js`; edit those inputs rather than
+hand-editing generated HTML. PHP is required for this integration, as for the site build.
+The integration keeps `regexp.q` example links pointing at `../../repl?code=` to
+preload them in the website editor without automatically executing them. Other
+library examples have Copy buttons because those libraries are not available in
+the browser REPL. This works on local previews and subdirectory installations too.
+The source comments determine documentation
 coverage, and the generator can list internal namespaces as well as public functions.
 
 Review the generated diff and preview the Library API link under Docs. The local
