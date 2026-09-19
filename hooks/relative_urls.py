@@ -18,26 +18,9 @@ import re
 # to another origin -- the Matomo snippet uses exactly that form -- so the
 # negative lookahead on the second slash is load-bearing.
 _ABSOLUTE_URL = re.compile(r'\b(href|src)="(/(?!/)[^"]*)"')
-_API_LINK = re.compile(r'(<a\b[^>]*\bhref="/docs/api/"[^>]*)>(.*?)</a>', re.DOTALL)
 
 
 def on_post_page(output: str, page, config) -> str:
-    # The generated reference has its own navigation; open its sidebar entry
-    # directly in a new tab while retaining the current guide.
-    def api_link(match: "re.Match") -> str:
-        if 'md-nav__link' not in match.group(1):
-            return match.group(0)
-        return (match.group(1)
-                + ' target="_blank" rel="noopener noreferrer"'
-                + ' aria-label="Library API (opens in a new tab)">'
-                + match.group(2)
-                + '<svg width="12" height="12" viewBox="0 0 24 24"'
-                + ' fill="currentColor" aria-hidden="true" focusable="false">'
-                + '<path d="M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42L17.59 5H14V3z'
-                + 'M5 3h6v2H5v14h14v-6h2v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5'
-                + 'a2 2 0 0 1 2-2z"/></svg></a>')
-
-    output = _API_LINK.sub(api_link, output)
     # page.url is relative to the site root and ends in "/" for directory URLs,
     # e.g. "news/2026/07/20-announcing-peachq/". Its depth is how many "../" it
     # takes to get back to the root.

@@ -1,25 +1,69 @@
-<!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<!doctype html>
+<html lang="en" data-theme="light">
 <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <link rel="shortcut icon" type="image/png" href="../../img/favicon.ico" />
-    <title>duckdb.q - PeachQ API</title>
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" />
-    <link rel="stylesheet" href="qdoc2.css" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/q.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/shell.min.js"></script>
-      <script>hljs.highlightAll();</script> 
-<link rel="stylesheet" href="peachq-api.css" />
-</head> 
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<!-- Resolves every relative URL below against the site root rather than the
+     requested path. See peachq_install_path(). -->
 
-<body class="wy-body-for-nav" role="document">
+<title>duckdb.q - PeachQ API</title>
+<link rel="canonical" href="https://peachq.org/docs/api/duckdb.q.html">
+<link rel="icon" href="../../img/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="16x16" href="../../img/peachq-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../../img/peachq-32x32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../../img/peachq-180x180.png">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" />
+<link rel="stylesheet" href="qdoc2.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/q.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/shell.min.js"></script>
+<script>hljs.highlightAll();</script>
+<link rel="stylesheet" href="../../css/styles.css">
+<link rel="stylesheet" href="peachq-api.css">
+<script src="../../mirror-banner.js" defer></script>
+<!-- Matomo. Self-hosted at timestored.com/mat, so no third-party analytics
+     service sees the traffic. Site 4 is "peachq"; site 1 is TimeStored's own
+     site, and pointing this at 1 filed every PeachQ visit under TimeStored.
+     Keep in sync with overrides/main.html, which carries the same snippet for
+     the MkDocs half of the site; tests/test_pages.sh checks the id matches. -->
+<script>
+  var _paq = window._paq = window._paq || [];
+  /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u="//www.timestored.com/mat/";
+    _paq.push(['setTrackerUrl', u+'matomo.php']);
+    _paq.push(['setSiteId', '4']);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+</head>
+<body class="peachq-api">
+<header class="nav">
+  <div class="container nav-inner">
+    <a class="brand" href="../.././"><img class="logo" src="../../img/peachq-logo.svg" alt="PeachQ logo"><span>Peach<span style="color:var(--peach-strong)">Q</span></span></a>
+    <button class="mobile-menu" type="button" data-mobile-menu aria-expanded="false" aria-controls="siteNav">Menu</button>
+    <nav class="nav-links" id="siteNav">
+      <a href="../../repl" class="nav-cta">Try Live</a>
+      <a href="../../download">Download</a>
+      <a href="../../docs/" class="active">Docs</a>
+      <a href="../../compatibility">Compatibility</a>
+      <a href="../../news/">News</a>
+      <a href="../../about">About</a>
+      <a href="https://github.com/peachq-org/peachq" target="_blank" rel="noreferrer">GitHub ↗</a>
+      <button class="theme-toggle" data-theme-toggle aria-label="Toggle theme"></button>
+    </nav>
+  </div>
+</header>
+<div class="preview-ribbon" aria-hidden="true">Early preview</div>
+
+
 
   <div class="wy-grid-for-nav">
-    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav" id="api-sidebar">
     <div class="wy-side-scroll">
       <div class="wy-side-nav-search">
 <p><a href="../">← PeachQ docs</a></p>
@@ -32,40 +76,25 @@
 
       <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption"><span class="caption-text">Namespaces</span></p>
-              
-              
+
+
 <ul><li class="toctree-l1 cls-csv-cls"><a class="reference internal cls-csv-cls" href='csv.q.html' >.csv</a></li>
 	<li class="toctree-l1 current"><a class="reference internal current" href='duckdb.q.html' >.duckdb</a></li>
-	<li class="toctree-l1 cls-duckdbi-cls"><a class="reference internal cls-duckdbi-cls" href='duckdb.q.html' >.duckdb.i</a></li>
 	<li class="toctree-l1 cls-ffi-cls"><a class="reference internal cls-ffi-cls" href='ffi.q.html' >.ffi</a></li>
 	<li class="toctree-l1 cls-j-cls"><a class="reference internal cls-j-cls" href='j.q.html' >.j</a></li>
-	<li class="toctree-l1 cls-ji-cls"><a class="reference internal cls-ji-cls" href='j.q.html' >.j.i</a></li>
 	<li class="toctree-l1 cls-massive-cls"><a class="reference internal cls-massive-cls" href='massive.q.html' >.massive</a></li>
-	<li class="toctree-l1 cls-massivei-cls"><a class="reference internal cls-massivei-cls" href='massive.q.html' >.massive.i</a></li>
 	<li class="toctree-l1 cls-parquet-cls"><a class="reference internal cls-parquet-cls" href='parquet.q.html' >.parquet</a></li>
-	<li class="toctree-l1 cls-parqueti-cls"><a class="reference internal cls-parqueti-cls" href='parquet.q.html' >.parquet.i</a></li>
 	<li class="toctree-l1 cls-pq-cls"><a class="reference internal cls-pq-cls" href='pq.q.html' >.pq</a></li>
-	<li class="toctree-l1 cls-pqi-cls"><a class="reference internal cls-pqi-cls" href='pq.q.html' >.pq.i</a></li>
-	<li class="toctree-l1 cls-qpc-cls"><a class="reference internal cls-qpc-cls" href='qpc.q.html' >.qpc</a></li>
-	<li class="toctree-l1 cls-qpci-cls"><a class="reference internal cls-qpci-cls" href='qpc.q.html' >.qpc.i</a></li>
 	<li class="toctree-l1 cls-regexp-cls"><a class="reference internal cls-regexp-cls" href='regexp.q.html' >.regexp</a></li>
-	<li class="toctree-l1 cls-s-cls"><a class="reference internal cls-s-cls" href='duckdb.q.html' >.s</a></li>
-	<li class="toctree-l1 cls-si-cls"><a class="reference internal cls-si-cls" href='duckdb.q.html' >.s.i</a></li>
 	<li class="toctree-l1 cls-str-cls"><a class="reference internal cls-str-cls" href='str.q.html' >.str</a></li>
-	<li class="toctree-l1 cls-stri-cls"><a class="reference internal cls-stri-cls" href='str.q.html' >.str.i</a></li>
 	<li class="toctree-l1 cls-termbox-cls"><a class="reference internal cls-termbox-cls" href='termbox.q.html' >.termbox</a></li>
-	<li class="toctree-l1 cls-termboxattribute-cls"><a class="reference internal cls-termboxattribute-cls" href='termbox.q.html' >.termbox.attribute</a></li>
-	<li class="toctree-l1 cls-termboxcolor-cls"><a class="reference internal cls-termboxcolor-cls" href='termbox.q.html' >.termbox.color</a></li>
-	<li class="toctree-l1 cls-termboxinput-cls"><a class="reference internal cls-termboxinput-cls" href='termbox.q.html' >.termbox.input</a></li>
-	<li class="toctree-l1 cls-termboxoutput-cls"><a class="reference internal cls-termboxoutput-cls" href='termbox.q.html' >.termbox.output</a></li>
 </ul><!--NAMESPACE_END-->
-              
+
               <p class="caption"><span class="caption-text">Files</span></p>
-              
+
 <ul><li class="toctree-l1 cls-csv-cls"><a class="reference internal cls-csv-cls" href='csv.q.html' >csv.q</a></li>
 	<li class="toctree-l1 current"><a class="reference internal current" href='duckdb.q.html' >duckdb.q</a></li>
 	<li class="toctree-l1 cls-ffi-cls"><a class="reference internal cls-ffi-cls" href='ffi.q.html' >ffi.q</a></li>
-	<li class="toctree-l1 cls-help-db-cls"><a class="reference internal cls-help-db-cls" href='help-db.q.html' >help-db.q</a></li>
 	<li class="toctree-l1 cls-j-cls"><a class="reference internal cls-j-cls" href='j.q.html' >j.q</a></li>
 	<li class="toctree-l1 cls-massive-cls"><a class="reference internal cls-massive-cls" href='massive.q.html' >massive.q</a></li>
 	<li class="toctree-l1 cls-parquet-cls"><a class="reference internal cls-parquet-cls" href='parquet.q.html' >parquet.q</a></li>
@@ -75,16 +104,16 @@
 	<li class="toctree-l1 cls-str-cls"><a class="reference internal cls-str-cls" href='str.q.html' >str.q</a></li>
 	<li class="toctree-l1 cls-termbox-cls"><a class="reference internal cls-termbox-cls" href='termbox.q.html' >termbox.q</a></li>
 </ul><!--FILES_END-->
-              
+
       </div>
     </div>
     </nav>
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
       <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
-          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <button type="button" data-api-menu aria-expanded="false" aria-controls="api-sidebar">☰ API menu</button>
           <a href="./">PeachQ API</a>
-        
+
       </nav>
       <div class="wy-nav-content">
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
@@ -99,75 +128,82 @@
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
-              
-                <h1 id="foobar">duckdb.q</h1>
-    
 
-    
-	<div id='headerDoc'></div>
+                <h1 id="foobar">duckdb.q</h1>
+
+
+
+	<div id='headerDoc'>Query and write DuckDB databases from q: a database is a handle, its tables are q tables. hopen `:pq:duckdb:alias:/path/db opens or creates a database and answers the alias symbol `:pq:duckdb:alias, the handle every .duckdb verb takes.  h "SELECT ..." runs SQL and answers a table; hclose h closes it. `:pq:duckdb:alias:table/ names a table for get, set, upsert and qsql, with select/where/by pushed down to DuckDB.
+
+One DuckDB database lives in the process, `:pq:duckdb:main (.duckdb.main[]; q -duckdb path puts it in a file): every alias is a catalog attached to it, and a q global bound to a DuckDB table is a same-named view in it, so s)SELECT ... runs SQL over q names, live.  DuckDB's httpfs carries s3:// gcs:// hf:// URLs for read0, read1, select from and set, with credentials as DuckDB secrets.  h (`getx;`t) reads a table with its schema as the pair (data;schema), which set and upsert accept back.  \?duckdb has more examples.
+
+<div class='qd-examples'><h3>Examples</h3><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>h:hopen `:pq:duckdb:demo:default:
+`:pq:duckdb:demo:trade/ set ([] sym:`a`b; px:1.5 2.5)
+`:pq:duckdb:demo:trade/ upsert ([] sym:enlist `c; px:enlist 3.5)
+select from `:pq:duckdb:demo:trade/ where px>2
+h "SELECT sym, px*2 AS px2 FROM trade"
+trade:get `:pq:duckdb:demo:trade/
+s)SELECT sym, count(*) FROM trade GROUP BY sym
+`:pq:duckdb:demo:dow/ set select from `:https://www.timestored.com/data/sample/dowjones.csv
+select max Price by 10 xbar `year$Date from `:pq:duckdb:demo:dow/
+h "SELECT year(Date) AS yr, max(Price) FROM dow GROUP BY yr ORDER BY yr DESC LIMIT 3"
+hclose h</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div></div></div>
 	<div id='summary'><h2>Entity Summary</h2><table class='overviewSummary'><tbody>
 <tr><th>Entities</th><th>Short Description</th></tr>
-		<tr><td>.duckdb.append</td><td>a missing table is created by this call, so the first batch </td></tr>
-		<tr><td>.duckdb.bind</td><td>bind reads the column names off meta - ONE catalog lookup ow</td></tr>
-		<tr><td><a href='#-duckdb-call'>.duckdb.call</a></td><td>Query and write DuckDB databases from q: a database is a han</td></tr>
-		<tr><td>.duckdb.count</td><td>count/meta answer from cheap SQL, never a materialize: COUNT</td></tr>
-		<tr><td><a href='#-duckdb-err'>.duckdb.err</a></td><td>the message channel behind the bare 'duckdb: the reason(s) b</td></tr>
-		<tr><td><a href='#-duckdb-exec'>.duckdb.exec</a></td><td>run SQL and answer the bare table - the door beside get, and</td></tr>
-		<tr><td>.duckdb.execx</td><td></td></tr>
-		<tr><td>.duckdb.get</td><td></td></tr>
-		<tr><td><a href='#-duckdb-getx'>.duckdb.getx</a></td><td>the envelope doors beside get and exec: the pair (data;schem</td></tr>
-		<tr><td><a href='#-duckdb-hdel'>.duckdb.hdel</a></td><td>drop table t of the handle's catalog with its sidecar rows (</td></tr>
-		<tr><td><a href='#-duckdb-load'>.duckdb.load</a></td><td>load the handle's tables and views as q pointers, at the roo</td></tr>
-		<tr><td><a href='#-duckdb-main'>.duckdb.main</a></td><td>THE main instance's own handle, `:pq:duckdb:main: the one Du</td></tr>
-		<tr><td>.duckdb.meta</td><td></td></tr>
-		<tr><td><a href='#-duckdb-onsql'>.duckdb.onsql</a></td><td>called once per statement with its row as a dict; rebind to </td></tr>
-		<tr><td>.duckdb.qsql</td><td></td></tr>
-		<tr><td><a href='#-duckdb-secret'>.duckdb.secret</a></td><td>---- credentials are DuckDB secrets (duckdb.</td></tr>
-		<tr><td><a href='#-duckdb-secrets'>.duckdb.secrets</a></td><td>what duckdb_secrets() shows, minus the secret values: scope </td></tr>
-		<tr><td>.duckdb.set</td><td></td></tr>
-		<tr><td>.duckdb.sqllog</td><td>the statement log, an ordinary table: one row per statement </td></tr>
-		<tr><td>.duckdb.sqllogmax</td><td>the ONE knob, cap AND switch: 0 keeps nothing at all, and at</td></tr>
-		<tr><td><a href='#-duckdb-types'>.duckdb.types</a></td><td>the DuckDB<->q type contract (the C QD_TYPES[] table) as dat</td></tr>
-		<tr><td><a href='#-duckdb-unsafeExecText'>.duckdb.unsafeExecText</a></td><td>---- the diagnostics ---- run ANY statement and answer DuckD</td></tr>
-		<tr><td><a href='#-duckdb-unsafeText'>.duckdb.unsafeText</a></td><td>DuckDB's own account of a table, bypassing the type contract</td></tr>
-		<tr><td>.duckdb.upsert</td><td>upsert is the name the provider host calls its write hook (`</td></tr>
-		<tr><td><a href='#-s-e'>.s.e</a></td><td>s)SELECT .</td></tr>
+		<tr><td><a href='#-duckdb-err'>.duckdb.err[handle]</a></td><td>The reason behind the last 'duckdb signal, first line the cause, cleared by the next call.</td></tr>
+		<tr><td><a href='#-duckdb-exec'>.duckdb.exec[handle;sql]</a></td><td>Run SQL on a handle and answer the result as a table; a statement without a result answers ::.</td></tr>
+		<tr><td><a href='#-duckdb-hdel'>.duckdb.hdel[handle;table]</a></td><td>Drop a table (or view) of the handle's catalog.</td></tr>
+		<tr><td><a href='#-duckdb-load'>.duckdb.load[handle;names]</a></td><td>Bind the handle's tables and views as q globals at the root, later-wins.</td></tr>
+		<tr><td><a href='#-duckdb-main'>.duckdb.main[]</a></td><td>The handle of the process's own DuckDB database, `:pq:duckdb:main: in-memory, or the file q -duckdb path names.</td></tr>
+		<tr><td><a href='#-duckdb-onsql'>.duckdb.onsql[row]</a></td><td>Called once per statement with its log row as a dict.</td></tr>
+		<tr><td><a href='#-duckdb-secret'>.duckdb.secret[name;typ;opts]</a></td><td>Create or replace a DuckDB secret (the credentials httpfs uses for s3:// gcs:// hf://), or drop one.</td></tr>
+		<tr><td><a href='#-duckdb-secrets'>.duckdb.secrets[]</a></td><td>The secrets defined, without their values.</td></tr>
+		<tr><td><a href='#-duckdb-sqllog'>.duckdb.sqllog</a></td><td>The statement log: one row per statement the bridge issued, newest last.</td></tr>
+		<tr><td>.duckdb.sqllogmax</td><td>How many rows .duckdb.sqllog keeps: 0 keeps nothing; at the cap the older half is dropped.</td></tr>
+		<tr><td><a href='#-duckdb-types'>.duckdb.types[]</a></td><td>The DuckDB-to-q type map as a table, one row per contract entry.</td></tr>
+		<tr><td><a href='#-duckdb-unsafeExecText'>.duckdb.unsafeExecText[handle;sql]</a></td><td>Run any statement and answer DuckDB's own rendering as text, bypassing the type map: rows as DuckDB prints them, or the error message as data when the statement fails.</td></tr>
+		<tr><td><a href='#-duckdb-unsafeText'>.duckdb.unsafeText[handle;tableName]</a></td><td>A table as DuckDB renders it, every column cast to VARCHAR (so nested, UUID, ENUM and BIT cells show), NULL as the text NULL, rows in insertion order.</td></tr>
 </tbody></table></div>
 	<div class='details'>
 	<h2>Entity Details</h2>
-		<div class='entity' id='-duckdb-call'><h2>.duckdb.call</h2><p>Query and write DuckDB databases from q: a database is a handle, its tables are q tables. h:hopen `:pq:duckdb:alias:/path/db opens (or creates) one and answers the alias symbol `:pq:duckdb:alias - the handle every public verb takes (.duckdb.exec[h;sql]); h "SELECT ..." runs SQL and answers a table; hclose h closes it.  `:pq:duckdb:alias:table/ names a table for get, set, upsert and qsql, with select/where/by pushed down to DuckDB.  There is ONE DuckDB database per process, `:pq:duckdb:main (.duckdb.main[]; q -duckdb path makes it a file): every alias is a catalog attached to it, and a q global bound to a DuckDB table is a same-named view in it, so s)SELECT ... runs SQL over q names, live.  .duckdb.types[] is the type map, .duckdb.err[] the last error.  DuckDB's httpfs is also the transport for s3:// gcs:// hf:// (read0, read1, select from and set on a URL just work), with credentials as DuckDB secrets: .duckdb.secret[name;type;opts] and .duckdb.secrets[].  \?duckdb has examples.</p><table>
-<tr><th>implNote: </th><td>DuckDB as a virtual-table PROVIDER (contract v3: the 2026-09-15 ADR § Handles; the instance and the link: § Main instance).  These hooks ARE the DuckDB surface, written over the natives .duckdb.i.*, which bind at this same \l pq gate; the lifecycle hooks .duckdb.i.open[alias;rest;tmo;cfg] / .duckdb.i.close[token] and the link hooks .duckdb.i.link[token;qname;table] / .duckdb.i.unlink[token;qname] ARE natives, called by the host alone (hopen/hclose are the only doors; the link fires at the global-set seam).  c below is the HANDLE (alias sym, or the legacy int), resolved to the native token in C - no q-side state.  ANY-ORDER LAW: definitions only at top level. the sync flag is ignored: an in-process engine has no async lane (the same treatment as open's timeout) lastsql records the SQL last handed to the engine - the B2 pushdown-snapshot slot (test/observed/taq-sql); inert until a .duckdb.qsql translator emits SQL.</td></tr></table></div>
-		<div class='entity' id='-duckdb-err'><h2>.duckdb.err</h2><p>the message channel behind the bare 'duckdb: the reason(s) behind the last call's refusal, first line the cause (DuckDB's own text, or the bridge's), cleared by the next call.  err[] is any connection's, err[c] that connection's.</p><table>
-<tr><th>Return: </th><td>(string)</td></tr></table></div>
-		<div class='entity' id='-duckdb-exec'><h2>.duckdb.exec</h2><p>run SQL and answer the bare table - the door beside get, and the sibling of execx, which answers the pair</p><table>
-<tr><th>Return: </th><td>(table)</td></tr></table></div>
-		<div class='entity' id='-duckdb-getx'><h2>.duckdb.getx</h2><p>the envelope doors beside get and exec: the pair (data;schema), schema one row per column whose DuckDB type the q carrier alone cannot spell (TINYINT is also h); set and append take the pair back.  h (`getx;`t) is the handle form</p></div>
-		<div class='entity' id='-duckdb-hdel'><h2>.duckdb.hdel</h2><p>drop table t of the handle's catalog with its sidecar rows (native: the key law is the codec's) - a view when that is what t names; hdel `:pq:duckdb:al:t/ is this verb's spelling.  A q name bound to it stays bound and errors on use</p><table>
-<tr><th>Return: </th><td>(symbol) t</td></tr></table></div>
-		<div class='entity' id='-duckdb-load'><h2>.duckdb.load</h2><p>load the handle's tables and views as q pointers, at the root, later-wins (\l `:pq:duckdb:al is the same door): tbls () none, :: all, else the names</p><table>
-<tr><th>Return: </th><td>(symbol list) the names bound</td></tr></table></div>
-		<div class='entity' id='-duckdb-main'><h2>.duckdb.main</h2><p>THE main instance's own handle, `:pq:duckdb:main: the one DuckDB database of the process (in-memory, or the file q -duckdb path / PEACHQ_DUCKDB_MAIN names), opened and registered on the first call - .pq.conns[] lists it, every alias is a catalog ATTACHed to it, and a q global bound to a DuckDB table is a same-named VIEW in it.  The standard library's own doors (.parquet, s)) run here; hopen/hclose refuse the alias.</p><table>
-<tr><th>Return: </th><td>(symbol) `:pq:duckdb:main</td></tr></table></div>
-		<div class='entity' id='-duckdb-onsql'><h2>.duckdb.onsql</h2><p>called once per statement with its row as a dict; rebind to route the log elsewhere, or unbind with (::) for none. do NOT close the connection or issue transaction control from a handler: it runs mid-statement, before the bridge has consumed the result it is about to read.</p></div>
-		<div class='entity' id='-duckdb-secret'><h2>.duckdb.secret</h2><p>---- credentials are DuckDB secrets (duckdb.org/docs/configuration/secrets_manager), on main ---- CREATE OR REPLACE [PERSISTENT] SECRET name (TYPE typ, KEY value, ...): opts ride verbatim as KEY value clauses (a string or sym quoted, a bool or number bare - the COPY-option shape), so an unknown key is DuckDB's own refusal; the key `persistent (a bool) picks the persistent form and is no clause.  opts (::) or () DROPs the secret, persistent or not, and typ is not consulted.  A persistent secret lands in DuckDB's own store, outside q</p><table>
-<tr><th>Return: </th><td>name</td></tr></table></div>
-		<div class='entity' id='-duckdb-secrets'><h2>.duckdb.secrets</h2><p>what duckdb_secrets() shows, minus the secret values: scope is the list of URL prefixes the secret covers</p><table>
-<tr><th>Return: </th><td>(table) name type provider persistent storage scope</td></tr></table></div>
-		<div class='entity' id='-duckdb-types'><h2>.duckdb.types</h2><p>the DuckDB<->q type contract (the C QD_TYPES[] table) as data: one row per contract entry, columns dtype (the DDL spelling), ktype (the .duckdb.meta char), logical (the hub name), canon (whether a bare read of that DuckDB type produces this row), needs (what an envelope row must carry: none, logical, dtype, both).  Derive from it.</p><table>
-<tr><th>Return: </th><td>(table) `dtype`ktype`logical`canon`needs</td></tr></table></div>
-		<div class='entity' id='-duckdb-unsafeExecText'><h2>.duckdb.unsafeExecText</h2><p>---- the diagnostics ---- run ANY statement and answer DuckDB's own text, bypassing the type contract entirely: rows rendered cell by cell by DuckDB itself, or, when the statement fails, its message AS DATA rather than a signal.  `unsafe` is the marker - a hit for `.duckdb.unsafe` outside tests and interactive use is a review finding.</p><table>
-<tr><th>Return: </th><td>(string)</td></tr></table></div>
-		<div class='entity' id='-duckdb-unsafeText'><h2>.duckdb.unsafeText</h2><p>DuckDB's own account of a table, bypassing the type contract: every column cast to VARCHAR (so nested, UUID, ENUM and BIT cells render), NULL kept as the text NULL, rows in insertion order.  Lines are rows and " | " splits a line, so a text cell holding a newline or that sequence misaligns its row - accepted, not guarded.</p><table>
-<tr><th>Return: </th><td>(table) one string column per column of tableName</td></tr></table></div>
-		<div class='entity' id='-s-e'><h2>.s.e</h2><p>s)SELECT ... - the custom-language handler kdb documents (.X.e receives the line after the prefix), on main: a q global bound to a DuckDB table is a bare name here, an alias's table is alias.table, a result prints as a table and a statement without one answers ::.  Errors are the bridge's 'duckdb, .duckdb.err[] the reason.  After a CREATE or ALTER the NEW names of main's own catalog become q pointers (an existing global keeps its value; \l is the later-wins door); a DROP unbinds nothing - the stale pointer errors on use.</p></div></div><!--MAIN_END-->
+		<div class='entity' id='-duckdb-err'><h2>.duckdb.err[handle]</h2><p class='qd-description'>The reason behind the last 'duckdb signal, first line the cause, cleared by the next call. err[] is any connection's, err[handle] that connection's.</p><table class='qd-tags'>
+<tr><th>Return: </th><td>string</td></tr></table><div class='qd-examples'><h3>Examples</h3><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>@[.duckdb.exec[.duckdb.main[]];"SELECT * FROM no_such_table";{.duckdb.err[]}]</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div></div></div>
+		<div class='entity' id='-duckdb-exec'><h2>.duckdb.exec[handle;sql]</h2><p class='qd-description'>Run SQL on a handle and answer the result as a table; a statement without a result answers ::.</p><div class='qd-examples'><h3>Examples</h3><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.duckdb.exec[.duckdb.main[];"SELECT 1 AS one, 'a' AS s"]</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div></div></div>
+		<div class='entity' id='-duckdb-hdel'><h2>.duckdb.hdel[handle;table]</h2><p class='qd-description'>Drop a table (or view) of the handle's catalog.  hdel `:pq:duckdb:alias:table/ is the same verb. A q global bound to it stays bound and errors on use.</p><table class='qd-tags'>
+<tr><th>Return: </th><td>table</td></tr></table><div class='qd-examples'><h3>Examples</h3><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.duckdb.exec[.duckdb.main[];"CREATE OR REPLACE TABLE u AS SELECT 1 AS a"]
+.duckdb.hdel[.duckdb.main[];`u]</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div></div></div>
+		<div class='entity' id='-duckdb-load'><h2>.duckdb.load[handle;names]</h2><p class='qd-description'>Bind the handle's tables and views as q globals at the root, later-wins.  \l `:pq:duckdb:alias is the same door.</p><table class='qd-tags qd-parameters'>
+<tr><th>Return: </th><td>the names bound</td></tr>
+<tr><th>Parameters: </th><td><ul class='qd-parameters'>
+	<li><strong>names</strong> - () for none, :: for all, else the table names</li></ul></td></tr></table><div class='qd-examples'><h3>Examples</h3><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.duckdb.load[.duckdb.main[];::]</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div></div></div>
+		<div class='entity' id='-duckdb-main'><h2>.duckdb.main[]</h2><p class='qd-description'>The handle of the process's own DuckDB database, `:pq:duckdb:main: in-memory, or the file q -duckdb path names. Opened on the first call; every alias is a catalog attached to it, and .parquet and s) run here.</p><table class='qd-tags'>
+<tr><th>Return: </th><td>`:pq:duckdb:main</td></tr></table><div class='qd-examples'><h3>Examples</h3><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.duckdb.exec[.duckdb.main[];"SELECT current_database()"]</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div></div></div>
+		<div class='entity' id='-duckdb-onsql'><h2>.duckdb.onsql[row]</h2><p class='qd-description'>Called once per statement with its log row as a dict.  Rebind it to route the log elsewhere, or set it to (::) for none.  Do not close the connection or issue transaction control from a handler: it runs mid-statement.</p><div class='qd-examples'><h3>Examples</h3><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.duckdb.onsql:{[row] -1 row`sql;}</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div></div></div>
+		<div class='entity' id='-duckdb-secret'><h2>.duckdb.secret[name;typ;opts]</h2><p class='qd-description'>Create or replace a DuckDB secret (the credentials httpfs uses for s3:// gcs:// hf://), or drop one. opts ride verbatim as KEY value clauses of CREATE SECRET, so an unknown key is DuckDB's own refusal; the key `persistent (boolean) picks the persistent form, which outlives the process in DuckDB's own store.</p><table class='qd-tags qd-parameters'>
+<tr><th>Return: </th><td>name</td></tr>
+<tr><th>Parameters: </th><td><ul class='qd-parameters'>
+	<li><strong>opts</strong> - a symbol-keyed dict of KEY value clauses; () or (::) drops the secret instead</li>
+	<li><strong>typ</strong> - the secret type: `s3, `gcs, `r2, `huggingface ...</li></ul></td></tr></table><div class='qd-examples'><h3>Examples</h3><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.duckdb.secret[`bucket;`s3;`key_id`secret`region!("AKIA...";"...";"eu-west-1")]</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.duckdb.secret[`bucket;`s3;()]</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div></div></div>
+		<div class='entity' id='-duckdb-secrets'><h2>.duckdb.secrets[]</h2><p class='qd-description'>The secrets defined, without their values.</p><table class='qd-tags'>
+<tr><th>col: </th><td>scope the URL prefixes the secret covers</td></tr></table><div class='qd-examples'><h3>Examples</h3><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.duckdb.secrets[]</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div></div></div>
+		<div class='entity' id='-duckdb-sqllog'><h2>.duckdb.sqllog</h2><p class='qd-description'>The statement log: one row per statement the bridge issued, newest last.</p><div class='qd-examples'><h3>Examples</h3><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>select time, dur, sql from .duckdb.sqllog</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div></div></div>
+		<div class='entity' id='-duckdb-types'><h2>.duckdb.types[]</h2><p class='qd-description'>The DuckDB-to-q type map as a table, one row per contract entry.</p><table class='qd-tags'>
+<tr><th>Columns: </th><td><ul class='qd-columns'>
+	<li><strong>needs</strong> - what a schema row must carry to round-trip: none, logical, dtype or both</li>
+	<li><strong>dtype</strong> - the DuckDB DDL spelling</li>
+	<li><strong>logical</strong> - the logical type name</li>
+	<li><strong>ktype</strong> - the .duckdb.meta type char</li>
+	<li><strong>canon</strong> - whether a bare read of that DuckDB type produces this row</li></ul></td></tr></table><div class='qd-examples'><h3>Examples</h3><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>select from .duckdb.types[] where canon</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div></div></div>
+		<div class='entity' id='-duckdb-unsafeExecText'><h2>.duckdb.unsafeExecText[handle;sql]</h2><p class='qd-description'>Run any statement and answer DuckDB's own rendering as text, bypassing the type map: rows as DuckDB prints them, or the error message as data when the statement fails.  A diagnostic, not a query door.</p><table class='qd-tags'>
+<tr><th>Return: </th><td>string</td></tr></table><div class='qd-examples'><h3>Examples</h3><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.duckdb.unsafeExecText[.duckdb.main[];"SELECT [1,2,3] AS arr, {'a': 1} AS st"]</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div></div></div>
+		<div class='entity' id='-duckdb-unsafeText'><h2>.duckdb.unsafeText[handle;tableName]</h2><p class='qd-description'>A table as DuckDB renders it, every column cast to VARCHAR (so nested, UUID, ENUM and BIT cells show), NULL as the text NULL, rows in insertion order.  A text cell holding a newline or " | " misaligns its row.</p><table class='qd-tags'>
+<tr><th>Return: </th><td>a table of one string column per column of tableName</td></tr></table><div class='qd-examples'><h3>Examples</h3><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.duckdb.exec[.duckdb.main[];"CREATE OR REPLACE TABLE u AS SELECT [1,2] AS arr, 1 AS a"]
+.duckdb.unsafeText[.duckdb.main[];`u]</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div></div></div></div><!--MAIN_END-->
 
-              
+
             </div>
-            
 
           </div><footer>
-<nav class="peachq-api-links" aria-label="PeachQ links"><a href="../">Docs</a> · <a href="../../thanks/">Thanks</a> · <a href="https://github.com/peachq-org/peachq/blob/2f1971a315fbfba84149043ba994ec2d79d8f9d4/lib/duckdb.q">Source</a></nav>
-<nav class="peachq-api-reports" aria-label="Generation reports"><a href="lint.html">Lint</a> · <a href="lint.csv">Lint CSV</a> · <a href="metrics.html">Metrics</a> · <a href="metrics.csv">Metrics CSV</a></nav>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
         <!-- a href="../foo/" class="btn btn-neutral float-left" title="Foo"><span class="icon icon-circle-arrow-left"></span> Previous</a>
         <a href="../../namespaces/bar/" class="btn btn-neutral float-right" title="Bar">Next <span class="icon icon-circle-arrow-right"></span></a -->
@@ -181,9 +217,9 @@
     <!-- Copyright -->
   </div>
 
-  Built with <a href="https://www.timestored.com/qstudio/help/qdoc">QDoc</a> provided by <a href="https://www.timestored.com/">TimeStored</a>.
+  Built with <a href="https://www.timestored.com/qstudio/help/qdoc">QDoc</a> provided by <a href="https://www.timestored.com/">TimeStored</a>. <nav class="peachq-api-links" aria-label="PeachQ links"><a href="../">Docs</a> · <a href="../../thanks/">Thanks</a> · <a href="source.json">Source</a></nav>
 </footer>
-          
+
         </div>
       </div>
 
@@ -191,23 +227,26 @@
 
   </div>
 
-  <div class="rst-versions" role="note" aria-label="Versions">
-  <span class="rst-current-version" data-toggle="rst-current-version">
-    
-      <!-- span><a href="../foo/" style="color: #fcfcfc">&laquo; Previous</a></span>
-      <span><a href="../../namespaces/bar/" style="color: #fcfcfc">Next &raquo;</a></span -->
-    
-  </span>
-</div>
-    <script src="https://www.timestored.com/qstudio/addon/qdoc/2025-08-07/js/jquery-3.6.0.min.js"></script>
-    <script>var base_url = "../..";</script>
-    <script src="https://www.timestored.com/qstudio/addon/qdoc/2025-08-07/js/theme_extra.js"></script>
-    <script src="https://www.timestored.com/qstudio/addon/qdoc/2025-08-07/js/theme.js"></script>
-    <script>
-        jQuery(function () {
-            SphinxRtdTheme.Navigation.enable(true);
-        });
-    </script>
 
+
+
+
+
+
+
+<script src="peachq-api.js"></script><footer class="footer">
+  <div class="container footer-inner">
+    <div>PeachQ - MIT-licensed open source q, built on Rayforce with DuckDB storage in progress.
+      <a href="../../thanks/">Thanks</a>
+    </div>
+    <nav class="footer-links" aria-label="Footer">
+      <a href="../../repl">Try Live</a><a href="../../download">Download</a><a href="../../docs/">Docs</a>
+      <a href="../../compatibility">Compatibility</a><a href="../../roadmap">Roadmap</a><a href="../../news/">News</a>
+      <a href="../../about">About</a><a href="../../contact">Contact</a>
+      <a href="https://github.com/peachq-org/peachq" target="_blank" rel="noreferrer">GitHub ↗</a>
+    </nav>
+  </div>
+</footer>
+<script src="../../script.js"></script>
 </body>
 </html>

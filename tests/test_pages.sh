@@ -118,9 +118,8 @@ echo "--- shared light/dark preference ---"
 # Material owns the state; the PHP pages follow it. script.js must therefore
 # read and write Material's own localStorage entry, and Material's theme code
 # must be left untouched.
-# Composed from document.baseURI, which template.php sets to the site root, so
-# both halves agree on the scope whether the site is at / or in a subdirectory.
-has "root pages use Material's palette key" /script.js 'document\.baseURI'
+# The shared script lives at the site root, including on nested API pages.
+has "root pages use Material's palette key" /script.js 'document\.currentScript\.src'
 has "palette key keeps Material's suffix"   /script.js '"\.__palette"'
 has "root pages map slate to dark"          /script.js 'slate'
 lacks "no override of Material's palette"   /docs/     'peachq-theme'
@@ -356,8 +355,18 @@ for ref in $(get /docs/ | grep -oE 'href="[^"]*\.css"' | sed 's/href="//;s/"//' 
 done
 
 echo "--- PeachQ documentation ---"
-has "library API nav opens generated docs in a new tab" /docs/ 'href="../docs/api/"[^>]*target="_blank"'
-has "library API nav describes the new tab" /docs/ 'aria-label="Library API (opens in a new tab)"'
+has "library API nav links directly to generated docs" /docs/ 'href="../docs/api/"'
+lacks "library API nav stays in the same tab" /docs/ 'href="../docs/api/"[^>]*target="_blank"'
+has "library API uses the site header" /docs/api/ 'class="nav"'
+has "library API uses the site footer" /docs/api/ 'aria-label="Footer"'
+has "library API uses the shared theme script" /docs/api/ 'src="../../script.js"'
+has "library API offers mobile navigation" /docs/api/ 'data-api-menu'
+has "regexp API examples preload the REPL" /docs/api/regexp.q.html 'href=.*../../repl?code='
+has "CSV examples offer clipboard copying" /docs/api/csv.q.html 'data-copy-example'
+lacks "CSV examples do not link to the REPL" /docs/api/csv.q.html 'href=.*../../repl?code='
+has "library API explains standard library loading" /docs/api/ 'system "l pq"'
+lacks "library pages omit generation report links" /docs/api/csv.q.html 'peachq-api-reports'
+lacks "API examples do not claim checker verification" /docs/api/csv.q.html 'autorun=1'
 has "generated API index is published" /docs/api/ 'Library API'
 has "DuckDB API contains function documentation" /docs/api/duckdb.q.html '.duckdb.exec'
 has "CSV API is also published" /docs/api/csv.q.html '.csv.read'
@@ -369,7 +378,7 @@ for report in lint.html lint.csv metrics.html metrics.csv; do
 done
 [ ! -e site/docs/api/man.q ]; check "generated man.q is not published" $?
 has "generated API links back to docs" /docs/api/duckdb.q.html 'href="../"'
-has "generated API records official source" /docs/api/source.json 'https://github.com/peachq-org/peachq'
+has "generated API records source provenance" /docs/api/source.json '"repository"\|"source_type"'
 has "PeachQ guides are published" /docs/peachq/csv/ 'PeachQ documentation snapshot'
 has "REPL guide explains table display" /docs/peachq/repl/ 'Reading tables'
 has "docs examples preload the REPL" /docs/peachq/getting-started/ 'repl?code='

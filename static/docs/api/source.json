@@ -1,7 +1,19 @@
 {
-  "repository": "https://github.com/peachq-org/peachq",
-  "revision": "2f1971a315fbfba84149043ba994ec2d79d8f9d4",
-  "source_directory": "lib/",
-  "include": "**/*.q",
-  "generator": "https://www.timestored.com/qstudio/files/qstudio.jar"
+    "source_type": "local working tree",
+    "include": "**/*.q",
+    "generator": "https://www.timestored.com/qstudio/files/beta/qstudio.jar",
+    "files_sha256": {
+        "csv.q": "70f65e89d14163ca0a33a375474fd5fe5dfa1c08772d3f6e28ef19dece429c8f",
+        "duckdb.q": "cbcf45f1f9f520e66bf4b96d19af129748eccee2a17e0facfdf22ae0623a1ff0",
+        "ffi.q": "daf44f55d1daf42411b72196952b5b46d7c978168e04cd64fc309dea87f87e47",
+        "help-db.q": "e81cc29c4a74d6c0248b12a8b391e29551c84ce2b0f5bb40ceefa9fb1f9e8d42",
+        "j.q": "cd91f2507def564e068de34a244835746024c7a575f595d3800de18e79c43d1a",
+        "massive.q": "e7bb620f738079c1984eba13d71e6f91bbc0c17abcf4807bef58344c645b3ba6",
+        "parquet.q": "8cdaa2d0496e4692f48160b82a57686d3a2122c1edeb7e21f3477d93159af88e",
+        "pq.q": "0646c5be84124433afb968be8cdaf9b648b3956bd23adb7a4d21f1cf0eeca7ca",
+        "qpc.q": "6daa858bf5573101063ea4a549c9f50d45b4b9d8403af50efbd3fd4ecca31200",
+        "regexp.q": "fb7644a82d2976a1c3ccab712211a45a7b4a5b30c907fb211af9cea08b3a2587",
+        "str.q": "5c5054f3f216c9c81959664a90706dea1fbf9c347ffb8fbf8b43c5fc279d1a71",
+        "termbox.q": "d4718c19ebdfc6ec8a4fc4b0bd3a17aa51624ac89b671d026facf5430c7b7fff"
+    }
 }
