@@ -5,6 +5,7 @@ peachq_page_start('PeachQ Compatibility', 'Track PeachQ q compatibility progress
 <main>
 <section class="page-hero compat-hero"><div class="container"><span class="tag">Public progress</span><h1>Compatibility, tracked.</h1><p>Generated from the PeachQ conformance ledger: q behaviour coverage, trend, suite heatmap, and robustness checks from the current build.</p></div></section>
 <section class="section compat-page"><div class="container">
+<p>Moving existing q code? Read the <a href="docs/peachq/compatibility/">additions and deliberate differences</a>, or start with the <a href="docs/">documentation</a>. Passing corpus examples measure coverage, not every possible program.</p>
 <div class="compat-kpis" id="compatKpis"></div>
 <div class="compat-chart">
   <div class="chart-meta"><strong id="compatChartTitle">q behaviours over time</strong><span id="compatUpdated"></span></div>

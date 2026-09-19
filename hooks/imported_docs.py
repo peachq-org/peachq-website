@@ -36,10 +36,10 @@ def on_page_markdown(markdown: str, page, config, files) -> str:
         return markdown
     notice = """
 
-<div class="peachq-import-attribution" markdown>
+---
+
 Source adapted from the [Documentation for kdb+ and q](https://github.com/KxSystems/docs)
 by KX Systems and contributors, used under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
-[Attribution, provenance and independence notice](../attribution.md).
-</div>
+[Thanks and documentation attribution](../../thanks.md#kx-documentation).
 """
     return markdown + notice

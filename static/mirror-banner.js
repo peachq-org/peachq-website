@@ -22,6 +22,8 @@
     host.endsWith("." + CANONICAL_HOST) ||
     host === "localhost" ||
     host === "127.0.0.1" ||
+    host === "peachq.me" ||
+    host === "www.peachq.me" ||
     host === ""
   ) {
     return;

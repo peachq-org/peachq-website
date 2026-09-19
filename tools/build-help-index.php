@@ -262,6 +262,18 @@ foreach ($errorLines as $lineNumber => $line) {
     set_topic($topics, 'error-' . $anchor, 'basics/errors', $anchor, 'alias');
 }
 
+// Explicit PeachQ topics leave inherited q aliases intact.
+foreach (glob("$docsDir/peachq/*.md") ?: [] as $page) {
+    $stem = pathinfo($page, PATHINFO_FILENAME);
+    set_topic($topics, 'peachq/' . $stem, 'peachq/' . $stem, '', 'page');
+}
+foreach (['.csv.read' => 'csv', '.csv.info' => 'csv', '.j.read' => 'json',
+          '.j.info' => 'json', '.regexp' => 'regexp', 'rlike' => 'regexp',
+          '.ffi' => 'ffi', '.parquet.read' => 'parquet', '.parquet.write' => 'parquet',
+          'peachq-repl' => 'repl'] as $name => $page) {
+    set_topic($topics, $name, 'peachq/' . $page, '', 'peachq');
+}
+
 ksort($topics);
 $json = json_encode(
     ['version' => 3, 'topics' => $topics],

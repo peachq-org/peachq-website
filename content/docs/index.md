@@ -1,45 +1,27 @@
 ---
 title: PeachQ documentation
-description: Guides and reference for PeachQ, an open source implementation of q.
+description: Learn q, explore PeachQ additions, and find the language reference.
 ---
 
 # PeachQ documentation
 
-PeachQ is an open implementation of q, built on the Rayforce in-memory engine.
-These pages are community-maintained — see
-[CONTRIBUTING.md](https://github.com/peachq-org/peachq-website/blob/main/CONTRIBUTING.md)
-to add or improve one.
+PeachQ is an open-source implementation of q. Start with a few expressions in the
+[browser REPL](/repl), explore the language reference, or find the features PeachQ adds.
 
-## Getting started
+## Start here
 
-The quickest way to try PeachQ is the [browser REPL](https://peachq.org/repl) —
-no install, and it runs entirely in your tab. When you are ready for a local
-build, see [Download](https://peachq.org/download).
-
-## Where things are
-
-| | |
+| What you want to do | Where to go |
 |---|---|
-| [Compatibility](https://peachq.org/compatibility) | Which q behaviours pass today, suite by suite |
-| [Roadmap](https://peachq.org/roadmap) | What is planned, and what is explicitly not a target |
-| [News](../news/index.md) | Release milestones and project updates |
-| [GitHub](https://github.com/peachq-org/peachq) | The implementation itself |
+| Run your first expressions and query a table | [Getting started](peachq/getting-started.md) |
+| Use the terminal or browser editor | [REPL and table display](peachq/repl.md) |
+| Look up q syntax, operators and functions | [q language reference](reference.md) |
+| Read files, use regular expressions, or call native code | [PeachQ additions](peachq/index.md) |
+| Bring existing q code to PeachQ | [Compatibility and migration](peachq/compatibility.md) |
+| See measured implementation coverage | [Compatibility dashboard](/compatibility) |
 
-## Contributing documentation
+## Coming from q?
 
-This section is deliberately thin — it is where the community can help most. We
-are particularly looking for **tutorial writers, documentation writers, and
-people writing articles about using PeachQ**.
-
-- **Tutorials** that take someone from nothing to doing something useful.
-- **Documentation** of how a feature actually behaves, with examples.
-- **Articles** on using PeachQ for real work: analysis, time series, tooling, whatever you built.
-- **Worked examples** in q, ideally ones that run in the [browser REPL](https://peachq.org/repl).
-- **Migration notes** for people arriving from kdb+, especially where PeachQ differs.
-- **Gotchas** you hit and had to work out — the hardest pages to write and the most useful to read.
-
-You do not need to be an expert. A page written by someone who just learned
-something is often clearer than one written by someone who has known it for years.
-
-Everything here is Markdown. Use the edit icon at the top of any page, or see
-[CONTRIBUTING.md](https://github.com/peachq-org/peachq-website/blob/main/CONTRIBUTING.md).
+Most familiar q concepts carry over. Begin with the [differences](peachq/compatibility.md),
+particularly file-format inference, storage support and launch options. The inherited
+q reference describes q; it is not a guarantee that every feature is implemented in PeachQ.
+The dedicated PeachQ section explains additions, intentional differences and known limits.

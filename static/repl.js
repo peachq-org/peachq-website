@@ -49,6 +49,7 @@ let history = [];
 let historyIndex = 0;
 let transcript = [];
 let sharedRuns = [];
+let pendingDocsCode = null;
 let cmView = null;
 let editorDirty = false;
 let workspace = null;
@@ -221,6 +222,7 @@ function cleanTab(tab, index = 0) {
   return {
     id: typeof tab.id === "string" ? tab.id : newId(),
     name: typeof tab.name === "string" && tab.name.trim() ? tab.name.trim().slice(0, 80) : `scratch-${index + 1}.q`,
+    exampleId: typeof tab.exampleId === "string" ? tab.exampleId : "",
     text: typeof tab.text === "string" ? tab.text : "",
     dirty: tab.dirty === true
   };
@@ -875,6 +877,12 @@ async function loadEditorExample(path) {
 }
 
 function replaySharedRuns() {
+  if (pendingDocsCode !== null) {
+    const code = pendingDocsCode;
+    pendingDocsCode = null;
+    runBlock(code);
+    return;
+  }
   if (!sharedRuns.length) return;
   const runs = sharedRuns;
   sharedRuns = [];
@@ -1263,4 +1271,24 @@ restoreEditor();
 renderEditorThemeButton();
 initCodeMirror();
 restoreExpandedState();
+// Preserve existing work, reuse unchanged examples, and execute marked examples
+// only after the runtime is ready. Legacy ?run= links retain their behaviour.
+const docsParams = new URLSearchParams(window.location.search);
+const docsCode = docsParams.get("code");
+if (docsCode) {
+  sharedRuns = [];
+  const title = (docsParams.get("title") || "docs-example").trim().slice(0, 78) || "docs-example";
+  const name = /\.q$/i.test(title) ? title : title + ".q";
+  const exampleId = docsParams.get("example") || "";
+  const existingExample = workspace.tabs.find(tab => !tab.dirty && tab.text === docsCode
+    && (exampleId ? tab.exampleId === exampleId : tab.name === name));
+  if (existingExample) selectTab(existingExample.id);
+  else {
+    createTab(name, docsCode, false, true);
+    activeTab().exampleId = exampleId;
+    saveWorkspace();
+  }
+  setExpandedState(true);
+  if (docsParams.get("autorun") === "1") pendingDocsCode = docsCode;
+}
 loadRuntime();

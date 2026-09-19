@@ -32,6 +32,7 @@ theme:
   # renders the nav inline in the header row instead, matching template.php.
   features:
     - navigation.sections
+    - navigation.indexes
     - navigation.top
     - content.code.copy
     - content.action.edit
@@ -44,6 +45,7 @@ extra_css:
 hooks:
   - hooks/relative_urls.py
   - hooks/imported_docs.py
+  - hooks/repl_examples.py
 
 plugins:
   - search
@@ -57,11 +59,245 @@ plugins:
 
 # MkDocs' own structure. Only pages it generates belong here.
 nav:
+  - Docs:
+      - Overview: docs/index.md
+      - Getting started: docs/peachq/getting-started.md
+      - q language reference:
+          - Overview: docs/reference.md
+          - Language basics:
+              - "Application, projection, and indexing": docs/basics/application.md
+              - "Atomic functions": docs/basics/atomic.md
+              - "Q language resources by topic": docs/basics/by-topic.md
+              - "Command line options": docs/basics/cmdline.md
+              - "Comparison": docs/basics/comparison.md
+              - "Conformable data objects": docs/basics/conformable.md
+              - "Controlling evaluation": docs/basics/control.md
+              - "Datatypes": docs/basics/datatypes.md
+              - "Debugging": docs/basics/debug.md
+              - "Dictionaries": docs/basics/dictsandtables.md
+              - "Enumerations": docs/basics/enumerations.md
+              - "Errors": docs/basics/errors.md
+              - "Exposed infrastructure": docs/basics/exposed-infrastructure.md
+              - "File system": docs/basics/files.md
+              - "Function notation": docs/basics/function-notation.md
+              - "Functional qSQL": docs/basics/funsql.md
+              - "Glossary": docs/basics/glossary.md
+              - "Connection handles": docs/basics/handles.md
+              - "Implicit iteration": docs/basics/implicit-iteration.md
+              - "Internal functions": docs/basics/internal.md
+              - "Interprocess communication": docs/basics/ipc.md
+              - "Iteration": docs/basics/iteration.md
+              - "Joins": docs/basics/joins.md
+              - "Listening port": docs/basics/listening-port.md
+              - "Mathematics and statistics": docs/basics/math.md
+              - "Metadata": docs/basics/metadata.md
+              - "Namespaces": docs/basics/namespaces.md
+              - "Parse trees": docs/basics/parsetrees.md
+              - "Pattern Matching": docs/basics/pattern.md
+              - "Parallel processing": docs/basics/peach.md
+              - "Precision": docs/basics/precision.md
+              - "QSQL query templates": docs/basics/qsql.md
+              - "Regular expressions": docs/basics/regex.md
+              - "Syntax": docs/basics/syntax.md
+              - "System commands": docs/basics/syscmds.md
+              - "Variadic syntax": docs/basics/variadic.md
+          - Functions and operators:
+              - "abs": docs/ref/abs.md
+              - "Accumulators": docs/ref/accumulators.md
+              - "+ Add": docs/ref/add.md
+              - "aj, aj0, ajf, ajf0": docs/ref/aj.md
+              - "all, any": docs/ref/all-any.md
+              - ". @ Amend, Amend At": docs/ref/amend.md
+              - "and": docs/ref/and.md
+              - ". Apply, Index, Trap@ Apply At, Index At, Trap At": docs/ref/apply.md
+              - "asc, iasc, xasc": docs/ref/asc.md
+              - "asof": docs/ref/asof.md
+              - "Assign": docs/ref/assign.md
+              - "attr": docs/ref/attr.md
+              - "avg, avgs, mavg, wavg": docs/ref/avg.md
+              - "bin, binr": docs/ref/bin.md
+              - "$ Cast": docs/ref/cast.md
+              - "ceiling": docs/ref/ceiling.md
+              - "^ Coalesce": docs/ref/coalesce.md
+              - "cols, xcol, xcols": docs/ref/cols.md
+              - "' Compose": docs/ref/compose.md
+              - "$ Cond": docs/ref/cond.md
+              - "cor": docs/ref/cor.md
+              - "cos, acos": docs/ref/cos.md
+              - "count, mcount": docs/ref/count.md
+              - "cov, scov": docs/ref/cov.md
+              - "cross": docs/ref/cross.md
+              - "csv": docs/ref/csv.md
+              - "_ Cut, cut": docs/ref/cut.md
+              - "? Roll, Deal, Permute": docs/ref/deal.md
+              - "delete": docs/ref/delete.md
+              - "deltas": docs/ref/deltas.md
+              - "desc, idesc, xdesc": docs/ref/desc.md
+              - "dev, mdev, sdev": docs/ref/dev.md
+              - "! Dict": docs/ref/dict.md
+              - "differ": docs/ref/differ.md
+              - "! Display": docs/ref/display.md
+              - "distinct": docs/ref/distinct.md
+              - "div": docs/ref/div.md
+              - "% Divide": docs/ref/divide.md
+              - "do": docs/ref/do.md
+              - "The .h namespace": docs/ref/doth.md
+              - "The .j namespace": docs/ref/dotj.md
+              - "The .m namespace": docs/ref/dotm.md
+              - "The .Q namespace": docs/ref/dotq.md
+              - "The .z namespace": docs/ref/dotz.md
+              - "_ Drop": docs/ref/drop.md
+              - "dsave": docs/ref/dsave.md
+              - "2: Dynamic Load": docs/ref/dynamic-load.md
+              - "each, peach": docs/ref/each.md
+              - "ej": docs/ref/ej.md
+              - "ema": docs/ref/ema.md
+              - "! Enkey, Unkey": docs/ref/enkey.md
+              - "enlist": docs/ref/enlist.md
+              - "? Enum Extend": docs/ref/enum-extend.md
+              - "$ Enumerate": docs/ref/enumerate.md
+              - "! Enumeration": docs/ref/enumeration.md
+              - "= Equal": docs/ref/equal.md
+              - "eval, reval": docs/ref/eval.md
+              - "except": docs/ref/except.md
+              - "exec": docs/ref/exec.md
+              - "exit": docs/ref/exit.md
+              - "exp, xexp": docs/ref/exp.md
+              - "fby": docs/ref/fby.md
+              - "1: File Binary": docs/ref/file-binary.md
+              - "0: File Text": docs/ref/file-text.md
+              - "^ Fill, fills": docs/ref/fill.md
+              - "? Find": docs/ref/find.md
+              - "first, last": docs/ref/first.md
+              - "fkeys": docs/ref/fkeys.md
+              - "! Flip Splayed or Partitioned": docs/ref/flip-splayed.md
+              - "flip": docs/ref/flip.md
+              - "floor": docs/ref/floor.md
+              - "get, set": docs/ref/get.md
+              - "getenv": docs/ref/getenv.md
+              - "> Greater Than >= At Least": docs/ref/greater-than.md
+              - "| Greater, or": docs/ref/greater.md
+              - "group": docs/ref/group.md
+              - "gtime, ltime": docs/ref/gtime.md
+              - "hcount": docs/ref/hcount.md
+              - "hdel": docs/ref/hdel.md
+              - "hopen, hclose": docs/ref/hopen.md
+              - "hsym": docs/ref/hsym.md
+              - "Identity, Null": docs/ref/identity.md
+              - "if": docs/ref/if.md
+              - "ij, ijf": docs/ref/ij.md
+              - "in": docs/ref/in.md
+              - "Reference card": docs/ref/index.md
+              - "insert": docs/ref/insert.md
+              - "inter": docs/ref/inter.md
+              - "inv": docs/ref/inv.md
+              - "Iterators": docs/ref/iterators.md
+              - ", ,: Join and Append": docs/ref/join.md
+              - "key": docs/ref/key.md
+              - "keys, xkey": docs/ref/keys.md
+              - "<= Up To": docs/ref/less-than.md
+              - "& Lesser, and": docs/ref/lesser.md
+              - "like": docs/ref/like.md
+              - "lj, ljf": docs/ref/lj.md
+              - "load, rload": docs/ref/load.md
+              - "log, xlog": docs/ref/log.md
+              - "lower, upper": docs/ref/lower.md
+              - "lsq": docs/ref/lsq.md
+              - "Map iterators": docs/ref/maps.md
+              - "~ Match": docs/ref/match.md
+              - "max, maxs, mmax": docs/ref/max.md
+              - "md5": docs/ref/md5.md
+              - "med": docs/ref/med.md
+              - "meta": docs/ref/meta.md
+              - "min, mins, mmin": docs/ref/min.md
+              - "$ Matrix Multiply, mmu": docs/ref/mmu.md
+              - "mod": docs/ref/mod.md
+              - "Multiply": docs/ref/multiply.md
+              - "neg": docs/ref/neg.md
+              - "next, prev, xprev": docs/ref/next.md
+              - "<> Not Equal": docs/ref/not-equal.md
+              - "not": docs/ref/not.md
+              - "null": docs/ref/null.md
+              - "or": docs/ref/or.md
+              - "over, scan": docs/ref/over.md
+              - "Overloaded glyphs": docs/ref/overloads.md
+              - "$ Pad": docs/ref/pad.md
+              - "parse": docs/ref/parse.md
+              - "pj": docs/ref/pj.md
+              - "prd, prds": docs/ref/prd.md
+              - "prior": docs/ref/prior.md
+              - "rand": docs/ref/rand.md
+              - "rank": docs/ref/rank.md
+              - "ratios": docs/ref/ratios.md
+              - "raze": docs/ref/raze.md
+              - "read0": docs/ref/read0.md
+              - "read1": docs/ref/read1.md
+              - "reciprocal": docs/ref/reciprocal.md
+              - "reverse": docs/ref/reverse.md
+              - "rotate": docs/ref/rotate.md
+              - "save, rsave": docs/ref/save.md
+              - "select": docs/ref/select.md
+              - "# Set Attribute": docs/ref/set-attribute.md
+              - "show": docs/ref/show.md
+              - "' Signal": docs/ref/signal.md
+              - "signum": docs/ref/signum.md
+              - "? Simple Exec": docs/ref/simple-exec.md
+              - "sin, asin": docs/ref/sin.md
+              - "sqrt": docs/ref/sqrt.md
+              - "ss, ssr": docs/ref/ss.md
+              - "string": docs/ref/string.md
+              - "sublist": docs/ref/sublist.md
+              - "- Subtract": docs/ref/subtract.md
+              - "sum, sums, msum, wsum": docs/ref/sum.md
+              - "sv": docs/ref/sv.md
+              - "system": docs/ref/system.md
+              - "tables": docs/ref/tables.md
+              - "# Take": docs/ref/take.md
+              - "tan, atan": docs/ref/tan.md
+              - "til": docs/ref/til.md
+              - "$ Tok": docs/ref/tok.md
+              - "trim, ltrim, rtrim": docs/ref/trim.md
+              - "type": docs/ref/type.md
+              - "uj, ujf": docs/ref/uj.md
+              - "ungroup": docs/ref/ungroup.md
+              - "union": docs/ref/union.md
+              - "update": docs/ref/update.md
+              - "upsert": docs/ref/upsert.md
+              - "value": docs/ref/value.md
+              - "var, svar": docs/ref/var.md
+              - "? Vector Conditional": docs/ref/vector-conditional.md
+              - "view, views": docs/ref/view.md
+              - "vs": docs/ref/vs.md
+              - "where": docs/ref/where.md
+              - "while": docs/ref/while.md
+              - "within": docs/ref/within.md
+              - "wj, wj1": docs/ref/wj.md
+              - "xbar": docs/ref/xbar.md
+              - "xgroup": docs/ref/xgroup.md
+              - "xrank": docs/ref/xrank.md
+      - PeachQ additions and differences:
+          - Overview: docs/peachq/index.md
+          - Compatibility and migration: docs/peachq/compatibility.md
+          - REPL and table display: docs/peachq/repl.md
+          - Command line: docs/peachq/cmdline.md
+          - System commands: docs/peachq/syscmds.md
+          - Loading data: docs/peachq/loading.md
+          - Reading CSV: docs/peachq/csv.md
+          - Reading JSON: docs/peachq/json.md
+          - Bad rows and errors: docs/peachq/bad-rows.md
+          - Handles and resources: docs/peachq/handles.md
+          - Parquet: docs/peachq/parquet.md
+          - Regular expressions: docs/peachq/regexp.md
+          - Foreign functions: docs/peachq/ffi.md
+          - Typed parameters (design): docs/peachq/typed-parameters.md
+          - Writing resource providers: docs/peachq/resource-handle-implementer.md
+          - Recent changes: docs/peachq/recent-changes.md
+          - Source and sync notes: docs/peachq/sync.md
   - News: news/index.md
+  - Thanks: thanks.md
 
-# /docs is live but deliberately unlinked from the menu for now.
+# The inherited reference remains available through the reference landing page.
 not_in_nav: |
-  docs/*.md
   docs/basics/*.md
   docs/ref/*.md
 
@@ -83,6 +319,21 @@ extra:
       url: repl
     - title: Download
       url: download
+    - title: Docs
+      url: docs/
+    - title: Compatibility
+      url: compatibility
+    - title: News
+      url: news/
+    - title: About
+      url: about
+  peachq_footer_nav:
+    - title: Try Live
+      url: repl
+    - title: Download
+      url: download
+    - title: Docs
+      url: docs/
     - title: Compatibility
       url: compatibility
     - title: Roadmap

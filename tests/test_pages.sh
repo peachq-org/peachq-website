@@ -65,8 +65,7 @@ for page in "" repl compatibility contact download roadmap about; do
   lacks "$label has no raw PHP"     "/$page" '<?php'
   # The root pages must NOT pick up Material's chrome.
   lacks "$label is free of Material" "/$page" 'md-header'
-  # Docs was removed from the root nav for now.
-  lacks "$label omits docs link"    "/$page" 'href="docs/"'
+  has "$label links to docs"        "/$page" 'href="docs/"'
 done
 
 echo "--- root page functionality survives ---"
@@ -107,13 +106,13 @@ echo "--- docs nav mirrors the root nav ---"
 # The hrefs are relative and carry Material's per-page base_url, so from /docs/
 # they read "../repl". That is the property under test: a root-relative "/repl"
 # here would break the copy installed at timestored.com/peachq.
-for target in ../repl ../download ../compatibility ../roadmap ../news/ ../about ../contact; do
+for target in ../repl ../download ../docs/ ../compatibility ../news/ ../about; do
   has "docs nav has $target" /docs/ "peachq-nav__link[^\"]*\" href=\"$target\""
 done
 has "docs nav has GitHub" /docs/ 'peachq-nav__link" href="https://github.com/peachq-org/peachq"'
 # The nav must contain exactly the root nav's entries plus GitHub.
 count=$(get /docs/ | grep -oc 'class="peachq-nav__link')
-[ "$count" = "8" ]; check "docs nav has 8 entries (7 + GitHub), got $count" $?
+[ "$count" = "7" ]; check "docs nav has 7 entries (6 + GitHub), got $count" $?
 
 echo "--- shared light/dark preference ---"
 # Material owns the state; the PHP pages follow it. script.js must therefore
@@ -269,13 +268,21 @@ for ref in /css/styles.css /script.js /img/peachq-logo.svg; do
   [ "$code" = "200" ]; check "asset 200: $ref" $?
 done
 
+echo "--- thanks replaces the unpublished attribution page ---"
+has "thanks page renders" /thanks/ 'id="kx-documentation"'
+has "thanks Markdown is published" /thanks.md '^# Thanks'
+for old in /docs/attribution/ /docs/attribution.md; do
+  code=$(curl -s -o /dev/null -w '%{http_code}' "http://127.0.0.1:$PORT$old")
+  [ "$code" = "404" ]; check "old attribution URL removed: $old" $?
+done
+
 echo "--- imported documentation serves as HTML and Markdown ---"
 has "datatypes renders through Material" /docs/basics/datatypes/ 'class="md-content"'
 has "datatypes renders its typewriter block" /docs/basics/datatypes/ '<p><strong>Basic datatypes</strong>'
-has "imported basics page shows attribution" /docs/basics/datatypes/ 'peachq-import-attribution'
+has "imported basics page shows attribution" /docs/basics/datatypes/ 'Thanks and documentation attribution'
 has "asc renders through Material"       /docs/ref/asc/             'class="md-content"'
-has "imported ref page shows attribution" /docs/ref/asc/            'peachq-import-attribution'
-lacks "PeachQ-authored docs omit import attribution" /docs/         'peachq-import-attribution'
+has "imported ref page shows attribution" /docs/ref/asc/            'Thanks and documentation attribution'
+lacks "PeachQ-authored docs omit import attribution" /docs/         'Thanks and documentation attribution'
 has "datatypes Markdown is published"    /docs/basics/datatypes.md  '^# Datatypes'
 has "asc Markdown is published"          /docs/ref/asc.md            '^# `asc`, `iasc`, `xasc`'
 has "help index includes heading aliases" /docs/help-index.json      '"iasc": {'
@@ -345,6 +352,20 @@ for ref in $(get /docs/ | grep -oE 'href="[^"]*\.css"' | sed 's/href="//;s/"//' 
   code=$(curl -s -o /dev/null -w '%{http_code}' "http://127.0.0.1:$PORT/docs/$ref")
   [ "$code" = "200" ]; check "docs css resolves: $ref" $?
 done
+
+echo "--- PeachQ documentation ---"
+has "PeachQ guides are published" /docs/peachq/csv/ 'PeachQ documentation snapshot'
+has "REPL guide explains table display" /docs/peachq/repl/ 'Reading tables'
+has "docs examples preload the REPL" /docs/peachq/getting-started/ 'repl?code='
+has "source Markdown retains runnable marker" /docs/peachq/getting-started.md 'peachq: runnable'
+has "checked examples request automatic execution" /docs/peachq/getting-started/ 'autorun=1'
+has "unmarked reference examples have play controls" /docs/ref/asc/ 'peachq-repl-link'
+has "sync record includes source revision" /docs/peachq/sync.json '"revision"'
+has "new help alias serves PeachQ Markdown" '/help.md?q=.csv.read' 'Reading CSV'
+has "PeachQ help links stay on PeachQ" '/help.md?q=.csv.read' 'https://peachq.org/docs/peachq/loading/'
+lacks "roadmap is absent from docs header" /docs/ 'peachq-nav__link[^\"]*\" href="../roadmap"'
+lacks "contact is absent from docs header" /docs/ 'peachq-nav__link[^\"]*\" href="../contact"'
+has "roadmap remains in the footer" /docs/ 'href="../roadmap"'
 
 echo ""
 [ "$failures" -eq 0 ] && echo "All passed" || echo "$failures failed"

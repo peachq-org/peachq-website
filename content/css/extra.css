@@ -189,24 +189,11 @@ body {
   }
 }
 
-/* --- Left sidebar ---------------------------------------------------------
-   The site menu lives in the header, so Material's primary nav drawer would
-   just repeat it. The table of contents (secondary sidebar) stays. */
-
-.md-sidebar--primary,
-.md-header__button[for="__drawer"] {
-  display: none;
-}
-
-/* With the drawer gone, reclaim its column. */
-@media screen and (min-width: 76.25em) {
-  .md-content {
-    margin-left: 0;
-  }
-}
-
 /* --- Footer ----------------------------------------------------------------
    Mirrors the two-line footer in template.php. */
+
+/* The linked Docs section title is the sidebar's entry point. */
+.md-nav--primary > .md-nav__title { display: none; }
 
 .md-copyright__highlight {
   color: var(--peachq-text);
@@ -279,18 +266,6 @@ body {
   margin-bottom: 0;
 }
 
-.peachq-import-attribution {
-  margin-top: 3rem;
-  padding-top: 1rem;
-  border-top: 1px solid var(--peachq-line);
-  color: var(--peachq-muted);
-  font-size: .78rem;
-}
-
-.peachq-import-attribution p {
-  margin: 0;
-}
-
 /* Blog post cards on the news index. */
 .md-post--excerpt {
   border-bottom: 1px solid var(--peachq-line);
@@ -317,3 +292,31 @@ body {
 .md-footer-meta .md-footer-copyright {
   color: var(--peachq-muted);
 }
+
+.footer-links { display: flex; flex-wrap: wrap; gap: .5rem 1rem; margin-top: .6rem; }
+.md-footer .footer-links a { color: var(--peachq-muted); }
+.md-footer .md-copyright a:not(:hover):not(:focus) { color: var(--peachq-muted); }
+.md-footer .md-copyright a:hover,
+.md-footer .md-copyright a:focus { color: var(--peachq-text); text-decoration: underline; }
+.md-footer .footer-links a:hover { color: var(--peachq-peach-strong); }
+
+/* A small REPL action beside Material's copy button. */
+.peachq-example { position: relative; margin: 1em 0; }
+.peachq-example .highlight { margin: 0; }
+.peachq-example > p:last-child { margin: 0; }
+.peachq-example .highlight pre > code { padding-right: 4.5rem; }
+.md-typeset .peachq-repl-link {
+  position: absolute;
+  top: .5rem;
+  right: 2rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.2rem;
+  height: 1.2rem;
+  color: var(--md-default-fg-color--light);
+  opacity: .65;
+}
+.peachq-repl-link svg { width: .85rem; height: .85rem; fill: currentColor; }
+.md-typeset .peachq-repl-link:hover,
+.md-typeset .peachq-repl-link:focus-visible { color: var(--peachq-peach-strong); opacity: 1; }

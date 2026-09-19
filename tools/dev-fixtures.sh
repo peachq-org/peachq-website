@@ -17,20 +17,22 @@
 # blocks peachq.org, so it has to serve the downloads itself.
 #
 # Usage: ./tools/build.sh && ./tools/dev-fixtures.sh
+# PEACHQ_FIXTURE_DIR overrides the destination for a persistent preview cache.
 set -eu
 
 cd "$(dirname "$0")/.."
 
 BASE=${PEACHQ_FIXTURE_BASE:-https://peachq.org}
+OUTPUT=${PEACHQ_FIXTURE_DIR:-site}
 
-if [ ! -d site ]; then
-  echo "error: site/ not found - run ./tools/build.sh first" >&2
+if [ ! -d "$OUTPUT" ]; then
+  echo "error: $OUTPUT not found - create it or run ./tools/build.sh first" >&2
   exit 1
 fi
 
 fetch() {
   url="$BASE/$1"
-  dest="site/$1"
+  dest="$OUTPUT/$1"
   mkdir -p "$(dirname "$dest")"
   if curl -sfL --max-time 30 -o "$dest" "$url"; then
     echo "  ok    $1 ($(wc -c < "$dest") bytes)"
@@ -48,8 +50,8 @@ fetch file/latest.json
 # The browser REPL needs the WebAssembly runtime. Its scripts are named in the
 # manifest rather than fixed, so read them from there rather than guessing.
 fetch wasm/latest/manifest.json
-if [ -f site/wasm/latest/manifest.json ]; then
-  scripts=$(sed -n 's/.*"script"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p' site/wasm/latest/manifest.json)
+if [ -f "$OUTPUT/wasm/latest/manifest.json" ]; then
+  scripts=$(sed -n 's/.*"script"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p' "$OUTPUT/wasm/latest/manifest.json")
   for s in $scripts; do
     fetch "wasm/latest/$s"
     # Emscripten ships a .js loader beside a .wasm binary of the same stem.
@@ -60,11 +62,11 @@ if [ -f site/wasm/latest/manifest.json ]; then
 fi
 
 # The release archives, for a mirror that has to serve downloads itself.
-if [ "${PEACHQ_WITH_RELEASES:-}" = "1" ] && [ -f site/file/latest.json ]; then
-  names=$(sed -n 's/.*"name"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p' site/file/latest.json)
+if [ "${PEACHQ_WITH_RELEASES:-}" = "1" ] && [ -f "$OUTPUT/file/latest.json" ]; then
+  names=$(sed -n 's/.*"name"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p' "$OUTPUT/file/latest.json")
   for n in $names; do
     fetch "file/$n"
   done
 fi
 
-echo "done. These are preview-only and are removed by the next build."
+echo "done. Preview fixtures saved to $OUTPUT (normal site/ builds clear site/)."

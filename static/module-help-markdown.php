@@ -11,7 +11,7 @@ function peachq_help_absolute_target(string $target, string $source, string $doc
         return 'https://peachq.org/docs/' . $sourcePage . $target;
     }
     if ($target[0] === '/') {
-        return 'https://code.kx.com' . $target;
+        return (strpos($source, 'peachq/') === 0 ? 'https://peachq.org' : 'https://code.kx.com') . $target;
     }
 
     $fragment = '';
@@ -34,7 +34,8 @@ function peachq_help_absolute_target(string $target, string $source, string $doc
     }
     $path = implode('/', $resolved);
     $localFile = rtrim($docsRoot, '/') . '/' . $path;
-    $isImported = strpos($path, 'basics/') === 0 || strpos($path, 'ref/') === 0;
+    $isImported = strpos($path, 'basics/') === 0 || strpos($path, 'ref/') === 0
+        || strpos($path, 'peachq/') === 0 || strpos($source, 'peachq/') === 0;
 
     if ($isImported && is_file($localFile)) {
         if (substr($path, -3) === '.md') {

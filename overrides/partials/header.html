@@ -46,7 +46,7 @@
          extra.peachq_nav uses, so they compare directly. #}
       {% set here = page.url if page and page.url else "" %}
       {% for item in config.extra.peachq_nav %}
-        {% set current = here == item.url or here == item.url ~ "/" or here.startswith(item.url ~ "/") %}
+        {% set current = here == item.url or here == item.url ~ "/" or here.startswith(item.url.rstrip("/") ~ "/") %}
         <a class="peachq-nav__link{% if current %} peachq-nav__link--active{% endif %}" href="{{ base_url }}/{{ item.url }}">{{ item.title }}</a>
       {% endfor %}
       <a class="peachq-nav__link" href="{{ config.repo_url }}" target="_blank" rel="noreferrer">GitHub &#8599;</a>

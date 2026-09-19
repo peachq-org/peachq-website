@@ -1,13 +1,13 @@
-{#-
-  Footer text, mirroring the <footer class="footer"> in static/template.php.
-  The GitHub link lives here because the header's repo source link is omitted
-  (see partials/header.html).
--#}
+{# Full site navigation, matching the PHP footer. #}
 <div class="md-copyright">
   <div class="md-copyright__highlight">
     PeachQ - MIT-licensed open source q, built on Rayforce with DuckDB storage in progress.
+    <a href="{{ base_url }}/thanks/">Thanks</a>
   </div>
-  <a href="{{ base_url }}/about">Built for the community</a> &middot;
-  <a href="{{ base_url }}/contact">Contact</a> &middot;
-  <a href="{{ config.repo_url }}" target="_blank" rel="noreferrer">GitHub</a>
+  <nav class="footer-links" aria-label="Footer">
+    {% for item in config.extra.peachq_footer_nav %}
+      <a href="{{ base_url }}/{{ item.url }}">{{ item.title }}</a>
+    {% endfor %}
+    <a href="{{ config.repo_url }}" target="_blank" rel="noreferrer">GitHub ↗</a>
+  </nav>
 </div>

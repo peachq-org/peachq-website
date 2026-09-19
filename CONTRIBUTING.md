@@ -102,6 +102,43 @@ php -S 127.0.0.1:8000 -t site tools/preview-router.php
 
 Fixtures land in `site/`, are never committed, and are wiped by the next build.
 
+### Local Apache preview at peachq.me
+
+On the development VM, the existing `peachq.me` Apache virtual host serves
+`/srv/git/timestored.com/peachq.org/public_html/`. Start the local watcher with:
+
+```bash
+python3 tools/watch-preview.py
+```
+
+Open `http://peachq.me` on the host and refresh after saving edits. The watcher
+builds in a temporary directory, checks PHP syntax, then copies a successful
+build into that local Apache directory. Failed builds leave the previous preview
+in place. Local responses disable browser caching. This does not commit, push,
+or change the GitHub publishing workflow.
+
+PHP, CSS and JavaScript additions/edits reuse the last successful docs build;
+documentation, build configuration and file deletions trigger a full build.
+PHP syntax is checked with `php7.3` when installed, matching this VM's Apache;
+set `PEACHQ_PREVIEW_PHP` to override the checker.
+
+The watcher downloads REPL and release/compatibility fixtures on first use and
+keeps them in `~/.cache/peachq-preview/fixtures`, outside build output. Stop the
+watcher and restart with `--refresh-data` to refresh them, or use `--once` for
+a single build. It requires the normal build dependencies, PHP and rsync.
+
+When run as the local `peachq-preview` user service:
+
+```bash
+systemctl --user status peachq-preview
+journalctl --user -u peachq-preview -f
+systemctl --user restart peachq-preview
+systemctl --user stop peachq-preview
+```
+
+The service is local to this VM and is not enabled at login by default. Use
+`systemctl --user start peachq-preview` to start it again.
+
 ## Tests
 
 ```bash
@@ -141,3 +178,45 @@ which holds only while no URL names the site root:
 system and rewrites the theming system, which would break the blog plugin and the
 `custom_dir` override this site uses. Do not unpin without running the tests
 above.
+
+### Syncing PeachQ documentation
+
+The C project's `user-docs/` owns behavioural documentation. Its copied website
+pages live together in `content/docs/peachq/`. Keep the KX-derived `basics/` and
+`ref/` source files unchanged during this first documentation round. Website
+introductions and guides live alongside the imports, outside the import manifest.
+
+`content/docs/peachq/sync.json` records the reviewed source SHA/version/date,
+source hashes, rendered hashes and known open questions. To prepare an update:
+
+1. Compare the recorded SHA with the proposed C-project revision, particularly
+   `user-docs/`, `CHANGELOG.md` and public behaviour touched by those changes.
+2. Preview the import with `python3 tools/sync-user-docs.py --source ../rayforce
+   --revision COMMIT` (as one shell command). After review, repeat with `--write`.
+   The importer reads committed files at that exact revision, never the dirty
+   working tree. It refuses to overwrite imported pages edited since the last sync.
+3. Review status notes, browser/native prerequisites and the website-authored
+   getting-started, REPL and recent-changes pages. Update `sync.md` with the new
+   record and outstanding questions. Keep source corrections in the C project;
+   do not maintain a second behavioural specification here.
+4. Build and check links, navigation and help lookup. The C project supplies and
+   runs the executable documentation checker; this repository does not implement it.
+
+Every fenced `q` example receives copy and play controls at build time, including
+inherited reference examples; their source files are not rewritten. The play link
+opens a new browser tab and preloads an editor tab named from the nearest heading
+(or the page title). Override the name with a hidden comment immediately before
+the fence: `<!-- peachq: title="Querying a table" -->`.
+
+`<!-- peachq: runnable title="Querying a table" -->` means the example passes
+the C project's automated code-block checker. Its play link executes it once the
+runtime is ready. This marker records automated verification, not an editorial
+judgment that a snippet looks executable. It does not promise browser compatibility: native-only
+capabilities may produce an error in the current browser runtime. The C project
+owns executable documentation checking. Do not mark incomplete snippets, syntax
+templates, planned behaviour or output-only blocks runnable. The old `repl` keyword
+is unnecessary (accepted for existing markers, but has no effect).
+
+Unchanged examples are reused in the editor when opened again; edited tabs are
+preserved. Copy retains the displayed block. For q session transcripts, the play
+link preloads the `q)` input lines and leaves expected output in the documentation.

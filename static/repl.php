@@ -37,7 +37,7 @@ peachq_page_start('PeachQ Browser REPL', 'Try PeachQ in a browser REPL.', 'repl'
         <button type="button" class="repl-icon-button" id="replImportTabs" aria-label="Import workspace" title="Import workspace">↑</button>
         <button type="button" class="repl-icon-button" id="replThemeToggle" data-repl-theme-toggle aria-label="Toggle color theme" title="Toggle light/dark theme">◐</button>
         <button type="button" id="replRunLine" title="Control+Enter" aria-label="Run current line, Control+Enter">Run line</button>
-        <button type="button" id="replRunSelection" title="Control+E" aria-label="Run selection, Control+E">Run selection</button>
+        <button type="button" id="replRunSelection" title="Control+E" aria-label="Run selection, Control+E"><span aria-hidden="true">▶</span> Run selection</button>
       </div>
     </div>
     <div class="repl-tabs" id="replTabs" role="tablist" aria-label="Editor files"></div>
@@ -76,6 +76,7 @@ peachq_page_start('PeachQ Browser REPL', 'Try PeachQ in a browser REPL.', 'repl'
   </div>
 </div>
 <div class="repl-help">
+  <a href="docs/peachq/repl/">REPL guide and keyboard shortcuts</a>
   <a class="repl-bug-button" id="replBugLink" href="https://github.com/peachq-org/peachq/issues/new" target="_blank" rel="noreferrer">Report a bug</a>
 </div>
 </aside>

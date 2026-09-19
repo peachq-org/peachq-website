@@ -272,7 +272,14 @@ h1 .peach{color:var(--peach-strong);text-shadow:0 2px 0 rgba(0,0,0,.08)}
 .repl-editor-wrap.cm-active .cm-q-comment,.repl-editor-wrap.cm-active .cm-q-comment *{color:#7e8b99!important;font-style:italic}
 .repl-editor-wrap.cm-active .cm-focused{outline:none!important}
 html[data-theme="light"] .repl-editor-pane{background:#fff8f3;box-shadow:inset 4px 0 0 rgba(242,139,87,.28)}
-html[data-theme="light"] .repl-editor-head{background:linear-gradient(90deg,rgba(255,179,138,.22),rgba(255,255,255,.72));border-bottom-color:rgba(197,95,42,.20)}
+html[data-theme="light"] .repl-editor-head{background:linear-gradient(90deg,rgba(255,179,138,.22),rgba(255,255,255,.72));border-bottom-color:rgba(197,95,42,.20);color:#85401f}
+html[data-theme="light"] .repl-editor-head button{color:#36271f;background:#fffaf6;border-color:#a78b78}
+html[data-theme="light"] .repl-editor-head button:hover{color:#702e10;background:#ffe1cb;border-color:#a84f25}
+html[data-theme="light"] .repl-editor-head button:focus-visible{color:#702e10;outline:2px solid #a84f25;outline-offset:2px}
+html[data-theme="light"] .repl-editor-menu>button{background:#fff0e3!important;border-color:#a78b78!important}
+html[data-theme="light"] .repl-editor-menu>button span{color:inherit}
+html[data-theme="light"] .repl-editor-menu-panel{background:#fffaf6;color:#36271f;border-color:#a78b78}
+html[data-theme="light"] .repl-editor-menu-panel strong{color:#705848}
 html[data-theme="light"] .repl-tabs{background:linear-gradient(180deg,#fff4ec,#f7eee7);border-bottom-color:rgba(197,95,42,.16)}
 html[data-theme="light"] .repl-tab{background:#f5e8df;color:#6d5d54;border-color:rgba(197,95,42,.16)}
 html[data-theme="light"] .repl-tab[aria-selected="true"]{background:#fffaf6;color:#271d17;border-color:rgba(197,95,42,.38)}
@@ -415,3 +422,5 @@ html[data-theme="dark"] .compat-kpi.hero,html[data-theme="dark"] .compat-kpi.her
   .change{grid-template-columns:1fr;gap:4px}
   .footer-inner{flex-direction:column}
 }
+
+.footer-links{display:flex;flex-wrap:wrap;gap:10px 18px;align-content:start}.footer-inner>div{max-width:440px}.footer-links a{white-space:nowrap}

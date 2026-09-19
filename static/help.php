@@ -58,7 +58,7 @@ if (!is_array($topic) && $query !== '') {
 }
 $target = is_array($topic) ? ($topic['path'] ?? null) : null;
 $anchor = is_array($topic) ? ($topic['anchor'] ?? '') : '';
-if (is_string($target) && preg_match('~^(?:basics|ref)/[a-z0-9._-]+$~', $target)
+if (is_string($target) && preg_match('~^(?:basics|ref|peachq)/[a-z0-9._-]+$~', $target)
     && is_string($anchor) && preg_match('~^[a-z0-9-]*$~', $anchor)) {
     if ($format === 'md') {
         $markdown = __DIR__ . '/docs/' . $target . '.md';
