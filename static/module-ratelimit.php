@@ -34,7 +34,7 @@ final class RateLimit {
         $cutoff = $now - $windowSeconds;
         $stamps = array_values(array_filter(
             $stamps,
-            static fn($t): bool => is_int($t) && $t > $cutoff
+            static function ($t) use ($cutoff): bool { return is_int($t) && $t > $cutoff; }
         ));
 
         $allowed = count($stamps) < $max;
