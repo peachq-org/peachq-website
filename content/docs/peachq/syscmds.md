@@ -9,10 +9,6 @@ peachq_revision: 49be5a234a51c44a393cf353c0ff0f3f85c9cc4c
 !!! info "PeachQ documentation snapshot"
     Reviewed source: **0.84**, `49be5a234a51`. See [source and sync notes](sync.md). Feature-specific status notes below take precedence; this snapshot is not a claim that every example passes.
 
-> Adapted from [System commands](https://code.kx.com/q/basics/syscmds/) in the kdb+ and q documentation,
-> © KX Systems, licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Modified: a
-> "Differences in peachq" section was added at the top, and site-specific markup was converted to plain markdown.
-
 ## Differences in peachq
 
 Everything below this table was re-derived by running each command against a 2026-08-30 peachq build. Commands not

@@ -27,19 +27,3 @@ class _ImportedDocsFilter(logging.Filter):
 def on_config(config):
     logging.getLogger("mkdocs.structure.pages").addFilter(_ImportedDocsFilter())
     return config
-
-
-def on_page_markdown(markdown: str, page, config, files) -> str:
-    """Append attribution to rendered imports without touching their source."""
-    source = page.file.src_uri
-    if not source.startswith(("docs/basics/", "docs/ref/")):
-        return markdown
-    notice = """
-
----
-
-Source adapted from the [Documentation for kdb+ and q](https://github.com/KxSystems/docs)
-by KX Systems and contributors, used under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
-[Thanks and documentation attribution](../../thanks.md#kx-documentation).
-"""
-    return markdown + notice

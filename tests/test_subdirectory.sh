@@ -53,7 +53,7 @@ php -S "127.0.0.1:$SYM_PORT" -t "$WORK/symlinked" tools/preview-router.php >/dev
 sym_server=$!
 sleep 2
 
-PAGES="/ /repl /compatibility /contact /download /roadmap /about /docs/ /news/ /news/2026/07/20-announcing-peachq/"
+PAGES="/ /repl /compatibility /contact /download /roadmap /about /docs/ /docs/api/ /docs/api/duckdb.q.html /news/ /news/2026/07/20-announcing-peachq/"
 
 echo "--- every page serves from a subdirectory ---"
 for page in $PAGES; do
@@ -89,7 +89,7 @@ from urllib.parse import urljoin
 
 root_port, nest_port, subdir = sys.argv[1], sys.argv[2], sys.argv[3]
 pages = sys.argv[4:]
-REF = re.compile(r'\b(?:href|src)="([^"#][^"]*)"')
+REF = re.compile(r"""\b(?:href|src)=["']([^"'#][^"']*)["']""")
 BASE = re.compile(r'<base href="([^"]*)"')
 SKIP = ("http:", "https:", "//", "mailto:", "data:", "javascript:")
 
@@ -111,6 +111,8 @@ for label, port, prefix in (("root", root_port, ""), ("subdirectory", nest_port,
         if status != 200:
             print("FAIL  %s: %s is %s" % (label, page, status))
             continue
+        # Generated templates can retain commented-out example navigation.
+        body = re.sub(r'<!--.*?-->', '', body, flags=re.S)
         found = BASE.search(body)
         # Relative URLs resolve against <base> when the page sets one, and
         # against the page's own URL otherwise -- exactly as a browser does.

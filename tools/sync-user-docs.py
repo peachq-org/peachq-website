@@ -139,6 +139,10 @@ def main():
             changes.append('Use page names instead of filenames for link labels')
             changes.append('Link the Feature column and remove the separate More column')
             changes.append('Qualify resource and Parquet support; label the PeachQ DuckDB integration experimental')
+        # Attribution is collected on the site's Thanks page.
+        body, notices = re.subn(r'^> Adapted from [^\n]*\n(?:>[^\n]*\n)*\n?', '', body, flags=re.MULTILINE)
+        if notices:
+            changes.append('Move page-level attribution to the Thanks page')
         if '#argument-lists-and-the--sentinel' in body:
             body = body.replace('#argument-lists-and-the--sentinel', '#argument-lists-and-the-sentinel')
             changes.append('Correct FFI argument-list anchor for the rendered heading')

@@ -270,6 +270,8 @@ done
 
 echo "--- thanks replaces the unpublished attribution page ---"
 has "thanks page renders" /thanks/ 'id="kx-documentation"'
+has "thanks credits the adapted system-command guide" /thanks/ 'System commands in the kdb+ and q documentation'
+lacks "system-command guide omits repeated attribution" /docs/peachq/syscmds/ 'Adapted from'
 has "thanks Markdown is published" /thanks.md '^# Thanks'
 for old in /docs/attribution/ /docs/attribution.md; do
   code=$(curl -s -o /dev/null -w '%{http_code}' "http://127.0.0.1:$PORT$old")
@@ -279,9 +281,9 @@ done
 echo "--- imported documentation serves as HTML and Markdown ---"
 has "datatypes renders through Material" /docs/basics/datatypes/ 'class="md-content"'
 has "datatypes renders its typewriter block" /docs/basics/datatypes/ '<p><strong>Basic datatypes</strong>'
-has "imported basics page shows attribution" /docs/basics/datatypes/ 'Thanks and documentation attribution'
+lacks "imported basics page omits repeated attribution" /docs/basics/datatypes/ 'Thanks and documentation attribution'
 has "asc renders through Material"       /docs/ref/asc/             'class="md-content"'
-has "imported ref page shows attribution" /docs/ref/asc/            'Thanks and documentation attribution'
+lacks "imported ref page omits repeated attribution" /docs/ref/asc/            'Thanks and documentation attribution'
 lacks "PeachQ-authored docs omit import attribution" /docs/         'Thanks and documentation attribution'
 has "datatypes Markdown is published"    /docs/basics/datatypes.md  '^# Datatypes'
 has "asc Markdown is published"          /docs/ref/asc.md            '^# `asc`, `iasc`, `xasc`'
@@ -354,6 +356,20 @@ for ref in $(get /docs/ | grep -oE 'href="[^"]*\.css"' | sed 's/href="//;s/"//' 
 done
 
 echo "--- PeachQ documentation ---"
+has "library API nav opens generated docs in a new tab" /docs/ 'href="../docs/api/"[^>]*target="_blank"'
+has "library API nav describes the new tab" /docs/ 'aria-label="Library API (opens in a new tab)"'
+has "generated API index is published" /docs/api/ 'Library API'
+has "DuckDB API contains function documentation" /docs/api/duckdb.q.html '.duckdb.exec'
+has "CSV API is also published" /docs/api/csv.q.html '.csv.read'
+has "regular expression API is also published" /docs/api/regexp.q.html '.regexp'
+for report in lint.html lint.csv metrics.html metrics.csv; do
+  has "API links to generation report: $report" /docs/api/ "href=\"$report\""
+  code=$(curl -s -o /dev/null -w '%{http_code}' "http://127.0.0.1:$PORT/docs/api/$report")
+  [ "$code" = "200" ]; check "generation report is published: $report" $?
+done
+[ ! -e site/docs/api/man.q ]; check "generated man.q is not published" $?
+has "generated API links back to docs" /docs/api/duckdb.q.html 'href="../"'
+has "generated API records official source" /docs/api/source.json 'https://github.com/peachq-org/peachq'
 has "PeachQ guides are published" /docs/peachq/csv/ 'PeachQ documentation snapshot'
 has "REPL guide explains table display" /docs/peachq/repl/ 'Reading tables'
 has "docs examples preload the REPL" /docs/peachq/getting-started/ 'repl?code='

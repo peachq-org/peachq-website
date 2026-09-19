@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" type="image/png" href="../../img/favicon.ico" />
+    <title>pq.q - PeachQ API</title>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" />
+    <link rel="stylesheet" href="qdoc2.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/q.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/shell.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+<link rel="stylesheet" href="peachq-api.css" />
+</head> 
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+<p><a href="../">← PeachQ docs</a></p>
+        <a href="./"  class="icon icon-home"> PeachQ API</a><div role="search">
+  <!-- form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form -->
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Namespaces</span></p>
+              
+              
+<ul><li class="toctree-l1 cls-csv-cls"><a class="reference internal cls-csv-cls" href='csv.q.html' >.csv</a></li>
+	<li class="toctree-l1 cls-duckdb-cls"><a class="reference internal cls-duckdb-cls" href='duckdb.q.html' >.duckdb</a></li>
+	<li class="toctree-l1 cls-duckdbi-cls"><a class="reference internal cls-duckdbi-cls" href='duckdb.q.html' >.duckdb.i</a></li>
+	<li class="toctree-l1 cls-ffi-cls"><a class="reference internal cls-ffi-cls" href='ffi.q.html' >.ffi</a></li>
+	<li class="toctree-l1 cls-j-cls"><a class="reference internal cls-j-cls" href='j.q.html' >.j</a></li>
+	<li class="toctree-l1 cls-ji-cls"><a class="reference internal cls-ji-cls" href='j.q.html' >.j.i</a></li>
+	<li class="toctree-l1 cls-massive-cls"><a class="reference internal cls-massive-cls" href='massive.q.html' >.massive</a></li>
+	<li class="toctree-l1 cls-massivei-cls"><a class="reference internal cls-massivei-cls" href='massive.q.html' >.massive.i</a></li>
+	<li class="toctree-l1 cls-parquet-cls"><a class="reference internal cls-parquet-cls" href='parquet.q.html' >.parquet</a></li>
+	<li class="toctree-l1 cls-parqueti-cls"><a class="reference internal cls-parqueti-cls" href='parquet.q.html' >.parquet.i</a></li>
+	<li class="toctree-l1 current"><a class="reference internal current" href='pq.q.html' >.pq</a></li>
+	<li class="toctree-l1 cls-pqi-cls"><a class="reference internal cls-pqi-cls" href='pq.q.html' >.pq.i</a></li>
+	<li class="toctree-l1 cls-qpc-cls"><a class="reference internal cls-qpc-cls" href='qpc.q.html' >.qpc</a></li>
+	<li class="toctree-l1 cls-qpci-cls"><a class="reference internal cls-qpci-cls" href='qpc.q.html' >.qpc.i</a></li>
+	<li class="toctree-l1 cls-regexp-cls"><a class="reference internal cls-regexp-cls" href='regexp.q.html' >.regexp</a></li>
+	<li class="toctree-l1 cls-s-cls"><a class="reference internal cls-s-cls" href='duckdb.q.html' >.s</a></li>
+	<li class="toctree-l1 cls-si-cls"><a class="reference internal cls-si-cls" href='duckdb.q.html' >.s.i</a></li>
+	<li class="toctree-l1 cls-str-cls"><a class="reference internal cls-str-cls" href='str.q.html' >.str</a></li>
+	<li class="toctree-l1 cls-stri-cls"><a class="reference internal cls-stri-cls" href='str.q.html' >.str.i</a></li>
+	<li class="toctree-l1 cls-termbox-cls"><a class="reference internal cls-termbox-cls" href='termbox.q.html' >.termbox</a></li>
+	<li class="toctree-l1 cls-termboxattribute-cls"><a class="reference internal cls-termboxattribute-cls" href='termbox.q.html' >.termbox.attribute</a></li>
+	<li class="toctree-l1 cls-termboxcolor-cls"><a class="reference internal cls-termboxcolor-cls" href='termbox.q.html' >.termbox.color</a></li>
+	<li class="toctree-l1 cls-termboxinput-cls"><a class="reference internal cls-termboxinput-cls" href='termbox.q.html' >.termbox.input</a></li>
+	<li class="toctree-l1 cls-termboxoutput-cls"><a class="reference internal cls-termboxoutput-cls" href='termbox.q.html' >.termbox.output</a></li>
+</ul><!--NAMESPACE_END-->
+              
+              <p class="caption"><span class="caption-text">Files</span></p>
+              
+<ul><li class="toctree-l1 cls-csv-cls"><a class="reference internal cls-csv-cls" href='csv.q.html' >csv.q</a></li>
+	<li class="toctree-l1 cls-duckdb-cls"><a class="reference internal cls-duckdb-cls" href='duckdb.q.html' >duckdb.q</a></li>
+	<li class="toctree-l1 cls-ffi-cls"><a class="reference internal cls-ffi-cls" href='ffi.q.html' >ffi.q</a></li>
+	<li class="toctree-l1 cls-help-db-cls"><a class="reference internal cls-help-db-cls" href='help-db.q.html' >help-db.q</a></li>
+	<li class="toctree-l1 cls-j-cls"><a class="reference internal cls-j-cls" href='j.q.html' >j.q</a></li>
+	<li class="toctree-l1 cls-massive-cls"><a class="reference internal cls-massive-cls" href='massive.q.html' >massive.q</a></li>
+	<li class="toctree-l1 cls-parquet-cls"><a class="reference internal cls-parquet-cls" href='parquet.q.html' >parquet.q</a></li>
+	<li class="toctree-l1 current"><a class="reference internal current" href='pq.q.html' >pq.q</a></li>
+	<li class="toctree-l1 cls-qpc-cls"><a class="reference internal cls-qpc-cls" href='qpc.q.html' >qpc.q</a></li>
+	<li class="toctree-l1 cls-regexp-cls"><a class="reference internal cls-regexp-cls" href='regexp.q.html' >regexp.q</a></li>
+	<li class="toctree-l1 cls-str-cls"><a class="reference internal cls-str-cls" href='str.q.html' >str.q</a></li>
+	<li class="toctree-l1 cls-termbox-cls"><a class="reference internal cls-termbox-cls" href='termbox.q.html' >termbox.q</a></li>
+</ul><!--FILES_END-->
+              
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="./">PeachQ API</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="./" class="icon icon-home" aria-label="Docs"></a></li>
+          <!-- li class="breadcrumb-item">Files-Breadcrumb</li -->
+      <li class="breadcrumb-item active">pq.q</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="foobar">pq.q</h1>
+    
+
+    
+	<div id='headerDoc'></div>
+	<div id='summary'><h2>Entity Summary</h2><table class='overviewSummary'><tbody>
+<tr><th>Entities</th><th>Short Description</th></tr>
+		<tr><td><a href='#-pq-cancolor'>.pq.cancolor</a></td><td>should stdout carry ANSI color?  PEACHQ_COLORS=0/1 overrides</td></tr>
+		<tr><td><a href='#-pq-conns'>.pq.conns</a></td><td>.</td></tr>
+		<tr><td>.pq.dr</td><td></td></tr>
+		<tr><td>.pq.drform</td><td></td></tr>
+		<tr><td><a href='#-pq-drsamples'>.pq.drsamples</a></td><td>.</td></tr>
+		<tr><td>.pq.drtype</td><td></td></tr>
+		<tr><td><a href='#-pq-termsize'>.pq.termsize</a></td><td>the live terminal size - the same query, 25/80 fallback and </td></tr>
+		<tr><td><a href='#-pq-version'>.pq.version</a></td><td>The session itself: .</td></tr>
+</tbody></table></div>
+	<div class='details'>
+	<h2>Entity Details</h2>
+		<div class='entity' id='-pq-cancolor'><h2>.pq.cancolor</h2><p>should stdout carry ANSI color?  PEACHQ_COLORS=0/1 overrides everything, then NO_COLOR (off), FORCE_COLOR (on), else a tty whose TERM is not dumb</p><table>
+<tr><th>Return: </th><td>(boolean) 1b when color is safe</td></tr></table></div>
+		<div class='entity' id='-pq-conns'><h2>.pq.conns</h2><p>.pq.conns - every open connection, 14 cols; the single-letter p/f/z/n/m are DELIBERATELY the -38! names so kdb code ports, the readable columns are peachq additions (the kdb verbs -38!/.z.W/.z.H stay socket-only); handle is what hclose takes (the alias sym of a provider, else the fd h).</p></div>
+		<div class='entity' id='-pq-drsamples'><h2>.pq.drsamples</h2><p>.pq.dr - domain and range in the layout the ref pages publish, so ours diffs by eye against theirs (after qdocs/docs/docs/tools.q, kx, CC BY 4.0). Samples are rebuilt by CASTING each call, so a cast regression shows here. A named dyad is probed as infix: `parse "*"` yields the MONADIC value, whose 2-arg application 'ranks - which would read as an empty domain.</p></div>
+		<div class='entity' id='-pq-termsize'><h2>.pq.termsize</h2><p>the live terminal size - the same query, 25/80 fallback and [10,2000] coercion that resolve the `\c 0N` auto axes</p><table>
+<tr><th>Return: </th><td>(long list) (rows;cols)</td></tr></table></div>
+		<div class='entity' id='-pq-version'><h2>.pq.version</h2><p>The session itself: .pq.version, .pq.conns[] (every open connection: handle = the alias sym of a :pq: provider, else the fd int; its alias, when it opened), .pq.termsize[], .pq.cancolor[] (does stdout take ANSI color).  \l pq.</p><table>
+<tr><th>implNote: </th><td>The PeachQ stdlib namespace. lib/*.q is the standard-library tier: bundled sorted at build, loaded ONLY by the \l pq gate (never at q_runtime_create) through the multiline statement seam. THE ANY-ORDER LAW: top level is definitions only - no cross-lib calls execute at load time. Pure q since the .pq.c.* rayfall escape hatch was deleted (2026-07-29).</td></tr></table></div></div><!--MAIN_END-->
+
+              
+            </div>
+            
+
+          </div><footer>
+<nav class="peachq-api-links" aria-label="PeachQ links"><a href="../">Docs</a> · <a href="../../thanks/">Thanks</a> · <a href="https://github.com/peachq-org/peachq/blob/2f1971a315fbfba84149043ba994ec2d79d8f9d4/lib/pq.q">Source</a></nav>
+<nav class="peachq-api-reports" aria-label="Generation reports"><a href="lint.html">Lint</a> · <a href="lint.csv">Lint CSV</a> · <a href="metrics.html">Metrics</a> · <a href="metrics.csv">Metrics CSV</a></nav>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <!-- a href="../foo/" class="btn btn-neutral float-left" title="Foo"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../../namespaces/bar/" class="btn btn-neutral float-right" title="Bar">Next <span class="icon icon-circle-arrow-right"></span></a -->
+    </div>
+
+  <hr/>
+
+
+
+  <div role="contentinfo">
+    <!-- Copyright -->
+  </div>
+
+  Built with <a href="https://www.timestored.com/qstudio/help/qdoc">QDoc</a> provided by <a href="https://www.timestored.com/">TimeStored</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+      <!-- span><a href="../foo/" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="../../namespaces/bar/" style="color: #fcfcfc">Next &raquo;</a></span -->
+    
+  </span>
+</div>
+    <script src="https://www.timestored.com/qstudio/addon/qdoc/2025-08-07/js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="https://www.timestored.com/qstudio/addon/qdoc/2025-08-07/js/theme_extra.js"></script>
+    <script src="https://www.timestored.com/qstudio/addon/qdoc/2025-08-07/js/theme.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

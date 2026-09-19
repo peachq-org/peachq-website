@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" type="image/png" href="../../img/favicon.ico" />
+    <title>termbox.q - PeachQ API</title>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" />
+    <link rel="stylesheet" href="qdoc2.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/q.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/shell.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+<link rel="stylesheet" href="peachq-api.css" />
+</head> 
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+<p><a href="../">← PeachQ docs</a></p>
+        <a href="./"  class="icon icon-home"> PeachQ API</a><div role="search">
+  <!-- form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form -->
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Namespaces</span></p>
+              
+              
+<ul><li class="toctree-l1 cls-csv-cls"><a class="reference internal cls-csv-cls" href='csv.q.html' >.csv</a></li>
+	<li class="toctree-l1 cls-duckdb-cls"><a class="reference internal cls-duckdb-cls" href='duckdb.q.html' >.duckdb</a></li>
+	<li class="toctree-l1 cls-duckdbi-cls"><a class="reference internal cls-duckdbi-cls" href='duckdb.q.html' >.duckdb.i</a></li>
+	<li class="toctree-l1 cls-ffi-cls"><a class="reference internal cls-ffi-cls" href='ffi.q.html' >.ffi</a></li>
+	<li class="toctree-l1 cls-j-cls"><a class="reference internal cls-j-cls" href='j.q.html' >.j</a></li>
+	<li class="toctree-l1 cls-ji-cls"><a class="reference internal cls-ji-cls" href='j.q.html' >.j.i</a></li>
+	<li class="toctree-l1 cls-massive-cls"><a class="reference internal cls-massive-cls" href='massive.q.html' >.massive</a></li>
+	<li class="toctree-l1 cls-massivei-cls"><a class="reference internal cls-massivei-cls" href='massive.q.html' >.massive.i</a></li>
+	<li class="toctree-l1 cls-parquet-cls"><a class="reference internal cls-parquet-cls" href='parquet.q.html' >.parquet</a></li>
+	<li class="toctree-l1 cls-parqueti-cls"><a class="reference internal cls-parqueti-cls" href='parquet.q.html' >.parquet.i</a></li>
+	<li class="toctree-l1 cls-pq-cls"><a class="reference internal cls-pq-cls" href='pq.q.html' >.pq</a></li>
+	<li class="toctree-l1 cls-pqi-cls"><a class="reference internal cls-pqi-cls" href='pq.q.html' >.pq.i</a></li>
+	<li class="toctree-l1 cls-qpc-cls"><a class="reference internal cls-qpc-cls" href='qpc.q.html' >.qpc</a></li>
+	<li class="toctree-l1 cls-qpci-cls"><a class="reference internal cls-qpci-cls" href='qpc.q.html' >.qpc.i</a></li>
+	<li class="toctree-l1 cls-regexp-cls"><a class="reference internal cls-regexp-cls" href='regexp.q.html' >.regexp</a></li>
+	<li class="toctree-l1 cls-s-cls"><a class="reference internal cls-s-cls" href='duckdb.q.html' >.s</a></li>
+	<li class="toctree-l1 cls-si-cls"><a class="reference internal cls-si-cls" href='duckdb.q.html' >.s.i</a></li>
+	<li class="toctree-l1 cls-str-cls"><a class="reference internal cls-str-cls" href='str.q.html' >.str</a></li>
+	<li class="toctree-l1 cls-stri-cls"><a class="reference internal cls-stri-cls" href='str.q.html' >.str.i</a></li>
+	<li class="toctree-l1 current"><a class="reference internal current" href='termbox.q.html' >.termbox</a></li>
+	<li class="toctree-l1 cls-termboxattribute-cls"><a class="reference internal cls-termboxattribute-cls" href='termbox.q.html' >.termbox.attribute</a></li>
+	<li class="toctree-l1 cls-termboxcolor-cls"><a class="reference internal cls-termboxcolor-cls" href='termbox.q.html' >.termbox.color</a></li>
+	<li class="toctree-l1 cls-termboxinput-cls"><a class="reference internal cls-termboxinput-cls" href='termbox.q.html' >.termbox.input</a></li>
+	<li class="toctree-l1 cls-termboxoutput-cls"><a class="reference internal cls-termboxoutput-cls" href='termbox.q.html' >.termbox.output</a></li>
+</ul><!--NAMESPACE_END-->
+              
+              <p class="caption"><span class="caption-text">Files</span></p>
+              
+<ul><li class="toctree-l1 cls-csv-cls"><a class="reference internal cls-csv-cls" href='csv.q.html' >csv.q</a></li>
+	<li class="toctree-l1 cls-duckdb-cls"><a class="reference internal cls-duckdb-cls" href='duckdb.q.html' >duckdb.q</a></li>
+	<li class="toctree-l1 cls-ffi-cls"><a class="reference internal cls-ffi-cls" href='ffi.q.html' >ffi.q</a></li>
+	<li class="toctree-l1 cls-help-db-cls"><a class="reference internal cls-help-db-cls" href='help-db.q.html' >help-db.q</a></li>
+	<li class="toctree-l1 cls-j-cls"><a class="reference internal cls-j-cls" href='j.q.html' >j.q</a></li>
+	<li class="toctree-l1 cls-massive-cls"><a class="reference internal cls-massive-cls" href='massive.q.html' >massive.q</a></li>
+	<li class="toctree-l1 cls-parquet-cls"><a class="reference internal cls-parquet-cls" href='parquet.q.html' >parquet.q</a></li>
+	<li class="toctree-l1 cls-pq-cls"><a class="reference internal cls-pq-cls" href='pq.q.html' >pq.q</a></li>
+	<li class="toctree-l1 cls-qpc-cls"><a class="reference internal cls-qpc-cls" href='qpc.q.html' >qpc.q</a></li>
+	<li class="toctree-l1 cls-regexp-cls"><a class="reference internal cls-regexp-cls" href='regexp.q.html' >regexp.q</a></li>
+	<li class="toctree-l1 cls-str-cls"><a class="reference internal cls-str-cls" href='str.q.html' >str.q</a></li>
+	<li class="toctree-l1 current"><a class="reference internal current" href='termbox.q.html' >termbox.q</a></li>
+</ul><!--FILES_END-->
+              
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="./">PeachQ API</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="./" class="icon icon-home" aria-label="Docs"></a></li>
+          <!-- li class="breadcrumb-item">Files-Breadcrumb</li -->
+      <li class="breadcrumb-item active">termbox.q</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="foobar">termbox.q</h1>
+    
+
+    
+	<div id='headerDoc'></div>
+	<div id='summary'><h2>Entity Summary</h2><table class='overviewSummary'><tbody>
+<tr><th>Entities</th><th>Short Description</th></tr>
+		<tr><td>.termbox.attribute.blink</td><td></td></tr>
+		<tr><td>.termbox.attribute.bold</td><td>text attributes as style longs; add them to a colour.</td></tr>
+		<tr><td>.termbox.attribute.dim</td><td></td></tr>
+		<tr><td>.termbox.attribute.italic</td><td></td></tr>
+		<tr><td>.termbox.attribute.reverse</td><td></td></tr>
+		<tr><td>.termbox.attribute.underline</td><td></td></tr>
+		<tr><td><a href='#-termbox-beep'>.termbox.beep</a></td><td>start a tone of hz for ms milliseconds and return at once (i</td></tr>
+		<tr><td><a href='#-termbox-cells'>.termbox.cells</a></td><td>the back buffer as a table with one row per cell: x y ch fg </td></tr>
+		<tr><td><a href='#-termbox-clear'>.termbox.clear</a></td><td>blank every cell of the back buffer (space, default colours)</td></tr>
+		<tr><td><a href='#-termbox-clock'>.termbox.clock</a></td><td>milliseconds since init on a monotonic clock (never wall tim</td></tr>
+		<tr><td>.termbox.color.black</td><td></td></tr>
+		<tr><td>.termbox.color.blue</td><td></td></tr>
+		<tr><td>.termbox.color.bright_black</td><td></td></tr>
+		<tr><td>.termbox.color.bright_blue</td><td></td></tr>
+		<tr><td>.termbox.color.bright_cyan</td><td></td></tr>
+		<tr><td>.termbox.color.bright_green</td><td></td></tr>
+		<tr><td>.termbox.color.bright_magenta</td><td></td></tr>
+		<tr><td>.termbox.color.bright_red</td><td></td></tr>
+		<tr><td>.termbox.color.bright_white</td><td></td></tr>
+		<tr><td>.termbox.color.bright_yellow</td><td></td></tr>
+		<tr><td>.termbox.color.cyan</td><td></td></tr>
+		<tr><td><a href='#-termbox-color-default'>.termbox.color.default</a></td><td>right to left: b+256*(g+256*r), shifted 10, rgb flag at bit </td></tr>
+		<tr><td>.termbox.color.green</td><td></td></tr>
+		<tr><td>.termbox.color.magenta</td><td></td></tr>
+		<tr><td>.termbox.color.peach</td><td></td></tr>
+		<tr><td>.termbox.color.red</td><td></td></tr>
+		<tr><td>.termbox.color.white</td><td></td></tr>
+		<tr><td>.termbox.color.yellow</td><td></td></tr>
+		<tr><td><a href='#-termbox-events'>.termbox.events</a></td><td>every pending event as a table with the event dict's columns</td></tr>
+		<tr><td><a href='#-termbox-has_truecolor'>.termbox.has_truecolor</a></td><td>whether the terminal reported 24-bit colour at init.</td></tr>
+		<tr><td><a href='#-termbox-height'>.termbox.height</a></td><td>the screen height in cells, as of the last present.</td></tr>
+		<tr><td>.termbox.hide_cursor</td><td>hide the cursor (the state init starts in).</td></tr>
+		<tr><td><a href='#-termbox-init'>.termbox.init</a></td><td>Draw on the terminal as a grid of cells: .</td></tr>
+		<tr><td>.termbox.input.alt</td><td></td></tr>
+		<tr><td>.termbox.input.esc</td><td>input modes for set_input_mode; add mouse to esc or alt to r</td></tr>
+		<tr><td>.termbox.input.mouse</td><td></td></tr>
+		<tr><td>.termbox.invalidate</td><td>forget what the terminal shows, so the next present repaints</td></tr>
+		<tr><td>.termbox.output.color256</td><td></td></tr>
+		<tr><td>.termbox.output.mono</td><td>output modes for set_output_mode.</td></tr>
+		<tr><td>.termbox.output.normal</td><td></td></tr>
+		<tr><td>.termbox.output.truecolor</td><td></td></tr>
+		<tr><td><a href='#-termbox-peek_event'>.termbox.peek_event</a></td><td>wait up to ms milliseconds for an event: always a dict `kind</td></tr>
+		<tr><td><a href='#-termbox-poll_event'>.termbox.poll_event</a></td><td>wait for the next event, with no timeout.</td></tr>
+		<tr><td><a href='#-termbox-present'>.termbox.present</a></td><td>write the back buffer to the terminal: only the cells that c</td></tr>
+		<tr><td><a href='#-termbox-print'>.termbox.print</a></td><td>write a string into the back buffer from (x;y), one cell per</td></tr>
+		<tr><td><a href='#-termbox-rgb'>.termbox.rgb</a></td><td>a 24-bit colour as a style long.</td></tr>
+		<tr><td><a href='#-termbox-set_cell'>.termbox.set_cell</a></td><td>write one cell of the back buffer.</td></tr>
+		<tr><td><a href='#-termbox-set_cells'>.termbox.set_cells</a></td><td>write many cells at once - the sparse overlay: x and y are l</td></tr>
+		<tr><td><a href='#-termbox-set_cursor'>.termbox.set_cursor</a></td><td>place the cursor (0-based; shown at the next present).</td></tr>
+		<tr><td><a href='#-termbox-set_input_mode'>.termbox.set_input_mode</a></td><td>choose how input is read: a sum of .</td></tr>
+		<tr><td><a href='#-termbox-set_output_mode'>.termbox.set_output_mode</a></td><td>choose how colours are sent: a .</td></tr>
+		<tr><td><a href='#-termbox-show'>.termbox.show</a></td><td>paint whole rows from the top-left corner - the vectorised s</td></tr>
+		<tr><td><a href='#-termbox-shutdown'>.termbox.shutdown</a></td><td>hand the terminal back exactly as init found it.</td></tr>
+		<tr><td><a href='#-termbox-width'>.termbox.width</a></td><td>the screen width in cells, as of the last present.</td></tr>
+		<tr><td><a href='#-termbox-wrap'>.termbox.wrap</a></td><td>word-wrap text to w CELLS (not bytes: a multibyte char is on</td></tr>
+</tbody></table></div>
+	<div class='details'>
+	<h2>Entity Details</h2>
+		<div class='entity' id='-termbox-beep'><h2>.termbox.beep</h2><p>start a tone of hz for ms milliseconds and return at once (it plays on its own thread, one at a time): 1b when a tone was started, 0b when one is still playing (the call is dropped) or no audio device was available and the terminal bell rang instead.</p><table>
+<tr><th>Return: </th><td>(boolean)</td></tr>
+<tr><th>Parameters: </th><td><ul>
+	<li><strong>hz</strong> - (long) 0-32767; 0 is silence</li>
+	<li><strong>ms</strong> - (long) 0-60000</li></ul></td></tr></table></div>
+		<div class='entity' id='-termbox-cells'><h2>.termbox.cells</h2><p>the back buffer as a table with one row per cell: x y ch fg bg, ch a long codepoint ("c"$ a row's ch for ASCII text).  What present would send, before it is sent.</p><table>
+<tr><th>Return: </th><td>(table)</td></tr></table></div>
+		<div class='entity' id='-termbox-clear'><h2>.termbox.clear</h2><p>blank every cell of the back buffer (space, default colours).  Nothing shows until present.</p></div>
+		<div class='entity' id='-termbox-clock'><h2>.termbox.clock</h2><p>milliseconds since init on a monotonic clock (never wall time), 0 before init so a game can call it anywhere.</p><table>
+<tr><th>Return: </th><td>(long)</td></tr></table></div>
+		<div class='entity' id='-termbox-color-default'><h2>.termbox.color.default</h2><p>right to left: b+256*(g+256*r), shifted 10, rgb flag at bit 9 the named colours as style longs - .termbox.color.red - plus default (the terminal's own) and peach. Add an attribute to a colour: .termbox.color.red+.termbox.attribute.bold.  .termbox.color is the whole set as a dict.</p></div>
+		<div class='entity' id='-termbox-events'><h2>.termbox.events</h2><p>every pending event as a table with the event dict's columns (kind name ch mod x y button w h), one row per event in arrival order: waits at most ms for the first, then takes what is already queued without waiting. An empty table with that schema when nothing arrived.</p><table>
+<tr><th>Return: </th><td>(table)</td></tr>
+<tr><th>Parameters: </th><td><ul>
+	<li><strong>ms</strong> - (long) the timeout for the first event; negative waits forever</li></ul></td></tr></table></div>
+		<div class='entity' id='-termbox-has_truecolor'><h2>.termbox.has_truecolor</h2><p>whether the terminal reported 24-bit colour at init.</p><table>
+<tr><th>Return: </th><td>(boolean)</td></tr></table></div>
+		<div class='entity' id='-termbox-height'><h2>.termbox.height</h2><p>the screen height in cells, as of the last present.</p><table>
+<tr><th>Return: </th><td>(long)</td></tr></table></div>
+		<div class='entity' id='-termbox-init'><h2>.termbox.init</h2><p>Draw on the terminal as a grid of cells: .termbox.init[] takes the screen, .termbox.show rows paints a list of strings from the top-left corner, .termbox.present[] flushes the changes, .termbox.peek_event 100 waits up to 100 ms for a key or mouse event, .termbox.shutdown[] hands the terminal back.  The names and meanings follow termbox2 (snake_case), so its documentation and examples carry over.  examples/q/life.q is the worked example.</p><table>
+<tr><th>implNote: </th><td>Natives .termbox.i.* (one session at a time; xterm-only, so one behaviour on Linux, mac and Win 11). The terminal is restored on shutdown, on any error or Ctrl-C at the statement seam, and on exit - a q program cannot trap 'stop, so restore is never the program's job.  Ctrl-C is the interrupt, never a key. Output written by show/-1 inside a loop reaches the screen only after the statement ends (the console buffer drains between statements); draw through .termbox instead. ANY-ORDER LAW: definitions only. take the terminal: raw input, the alternate screen, cursor hidden.  Nested inside the REPL's own terminal state, which comes back at shutdown.</td></tr>
+<tr><th>throws: </th><td><ul>
+	<li><strong>os</strong> - stdin/stdout is not a terminal</li>
+	<li><strong>domain</strong> - a session is already open</li></ul></td></tr></table></div>
+		<div class='entity' id='-termbox-peek_event'><h2>.termbox.peek_event</h2><p>wait up to ms milliseconds for an event: always a dict `kind`name`ch`mod`x`y`button`w`h (kind and name, not type and key: qSQL cannot name a keyword column).  kind is `key, `mouse, `resize, or `none when nothing arrived in time; name is the key's name (`a, `enter, `space, `left, `f1, `ctrl_c, `esc ...) and, for any other event, its kind again (`mouse, `resize, `none) so one switch on name dispatches everything - except a pointer movement, kind `mouse with name `move; ch is the char for a printable key (a long codepoint when it is not one byte); mod sums 1 shift, 2 alt, 4 ctrl; x y and button (`left`right`middle`wheel_up`wheel_down`release, `none for a plain movement) belong to mouse events, w h to a resize; a field that does not apply is null. Mouse events arrive only after set_input_mode with .termbox.input.mouse.  No key-release events.</p><table>
+<tr><th>Return: </th><td>(dict)</td></tr>
+<tr><th>Parameters: </th><td><ul>
+	<li><strong>ms</strong> - (long) the timeout; negative waits forever</li></ul></td></tr></table></div>
+		<div class='entity' id='-termbox-poll_event'><h2>.termbox.poll_event</h2><p>wait for the next event, with no timeout.  peek_event's answer.</p><table>
+<tr><th>Return: </th><td>(dict)</td></tr></table></div>
+		<div class='entity' id='-termbox-present'><h2>.termbox.present</h2><p>write the back buffer to the terminal: only the cells that changed since the last present are sent. A resized window is noticed here; the next peek_event answers a `resize event.</p></div>
+		<div class='entity' id='-termbox-print'><h2>.termbox.print</h2><p>write a string into the back buffer from (x;y), one cell per character (UTF-8 is decoded, so a multibyte character is ONE cell).  Text past the right edge is dropped.  .termbox.print[x;y;fg;bg;text] or .termbox.print[x;y;fg;bg;text;w;align]: the second form places the text inside a w-cell field starting at x, aligned `left, `centre (`center) or `right by CELLS, and clipped to the field. Bound straight to the vary native (both arities); guarded so the file still loads before the \l pq gate.</p><table>
+<tr><th>Parameters: </th><td><ul>
+	<li><strong>fg</strong> - (long) the foreground style, or a long vector with one style per character</li>
+	<li><strong>bg</strong> - (long) the background style, or a long vector with one style per character</li>
+	<li><strong>x</strong> - (long) column, 0-based</li>
+	<li><strong>y</strong> - (long) row, 0-based</li>
+	<li><strong>text</strong> - (string)</li></ul></td></tr></table></div>
+		<div class='entity' id='-termbox-rgb'><h2>.termbox.rgb</h2><p>a 24-bit colour as a style long.  Styles are disjoint bit fields, so add colours and attributes: .termbox.rgb[255;128;0]+.termbox.attribute.bold</p><table>
+<tr><th>Return: </th><td>(long)</td></tr>
+<tr><th>Parameters: </th><td><ul>
+	<li><strong>r</strong> - (long) 0-255</li>
+	<li><strong>b</strong> - (long) 0-255</li>
+	<li><strong>g</strong> - (long) 0-255</li></ul></td></tr></table></div>
+		<div class='entity' id='-termbox-set_cell'><h2>.termbox.set_cell</h2><p>write one cell of the back buffer.  A position off the screen is ignored.</p><table>
+<tr><th>Parameters: </th><td><ul>
+	<li><strong>fg</strong> - (long) a style: .termbox.color.<name>, .termbox.rgb[r;g;b], plus any .termbox.attribute.<name></li>
+	<li><strong>ch</strong> - (char|long) a char, or a Unicode codepoint as a long</li>
+	<li><strong>bg</strong> - (long) the background style</li>
+	<li><strong>x</strong> - (long) column, 0-based</li>
+	<li><strong>y</strong> - (long) row, 0-based</li></ul></td></tr></table></div>
+		<div class='entity' id='-termbox-set_cells'><h2>.termbox.set_cells</h2><p>write many cells at once - the sparse overlay: x and y are long vectors of one length (cell i at x[i];y[i]), or one of them an atom that extends to the other's length (both atoms: one cell); ch a char or a codepoint long for every cell, a string with one BYTE per cell, a long vector of codepoints, or a list of strings each decoding from UTF-8 to ONE codepoint ('type otherwise); fg and bg a style for every cell or a long vector with one per cell.  Cells off the screen are dropped.</p><table>
+<tr><th>Parameters: </th><td><ul>
+	<li><strong>fg</strong> - (long|long vector)</li>
+	<li><strong>ch</strong> - (char|string|long|long vector|list)</li>
+	<li><strong>bg</strong> - (long|long vector)</li>
+	<li><strong>x</strong> - (long|long vector) columns, 0-based</li>
+	<li><strong>y</strong> - (long|long vector) rows, 0-based</li></ul></td></tr>
+<tr><th>throws: </th><td>length x, y, ch and a vector style do not agree</td></tr></table></div>
+		<div class='entity' id='-termbox-set_cursor'><h2>.termbox.set_cursor</h2><p>place the cursor (0-based; shown at the next present).  A negative coordinate hides it.</p><table>
+<tr><th>Parameters: </th><td><ul>
+	<li><strong>x</strong> - (long) column</li>
+	<li><strong>y</strong> - (long) row</li></ul></td></tr></table></div>
+		<div class='entity' id='-termbox-set_input_mode'><h2>.termbox.set_input_mode</h2><p>choose how input is read: a sum of .termbox.input.<name> values.  .termbox.input.mouse turns mouse reporting on - clicks, wheel, releases and every pointer movement (name `move, button `none, or the held button while dragging); esc and alt both accept Esc-prefixed keys as alt-modified (that is what xterm sends).</p><table>
+<tr><th>Return: </th><td>(long) the previous mode</td></tr>
+<tr><th>Parameters: </th><td><ul>
+	<li><strong>mode</strong> - (long)</li></ul></td></tr></table></div>
+		<div class='entity' id='-termbox-set_output_mode'><h2>.termbox.set_output_mode</h2><p>choose how colours are sent: a .termbox.output.<name> value.  init picks the richest the terminal reports (COLORTERM, TERM); NO_COLOR or PEACHQ_COLORS=0 picks mono.  A style richer than the mode degrades to the nearest colour the mode has.</p><table>
+<tr><th>Return: </th><td>(long) the previous mode</td></tr>
+<tr><th>Parameters: </th><td><ul>
+	<li><strong>mode</strong> - (long)</li></ul></td></tr></table></div>
+		<div class='entity' id='-termbox-show'><h2>.termbox.show</h2><p>paint whole rows from the top-left corner - the vectorised set_cell.  .termbox.show[rows] or .termbox.show[rows;fg;bg]: rows is a list of strings (row y from the string at y), fg/bg a style atom for everything, a long vector with one style per row, or a list of long vectors with one style per cell. Rows below the screen and cells past the right edge are dropped. Bound straight to the vary native (both arities); guarded so the file still loads before the \l pq gate.</p></div>
+		<div class='entity' id='-termbox-shutdown'><h2>.termbox.shutdown</h2><p>hand the terminal back exactly as init found it.  Safe to call when no session is open.</p></div>
+		<div class='entity' id='-termbox-width'><h2>.termbox.width</h2><p>the screen width in cells, as of the last present.</p><table>
+<tr><th>Return: </th><td>(long)</td></tr></table></div>
+		<div class='entity' id='-termbox-wrap'><h2>.termbox.wrap</h2><p>word-wrap text to w CELLS (not bytes: a multibyte char is one cell): breaks at spaces, a newline in the text starts a new line, a word wider than w is split where it must be.  Pure - no session needed.</p><table>
+<tr><th>Return: </th><td>(list) strings</td></tr>
+<tr><th>Parameters: </th><td><ul>
+	<li><strong>w</strong> - (long) the line width in cells</li>
+	<li><strong>text</strong> - (string)</li></ul></td></tr></table></div></div><!--MAIN_END-->
+
+              
+            </div>
+            
+
+          </div><footer>
+<nav class="peachq-api-links" aria-label="PeachQ links"><a href="../">Docs</a> · <a href="../../thanks/">Thanks</a> · <a href="https://github.com/peachq-org/peachq/blob/2f1971a315fbfba84149043ba994ec2d79d8f9d4/lib/termbox.q">Source</a></nav>
+<nav class="peachq-api-reports" aria-label="Generation reports"><a href="lint.html">Lint</a> · <a href="lint.csv">Lint CSV</a> · <a href="metrics.html">Metrics</a> · <a href="metrics.csv">Metrics CSV</a></nav>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <!-- a href="../foo/" class="btn btn-neutral float-left" title="Foo"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../../namespaces/bar/" class="btn btn-neutral float-right" title="Bar">Next <span class="icon icon-circle-arrow-right"></span></a -->
+    </div>
+
+  <hr/>
+
+
+
+  <div role="contentinfo">
+    <!-- Copyright -->
+  </div>
+
+  Built with <a href="https://www.timestored.com/qstudio/help/qdoc">QDoc</a> provided by <a href="https://www.timestored.com/">TimeStored</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+      <!-- span><a href="../foo/" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="../../namespaces/bar/" style="color: #fcfcfc">Next &raquo;</a></span -->
+    
+  </span>
+</div>
+    <script src="https://www.timestored.com/qstudio/addon/qdoc/2025-08-07/js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="https://www.timestored.com/qstudio/addon/qdoc/2025-08-07/js/theme_extra.js"></script>
+    <script src="https://www.timestored.com/qstudio/addon/qdoc/2025-08-07/js/theme.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

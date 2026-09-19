@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" type="image/png" href="../../img/favicon.ico" />
+    <title>str.q - PeachQ API</title>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" />
+    <link rel="stylesheet" href="qdoc2.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/q.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/shell.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+<link rel="stylesheet" href="peachq-api.css" />
+</head> 
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+<p><a href="../">← PeachQ docs</a></p>
+        <a href="./"  class="icon icon-home"> PeachQ API</a><div role="search">
+  <!-- form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form -->
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Namespaces</span></p>
+              
+              
+<ul><li class="toctree-l1 cls-csv-cls"><a class="reference internal cls-csv-cls" href='csv.q.html' >.csv</a></li>
+	<li class="toctree-l1 cls-duckdb-cls"><a class="reference internal cls-duckdb-cls" href='duckdb.q.html' >.duckdb</a></li>
+	<li class="toctree-l1 cls-duckdbi-cls"><a class="reference internal cls-duckdbi-cls" href='duckdb.q.html' >.duckdb.i</a></li>
+	<li class="toctree-l1 cls-ffi-cls"><a class="reference internal cls-ffi-cls" href='ffi.q.html' >.ffi</a></li>
+	<li class="toctree-l1 cls-j-cls"><a class="reference internal cls-j-cls" href='j.q.html' >.j</a></li>
+	<li class="toctree-l1 cls-ji-cls"><a class="reference internal cls-ji-cls" href='j.q.html' >.j.i</a></li>
+	<li class="toctree-l1 cls-massive-cls"><a class="reference internal cls-massive-cls" href='massive.q.html' >.massive</a></li>
+	<li class="toctree-l1 cls-massivei-cls"><a class="reference internal cls-massivei-cls" href='massive.q.html' >.massive.i</a></li>
+	<li class="toctree-l1 cls-parquet-cls"><a class="reference internal cls-parquet-cls" href='parquet.q.html' >.parquet</a></li>
+	<li class="toctree-l1 cls-parqueti-cls"><a class="reference internal cls-parqueti-cls" href='parquet.q.html' >.parquet.i</a></li>
+	<li class="toctree-l1 cls-pq-cls"><a class="reference internal cls-pq-cls" href='pq.q.html' >.pq</a></li>
+	<li class="toctree-l1 cls-pqi-cls"><a class="reference internal cls-pqi-cls" href='pq.q.html' >.pq.i</a></li>
+	<li class="toctree-l1 cls-qpc-cls"><a class="reference internal cls-qpc-cls" href='qpc.q.html' >.qpc</a></li>
+	<li class="toctree-l1 cls-qpci-cls"><a class="reference internal cls-qpci-cls" href='qpc.q.html' >.qpc.i</a></li>
+	<li class="toctree-l1 cls-regexp-cls"><a class="reference internal cls-regexp-cls" href='regexp.q.html' >.regexp</a></li>
+	<li class="toctree-l1 cls-s-cls"><a class="reference internal cls-s-cls" href='duckdb.q.html' >.s</a></li>
+	<li class="toctree-l1 cls-si-cls"><a class="reference internal cls-si-cls" href='duckdb.q.html' >.s.i</a></li>
+	<li class="toctree-l1 current"><a class="reference internal current" href='str.q.html' >.str</a></li>
+	<li class="toctree-l1 cls-stri-cls"><a class="reference internal cls-stri-cls" href='str.q.html' >.str.i</a></li>
+	<li class="toctree-l1 cls-termbox-cls"><a class="reference internal cls-termbox-cls" href='termbox.q.html' >.termbox</a></li>
+	<li class="toctree-l1 cls-termboxattribute-cls"><a class="reference internal cls-termboxattribute-cls" href='termbox.q.html' >.termbox.attribute</a></li>
+	<li class="toctree-l1 cls-termboxcolor-cls"><a class="reference internal cls-termboxcolor-cls" href='termbox.q.html' >.termbox.color</a></li>
+	<li class="toctree-l1 cls-termboxinput-cls"><a class="reference internal cls-termboxinput-cls" href='termbox.q.html' >.termbox.input</a></li>
+	<li class="toctree-l1 cls-termboxoutput-cls"><a class="reference internal cls-termboxoutput-cls" href='termbox.q.html' >.termbox.output</a></li>
+</ul><!--NAMESPACE_END-->
+              
+              <p class="caption"><span class="caption-text">Files</span></p>
+              
+<ul><li class="toctree-l1 cls-csv-cls"><a class="reference internal cls-csv-cls" href='csv.q.html' >csv.q</a></li>
+	<li class="toctree-l1 cls-duckdb-cls"><a class="reference internal cls-duckdb-cls" href='duckdb.q.html' >duckdb.q</a></li>
+	<li class="toctree-l1 cls-ffi-cls"><a class="reference internal cls-ffi-cls" href='ffi.q.html' >ffi.q</a></li>
+	<li class="toctree-l1 cls-help-db-cls"><a class="reference internal cls-help-db-cls" href='help-db.q.html' >help-db.q</a></li>
+	<li class="toctree-l1 cls-j-cls"><a class="reference internal cls-j-cls" href='j.q.html' >j.q</a></li>
+	<li class="toctree-l1 cls-massive-cls"><a class="reference internal cls-massive-cls" href='massive.q.html' >massive.q</a></li>
+	<li class="toctree-l1 cls-parquet-cls"><a class="reference internal cls-parquet-cls" href='parquet.q.html' >parquet.q</a></li>
+	<li class="toctree-l1 cls-pq-cls"><a class="reference internal cls-pq-cls" href='pq.q.html' >pq.q</a></li>
+	<li class="toctree-l1 cls-qpc-cls"><a class="reference internal cls-qpc-cls" href='qpc.q.html' >qpc.q</a></li>
+	<li class="toctree-l1 cls-regexp-cls"><a class="reference internal cls-regexp-cls" href='regexp.q.html' >regexp.q</a></li>
+	<li class="toctree-l1 current"><a class="reference internal current" href='str.q.html' >str.q</a></li>
+	<li class="toctree-l1 cls-termbox-cls"><a class="reference internal cls-termbox-cls" href='termbox.q.html' >termbox.q</a></li>
+</ul><!--FILES_END-->
+              
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="./">PeachQ API</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="./" class="icon icon-home" aria-label="Docs"></a></li>
+          <!-- li class="breadcrumb-item">Files-Breadcrumb</li -->
+      <li class="breadcrumb-item active">str.q</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="foobar">str.q</h1>
+    
+
+    
+	<div id='headerDoc'></div>
+	<div id='summary'><h2>Entity Summary</h2><table class='overviewSummary'><tbody>
+<tr><th>Entities</th><th>Short Description</th></tr>
+		<tr><td><a href='#-str-endswith'>.str.endswith</a></td><td>does s end with suffix?  Empty and over-long suffixes as abo</td></tr>
+		<tr><td><a href='#-str-format'>.str.format</a></td><td>Python-style formatting, same message shape and same DuckDB </td></tr>
+		<tr><td><a href='#-str-isalnum'>.str.isalnum</a></td><td>is every character a letter or a digit, and is there at leas</td></tr>
+		<tr><td><a href='#-str-isalpha'>.str.isalpha</a></td><td>is every character a letter, and is there at least one?</td></tr>
+		<tr><td><a href='#-str-isdigit'>.str.isdigit</a></td><td>is every character a digit, and is there at least one?</td></tr>
+		<tr><td><a href='#-str-islower'>.str.islower</a></td><td>is every CASED character lower case, and is there at least o</td></tr>
+		<tr><td><a href='#-str-isspace'>.str.isspace</a></td><td>is every character one of " \t\n\r", and is there at least o</td></tr>
+		<tr><td><a href='#-str-isupper'>.str.isupper</a></td><td>is every CASED character upper case, and is there at least o</td></tr>
+		<tr><td><a href='#-str-lstrip'>.str.lstrip</a></td><td>leading " \t\n\r" removed.</td></tr>
+		<tr><td><a href='#-str-printf'>.str.printf</a></td><td>C-style formatting.</td></tr>
+		<tr><td><a href='#-str-removeprefix'>.str.removeprefix</a></td><td>s without a leading prefix, or s unchanged when it does not </td></tr>
+		<tr><td><a href='#-str-removesuffix'>.str.removesuffix</a></td><td>s without a trailing suffix, or s unchanged when it does not</td></tr>
+		<tr><td><a href='#-str-rstrip'>.str.rstrip</a></td><td>trailing " \t\n\r" removed.</td></tr>
+		<tr><td><a href='#-str-startswith'>.str.startswith</a></td><td>does s begin with prefix?  An empty prefix always does, and </td></tr>
+		<tr><td><a href='#-str-strip'>.str.strip</a></td><td>leading and trailing " \t\n\r" removed.</td></tr>
+</tbody></table></div>
+	<div class='details'>
+	<h2>Entity Details</h2>
+		<div class='entity' id='-str-endswith'><h2>.str.endswith</h2><p>does s end with suffix?  Empty and over-long suffixes as above.</p><table>
+<tr><th>Parameters: </th><td><ul>
+	<li><strong>s</strong> - (any) a string, a symbol, or a list of either</li>
+	<li><strong>suffix</strong> - (any) a string or symbol</li></ul></td></tr></table></div>
+		<div class='entity' id='-str-format'><h2>.str.format</h2><p>Python-style formatting, same message shape and same DuckDB engine: {} {0} {:>8.2f} {:,}.</p><table>
+<tr><th>Parameters: </th><td><ul>
+	<li><strong>msg</strong> - (any) a format string, or a general list of one plus its arguments</li></ul></td></tr></table></div>
+		<div class='entity' id='-str-isalnum'><h2>.str.isalnum</h2><p>is every character a letter or a digit, and is there at least one?  NOT .Q.an, which is the IDENTIFIER alphabet and admits "_" - .str.isalnum "a_b" is 0b.</p><table>
+<tr><th>Parameters: </th><td><ul>
+	<li><strong>s</strong> - (any) a string, a symbol, or a list of either</li></ul></td></tr></table></div>
+		<div class='entity' id='-str-isalpha'><h2>.str.isalpha</h2><p>is every character a letter, and is there at least one?</p><table>
+<tr><th>Parameters: </th><td><ul>
+	<li><strong>s</strong> - (any) a string, a symbol, or a list of either</li></ul></td></tr></table></div>
+		<div class='entity' id='-str-isdigit'><h2>.str.isdigit</h2><p>is every character a digit, and is there at least one?</p><table>
+<tr><th>Parameters: </th><td><ul>
+	<li><strong>s</strong> - (any) a string, a symbol, or a list of either</li></ul></td></tr></table></div>
+		<div class='entity' id='-str-islower'><h2>.str.islower</h2><p>is every CASED character lower case, and is there at least one?  Uncased characters are ignored, so "abc1" is 1b.</p><table>
+<tr><th>Parameters: </th><td><ul>
+	<li><strong>s</strong> - (any) a string, a symbol, or a list of either</li></ul></td></tr></table></div>
+		<div class='entity' id='-str-isspace'><h2>.str.isspace</h2><p>is every character one of " \t\n\r", and is there at least one?</p><table>
+<tr><th>Parameters: </th><td><ul>
+	<li><strong>s</strong> - (any) a string, a symbol, or a list of either</li></ul></td></tr></table></div>
+		<div class='entity' id='-str-isupper'><h2>.str.isupper</h2><p>is every CASED character upper case, and is there at least one?  Uncased characters are ignored, so "ABC1" is 1b.</p><table>
+<tr><th>Parameters: </th><td><ul>
+	<li><strong>s</strong> - (any) a string, a symbol, or a list of either</li></ul></td></tr></table></div>
+		<div class='entity' id='-str-lstrip'><h2>.str.lstrip</h2><p>leading " \t\n\r" removed.</p><table>
+<tr><th>Parameters: </th><td><ul>
+	<li><strong>s</strong> - (any) a string, a symbol, or a list of either</li></ul></td></tr></table></div>
+		<div class='entity' id='-str-printf'><h2>.str.printf</h2><p>C-style formatting.  Grammar and semantics are DuckDB's, so `%'d` groups with an APOSTROPHE and a comma is spelled `%,d`; the q supersets are `%r`, a permissive `%s`, and typed nulls rendering their q display.</p><table>
+<tr><th>Parameters: </th><td><ul>
+	<li><strong>msg</strong> - (any) a format string, or a general list of one plus its arguments</li></ul></td></tr></table></div>
+		<div class='entity' id='-str-removeprefix'><h2>.str.removeprefix</h2><p>s without a leading prefix, or s unchanged when it does not start with one.  Only ONE copy is removed.</p><table>
+<tr><th>Parameters: </th><td><ul>
+	<li><strong>s</strong> - (any) a string, a symbol, or a list of either</li>
+	<li><strong>prefix</strong> - (any) a string or symbol</li></ul></td></tr></table></div>
+		<div class='entity' id='-str-removesuffix'><h2>.str.removesuffix</h2><p>s without a trailing suffix, or s unchanged when it does not end with one.  Only ONE copy is removed.</p><table>
+<tr><th>Parameters: </th><td><ul>
+	<li><strong>s</strong> - (any) a string, a symbol, or a list of either</li>
+	<li><strong>suffix</strong> - (any) a string or symbol</li></ul></td></tr></table></div>
+		<div class='entity' id='-str-rstrip'><h2>.str.rstrip</h2><p>trailing " \t\n\r" removed.</p><table>
+<tr><th>Parameters: </th><td><ul>
+	<li><strong>s</strong> - (any) a string, a symbol, or a list of either</li></ul></td></tr></table></div>
+		<div class='entity' id='-str-startswith'><h2>.str.startswith</h2><p>does s begin with prefix?  An empty prefix always does, and a prefix longer than s never does - which is why this is `sublist` and not `#`, whose take WRAPS: 3#"ab" is "aba", so "ab" would wrongly start with "aba".</p><table>
+<tr><th>Parameters: </th><td><ul>
+	<li><strong>s</strong> - (any) a string, a symbol, or a list of either</li>
+	<li><strong>prefix</strong> - (any) a string or symbol</li></ul></td></tr></table></div>
+		<div class='entity' id='-str-strip'><h2>.str.strip</h2><p>leading and trailing " \t\n\r" removed.  NOT q's `trim`, whose domain is the char null instead.</p><table>
+<tr><th>Parameters: </th><td><ul>
+	<li><strong>s</strong> - (any) a string, a symbol, or a list of either</li></ul></td></tr></table></div></div><!--MAIN_END-->
+
+              
+            </div>
+            
+
+          </div><footer>
+<nav class="peachq-api-links" aria-label="PeachQ links"><a href="../">Docs</a> · <a href="../../thanks/">Thanks</a> · <a href="https://github.com/peachq-org/peachq/blob/2f1971a315fbfba84149043ba994ec2d79d8f9d4/lib/str.q">Source</a></nav>
+<nav class="peachq-api-reports" aria-label="Generation reports"><a href="lint.html">Lint</a> · <a href="lint.csv">Lint CSV</a> · <a href="metrics.html">Metrics</a> · <a href="metrics.csv">Metrics CSV</a></nav>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <!-- a href="../foo/" class="btn btn-neutral float-left" title="Foo"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../../namespaces/bar/" class="btn btn-neutral float-right" title="Bar">Next <span class="icon icon-circle-arrow-right"></span></a -->
+    </div>
+
+  <hr/>
+
+
+
+  <div role="contentinfo">
+    <!-- Copyright -->
+  </div>
+
+  Built with <a href="https://www.timestored.com/qstudio/help/qdoc">QDoc</a> provided by <a href="https://www.timestored.com/">TimeStored</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+      <!-- span><a href="../foo/" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="../../namespaces/bar/" style="color: #fcfcfc">Next &raquo;</a></span -->
+    
+  </span>
+</div>
+    <script src="https://www.timestored.com/qstudio/addon/qdoc/2025-08-07/js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="https://www.timestored.com/qstudio/addon/qdoc/2025-08-07/js/theme_extra.js"></script>
+    <script src="https://www.timestored.com/qstudio/addon/qdoc/2025-08-07/js/theme.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

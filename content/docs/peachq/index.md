@@ -28,6 +28,7 @@ This section collects PeachQ-specific documentation. It is separate from the
 | [Bad rows](bad-rows.md) | Error handling and tolerances |
 | [Handles and resources](handles.md) | Files, URLs, providers and format inference |
 | [Parquet](parquet.md) | Reading and writing through the experimental PeachQ DuckDB integration |
+| [Library API](/docs/api/) | Function reference generated from the PeachQ library source |
 | [Regular expressions](regexp.md) | RE2 matching, extraction and replacement |
 | [Foreign functions](ffi.md) | Calling native shared libraries |
 | [Writing resource providers](resource-handle-implementer.md) | The provider contract for implementers |

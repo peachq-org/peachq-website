@@ -99,8 +99,9 @@
     "syscmds.md": {
       "source": "user-docs/syscmds.md",
       "source_sha256": "90ab9bd65b34aa880282e802720f5279c72a727dd979f1d8e282839579ec587e",
-      "website_sha256": "fb3f7882de5fefb128e6ea4c70f8ae5d3ccb5cc2ff973f60f115bd2c248d6e63",
+      "website_sha256": "aeda02eafac60c30eb0cede2c60933b7a794b8716a2e17ccf69e06b751e46cfe",
       "adaptations": [
+        "Move page-level attribution to the Thanks page",
         "Resolve q4m3 links against code.kx.com"
       ]
     },

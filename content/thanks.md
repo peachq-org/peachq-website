@@ -59,6 +59,11 @@ PeachQ imported only the `docs/basics` and `docs/ref` sections. The initial
 snapshot is unmodified; later PeachQ changes are recorded in this repository's
 Git history.
 
+The PeachQ [System commands guide](docs/peachq/syscmds.md) is adapted from
+[System commands in the kdb+ and q documentation](https://code.kx.com/q/basics/syscmds/),
+© KX Systems, under the same CC BY 4.0 licence. The adaptation adds a
+“Differences in peachq” section and converts site-specific markup to plain Markdown.
+
 PeachQ is an independent open-source project. It is not affiliated with or
 endorsed by KX. KX and kdb+ are trademarks of their respective owners.
 

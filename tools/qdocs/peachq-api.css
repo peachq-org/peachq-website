@@ -1,0 +1,11 @@
+/* Small presentation overrides; qDoc owns its HTML and base stylesheet. */
+.wy-side-nav-search, .wy-nav-top { background: #ffb38a; color: #271d17; }
+.wy-side-nav-search > a, .wy-side-nav-search p a, .wy-nav-top a { color: #271d17; }
+.wy-side-nav-search p { margin-bottom: .5rem; }
+.wy-menu-vertical header, .wy-menu-vertical p.caption { color: #ffb38a; }
+.wy-nav-content { max-width: 1100px; }
+.rst-content a { color: #954419; }
+.peachq-api-links { margin: 1rem 0; }
+.peachq-api-reports { font-size: .65rem; margin: .5rem 0; }
+.overviewSummary { width: 100%; }
+.overviewSummary td, .overviewSummary th { padding: .4rem; text-align: left; overflow-wrap: anywhere; }

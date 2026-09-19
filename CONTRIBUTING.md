@@ -76,6 +76,40 @@ Keep Markdown useful on its own: name prerequisites in prose, use descriptive li
 text and put example titles and checker markers in the documented hidden comments.
 Do not rely on colours, icons or the rendered page to convey feature status.
 
+## Generating the library API reference
+
+Run the Bash script manually from this checkout (Java is assumed to be installed):
+
+```bash
+./tools/generate-qdocs.sh                 # official PeachQ main
+./tools/generate-qdocs.sh --ref v0.84      # or a branch, tag or commit
+```
+
+The script downloads qStudio from `https://www.timestored.com/qstudio/files/qstudio.jar`
+only when `build/qdocs/cache/qstudio.jar` is missing. Delete that cached JAR to fetch
+it again. Downloads and temporary generation files live under the ignored
+`build/qdocs/` directory.
+
+The requested ref is resolved to a commit in `peachq-org/peachq` on GitHub, and that
+exact source archive is downloaded. The whole `lib/` folder is passed to qDoc, which
+processes its `.q` files recursively. The local
+C-project checkout is not used. The current qStudio CLI expects the output directory
+first and input directory second.
+
+Successful generation replaces `static/docs/api/`, including `source.json` with the
+official source SHA. Failures before installation leave the existing docs intact.
+Lint and metrics reports are included as HTML and CSV, with small footer links;
+generated `man.q` is not published. The script makes
+small presentation changes and copies `tools/qdocs/peachq-api.css`; edit those inputs
+rather than hand-editing generated HTML. The source comments determine documentation
+coverage, and the generator can list internal namespaces as well as public functions.
+
+Review the generated diff and preview the Library API link under Docs. The local
+watcher picks up the files; otherwise run `./tools/build.sh`. Keep the generated HTML,
+CSS and source record with the website changes when committing is authorized. Normal
+website builds and CI copy this snapshot without downloading source or running Java.
+The generation script does not commit, push or publish anything.
+
 ## The root pages
 
 The landing page, download, roadmap, about, REPL, compatibility and contact are
