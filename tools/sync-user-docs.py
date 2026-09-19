@@ -171,12 +171,12 @@ def main():
         name = Path(source).name
         rendered[name] = result
         entries[name] = {'source': source, 'source_sha256': hashlib.sha256(raw.encode()).hexdigest(),
-                         'rendered_sha256': hashlib.sha256(result.encode()).hexdigest(),
+                         'website_sha256': hashlib.sha256(result.encode()).hexdigest(),
                          'adaptations': changes}
     # Refuse to silently erase website edits made since the previous import.
     for name, entry in old.get('files', {}).items():
         path = DEST / name
-        if path.exists() and hashlib.sha256(path.read_bytes()).hexdigest() != entry['rendered_sha256']:
+        if path.exists() and hashlib.sha256(path.read_bytes()).hexdigest() != entry['website_sha256']:
             parser.error(f'{path} has local editorial changes; reconcile them before syncing')
     print(f'{len(rendered)} pages from {sha} (version {version})')
     if not args.write:
