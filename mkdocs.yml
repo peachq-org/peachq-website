@@ -275,7 +275,6 @@ nav:
               - "xbar": docs/ref/xbar.md
               - "xgroup": docs/ref/xgroup.md
               - "xrank": docs/ref/xrank.md
-      - Library API: /docs/api/
       - PeachQ additions and differences:
           - Overview: docs/peachq/index.md
           - Compatibility and migration: docs/peachq/compatibility.md
@@ -294,6 +293,7 @@ nav:
           - Writing resource providers: docs/peachq/resource-handle-implementer.md
           - Recent changes: docs/peachq/recent-changes.md
           - Source and sync notes: docs/peachq/sync.md
+      - Library API: /docs/api/
   - News: news/index.md
   - Thanks: thanks.md
 
