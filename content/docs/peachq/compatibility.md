@@ -19,14 +19,14 @@ PeachQ builds on familiar q syntax with richer interactive tools, flexible data 
 | [Reading CSV — `.csv.read`, `.csv.info`](csv.md) | Type inference, quoting dialects, streaming targets, a reject channel. |
 | [Reading JSON — `.j.read`, `.j.info`](json.md) | A reader beside kdb's `.j.k` converter: written forms, a table, a schema. |
 | [The shared loader laws](loading.md) | What a cell means, the freeze, the error classes, the tolerance levers. |
-| [Resources at a URL](handles.md) | A `` `: `` symbol can name a resource anywhere; `read0`, `read1` and qSQL resolve it. |
+| [Resources at a URL](handles.md) | Read supported files and remote resources; available operations depend on the transport and format. |
 | [Regular expressions — `.regexp`, `rlike`](regexp.md) | RE2-backed matching, extraction, replacement and splitting. |
 | [Typed parameters (design preview)](typed-parameters.md) | Declared types, optional arguments, defaults and varargs, read statically. |
 | [Foreign functions — `.ffi`](ffi.md) | Call into a shared library from q. |
 | [Startup evaluation — `-eval`, `-eval-before`](cmdline.md) | Run q text from argv after / before the startup script; no stdin piping. |
 | [String helpers — `.str`](repl.md) | `printf`/`format`, strip, prefix and suffix tests, character-class predicates. |
-| [DuckDB-backed storage — `.duckdb`](handles.md) | Query it from q, and reach Parquet and S3 through it. |
-| [Parquet — `.parquet.read`, `.parquet.write`](parquet.md) | Read and write parquet through DuckDB; q types survive the round trip. |
+| [DuckDB-backed storage — `.duckdb`](handles.md) | Experimental native integration: query DuckDB from q and use its Parquet and S3 support. |
+| [Parquet — `.parquet.read`, `.parquet.write`](parquet.md) | Read and write Parquet through DuckDB; supported q types round-trip using PeachQ schema metadata. |
 
 Load the bundled library with `\l pq` for its namespaces. The native REPL, URL resources, `rlike` and startup evaluation do not need that step. Typed parameters are a **design preview**; the feature guide records which stages have not shipped. String helpers and DuckDB functions also have doc comments at the prompt: try `.str.printf` or `.duckdb.exec`.
 

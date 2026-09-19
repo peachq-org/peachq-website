@@ -27,7 +27,7 @@ This section collects PeachQ-specific documentation. It is separate from the
 | [CSV](csv.md) / [JSON](json.md) | Readers, options and streaming targets |
 | [Bad rows](bad-rows.md) | Error handling and tolerances |
 | [Handles and resources](handles.md) | Files, URLs, providers and format inference |
-| [Parquet](parquet.md) | Reading and writing through DuckDB |
+| [Parquet](parquet.md) | Reading and writing through the experimental PeachQ DuckDB integration |
 | [Regular expressions](regexp.md) | RE2 matching, extraction and replacement |
 | [Foreign functions](ffi.md) | Calling native shared libraries |
 | [Writing resource providers](resource-handle-implementer.md) | The provider contract for implementers |

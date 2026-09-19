@@ -9,6 +9,9 @@ peachq_revision: 49be5a234a51c44a393cf353c0ff0f3f85c9cc4c
 !!! info "PeachQ documentation snapshot"
     Reviewed source: **0.84**, `49be5a234a51`. See [source and sync notes](sync.md). Feature-specific status notes below take precedence; this snapshot is not a claim that every example passes.
 
+!!! warning "Experimental PeachQ DuckDB integration"
+    PeachQ’s DuckDB integration is experimental and requires the native runtime with DuckDB available; it is not available in the browser REPL. Check the operation-specific limitations before relying on it for a workload. This status describes PeachQ’s integration, not DuckDB itself.
+
 PeachQ keeps the familiar kdb+/q handle syntax while giving it a clearer mental model for new resource types.
 
 In kdb+/q, symbols beginning with `:` are commonly described as **file handles**, **process handles**, or **communication handles** depending on how

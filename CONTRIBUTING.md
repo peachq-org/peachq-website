@@ -60,6 +60,22 @@ first if you are a new author.
 Create `content/docs/your-page.md` with a `title` and `description` in the front
 matter, then add it to the `nav` in `mkdocs.yml`.
 
+### Write for end users
+
+Explain how to use a feature, its prerequisites and its limitations. Keep project
+history, import mechanics and contributor acknowledgements out of individual guides;
+use the source and sync notes, this contributing guide and the Thanks page for those.
+The existing source-snapshot notices remain the visible version record.
+
+Distinguish available features from experimental integrations and design previews.
+An experimental integration can be usable while its behaviour is still evolving;
+a planned feature must not read as a promise about the current release. State native
+runtime requirements explicitly when an example cannot work in the browser REPL.
+
+Keep Markdown useful on its own: name prerequisites in prose, use descriptive link
+text and put example titles and checker markers in the documented hidden comments.
+Do not rely on colours, icons or the rendered page to convey feature status.
+
 ## The root pages
 
 The landing page, download, roadmap, about, REPL, compatibility and contact are
