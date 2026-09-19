@@ -42,7 +42,8 @@ builds have different capabilities, so use the native executable for those guide
 
 Start with [loading data](loading.md), then [CSV](csv.md), [JSON](json.md) or
 [Parquet](parquet.md). The DuckDB distribution bundles dependencies for the DuckDB path;
-check the [download page](/download) for platform packages.
+check the [download page](/download) for platform packages. PeachQ’s DuckDB integration
+is experimental; review the feature-specific limitations before adopting it.
 
 ## Bring existing q code
 

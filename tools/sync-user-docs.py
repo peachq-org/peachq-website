@@ -36,6 +36,15 @@ def compatibility_page(raw):
     additions = additions.replace('| **Typed parameters** |', '| **Typed parameters (design preview)** |')
     additions = additions.replace('|---|---|---|', '|---|---|---|\n'
         '| **REPL and table display** | Built-in editing, history and a richer table display. | [REPL guide](repl.md) |', 1)
+    additions = additions.replace(
+        'A `` `: `` symbol can name a resource anywhere; `read0`, `read1` and qSQL resolve it.',
+        'Read supported files and remote resources; available operations depend on the transport and format.')
+    additions = additions.replace(
+        'Query it from q, and reach Parquet and S3 through it.',
+        'Experimental native integration: query DuckDB from q and use its Parquet and S3 support.')
+    additions = additions.replace(
+        'Read and write parquet through DuckDB; q types survive the round trip.',
+        'Read and write Parquet through DuckDB; supported q types round-trip using PeachQ schema metadata.')
     # The source's blanket library-loading sentence predates the REPL row and
     # does not distinguish planned typed-parameter stages.
     additions = additions.split('Everything above arrives', 1)[0].rstrip()
@@ -129,6 +138,7 @@ def main():
             changes.append('Link the website REPL guide and label typed parameters as design preview')
             changes.append('Use page names instead of filenames for link labels')
             changes.append('Link the Feature column and remove the separate More column')
+            changes.append('Qualify resource and Parquet support; label the PeachQ DuckDB integration experimental')
         if '#argument-lists-and-the--sentinel' in body:
             body = body.replace('#argument-lists-and-the--sentinel', '#argument-lists-and-the-sentinel')
             changes.append('Correct FFI argument-list anchor for the rendered heading')
@@ -144,6 +154,13 @@ def main():
                   f'    Reviewed source: **{version}**, `{sha[:12]}`. '
                   'See [source and sync notes](sync.md). Feature-specific status notes below '
                   'take precedence; this snapshot is not a claim that every example passes.\n')
+        if source in ('user-docs/handles.md', 'user-docs/parquet.md'):
+            notice += ('\n!!! warning "Experimental PeachQ DuckDB integration"\n'
+                       '    PeachQ’s DuckDB integration is experimental and requires the native runtime '
+                       'with DuckDB available; it is not available in the browser REPL. '
+                       'Check the operation-specific limitations before relying on it for a workload. '
+                       'This status describes PeachQ’s integration, not DuckDB itself.\n')
+            changes.append('Add experimental status and native-runtime requirements for the PeachQ DuckDB integration')
         if source.endswith('typed-parameters.md'):
             notice += ('\n!!! warning "Design documentation"\n'
                        '    The source marks type checks as in review and defaults, varargs and named apply '

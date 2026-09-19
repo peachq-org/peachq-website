@@ -9,6 +9,9 @@ peachq_revision: 49be5a234a51c44a393cf353c0ff0f3f85c9cc4c
 !!! info "PeachQ documentation snapshot"
     Reviewed source: **0.84**, `49be5a234a51`. See [source and sync notes](sync.md). Feature-specific status notes below take precedence; this snapshot is not a claim that every example passes.
 
+!!! warning "Experimental PeachQ DuckDB integration"
+    PeachQ’s DuckDB integration is experimental and requires the native runtime with DuckDB available; it is not available in the browser REPL. Check the operation-specific limitations before relying on it for a workload. This status describes PeachQ’s integration, not DuckDB itself.
+
 `.parquet.read` loads a parquet file as a table and `.parquet.write` writes one. Both are a thin shim over DuckDB:
 every verb is SQL run through the `.duckdb` bridge, and every value crosses the same type codec a DuckDB table does.
 The `.parquet` namespace arrives with `\l pq`; without the DuckDB library every verb signals the bare `'duckdb` and

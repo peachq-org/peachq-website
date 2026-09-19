@@ -26,6 +26,9 @@ The imported user guides retain their source text with a snapshot notice. Intern
 system-command guide point to the original hosted book, and an FFI heading link is corrected.
 The compatibility guide leads with additions, then separates behaviour changes from unsupported
 features. It omits the unchanged CSV operator, links the REPL guide and labels typed parameters as a design preview.
+Resource and Parquet summaries are qualified by their supported operations and types.
+The website labels the PeachQ DuckDB integration experimental and states its native-runtime
+requirements on the handles and Parquet guides; this does not label DuckDB itself experimental.
 The sync record contains
 source and rendered hashes and lists these adaptations for each page.
 
