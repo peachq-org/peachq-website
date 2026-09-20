@@ -279,6 +279,12 @@ done
 echo "--- imported documentation serves as HTML and Markdown ---"
 has "datatypes renders through Material" /docs/basics/datatypes/ 'class="md-content"'
 has "datatypes renders its typewriter block" /docs/basics/datatypes/ '<p><strong>Basic datatypes</strong>'
+has "datatypes renders a collapsible infinity note" /docs/basics/datatypes/ '<summary>To infinity and beyond</summary>'
+has "datatypes keeps the infinity note body" /docs/basics/datatypes/ 'Floating-point arithmetic follows'
+for page in basics/datatypes basics/cmdline basics/implicit-iteration ref/wj ref/cast ref/differ ref/fby ref/uj; do
+  has "$page renders collapsible notes" "/docs/$page/" '<details class='
+  lacks "$page has no literal details markup" "/docs/$page/" '??? '
+done
 lacks "imported basics page omits repeated attribution" /docs/basics/datatypes/ 'Thanks and documentation attribution'
 has "asc renders through Material"       /docs/ref/asc/             'class="md-content"'
 lacks "imported ref page omits repeated attribution" /docs/ref/asc/            'Thanks and documentation attribution'
