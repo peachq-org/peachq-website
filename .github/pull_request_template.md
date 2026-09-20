@@ -1,8 +1,8 @@
 <!--
 Thanks for contributing to peachq.org.
 
-Most PRs here are Markdown under content/ and need nothing but a spellcheck and
-a read-through. Delete anything below that does not apply.
+Use the checklist alongside CONTRIBUTING.md. Delete items that do not apply.
+If you cannot perform a check, say what still needs maintainer review.
 -->
 
 ## What this changes
@@ -11,13 +11,20 @@ a read-through. Delete anything below that does not apply.
 
 ## Checklist
 
-- [ ] **Spelling and grammar** read through once more
-- [ ] **Links work** — internal links point at real pages, external links resolve
-- [ ] **q examples run** — paste them into https://peachq.org/repl and check the output matches what the page claims
-- [ ] **Appearance checked** — see below; CI attaches a preview build to every PR
-- [ ] **Front matter present** — `title` and `description` on new pages
-- [ ] **Added to the nav** — new docs pages need an entry in `mkdocs.yml`
-- [ ] **News posts**: `date`, `categories` and `authors` set, and you are listed in `content/news/.authors.yml`
+- [ ] **Content:** Concise, accurate and written for users. Feature status and native/browser requirements are clear.
+- [ ] **API documentation:** Guides explain usage and link to the API reference for exact specifications.
+- [ ] **Examples:** Checked in the appropriate runtime. Transcripts use `q)` and show actual output; `runnable` markers require the automated verification described in CONTRIBUTING.
+- [ ] **PeachQ additions:** Use the banner and matching `PEACHQ-SPECIFIC:BEGIN/END` comments, recording the reviewed version and source.
+- [ ] **Navigation and links:** New pages have a `title`, `description` and navigation entry. Changed links, anchors and assets resolve; removed pages leave no broken internal links.
+- [ ] **Preview:** Changed pages render correctly, including tables, snippets and example controls. Any visual review still needed is noted below.
+- [ ] **Sources:** Attribution and source records are preserved. Generated API changes come from the generator inputs.
+- [ ] **News posts:** `date`, `categories` and `authors` are set, and authors are listed in `content/news/.authors.yml`.
+
+## Validation
+
+<!-- List checks performed and their results. For q examples, identify the runtime
+and version used. Note anything not checked or needing maintainer review.
+CI covers selected pages and links; it is not a whole-site link audit. -->
 
 ## Checking how it looks
 

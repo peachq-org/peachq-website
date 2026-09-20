@@ -65,7 +65,12 @@ matter, then add it to the `nav` in `mkdocs.yml`.
 Explain how to use a feature, its prerequisites and its limitations. Keep project
 history, import mechanics and contributor acknowledgements out of individual guides;
 use the source and sync notes, this contributing guide and the Thanks page for those.
-The existing source-snapshot notices remain the visible version record.
+Keep source and version records in front matter and the source and sync notes;
+do not add a documentation-snapshot banner to each page.
+
+Keep guides concise and focused on usage, explanations and worked examples.
+Where a library API reference exists, link to it near the top of the guide and
+leave exact signatures, option lists and return specifications there.
 
 Distinguish available features from experimental integrations and design previews.
 An experimental integration can be usable while its behaviour is still evolving;
@@ -75,6 +80,24 @@ runtime requirements explicitly when an example cannot work in the browser REPL.
 Keep Markdown useful on its own: name prerequisites in prose, use descriptive link
 text and put example titles and checker markers in the documented hidden comments.
 Do not rely on colours, icons or the rendered page to convey feature status.
+
+### Preparing a pull request
+
+Use the [PR checklist](.github/pull_request_template.md) and remove items that do
+not apply. Describe the user-visible change, list the checks performed and report
+anything that still needs maintainer review.
+
+Run changed examples in the appropriate runtime and record its version in the PR.
+Use the browser REPL for browser-supported features and the native executable for
+native-only features. Transcripts use `q)` for entered commands followed by captured
+output. A manual run does not qualify an example for the `runnable` marker; that
+requires the C project's automated checker described below.
+
+Preview changed pages, including tables, snippets and example controls. Check
+changed links, anchors and assets, including links to any removed pages. Review
+attribution and source records, and regenerate API documentation from its inputs
+rather than editing generated HTML. Use the marked-section convention below for
+PeachQ additions to reference pages.
 
 ## Generating the library API reference
 
@@ -227,9 +250,18 @@ The service is local to this VM and is not enabled at login by default. Use
 pick up Material's chrome, that the REPL, compatibility dashboard and contact
 form survive the build, and that `/docs` and `/news` render as Material.
 
-`test_subdirectory.sh` serves that same build twice -- once from a document root
-and once from a subdirectory -- and checks every link resolves both ways. CI runs
-both on every pull request.
+`test_subdirectory.sh` serves the same build from a document root, a subdirectory
+and a symlinked subdirectory. It checks selected pages and their links in those
+layouts. CI runs both shell suites on every pull request; these checks are not a
+whole-site link or anchor audit and do not validate external URLs.
+
+For changes to the local preview watcher, also run:
+
+```bash
+python3 -m unittest discover -s tests -p test_watch_preview.py
+```
+
+The watcher tests currently run separately from CI.
 
 ## Links must be relative
 
