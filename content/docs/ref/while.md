@@ -52,4 +52,4 @@ Name scope within the brackets is the same as outside them.
 <br>
 
 _Q for Mortals_
-[10.1.7 `while`](/q4m3/10_Execution_Control/#1016-while)
+[10.1.7 `while`](https://code.kx.com/q4m3/10_Execution_Control/#1016-while)

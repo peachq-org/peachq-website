@@ -54,7 +54,9 @@ time       sym  qty px
 10:01:04 ge   150
 ```
 
+<!--
 `aj` is a [multithreaded primitive](../kb/mt-primitives.md).
+-->
 
 !!! tip "There is no requirement for any of the join columns to be keys but the join is faster on keys."
 
@@ -142,4 +144,4 @@ In this case you will have to reduce the number of quotes retrieved by applying 
 <br>
 
 _Q for Mortals_
-[§9.9.8 As-of Joins](/q4m3/9_Queries_q-sql/#998-as-of-joins)
+[§9.9.8 As-of Joins](https://code.kx.com/q4m3/9_Queries_q-sql/#998-as-of-joins)

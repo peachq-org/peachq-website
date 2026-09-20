@@ -123,4 +123,4 @@ Instead, use [Vector Conditional](vector-conditional.md).
 <br>
 
 _Q for Mortals_
-[§10.1.1 Basic Conditional Evaluation](/q4m3/10_Execution_Control/#1011-basic-conditional-evaluation)
+[§10.1.1 Basic Conditional Evaluation](https://code.kx.com/q4m3/10_Execution_Control/#1011-basic-conditional-evaluation)

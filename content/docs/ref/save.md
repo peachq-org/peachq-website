@@ -152,8 +152,8 @@ q)`:sp/ set sp        / equivalent to rsave `sp
 <br>
 
 _Q for Mortals_q4m
-[§11.2 Save and Load on Tables](/q4m3/11_IO/#112-save-and-load-on-tables)
+[§11.2 Save and Load on Tables](https://code.kx.com/q4m3/11_IO/#112-save-and-load-on-tables)
 <br>
 
 _Q for Mortals_q4m
-[§11.3 Splayed Tables](/q4m3/11_IO/#113-splayed-tables)
+[§11.3 Splayed Tables](https://code.kx.com/q4m3/11_IO/#113-splayed-tables)

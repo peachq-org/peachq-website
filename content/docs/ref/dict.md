@@ -76,4 +76,4 @@ type   | `y` is not a simple table
 <br>
 
 _Q for Mortals_
-[§5 Dictionaries](/q4m3/5_Dictionaries/)
+[§5 Dictionaries](https://code.kx.com/q4m3/5_Dictionaries/)

@@ -28,4 +28,4 @@ q)(3;"a")<>(2 3 4;"abc")
 [Comparison](../basics/comparison.md)
 <br>
  
-_Q for Mortals_: [§4.3.1 Equality = and Inequality <>](/q4m3/4_Operators/#431-equality-and-disequality)
+_Q for Mortals_: [§4.3.1 Equality = and Inequality <>](https://code.kx.com/q4m3/4_Operators/#431-equality-and-disequality)

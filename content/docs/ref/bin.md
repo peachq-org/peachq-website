@@ -70,7 +70,9 @@ r[j]=x bin y[j]    for all j in index of y
 
 `bin` is the function used in [`aj`](aj.md) and [`lj`](lj.md).
 
+<!--
 `bin` and `binr` are [multithreaded primitives](../kb/mt-primitives.md).
+-->
 
 ## Tables
 

@@ -236,7 +236,7 @@ q)get[`:test]~get`:ztest
 ```
 
 :fontawesome-solid-database:
-[File compression](../kb/file-compression.md)
+[File compression](https://code.kx.com/q/kb/file-compression/)
 <br>
 :fontawesome-solid-book:
 [`.z.zd` zip defaults](../ref/dotz.md#zzd-compressionencryption-defaults)
@@ -270,7 +270,7 @@ zipLevel          | 6i
 [`set`](../ref/get.md#set)
 <br>
 :fontawesome-solid-database:
-[File compression](../kb/file-compression.md)
+[File compression](https://code.kx.com/q/kb/file-compression/)
 <br>
 :fontawesome-solid-database:
 [Data at rest encryption (DARE)](../kb/dare.md)

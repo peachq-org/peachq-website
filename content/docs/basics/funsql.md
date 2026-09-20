@@ -883,7 +883,7 @@ These instances are rare and a developer should be able to spot when they occur.
 Functional select also has ranks 5 and 6; i.e. fifth and sixth arguments.
 
 :fontawesome-regular-hand-point-right:
-_Q for Mortals_: [§9.12.1 Functional queries](/q4m3/9_Queries_q-sql/#9121-functional-select)
+_Q for Mortals_: [§9.12.1 Functional queries](https://code.kx.com/q4m3/9_Queries_q-sql/#9121-functional-select)
 
 We also cover these with the `buildQuery` function.
 

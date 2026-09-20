@@ -225,7 +225,7 @@ see [qSQL](../basics/qsql.md#cond).
 <br>
 
 _Q for Mortals_
-[§9.3 The `select` Template](/q4m3/9_Queries_q-sql/#93-the-select-template) 
+[§9.3 The `select` Template](https://code.kx.com/q4m3/9_Queries_q-sql/#93-the-select-template) 
 
 <!-- PEACHQ-SPECIFIC:BEGIN select-files | version=0.84 | source=native file checks -->
 

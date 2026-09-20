@@ -43,7 +43,9 @@ Where `x` is:
 
 Casting does not change the underlying bit pattern of the data, only how it is represented.
 
+<!--
 `$`(cast) is a [multithreaded primitive](../kb/mt-primitives.md).
+-->
 
 ## Iteration
 
@@ -214,4 +216,4 @@ q)`float$0Wh
 <br>
 
 _Q for Mortals_
-[§7.2 Cast](/q4m3/7_Transforming_Data/#731-data-to-strings)
+[§7.2 Cast](https://code.kx.com/q4m3/7_Transforming_Data/#731-data-to-strings)

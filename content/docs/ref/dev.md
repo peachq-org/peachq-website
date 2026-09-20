@@ -47,7 +47,9 @@ a| 1.247219
 b| 2
 ```
 
+<!--
 `dev` is a [multithreaded primitive](../kb/mt-primitives.md).
+-->
 
 ## `mdev`
 
@@ -181,7 +183,9 @@ a| 1.527525
 b| 2.828427
 ```
 
+<!--
 `sdev` is a [multithreaded primitive](../kb/mt-primitives.md).
+-->
 
 ----
 
@@ -191,7 +195,7 @@ b| 2.828427
 [Mathematics](../basics/math.md)
 <br>
 
-[Sliding windows](../kb/programming-idioms.md#how-do-i-apply-a-function-to-a-sequence-sliding-window)
+[Sliding windows](https://code.kx.com/q/kb/programming-idioms/#how-do-i-apply-a-function-to-a-sequence-sliding-window)
 <br>
 
 [Standard deviation](https://en.wikipedia.org/wiki/Standard_deviation "Wikipedia"),

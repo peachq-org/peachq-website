@@ -54,7 +54,9 @@ domain: B G X H I J E F C S P M D Z N U V T
 range:  f . f f f f f f f . f f f f f f f f
 ```
 
+<!--
 `avg` is a [multithreaded primitive](../kb/mt-primitives.md).
+-->
 
 ## `avgs`
 
@@ -205,7 +207,9 @@ T | f . f f f f f f f . f f f f f f f f
 
 Range: `f`
 
+<!--
 `wavg` is a [multithreaded primitive](../kb/mt-primitives.md).
+-->
 
 ## Implicit iteration
 

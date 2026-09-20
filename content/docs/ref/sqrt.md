@@ -32,7 +32,9 @@ q)sqrt 101b
 1 0 1f
 ```
 
+<!--
 `sqrt` is a [multithreaded primitive](../kb/mt-primitives.md).
+-->
 
 ## Implicit iteration
 

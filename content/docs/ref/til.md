@@ -31,7 +31,9 @@ q)til 5f
 
 `til` and [`key`](key.md) are synonyms, but the above usage is conventionally reserved to `til`.
 
+<!--
 `til` is a [multithreaded primitive](../kb/mt-primitives.md).
+-->
 
 ----
 

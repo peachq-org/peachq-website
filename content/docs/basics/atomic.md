@@ -166,4 +166,4 @@ q)upper ("quick";("brown";"fox");"x")
 ----
 :fontawesome-solid-street-view:
 _Q for Mortals_
-[§6.6 Atomic Functions](/q4m3/6_Functions/#66-atomic-functions)
+[§6.6 Atomic Functions](https://code.kx.com/q4m3/6_Functions/#66-atomic-functions)

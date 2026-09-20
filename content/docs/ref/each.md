@@ -53,7 +53,7 @@ Parallel processing
 <br>
 
 _Q for Mortals_
-[A.49 `peach`](/q4m3/A_Built-in_Functions/#a68-peach)
+[A.49 `peach`](https://code.kx.com/q4m3/A_Built-in_Functions/#a68-peach)
 
 ## Higher-rank values
 

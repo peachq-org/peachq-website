@@ -46,7 +46,9 @@ q)not (0W;-0w;0N)
 
 An atomic function. 
 
+<!--
 `not` is a [multithreaded primitive](../kb/mt-primitives.md).
+-->
 
 ---
 
@@ -57,4 +59,4 @@ An atomic function.
 <br>
 
 _Q for Mortals_
-[§4.3.2 Not Zero `not`](/q4m3/4_Operators/#432-not-zero-not)
+[§4.3.2 Not Zero `not`](https://code.kx.com/q4m3/4_Operators/#432-not-zero-not)

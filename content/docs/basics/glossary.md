@@ -139,7 +139,7 @@ A communication handle specifies a network resource.
 <br>
 :fontawesome-solid-street-view:
 _Q for Mortals_
-[§11.6.1 Communication Handle](/q4m3/11_IO/#1161-communication-handle)
+[§11.6.1 Communication Handle](https://code.kx.com/q4m3/11_IO/#1161-communication-handle)
 
 
 ## Comparison tolerance
@@ -155,7 +155,7 @@ Because floating-point values resulting from computations are usually only appro
 A list of vectors of uniform type, e.g. `("quick";"brown";"fox")`.
 
 :fontawesome-solid-book-open:
-[Compound columns in tables](../kb/faq.md#compound-columns)
+[Compound columns in tables](https://code.kx.com/q/kb/faq/#compound-columns)
 
 
 ## Conform

@@ -119,7 +119,7 @@ q).Q.addmonths[2006.10.29;4]
 [Mathematics with temporals](../basics/math.md#mathematics-with-temporals)
 <br>
 
-[How to handle temporal data in q](../kb/temporal-data.md)
+[How to handle temporal data in q](https://code.kx.com/q/kb/temporal-data/)
 
 [](){#addr-ip-address}
 
@@ -352,7 +352,7 @@ q).Q.chk[`:hdb]
     check the process has write permissions for that filesystem.
 
 _Q for Mortals_
-[§14.5.2 `.Q.chk`](/q4m3/14_Introduction_to_Kdb+/#1457-qchk)
+[§14.5.2 `.Q.chk`](https://code.kx.com/q4m3/14_Introduction_to_Kdb+/#1457-qchk)
 
 ## `cn` (count partitioned table)
 
@@ -653,17 +653,17 @@ Tables splayed across a directory must be fully enumerated and not keyed. The so
 [`save`](save.md)
 <br>
 
-[Enumerating symbol columns in a table](../kb/splayed-tables.md#enumerating-symbol-columns)
+[Enumerating symbol columns in a table](https://code.kx.com/q/kb/splayed-tables/#enumerating-symbol-columns)
 <br>
 
-[Splayed tables](../kb/splayed-tables.md)
+[Splayed tables](https://code.kx.com/q/kb/splayed-tables/)
 <br>
 
 [Working with sym files](../wp/symfiles.md#enumeration)
 <br>
 
 _Q for Mortals_
-[§14.2.8 Working with sym files](/q4m3/14_Introduction_to_Kdb+/)
+[§14.2.8 Working with sym files](https://code.kx.com/q4m3/14_Introduction_to_Kdb+/)
 
 [](){#f-format}
 
@@ -876,7 +876,7 @@ Where
 
 Reads `z`-sized lumps of complete `"\n"` delimited records from a pipe and applies a function to each record. This enables you to implement a streaming algorithm for various purposes such as converting a large compressed CSV file into an on-disk kdb+ database without holding the data in memory all at once or using disk space required for the uncompressed file.
 
-[Streaming data from named pipes](../kb/named-pipes.md#streaming)
+[Streaming data from named pipes](https://code.kx.com/q/kb/named-pipes/#streaming)
 
 !!! tip "`.Q.fps` is a projection of `.Q.fpn` with the chunk size set to 131000 bytes."
 
@@ -1200,7 +1200,7 @@ N.B. HTTPS is not supported across proxies which require `CONNECT`.
 Since 4.0 2019.10.22, gzip compression is supported. Requests include the HTTP header "Accept-Encoding: gzip".
 The server then decides whether to gzip the returned payload, which is uncompressed prior to .Q.hg returning.
 
-[HTTP](../kb/http.md)
+[HTTP](https://code.kx.com/q/kb/http/)
 
 [](){#host-hostname}
 
@@ -1288,7 +1288,7 @@ q).Q.hp["http://google.com";.h.ty`json]"my question"
 "<!DOCTYPE html>\n<html lang=en>\n  <meta charset=utf-8>\n  <meta name=viewpo..
 ```
 
-[HTTP](../kb/http.md)
+[HTTP](https://code.kx.com/q/kb/http/)
 
 ## `id` (sanitize)
 
@@ -1842,7 +1842,7 @@ A list of the values of the partition domain: the values corresponding to the sl
 In partitioned DBs, [`.Q.PV`](#pv-partition-values) as modified by [`.Q.view`](#view-subview).
 
 _Q for Mortals_
-[§14.5.3 `.Q.pv`](/q4m3/14_Introduction_to_Kdb+/)
+[§14.5.3 `.Q.pv`](https://code.kx.com/q4m3/14_Introduction_to_Kdb+/)
 
 ## `PV` (partition values)
 
@@ -2204,7 +2204,7 @@ Since 4.1t 2022.03.25,4.0 2023.05.26 this would signal an `invalid partition fil
 `.Q.view`, also used when loading an hdb, now utilizes threads to load .d files (column names) since 4.1t 2023.04.17.
 
 _Q for Mortals_
-[§14.5.8 `Q.view`](/q4m3/14_Introduction_to_Kdb+/)
+[§14.5.8 `Q.view`](https://code.kx.com/q4m3/14_Introduction_to_Kdb+/)
 
 ## `vp` (missing partitions)
 

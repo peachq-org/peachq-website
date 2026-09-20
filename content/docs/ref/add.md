@@ -34,7 +34,9 @@ msoft| 3005 103
 
 Add is generally faster than [Subtract](subtract.md).
 
+<!--
 `+` is a [multithreaded primitive](../kb/mt-primitives.md).
+-->
 
 ## Implicit iteration
 
@@ -128,4 +130,4 @@ q)type 1i+55
 <br>
 
 _Q for Mortals_
-[§4.9.2 Temporal Arithmetic](/q4m3/4_Operators/#492-temporal-arithmetic)
+[§4.9.2 Temporal Arithmetic](https://code.kx.com/q4m3/4_Operators/#492-temporal-arithmetic)

@@ -25,7 +25,9 @@ q)"sat" or "cow"
 "sow"
 ```
 
+<!--
 `or` is a [multithreaded primitive](../kb/mt-primitives.md).
+-->
 
 :fontawesome-solid-book:
 [Greater](greater.md)

@@ -87,5 +87,5 @@ cast  | item/s of `y` not in `d`
 <br>
 
 _Q for Mortals_
-[§7.5 Enumerations](/q4m3/7_Transforming_Data/#75-enumerations) ,
-[§8.5 Foreign Keys and Virtual Columns](/q4m3/8_Tables/#85-foreign-keys-and-virtual-columns)
+[§7.5 Enumerations](https://code.kx.com/q4m3/7_Transforming_Data/#75-enumerations) ,
+[§8.5 Foreign Keys and Virtual Columns](https://code.kx.com/q4m3/8_Tables/#85-foreign-keys-and-virtual-columns)

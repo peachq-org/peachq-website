@@ -36,7 +36,9 @@ q)"abcde"?"d"
 3
 ```
 
+<!--
 `?`(find) is a [multithreaded primitive](../kb/mt-primitives.md).
+-->
 
 
 ## Type-specific

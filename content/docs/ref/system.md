@@ -55,7 +55,7 @@ q)system "pwd"
  This transformation makes it impractical to capture binary data from the result of the system call. 
  Redirecting the output to a 
  [file](read1.md) or 
- [fifo](../kb/named-pipes.md) for explicit ingestion may be appropriate in such cases.
+ [fifo](https://code.kx.com/q/kb/named-pipes/) for explicit ingestion may be appropriate in such cases.
 
 ### Directing output to a file
 

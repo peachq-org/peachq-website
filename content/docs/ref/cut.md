@@ -56,7 +56,9 @@ a b
     5 6
     ```
 
+<!--
 `_`(cut) is a [multithreaded primitive](../kb/mt-primitives.md).
+-->
 
 !!! tip "Avoid confusion with underscores in names: separate the Cut operator with spaces."
 

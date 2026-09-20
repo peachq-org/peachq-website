@@ -133,7 +133,7 @@ q)csv 0:([]("foo\nbar";"baz"))
     ```
 
 _Q for Mortals_
-[§11.4.3 Preparing Text](/q4m3/11_IO/#1143-preparing-text)
+[§11.4.3 Preparing Text](https://code.kx.com/q4m3/11_IO/#1143-preparing-text)
 
 ## Save Text
 
@@ -353,7 +353,7 @@ q)0N!"S=*,"0:"a=\"hello,world\",b=1";
 ```
 
 _Q for Mortals_
-[§11.5.3 Key-Value Records](/q4m3/11_IO/#1153-key-value-records)
+[§11.5.3 Key-Value Records](https://code.kx.com/q4m3/11_IO/#1153-key-value-records)
 
 ## Column types and formats
 
@@ -390,4 +390,4 @@ T        time        hh[:]mm[:]ss[[.]ddd]
 <br>
 
 _Q for Mortals_
-[§11.4.1 Reading and Writing Text Files](/q4m3/11_IO/#1141-reading-and-writing-text-files)
+[§11.4.1 Reading and Writing Text Files](https://code.kx.com/q4m3/11_IO/#1141-reading-and-writing-text-files)

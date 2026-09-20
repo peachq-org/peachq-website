@@ -74,8 +74,8 @@ The type is a short int:
 <br>
 :fontawesome-solid-book-open:
 :fontawesome-solid-graduation-cap:
-[Temporal data](../kb/temporal-data.md),
-[Timezones](../kb/timezones.md)
+[Temporal data](https://code.kx.com/q/kb/temporal-data/),
+[Timezones](https://code.kx.com/q/kb/timezones/)
 
 
 ## Basic types
@@ -115,7 +115,7 @@ q)"Zürich"
 ```
 
 :fontawesome-solid-graduation-cap:
-[Unicode](../kb/unicode.md)
+[Unicode](https://code.kx.com/q/kb/unicode/)
 
 
 ### Temporal
@@ -193,7 +193,7 @@ A back tick without characters after it represents the _empty symbol_: `` ` ``.
     ```
 
 :fontawesome-solid-street-view:
-_Q for Mortals_: [§2.4 Basic Data Types – Atoms](/q4m3/2_Basic_Data_Types_Atoms/#24-text-data)
+_Q for Mortals_: [§2.4 Basic Data Types – Atoms](https://code.kx.com/q4m3/2_Basic_Data_Types_Atoms/#24-text-data)
 
 
 ### Filepaths

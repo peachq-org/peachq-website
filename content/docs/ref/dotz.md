@@ -64,7 +64,7 @@ Prior to kdb+, `.z` was a pseudo-namespace that could not be retrieved or enumer
 <br>
 
 _Q for Mortals:_
-[§11.8 Interprocess Communication](/q4m3/11_IO/#116-interprocess-communication)
+[§11.8 Interprocess Communication](https://code.kx.com/q4m3/11_IO/#116-interprocess-communication)
 
 ## `.z.a` (IP address)
 
@@ -165,7 +165,7 @@ An HTTP callback to handle the original request is not called.
 Fallback to [basic access authentication](https://en.wikipedia.org/wiki/Basic_access_authentication#Client_side), where the username/password are base64 decoded and processed via the [`-u`](../basics/cmdline.md#-u-usr-pwd-local)/[`-U`](../basics/cmdline.md#-u-usr-pwd) file and [`.z.pw`](#zpw-validate-user) (if defined).
 If the user is not permitted, the client is sent a default 401 HTTP unauthorized response. Since V4.0 2021.07.12.
 
-[HTTP](../kb/http.md)
+[HTTP](https://code.kx.com/q/kb/http/)
 
 [](){#zb-dependencies}
 
@@ -694,11 +694,11 @@ Since V3.6 and V3.5 2019.11.13, the default implementation calls [`.h.val`](doth
 [`.h` namespace](doth.md)
 <br>
 
-[HTTP](../kb/http.md)
+[HTTP](https://code.kx.com/q/kb/http/)
 <br>
 
 _Q for Mortals_
-[§11.10.1 HTTP Connections](/q4m3/11_IO/#1171-http-connections)
+[§11.10.1 HTTP Connections](https://code.kx.com/q4m3/11_IO/#1171-http-connections)
 
 ## `.z.pi` (input)
 
@@ -753,7 +753,7 @@ For the POST method use [.z.pp](#zpp-http-post), and for GET use [.z.ph](#zph-ht
 
 [`.z.ph`](#zph-http-get) (HTTP get), [`.z.pp`](#zpp-http-post) (HTTP post), [`.z.ac`](#zac-http-auth) (HTTP auth)
 <br>
-[HTTP](../kb/http.md)
+[HTTP](https://code.kx.com/q/kb/http/)
 
 ## `.z.po` (open)
 
@@ -770,7 +770,7 @@ Its argument is the handle and is typically used to build a dictionary of handle
 <br>
 
 _Q for Mortals_
-[§11.8 Interprocess Communication](/q4m3/11_IO/#116-interprocess-communication)
+[§11.8 Interprocess Communication](https://code.kx.com/q4m3/11_IO/#116-interprocess-communication)
 
 ## `.z.pp` (HTTP post)
 
@@ -792,11 +792,11 @@ Allows empty requests since 4.1t 2021.03.30 (previously signalled `length` error
 [`.h` namespace](doth.md)
 <br>
 
-[HTTP](../kb/http.md)
+[HTTP](https://code.kx.com/q/kb/http/)
 <br>
 
 _Q for Mortals_
-[§11.10.1 HTTP Connections](/q4m3/11_IO/#1171-http-connections)
+[§11.10.1 HTTP Connections](https://code.kx.com/q4m3/11_IO/#1171-http-connections)
 
 ## `.z.pq` (qcon)
 
@@ -1164,7 +1164,7 @@ q).z.z
 .z.zd:dict
 ```
 
-Integers `lbs`, `alg`, and `lvl` are [compression parameters](../kb/file-compression.md) and/or [encryption parameters](../kb/dare.md#configuration).
+Integers `lbs`, `alg`, and `lvl` are [compression parameters](https://code.kx.com/q/kb/file-compression/) and/or [encryption parameters](../kb/dare.md#configuration).
 They set default values for logical block size, compression/encryption algorithm and compression level that apply when saving to files.
 Encryption available since 4.0 2019.12.12.
 
@@ -1227,7 +1227,7 @@ q)\x .z.zd            / clear zip defaults
 
 [`-21!x`](../basics/internal.md#-21x-compressionencryption-stats) (compression/encryption stats), [`set`](get.md#set) (per file/dir compression)
 
-[File compression](../kb/file-compression.md)
+[File compression](https://code.kx.com/q/kb/file-compression/)
 <br>
 
 [Data at rest encryption (DARE)](../kb/dare.md)
@@ -1250,4 +1250,4 @@ Shorthand forms:
 <br>
 
 _Q for Mortals:_
-[§11.8 Interprocess Communication](/q4m3/11_IO/#116-interprocess-communication)
+[§11.8 Interprocess Communication](https://code.kx.com/q4m3/11_IO/#116-interprocess-communication)

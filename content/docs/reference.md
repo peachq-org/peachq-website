@@ -5,8 +5,7 @@ description: Find q concepts, syntax and functions in the inherited reference.
 
 # q language reference
 
-These pages are the inherited q reference. Their source text is unchanged in this
-first PeachQ documentation round. Consult [PeachQ compatibility](peachq/compatibility.md)
+These pages are adapted from the inherited q reference. Consult [PeachQ compatibility](peachq/compatibility.md)
 for differences and the [coverage dashboard](/compatibility) for measured progress.
 Some links within the inherited snapshot refer to sections that have not been imported.
 
