@@ -391,3 +391,26 @@ SEARCH_DELIVERY_URL=http://peachq.me node tests/test_search_delivery.cjs
 This checks glyph and API results, hashed URLs, compressed responses and zero
 index transfer on a second documentation page. Use the site's root URL, including
 any mirror prefix. Leave browser caching enabled when checking transfers manually.
+
+### Browser REPL sample files
+
+Add files under `static/repl/files/`; the build generates `repl/files.json`
+from that directory, including nested paths and content hashes. No separate file
+list needs updating. The static-only preview refresh regenerates it too.
+Files download only when the REPL runtime starts, before its controls are enabled.
+For example, `static/repl/files/dowjones.csv` becomes `/dowjones.csv` in the
+browser's temporary filesystem; `examples/dowjones.q` can be loaded with
+`\l examples/dowjones.q`. Changes made in that filesystem last for the current
+page session only. Startup failures report that samples are unavailable while
+leaving ordinary REPL commands usable. HTTP operations inside q are separate
+runtime functionality and are not enabled by this loader.
+
+The unmodified CSV and JSON samples were retrieved on 2026-09-20 from:
+
+- <https://www.timestored.com/data/sample/dowjones.csv>
+- <https://www.timestored.com/data/sample/price.json>
+
+These are historical examples, not current market data. The two `.q` scripts
+are website examples. Keep provenance notes here, outside the mounted directory.
+To test against the current browser runtime after building, fetch development
+fixtures and run `npm run test:repl-files`.

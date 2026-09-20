@@ -69,6 +69,15 @@ if (preg_match('#^(.*)/help\.(md|csv)$#', $uri, $m) && is_file($root . $m[1] . '
     return true;
 }
 
+// The REPL page shares its URL prefix with downloadable samples.
+if (preg_match('#^(.*)/repl/?$#', $uri, $m) && is_file($root . $m[1] . '/repl.php')) {
+    $file = $root . $m[1] . '/repl.php';
+    peachq_set_script_name($file);
+    chdir(dirname($file));
+    require $file;
+    return true;
+}
+
 // An existing directory: serve its index.
 if (is_dir($path) && peachq_serve_dir($path)) {
     return true;

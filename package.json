@@ -2,7 +2,8 @@
   "name": "peachq-website-checks",
   "private": true,
   "scripts": {
-    "test:search": "node tests/test_docs_search.cjs"
+    "test:search": "node tests/test_docs_search.cjs",
+    "test:repl-files": "node tests/test_repl_files.cjs"
   },
   "devDependencies": {
     "playwright": "1.61.1"
