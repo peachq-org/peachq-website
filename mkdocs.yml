@@ -362,6 +362,7 @@ markdown_extensions:
   - toc:
       permalink: true
   - pymdownx.highlight
+  - pymdownx.details
   - pymdownx.snippets:
       base_path: [content]
       check_paths: true
