@@ -228,3 +228,22 @@ q)(`:ztbl/;dic) set t               / splay table compressed
 <br>
 
 [Data at rest encryption (DARE)](../kb/dare.md)
+
+<!-- PEACHQ-SPECIFIC:BEGIN get-set-files | version=0.84 | source=native file checks -->
+
+## PeachQ file formats
+
+!!! info "PeachQ-specific additions"
+    A `.csv` or `.json` suffix makes `set` write text and `get` read a table.
+
+```q
+tbl:([]qty:100 250;price:171.4 402.3)
+`:a.csv set tbl
+`:a.json set tbl
+get `:a.json
+```
+
+Parquet files also support `set` and `get` after `\l pq`, using PeachQ's experimental native DuckDB integration; DuckDB must be available.
+See [Reading CSV](../peachq/csv.md), [Reading JSON](../peachq/json.md), [Parquet](../peachq/parquet.md) and [Handles and resources](../peachq/handles.md).
+
+<!-- PEACHQ-SPECIFIC:END get-set-files -->
