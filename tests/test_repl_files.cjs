@@ -5,6 +5,7 @@ const os = require('node:os');
 const path = require('node:path');
 const {spawn} = require('node:child_process');
 const {chromium} = require('playwright');
+const {checkCommand, checkQFiles} = require('./repl-console.cjs');
 const root = path.resolve(__dirname, '..');
 const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'peachq-files-test-'));
 fs.symlinkSync(path.join(root, 'site'), path.join(temporary, 'mirror'), 'dir');
@@ -36,14 +37,9 @@ async function serve(documentRoot) {
       await page.goto(origin + prefix + suffix);
       await page.waitForFunction(() => document.querySelector('#replStatus').getAttribute('aria-label') === 'runtime ready');
       assert.equal(await page.evaluate(() => document.baseURI), origin + prefix + '/');
-      assert.equal(await page.evaluate(() => evalWasm('count get `:dowjones.csv')), '649');
-      assert.equal(await page.evaluate(() => evalWasm('count get `:price.json')), '2628');
-      for (const script of ['dowjones', 'prices']) {
-        const result = await page.evaluate(script => evalWasm('\\l examples/' + script + '.q'), script);
-        assert(!result.startsWith("'"), result);
-      }
-      assert.equal(await page.evaluate(() => evalWasm('count dowjones')), '649');
-      assert.equal(await page.evaluate(() => evalWasm('count prices')), '2628');
+      // All q files/commands share this page and runtime. The second URL only
+      // checks routing; it does not repeat the q suite.
+      if (suffix !== '/repl/') await checkQFiles(page);
       // Reloading the sample installer never replaces a live user's edited file.
       assert.equal(await page.evaluate(async () => {
         runtime.FS.writeFile('/dowjones.csv', 'user data');
@@ -55,12 +51,12 @@ async function serve(documentRoot) {
     await page.goto(origin + prefix + '/repl');
     await page.waitForFunction(() => document.querySelector('#replStatus').getAttribute('aria-label') === 'runtime ready');
     assert((await page.locator('#replOutput').innerText()).includes('Sample files unavailable'));
-    assert.equal(await page.evaluate(() => evalWasm('1+1')), '2');
+    await checkCommand(page, '1+1', '2');
     assert.equal(await page.evaluate(() => runtime.FS.analyzePath('/dowjones.csv').exists), false);
     await page.close();
     server.kill(); server = null;
   }
-  console.log('REPL sample files: real WASM, root/mirror routes, scripts, lazy loading and failure handling passed');
+  console.log('REPL checks: q console output, root/mirror routes, deferred downloads and failure handling passed');
 })().catch(error => {console.error(error);process.exitCode=1;}).finally(async()=>{
   if (browser) await browser.close();
   if (server) server.kill();
