@@ -226,3 +226,23 @@ see [qSQL](../basics/qsql.md#cond).
 
 _Q for Mortals_
 [§9.3 The `select` Template](/q4m3/9_Queries_q-sql/#93-the-select-template) 
+
+<!-- PEACHQ-SPECIFIC:BEGIN select-files | version=0.84 | source=native file checks -->
+
+## PeachQ file resources
+
+!!! info "PeachQ-specific additions"
+    `select` accepts a file symbol as its table source; the suffix selects the reader.
+
+```q
+select from `:a.csv
+select from `:a.json
+\l pq
+select from `:a.parquet
+select qty from `:a.parquet where price>200
+```
+
+These queries require existing files. Parquet uses PeachQ's experimental native DuckDB integration and requires DuckDB to be available.
+See [Loading a file](../peachq/loading.md), [Parquet](../peachq/parquet.md) and [Handles and resources](../peachq/handles.md#resources-as-tables).
+
+<!-- PEACHQ-SPECIFIC:END select-files -->
