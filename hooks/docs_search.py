@@ -4,6 +4,7 @@ Also callable after a static-only preview refresh. No runtime/source checkout or
 network access is needed. The help destination map remains shared with REPL help.
 """
 import csv
+import hashlib
 import json
 import re
 import shutil
@@ -88,6 +89,55 @@ class Page(HTMLParser):
 
 def plain(parts):
     return ' '.join(' '.join(parts).split())
+
+
+def fingerprint_search(site):
+    """Version data and its consumers together; retain originals for refreshes.
+
+    Material's pinned bundle uses a literal index URL. Fail on an upstream
+    change rather than silently reverting to an unversioned download.
+    """
+    def hashed(path, content, stem, suffix):
+        digest = hashlib.sha256(content).hexdigest()[:16]
+        target = path.parent / (stem + '.' + digest + suffix)
+        target.write_bytes(content)
+        return target
+
+    replacements = {}
+    for name in ('search_index', 'q_lookup'):
+        source = site / 'search' / (name + '.json')
+        target = hashed(source, source.read_bytes(), name, '.json')
+        replacements['search/' + source.name] = 'search/' + target.name
+
+    scripts = list((site / 'assets/javascripts').glob('bundle.*.min.js'))
+    originals = [p for p in scripts if 'search/search_index.json' in p.read_text(encoding='utf-8')]
+    if scripts and len(originals) != 1:
+        raise ValueError('Expected one Material bundle with the search index URL')
+    rewrites = []
+    if originals:
+        source = originals[0]
+        content = source.read_text(encoding='utf-8').replace(
+            'search/search_index.json', replacements['search/search_index.json'])
+        target = hashed(source, content.encode(), 'bundle', '.min.js')
+        rewrites.append((r'assets/javascripts/bundle\.[a-f0-9]+\.min\.js',
+                         'assets/javascripts/' + target.name))
+    source = site / 'js/docs-search.js'
+    if source.exists():
+        content = source.read_text(encoding='utf-8')
+        if 'search/q_lookup.json' not in content:
+            raise ValueError('Expected the q lookup URL in docs-search.js')
+        content = content.replace('search/q_lookup.json', replacements['search/q_lookup.json'])
+        target = hashed(source, content.encode(), 'docs-search', '.js')
+        rewrites.append((r'js/docs-search(?:\.[a-f0-9]+)?\.js', 'js/' + target.name))
+    for page in site.rglob('*.html'):
+        content = page.read_text(encoding='utf-8')
+        updated = content
+        for pattern, replacement in rewrites:
+            # Rewrite script attributes, never example text mentioning a URL.
+            updated = re.sub(r'(src=["\'][^"\']*?)' + pattern + r'(?=["\'])',
+                             lambda match: match[1] + replacement, updated)
+        if updated != content:
+            page.write_text(updated, encoding='utf-8')
 
 
 def build(site, root=ROOT, strict=True):
@@ -204,6 +254,7 @@ def build(site, root=ROOT, strict=True):
         {'version': 1, 'source': 'help-source.json', 'license': 'help-LICENSE.txt',
          'entries': list(entries.values())}, ensure_ascii=False,
         separators=(',', ':')) + '\n', encoding='utf-8')
+    fingerprint_search(site)
 
 
 @event_priority(-100)

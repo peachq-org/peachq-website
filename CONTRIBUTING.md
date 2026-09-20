@@ -366,3 +366,28 @@ Browser checks exercise glyphs, keywords, API prose queries, keyboard controls,
 mobile layout and the same build installed under a subdirectory. Python checks
 validate every added result's page/fragment and ensure repeated index updates
 replace old API entries. Node and Playwright are test dependencies only.
+
+### Search caching
+
+The search build emits content-hashed JSON indexes and JavaScript consumers.
+Unchanged content retains its URL; changed indexes update the script URLs in
+rendered pages. Keep the unhashed build inputs for static-only preview refreshes.
+The pinned Material bundle's index URL is checked during the build; review this
+integration when upgrading Material.
+
+`static/.htaccess` is copied into the published site, including mirror installs.
+It enables JSON gzip compression when Apache mod_deflate is available and gives
+hashed search assets immutable caching. The local preview preserves this caching
+while disabling caching for unversioned assets. Check actual response headers and
+browser transfers when changing these rules; the PHP development server does not
+apply `.htaccess`.
+
+Against an Apache preview or deployed site, verify compression and cache reuse:
+
+```bash
+SEARCH_DELIVERY_URL=http://peachq.me node tests/test_search_delivery.cjs
+```
+
+This checks glyph and API results, hashed URLs, compressed responses and zero
+index transfer on a second documentation page. Use the site's root URL, including
+any mirror prefix. Leave browser caching enabled when checking transfers manually.

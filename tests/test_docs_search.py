@@ -80,6 +80,34 @@ class SearchTests(unittest.TestCase):
                          (ROOT / 'data/help/LICENSE').read_bytes())
         self.assertEqual(json.loads((self.site / 'search/help-source.json').read_text(encoding='utf-8')), metadata)
 
+    def test_content_hashes_change_only_with_content(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            site = Path(temporary)
+            for directory in ('search', 'js', 'assets/javascripts', 'docs'):
+                (site / directory).mkdir(parents=True)
+            for name in ('search_index', 'q_lookup'):
+                (site / 'search' / (name + '.json')).write_text('{}')
+            (site / 'assets/javascripts/bundle.12345678.min.js').write_text(
+                'fetch("search/search_index.json")')
+            (site / 'js/docs-search.js').write_text('fetch("search/q_lookup.json")')
+            html = site / 'docs/index.html'
+            html.write_text('<script src="../assets/javascripts/bundle.12345678.min.js"></script>'
+                            '<script src="../js/docs-search.js"></script>'
+                            '<code>js/docs-search.js</code>')
+            search.fingerprint_search(site)
+            first = html.read_text()
+            self.assertNotIn('bundle.12345678.min.js', first)
+            self.assertNotIn('"../js/docs-search.js"', first)
+            self.assertIn('<code>js/docs-search.js</code>', first)
+            search.fingerprint_search(site)
+            self.assertEqual(first, html.read_text())
+            (site / 'search/search_index.json').write_text('{"changed":true}')
+            search.fingerprint_search(site)
+            self.assertNotEqual(first, html.read_text())
+            for path in (site / 'search').glob('*.*.json'):
+                self.assertEqual(path.name.split('.')[1],
+                                 hashlib.sha256(path.read_bytes()).hexdigest()[:16])
+
     def test_rebuild_replaces_api_entries(self):
         with tempfile.TemporaryDirectory() as temporary:
             site = Path(temporary)

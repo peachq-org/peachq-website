@@ -78,12 +78,12 @@ def build(static_only=False):
                 if source.exists():
                     shutil.copytree(source, output / name, dirs_exist_ok=True)
             with (output / '.htaccess').open('a') as config:
-                config.write('\n# Local preview only: always fetch current assets.\n'
+                config.write('\n# Local preview only: refresh unversioned assets; cache content-hashed search assets.\n'
                              '<IfModule mod_expires.c>\nExpiresActive Off\n</IfModule>\n'
                              '<IfModule mod_headers.c>\n'
                              'Header unset Expires\n'
-                             'Header always set Cache-Control "no-store"\n'
-                             'Header unset Cache-Control\n</IfModule>\n')
+                             'Header always set Cache-Control "no-store" env=!PEACHQ_SEARCH_CACHE\n'
+                             'Header unset Cache-Control env=!PEACHQ_SEARCH_CACHE\n</IfModule>\n')
             TARGET.mkdir(parents=True, exist_ok=True)
             # No owner/mode changes: the target is a VirtualBox shared folder.
             run(['rsync', '-rc', '--delete-delay', '--delay-updates',
