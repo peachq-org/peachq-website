@@ -86,7 +86,9 @@ q)`a`b,`sym2$`c
 `a`b`c
 ```
 
+<!--
 `,`(join) is a [multithreaded primitive](../kb/mt-primitives.md).
+-->
 
 
 ### Dictionaries

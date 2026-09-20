@@ -110,7 +110,7 @@ v[vx[0]]
 
 
 _Q for Mortals_
-[§6.5.3 Indexing at Depth](/q4m3/6_Functions/#653-indexing-at-depth)
+[§6.5.3 Indexing at Depth](https://code.kx.com/q4m3/6_Functions/#653-indexing-at-depth)
 
 
 ## Nullaries
@@ -452,7 +452,7 @@ For most purposes, you will want `e` to be a function.
 
 
 _Q for Mortals_
-[§10.1.9 Protected Evaluation](/q4m3/10_Execution_Control/#1018-protected-evaluation)
+[§10.1.9 Protected Evaluation](https://code.kx.com/q4m3/10_Execution_Control/#1018-protected-evaluation)
 
 
 ## Errors signalled

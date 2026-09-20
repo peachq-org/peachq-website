@@ -23,7 +23,9 @@ q)"sat"&"cow"
 "cat"
 ```
 
+<!--
 `&` is a [multithreaded primitive](../kb/mt-primitives.md).
+-->
 
 ## Flags
 
@@ -152,4 +154,4 @@ The possible range of output types are `bcdefhijmnptuvxz`.
 <br>
 
 _Q for Mortals_
-[§4.5 Greater and Lesser](/q4m3/4_Operators/#45-greater-and-lesser)
+[§4.5 Greater and Lesser](https://code.kx.com/q4m3/4_Operators/#45-greater-and-lesser)

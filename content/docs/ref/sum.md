@@ -77,7 +77,9 @@ q)sum each flip(0n 8;8 0n) /do this to fall back to vector case
         q)sum a
         49999897.181933172
 
+<!--
 `sum` is a [multithreaded primitive](../kb/mt-primitives.md).
+-->
 
 ## `sums`
 
@@ -162,7 +164,7 @@ q)(1 2;3 4) wsum (500 400;300 200)
 
 `wsum` is an aggregate function, equivalent to `{sum x*y}`.
 
-[Sliding windows](../kb/programming-idioms.md#how-do-i-apply-a-function-to-a-sequence-sliding-window)
+[Sliding windows](https://code.kx.com/q/kb/programming-idioms/#how-do-i-apply-a-function-to-a-sequence-sliding-window)
 <br>
 
 [Weighted sum](https://en.wikipedia.org/wiki/Weight_function "Wikipedia")

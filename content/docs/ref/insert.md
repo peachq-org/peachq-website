@@ -132,6 +132,6 @@ type     y value wrong type
 [qSQL query templates](../basics/qsql.md)
 <br>
  
-[Tables](../kb/faq.md) 
+[Tables](https://code.kx.com/q/kb/faq/) 
 
 

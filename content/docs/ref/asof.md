@@ -44,7 +44,9 @@ px       vol
               / a row of nulls for no match
 ```
 
+<!--
 `asof` is a [multithreaded primitive](../kb/mt-primitives.md).
+-->
 
 ----
 
@@ -55,4 +57,4 @@ px       vol
 <br>
 
 _Q for Mortals_
-[§9.9.8 As-of Joins](/q4m3/9_Queries_q-sql/#998-as-of-joins)
+[§9.9.8 As-of Joins](https://code.kx.com/q4m3/9_Queries_q-sql/#998-as-of-joins)

@@ -93,7 +93,7 @@ t        time            4
 
 
 _Q for Mortals_
-[§11.5.1 Fixed-Width Records](/q4m3/11_IO/#1151-fixed-width-records)
+[§11.5.1 Fixed-Width Records](https://code.kx.com/q4m3/11_IO/#1151-fixed-width-records)
 
 ### Multithreaded Load
 
@@ -144,7 +144,7 @@ q)type get[`:b][0]
 
 ### Compression
 
-Since 4.1t 2023.04.17 data can be compressed while writing, by including [`compression parameters`](../kb/file-compression.md#compression-parameters):
+Since 4.1t 2023.04.17 data can be compressed while writing, by including [`compression parameters`](https://code.kx.com/q/kb/file-compression/#compression-parameters):
 
 ```q
 q)(`:file;17;2;9)1:100#0x0

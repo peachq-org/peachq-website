@@ -139,11 +139,11 @@ smith 400 gbp
 
 :fontawesome-solid-street-view:
 _Q for Mortals_
-[§9.9.1 Implicit Joins](/q4m3/9_Queries_q-sql/#991-implicit-join)
+[§9.9.1 Implicit Joins](https://code.kx.com/q4m3/9_Queries_q-sql/#991-implicit-join)
 
 
 
 ----
 :fontawesome-solid-street-view:
 _Q for Mortals_
-[§9.9 Joins](/q4m3/9_Queries_q-sql/#99-joins)
+[§9.9 Joins](https://code.kx.com/q4m3/9_Queries_q-sql/#99-joins)

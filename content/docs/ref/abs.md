@@ -29,7 +29,9 @@ q)"j"$1999.01.01 2000.12.31
 -365 365
 ```
 
+<!--
 `abs` is a [multithreaded primitive](../kb/mt-primitives.md).
+-->
 
 ## Implicit iteration
 

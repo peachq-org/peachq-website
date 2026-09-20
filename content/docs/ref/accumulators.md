@@ -464,4 +464,4 @@ q){x+y*z}/[`foo;mt;mt]
 
 
 _Q for Mortals_
-[§6.7.6 Over (/) for Accumulation](/q4m3/6_Functions/#676-over-for-accumulation)
+[§6.7.6 Over (/) for Accumulation](https://code.kx.com/q4m3/6_Functions/#676-over-for-accumulation)

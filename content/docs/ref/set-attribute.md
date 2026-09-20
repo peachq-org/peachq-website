@@ -142,4 +142,4 @@ Setting attributes consumes resources and is likely to improve performance only 
 <br>
 
 _Q for Mortals_
-[§8.9 Attributes](/q4m3/8_Tables/#88-attributes)
+[§8.9 Attributes](https://code.kx.com/q4m3/8_Tables/#88-attributes)

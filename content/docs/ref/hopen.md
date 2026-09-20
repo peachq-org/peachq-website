@@ -199,9 +199,9 @@ q)neg[h][];hclose h;
 [Interprocess communication](../basics/ipc.md)
 <br>
 
-[Named pipes](../kb/named-pipes.md),
+[Named pipes](https://code.kx.com/q/kb/named-pipes/),
 [SSL/TLS](../kb/ssl.md)
 <br>
 
 _Q for Mortals_
-[§11.8.2 Opening a Connection Handle](/q4m3/11_IO/#1162-opening-a-connection-handle)
+[§11.8.2 Opening a Connection Handle](https://code.kx.com/q4m3/11_IO/#1162-opening-a-connection-handle)

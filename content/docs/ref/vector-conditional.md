@@ -58,4 +58,4 @@ Vector Conditional can be used in [qSQL queries](../basics/qsql.md), which do no
 <br>
 
 _Q for Mortals_
-[§10.1.3 Vector Conditional Evaluation](/q4m3/10_Execution_Control/#1013-vector-conditional-evaluation)
+[§10.1.3 Vector Conditional Evaluation](https://code.kx.com/q4m3/10_Execution_Control/#1013-vector-conditional-evaluation)

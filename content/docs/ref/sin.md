@@ -31,7 +31,9 @@ q)asin 0.8      / arcsine
 0.9272952
 ```
 
+<!--
 `sin` and `asin` are [multithreaded primitives](../kb/mt-primitives.md).
+-->
 
 ## Implicit iteration
 

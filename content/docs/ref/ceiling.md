@@ -19,7 +19,9 @@ q)ceiling 01b
 0 1i
 ```
 
+<!--
 `ceiling` is a [multithreaded primitive](../kb/mt-primitives.md).
+-->
 
 ## Implicit iteration
 

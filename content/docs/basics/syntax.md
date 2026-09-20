@@ -266,7 +266,7 @@ alice SFO | 44
 <br>
 :fontawesome-solid-street-view: 
 _Q for Mortals_
-[§8. Tables](/q4m3/8_Tables/)
+[§8. Tables](https://code.kx.com/q4m3/8_Tables/)
 
 
 ## Attributes

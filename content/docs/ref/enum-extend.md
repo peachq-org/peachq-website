@@ -107,9 +107,9 @@ Enum Extend is a uniform function.
 [File system](../basics/files.md)
 <br>
 
-[Enumerating symbol columns in a table](../kb/splayed-tables.md#enumerating-symbol-columns)
+[Enumerating symbol columns in a table](https://code.kx.com/q/kb/splayed-tables/#enumerating-symbol-columns)
 <br>
  
 _Q for Mortals_
-[§7.5 Enumerations](/q4m3/7_Transforming_Data/#75-enumerations)  
+[§7.5 Enumerations](https://code.kx.com/q4m3/7_Transforming_Data/#75-enumerations)  
 

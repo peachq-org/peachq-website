@@ -271,7 +271,7 @@ q.s)key`
 
 :fontawesome-solid-street-view:
 _Q for Mortals_
-[§12.7 Working in a Context](/q4m3/12_Workspace_Organization/#127-working-in-a-context)
+[§12.7 Working in a Context](https://code.kx.com/q4m3/12_Workspace_Organization/#127-working-in-a-context)
 
 
 ## `\e` (error trap clients)
@@ -446,7 +446,7 @@ q).Q.gc[]                        / running garbage collection freed over 64MB
 <br>
 :fontawesome-solid-street-view:
 _Q for Mortals_
-[§13.1.10 Garbage Collection `\g`](/q4m3/13_Commands_and_System_Variables/#13110-garbage-collection-g)
+[§13.1.10 Garbage Collection `\g`](https://code.kx.com/q4m3/13_Commands_and_System_Variables/#13110-garbage-collection-g)
 
 
 ## `\l` (load file or directory)
@@ -493,8 +493,8 @@ If [logging](../kb/logging.md) is enabled, the command [checkpoints](../kb/loggi
 <br>
 :fontawesome-solid-street-view:
 _Q for Mortals_
-[§10.3 Scripts](/q4m3/10_Execution_Control/#103-scripts),
-[§13.2.6 Logging `-l` and `-L`](/q4m3/13_Commands_and_System_Variables/#1326-logging-l-and-l)
+[§10.3 Scripts](https://code.kx.com/q4m3/10_Execution_Control/#103-scripts),
+[§13.2.6 Logging `-l` and `-L`](https://code.kx.com/q4m3/13_Commands_and_System_Variables/#1326-logging-l-and-l)
 
 
 ## `\o` (offset from UTC)
@@ -847,7 +847,7 @@ q){x where x like"????"}system"v .h"
 
     :fontawesome-solid-street-view:
     _Q for Mortals_
-    [§12.5 Expunging from a Context](/q4m3/12_Workspace_Organization/#125-expunging-from-a-context)
+    [§12.5 Expunging from a Context](https://code.kx.com/q4m3/12_Workspace_Organization/#125-expunging-from-a-context)
 
 
 ## `\w` (workspace)

@@ -53,7 +53,8 @@ on the [Thanks page](../../thanks.md).
 - The imported guides have not had a complete executable documentation test run.
   The C project owns that checker and its results. The website's marked arithmetic
   example has passed the C project's existing `qdoctest`; unverified examples remain unmarked.
-- The inherited q reference remains unchanged. Some of its links target unimported sections.
+- The inherited q reference includes PeachQ additions and link repairs. Multithreaded-primitive
+  statements are preserved in HTML comments. Some links still target unimported sections.
 
 ## Updating this snapshot
 

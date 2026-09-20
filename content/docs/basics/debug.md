@@ -349,4 +349,4 @@ q))                 / the server is suspended in a debug session
 [`show`](../ref/show.md)
 <br>
 :fontawesome-solid-graduation-cap:
-_Q for Mortals 3:_ [§10.2 Debugging](/q4m3/10_Execution_Control/#102-debugging)
+_Q for Mortals 3:_ [§10.2 Debugging](https://code.kx.com/q4m3/10_Execution_Control/#102-debugging)

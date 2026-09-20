@@ -41,7 +41,9 @@ q)2010.01.01 % 2005.01.01
 1.999453
 ```
 
+<!--
 `%` is a [multithreaded primitive](../kb/mt-primitives.md).
+-->
 
 ## Implicit iteration
 
@@ -123,4 +125,4 @@ Range: `f`
 <br>q4m
 
 _Q for Mortals_
-[§4.4 Basic Arithmetic](/q4m3/4_Operators/#44-basic-arithmetic-)
+[§4.4 Basic Arithmetic](https://code.kx.com/q4m3/4_Operators/#44-basic-arithmetic-)

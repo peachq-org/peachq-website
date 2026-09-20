@@ -113,7 +113,7 @@ def| 2 2
 ghi| 2 2
 ```
 
-[Sliding windows](../kb/programming-idioms.md#how-do-i-apply-a-function-to-a-sequence-sliding-window)
+[Sliding windows](https://code.kx.com/q/kb/programming-idioms/#how-do-i-apply-a-function-to-a-sequence-sliding-window)
 
 ----
 

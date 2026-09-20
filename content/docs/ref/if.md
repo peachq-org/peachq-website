@@ -68,4 +68,4 @@ Name scope within the brackets is the same as outside them.
 <br>
 
 _Q for Mortals_
-[§10.1.5 `if`](/q4m3/10_Execution_Control/#1014-if)
+[§10.1.5 `if`](https://code.kx.com/q4m3/10_Execution_Control/#1014-if)

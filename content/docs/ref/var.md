@@ -48,7 +48,9 @@ a| 1.555556
 b| 4
 ```
 
+<!--
 `var` is a [multithreaded primitive](../kb/mt-primitives.md).
+-->
 
 
 ## `svar`
@@ -90,7 +92,9 @@ a| 2.333333
 b| 8
 ```
 
+<!--
 `svar` is a [multithreaded primitive](../kb/mt-primitives.md).
+-->
 
 
 ## Domain and range

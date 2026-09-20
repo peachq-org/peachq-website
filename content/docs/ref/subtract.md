@@ -21,7 +21,9 @@ q)2000.11.22 - 03:44:55.666
 2000.11.21D20:15:04.334000000
 ```
 
+<!--
 `-` is a [multithreaded primitive](../kb/mt-primitives.md).
+-->
 
 
 ## Implicit iteration
@@ -119,10 +121,10 @@ q)type 55-1i
 [Mathematics](../basics/math.md)
 <br>
 
-[How to handle temporal data in q](../kb/temporal-data.md)
+[How to handle temporal data in q](https://code.kx.com/q/kb/temporal-data/)
 <br>
 
 _Q for Mortals_
-[§4.9.2 Temporal Arithmetic](/q4m3/4_Operators/#492-temporal-arithmetic)
+[§4.9.2 Temporal Arithmetic](https://code.kx.com/q4m3/4_Operators/#492-temporal-arithmetic)
 
 

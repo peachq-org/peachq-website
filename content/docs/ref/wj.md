@@ -136,5 +136,5 @@ ibm 10:01:08 105   107 108 107 108 104 106 106 107
 <br>
 
 _Q for Mortals_
-[9.9.9 Window Joins](/q4m3/9_Queries_q-sql/#999-window-join)
+[9.9.9 Window Joins](https://code.kx.com/q4m3/9_Queries_q-sql/#999-window-join)
 

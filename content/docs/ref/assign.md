@@ -203,5 +203,5 @@ q):/[1 2 3 4 5]
 <br>
 
 _Q for Mortals_
-[§4.6.2 Simple q Amend](/q4m3/4_Operators/#462-simple-q-amend)
+[§4.6.2 Simple q Amend](https://code.kx.com/q4m3/4_Operators/#462-simple-q-amend)
 

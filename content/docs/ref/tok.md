@@ -260,5 +260,5 @@ dd/[mm|MMM]/[yy]yy  / when \z is set to 1
 <br>
 
 _Q for Mortals_
-[§7.3.3 Parsing Data from Strings](/q4m3/7_Transforming_Data/#733-parsing-data-from-strings)
+[§7.3.3 Parsing Data from Strings](https://code.kx.com/q4m3/7_Transforming_Data/#733-parsing-data-from-strings)
 

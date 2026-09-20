@@ -71,4 +71,4 @@ Range: `c`
 <br>
 
 _Q for Mortals_
-[§7.3.1 Data to Strings](/q4m3/7_Transforming_Data/#731-data-to-strings)
+[§7.3.1 Data to Strings](https://code.kx.com/q4m3/7_Transforming_Data/#731-data-to-strings)

@@ -76,4 +76,4 @@ q)t1~t2
 [Comparison](../basics/comparison.md)
 <br>
  
-_Q for Mortals_: [§4.2 Match](/q4m3/4_Operators/#42-match)
+_Q for Mortals_: [§4.2 Match](https://code.kx.com/q4m3/4_Operators/#42-match)

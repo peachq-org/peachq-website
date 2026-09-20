@@ -390,7 +390,7 @@ s4 p5 100
 
   :fontawesome-solid-street-view:
   _Q for Mortals_
-  [§14.3.6 Query Execution on Partitioned Tables](/q4m3/14_Introduction_to_Kdb%2B/#1436-query-execution-on-partitioned-tables)
+  [§14.3.6 Query Execution on Partitioned Tables](https://code.kx.com/q4m3/14_Introduction_to_Kdb%2B/#1436-query-execution-on-partitioned-tables)
 
 ## Multithreading
 
@@ -516,8 +516,8 @@ Column names cannot be parameters of a qSQL query. Use [functional qSQL](../basi
 <br>
 :fontawesome-solid-street-view:
 _Q for Mortals_
-[§9.0 Queries: q-sql](/q4m3/9_Queries_q-sql/#90-overview)
+[§9.0 Queries: q-sql](https://code.kx.com/q4m3/9_Queries_q-sql/#90-overview)
 <br>
 :fontawesome-solid-street-view:
 _Q for Mortals_
-[§9.9.10 Parameterized Queries](/q4m3/9_Queries_q-sql/#999-parameterized-queries)
+[§9.10 Parameterized Queries](https://code.kx.com/q4m3/9_Queries_q-sql/#910-parameterized-queries)

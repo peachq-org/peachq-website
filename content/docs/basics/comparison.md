@@ -66,7 +66,9 @@ q)(1 + 1e-13) = 1
 1b
 ```
 
+<!--
 `< > = >= <= <>` are [multithreaded primitives](../kb/mt-primitives.md).
+-->
 
 !!! tip "For booleans, `<>` is the same as _exclusive or_ (XOR)."
 
@@ -160,7 +162,7 @@ q)tab.timeStamp>09:29
 
 :fontawesome-solid-street-view: 
 _Q for Mortals_
-[§4.9.1 Temporal Comparison](/q4m3/4_Operators/#491-temporal-comparison)
+[§4.9.1 Temporal Comparison](https://code.kx.com/q4m3/4_Operators/#491-temporal-comparison)
 
 ## Floating point
 
@@ -242,5 +244,5 @@ Keyword [`differ`](../ref/differ.md) is a uniform unary function that returns a 
 
 :fontawesome-solid-street-view:
 _Q for Mortals_
-[§4.3.3 Order](/q4m3/4_Operators/#433-order)
+[§4.3.3 Order](https://code.kx.com/q4m3/4_Operators/#433-order)
 

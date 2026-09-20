@@ -33,4 +33,4 @@ operator | name                                 | semantics
 
 :fontawesome-solid-street-view: 
 _Q for Mortals_
-[§7.5 Enumerations](/q4m3/7_Transforming_Data/#75-enumerations)  
+[§7.5 Enumerations](https://code.kx.com/q4m3/7_Transforming_Data/#75-enumerations)  
