@@ -6,9 +6,6 @@ peachq_revision: 49be5a234a51c44a393cf353c0ff0f3f85c9cc4c
 
 # Foreign functions (FFI)
 
-!!! info "PeachQ documentation snapshot"
-    Reviewed source: **0.84**, `49be5a234a51`. See [source and sync notes](sync.md). Feature-specific status notes below take precedence; this snapshot is not a claim that every example passes.
-
 peachq calls C through the `.ffi` namespace. It is the KX ffikdb surface, spelling for spelling, over a vendored libffi:
 `.ffi.bind`, `.ffi.callFunction`, `.ffi.cvar`, `.ffi.setErrno`, `.ffi.extension`, `.ffi.ptrsize` and `.ffi.os` all mean
 what they mean there, so published ffikdb examples run unchanged.

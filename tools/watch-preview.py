@@ -33,6 +33,22 @@ def run(args, **kwargs):
     subprocess.run(args, cwd=ROOT, check=True, **kwargs)
 
 
+def wait_for_changes(before, quiet_seconds):
+    """Collect edits until files have stayed unchanged for the quiet period."""
+    pending = before
+    changed_at = None
+    while True:
+        time.sleep(1)
+        current = snapshot()
+        now = time.monotonic()
+        if current != pending:
+            pending = current
+            changed_at = now
+        if (pending != before and changed_at is not None
+                and now - changed_at >= quiet_seconds):
+            return pending
+
+
 def build(static_only=False):
     print('Building local preview...', flush=True)
     try:
@@ -82,7 +98,11 @@ def main():
     parser.add_argument('--once', action='store_true', help='Build once and exit')
     parser.add_argument('--refresh-data', action='store_true',
                         help='Refresh cached production REPL and metadata')
+    parser.add_argument('--debounce', type=int, default=10, metavar='SECONDS',
+                        help='Wait for this many quiet seconds after edits (default: 10)')
     args = parser.parse_args()
+    if args.debounce < 1:
+        parser.error('--debounce must be at least 1 second')
     CACHE.mkdir(parents=True, exist_ok=True)
     with (CACHE / 'watch.lock').open('w') as lock:
         try:
@@ -98,17 +118,10 @@ def main():
         success = build()
         if args.once:
             return 0 if success else 1
-        print('Watching working files; Ctrl-C to stop.', flush=True)
+        print(f'Watching working files; rebuilding after {args.debounce} quiet seconds. '
+              'Ctrl-C to stop.', flush=True)
         while True:
-            time.sleep(1)
-            current = snapshot()
-            if current == before:
-                continue
-            # Wait for one quiet second to group editor saves together.
-            time.sleep(1)
-            stable = snapshot()
-            if stable != current:
-                continue
+            stable = wait_for_changes(before, args.debounce)
             changed = set(before) ^ set(stable)
             changed.update(path for path in set(before) & set(stable)
                            if before[path] != stable[path])

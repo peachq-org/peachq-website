@@ -270,7 +270,7 @@ done
 echo "--- thanks replaces the unpublished attribution page ---"
 has "thanks page renders" /thanks/ 'id="kx-documentation"'
 has "thanks credits the adapted system-command guide" /thanks/ 'System commands in the kdb+ and q documentation'
-lacks "system-command guide omits repeated attribution" /docs/peachq/syscmds/ 'Adapted from'
+lacks "system-command guide omits repeated attribution" /docs/basics/syscmds/ 'Adapted from'
 has "thanks Markdown is published" /thanks.md '^# Thanks'
 for old in /docs/attribution/ /docs/attribution.md; do
   code=$(curl -s -o /dev/null -w '%{http_code}' "http://127.0.0.1:$PORT$old")
@@ -379,7 +379,7 @@ done
 [ ! -e site/docs/api/man.q ]; check "generated man.q is not published" $?
 has "generated API links back to docs" /docs/api/duckdb.q.html 'href="../"'
 has "generated API records source provenance" /docs/api/source.json '"repository"\|"source_type"'
-has "PeachQ guides are published" /docs/peachq/csv/ 'PeachQ documentation snapshot'
+has "PeachQ guides are published" /docs/peachq/csv/ 'Reading CSV'
 has "REPL guide explains table display" /docs/peachq/repl/ 'Reading tables'
 has "docs examples preload the REPL" /docs/peachq/getting-started/ 'repl?code='
 has "source Markdown retains runnable marker" /docs/peachq/getting-started.md 'peachq: runnable'

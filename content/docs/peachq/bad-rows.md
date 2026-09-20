@@ -6,9 +6,6 @@ peachq_revision: 49be5a234a51c44a393cf353c0ff0f3f85c9cc4c
 
 # Bad rows
 
-!!! info "PeachQ documentation snapshot"
-    Reviewed source: **0.84**, `49be5a234a51`. See [source and sync notes](sync.md). Feature-specific status notes below take precedence; this snapshot is not a claim that every example passes.
-
 Your load failed. This page says why, and what to do about it. It covers both readers — [`.csv.read`](csv.md) and
 [`.j.read`](json.md) — because they answer the same way.
 
@@ -190,4 +187,4 @@ q).csv.read[`:trades.csv;{[tblData;errData;misc] if[count errData; show errData]
 ```
 
 `errData` is a table with the same four columns, and is the empty table — schema intact — on a clean batch. See
-[Reading CSV](csv.md#a-lambda-called-once-per-batch).
+[Reading CSV](csv.md#process-batches).

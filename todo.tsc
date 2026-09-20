@@ -1,6 +1,5 @@
 |date|section|priority|description|
 |2026-09-19|decision|TBD|Decide code-block format: .qcmd transcripts, .q source, or both; define how each works with the automated checker and embedded REPL.|
-|2026-09-19|decision|TBD|Decide how PeachQ-specific material is added to individual reference pages and how those additions look to readers.|
 |2026-09-19|docs|TBD|Review each PeachQ-specific page for accuracy and feature status; consider marking features such as DuckDB support as experimental where appropriate.|
 |2026-09-19|decision|TBD|Consider automatically generating qdocs and publishing them to the website.|
 |2026-09-19|qstudio|TBD|Update the qStudio documentation generator to omit internal .i. namespaces from the generated library API reference.|

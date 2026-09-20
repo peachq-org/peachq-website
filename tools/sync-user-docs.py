@@ -127,7 +127,8 @@ def main():
     rendered = {}
     entries = {}
     for source in files:
-        if not source.endswith('.md'):
+        # Command-line and system-command additions live in the reference pages.
+        if source in ('user-docs/cmdline.md', 'user-docs/syscmds.md') or not source.endswith('.md'):
             continue
         raw = git('show', sha + ':' + source)
         body = raw
@@ -153,11 +154,10 @@ def main():
         body = body.replace('](/q4m3/', '](https://code.kx.com/q4m3/')
         if '](/q4m3/' in raw:
             changes.append('Resolve q4m3 links against code.kx.com')
+        body = body.replace('](cmdline.md)', '](../basics/cmdline.md#peachq-specific-options)')
+        body = body.replace('](syscmds.md)', '](../basics/syscmds.md#peachq-specific-commands)')
         title, rest = body.split('\n', 1)
-        notice = ('!!! info "PeachQ documentation snapshot"\n'
-                  f'    Reviewed source: **{version}**, `{sha[:12]}`. '
-                  'See [source and sync notes](sync.md). Feature-specific status notes below '
-                  'take precedence; this snapshot is not a claim that every example passes.\n')
+        notice = ""
         if source in ('user-docs/handles.md', 'user-docs/parquet.md'):
             notice += ('\n!!! warning "Experimental PeachQ DuckDB integration"\n'
                        '    PeachQ’s DuckDB integration is experimental and requires the native runtime '

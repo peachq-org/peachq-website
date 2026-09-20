@@ -475,3 +475,22 @@ Set the format for `"D"$` date parsing.
 
 [![](../img/xkcd.tar.png)](https://xkcd.com/1168/)
 _xkcd.com_
+
+
+<!-- PEACHQ-SPECIFIC:BEGIN cmdline | version=0.84 | source=rayforce/q -h -->
+
+## PeachQ-specific options
+
+!!! info "PeachQ-specific additions"
+    The options below extend the command-line reference above for PeachQ.
+
+| Option | Description |
+|---|---|
+| `-classic` | Use legacy table display and a kdb-clean environment. Use `\classic` to change table display within a session. |
+| `-eval "src"` | Run q text after the startup script. |
+| `-eval-before "src"` | Run q text before the startup script. |
+| `-h` or `--help` | Print the command-line option table and exit. Use `\?cmdline` for help within a session. |
+| `--port N` | Long spelling of `-p N`: listen on port N. |
+| `-duckdb path` | Use this file for the main DuckDB database instead of an in-memory database. Use `\?duckdb` for help within a session. |
+
+<!-- PEACHQ-SPECIFIC:END cmdline -->

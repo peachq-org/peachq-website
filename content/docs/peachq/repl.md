@@ -15,11 +15,17 @@ PeachQ's default native console separates table columns with vertical bars and s
 types under their names. Key columns have an equals-sign separator. A mixed column
 has no single type label; values within it retain useful type distinctions.
 
-Try a keyed table with a nested column:
+This transcript shows a keyed table with a nested column. The `q)` prefix marks
+the command entered; the lines below it are the output:
 
 <!-- peachq: title="Keyed table" -->
 ```q
-([instrument:`ALPHA`BETA]quantity:10 20;price:12.5 18.0;levels:(1 2;3 4))
+q)([instrument:`ALPHA`BETA]quantity:10 20;price:12.5 18.0;levels:(1 2;3 4))
+| instrument | quantity | price | levels |
+| symbol     | long     | float |        |
+|============|----------|-------|--------|
+| ALPHA      | 10       | 12.5  | 1 2    |
+| BETA       | 20       | 18    | 3 4    |
 ```
 
 The `instrument` column is the key; `quantity` is long and `price` is float.
@@ -30,14 +36,19 @@ For mixed nested values:
 
 <!-- peachq: title="Mixed nested values" -->
 ```q
-([]name:`first`second;levels:(1 2;3 4f))
+q)([]name:`first`second;levels:(1 2;3 4f))
+| name   | levels |
+| symbol |        |
+|--------|--------|
+| first  | 1 2    |
+| second | 3 4f   |
 ```
 
 The float suffix helps distinguish the second row's values from integers.
 
 The native `-classic` launch flag selects the legacy q-style table display and a
 cleaner starting environment. It is not a switch that removes every language difference.
-See [command-line options](cmdline.md).
+See [command-line options](../basics/cmdline.md#peachq-specific-options).
 
 ## Editing in the native terminal
 

@@ -6,8 +6,7 @@ peachq_revision: 49be5a234a51c44a393cf353c0ff0f3f85c9cc4c
 
 # Regular expressions
 
-!!! info "PeachQ documentation snapshot"
-    Reviewed source: **0.84**, `49be5a234a51`. See [source and sync notes](sync.md). Feature-specific status notes below take precedence; this snapshot is not a claim that every example passes.
+[API reference: `.regexp`](/docs/api/regexp.q.html) — signatures, return values and examples.
 
 peachq matches with [RE2](https://github.com/google/re2), the same engine DuckDB uses. RE2
 guarantees linear-time matching, so no pattern, however hostile or badly written, can hang a
@@ -390,25 +389,11 @@ overlap in behaviour between `like` and `rlike` beyond both returning booleans; 
 
 ## For DuckDB SQL users
 
-| DuckDB SQL | peachq |
-|---|---|
-| `regexp_matches(s, p)` | `.regexp.matches[subject;pattern]` or `subject rlike pattern` |
-| `regexp_full_match(s, p)` | `.regexp.full_match[subject;pattern]` |
-| `regexp_extract(s, p)` | `.regexp.extract[subject;pattern]` |
-| `regexp_extract(s, p, n)` | `.regexp.groups[subject;pattern][n-1]` |
-| `regexp_extract(s, p, name_list)` | `` names!.regexp.groups[subject;pattern] `` |
-| `regexp_extract_all(s, p)` | `.regexp.extract_all[subject;pattern]` |
-| `regexp_extract_all(s, p, n)` | `.regexp.groups_all[subject;pattern][;n-1]` |
-| `regexp_replace(s, p, r)` | `.regexp.replace[subject;pattern;replacement]` |
-| `regexp_replace(s, p, r, 'g')` | `.regexp.replace_all[subject;pattern;replacement]` |
-| `regexp_escape(s)` | `.regexp.escape[text]` |
-| `regexp_split_to_array(s, p)` | `.regexp.split[subject;pattern]` |
-| `regexp_split_to_table(s, p)` | `flip enlist .regexp.split[subject;pattern]` |
+PeachQ uses DuckDB-style regular-expression names and RE2 patterns:
+`regexp_matches(s, p)` becomes `.regexp.matches[s;p]`, and similarly for
+`full_match`, `extract` and `extract_all`.
 
-Two differences worth knowing. DuckDB's `~` operator is `regexp_full_match`, whereas peachq's
-`rlike` searches, so `~` and `rlike` are **not** equivalents. And DuckDB has no
-case-insensitive regex operator at all (`~*` is unsupported there), which is why peachq
-documents `(?i)` rather than adding a second keyword.
-
-`regexp_split_to_table` has no peachq twin because a q list already *is* the result; make a
-table from it if you want one.
+Use q indexing on `groups` or `groups_all` to select captures, `replace_all` for
+global replacement, and `split` for `regexp_split_to_array`. Flags such as `(?i)`
+go in the pattern. DuckDB’s `~` matches the whole subject; PeachQ’s `rlike` searches
+within it.

@@ -22,14 +22,6 @@
       "website_sha256": "9bcae32523138c45ac339630e89c4e0714748467dc29a483c2b054abc13ac60b",
       "adaptations": []
     },
-    "cmdline.md": {
-      "source": "user-docs/cmdline.md",
-      "source_sha256": "4b67b813bdd892b4c704d1192a3e63f0f0dc5482ffc480162b4880b060eeab10",
-      "website_sha256": "2a5f39922c0eba5100d508906b7d84bda0e6fd666498bc0a6a976253a35775fc",
-      "adaptations": [
-        "Omit internal Notes for dev section"
-      ]
-    },
     "compatibility.md": {
       "source": "user-docs/compatibility.md",
       "source_sha256": "615d567e3ae2bd16f4bcff4686f6b34051680399b65f72d93b4c0c624f7686de",
@@ -95,15 +87,6 @@
       "source_sha256": "4c103aba268d140c176b62c6829e436ae54b4bffb879318e45f1ed461af11f7d",
       "website_sha256": "9108a5de9f8864ec088c3facd202050c606df83b646e21806824b3c9aec0629e",
       "adaptations": []
-    },
-    "syscmds.md": {
-      "source": "user-docs/syscmds.md",
-      "source_sha256": "90ab9bd65b34aa880282e802720f5279c72a727dd979f1d8e282839579ec587e",
-      "website_sha256": "aeda02eafac60c30eb0cede2c60933b7a794b8716a2e17ccf69e06b751e46cfe",
-      "adaptations": [
-        "Move page-level attribution to the Thanks page",
-        "Resolve q4m3 links against code.kx.com"
-      ]
     },
     "typed-parameters.md": {
       "source": "user-docs/typed-parameters.md",
