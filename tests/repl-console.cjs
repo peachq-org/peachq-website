@@ -44,4 +44,4 @@ async function checkQFiles(page, directory = path.join(__dirname, 'repl')) {
   console.log(`${files.length} q files, ${count} commands passed in one REPL session`);
 }
 
-module.exports = {checkCommand, checkQFiles};
+module.exports = {checkQFiles};

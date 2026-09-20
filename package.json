@@ -3,8 +3,7 @@
   "private": true,
   "scripts": {
     "test:search": "node tests/test_docs_search.cjs",
-    "test:repl": "node tests/test_repl_files.cjs",
-    "test:repl-files": "npm run test:repl"
+    "test:repl": "node tests/test_repl.cjs"
   },
   "devDependencies": {
     "playwright": "1.61.1"
