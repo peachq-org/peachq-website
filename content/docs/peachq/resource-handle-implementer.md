@@ -6,9 +6,6 @@ peachq_revision: 49be5a234a51c44a393cf353c0ff0f3f85c9cc4c
 
 # Resource handles — the provider implementer's page
 
-!!! info "PeachQ documentation snapshot"
-    Reviewed source: **0.84**, `49be5a234a51`. See [source and sync notes](sync.md). Feature-specific status notes below take precedence; this snapshot is not a claim that every example passes.
-
 The user-facing model is `user-docs/handles.md`; this page is for whoever writes a `:pq:` PROVIDER — a q namespace
 `.X` whose hooks the host calls by NAME. A user names your provider in a coordinate, `` `:pq:X:alias:… ``, and never
 calls a hook directly. The contract is v3; `lib/qpc.q` (q IPC) and `lib/duckdb.q` are the two shipped implementations

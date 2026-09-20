@@ -6,6 +6,29 @@ keywords: command, kdb+, q, system
 # :fontawesome-solid-bullhorn: System commands
 
 
+<!-- PEACHQ-SPECIFIC:BEGIN syscmds | version=0.84 | source=user-docs/syscmds.md -->
+
+## PeachQ-specific commands
+
+!!! info "PeachQ-specific additions"
+    PeachQ adds the following commands to the system-command reference below.
+
+| Command | Description |
+|---|---|
+| `\?` | Show the help index. |
+| `\?topic` | Show a summary for a name or topic, such as `\?til`, `\?-p` or `\?cmdline`. |
+| `\??topic` | Show the full help entry without clipping. |
+| `\classic` | Show whether legacy table display is enabled. Use `\classic 1` to enable it or `\classic 0` to disable it. |
+
+Help is also available through `system "?topic"`. The help database loads on first
+use, so the first request can take longer than later requests.
+
+To start with legacy table display, use the
+[`-classic` command-line option](cmdline.md#peachq-specific-options).
+
+<!-- PEACHQ-SPECIFIC:END syscmds -->
+
+
 
 
 

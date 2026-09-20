@@ -63,7 +63,7 @@ nav:
       - Overview: docs/index.md
       - Getting started: docs/peachq/getting-started.md
       - q language reference:
-          - Overview: docs/reference.md
+          - docs/ref/index.md
           - Language basics:
               - "Application, projection, and indexing": docs/basics/application.md
               - "Atomic functions": docs/basics/atomic.md
@@ -187,7 +187,6 @@ nav:
               - "if": docs/ref/if.md
               - "ij, ijf": docs/ref/ij.md
               - "in": docs/ref/in.md
-              - "Reference card": docs/ref/index.md
               - "insert": docs/ref/insert.md
               - "inter": docs/ref/inter.md
               - "inv": docs/ref/inv.md
@@ -279,8 +278,6 @@ nav:
           - Overview: docs/peachq/index.md
           - Compatibility and migration: docs/peachq/compatibility.md
           - REPL and table display: docs/peachq/repl.md
-          - Command line: docs/peachq/cmdline.md
-          - System commands: docs/peachq/syscmds.md
           - Loading data: docs/peachq/loading.md
           - Reading CSV: docs/peachq/csv.md
           - Reading JSON: docs/peachq/json.md
@@ -356,6 +353,9 @@ markdown_extensions:
   - toc:
       permalink: true
   - pymdownx.highlight
+  - pymdownx.snippets:
+      base_path: [content]
+      check_paths: true
   - pymdownx.emoji:
       emoji_index: !!python/name:material.extensions.emoji.twemoji
       emoji_generator: !!python/name:material.extensions.emoji.to_svg

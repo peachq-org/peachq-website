@@ -49,4 +49,4 @@ is experimental; review the feature-specific limitations before adopting it.
 
 Read [compatibility and migration](compatibility.md) before moving an application.
 In particular, recognised file suffixes change `get` and `set` behaviour, and storage
-support differs. Use the [command-line guide](cmdline.md) when choosing launch flags.
+support differs. Use the [command-line guide](../basics/cmdline.md#peachq-specific-options) when choosing launch flags.

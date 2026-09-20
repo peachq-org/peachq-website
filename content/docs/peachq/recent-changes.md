@@ -32,6 +32,6 @@ They describe that source snapshot; use [Downloads](/download) for currently pub
 
 ## Before upgrading an application
 
-Review [compatibility](compatibility.md), confirm required [launch options](cmdline.md),
+Review [compatibility](compatibility.md), confirm required [launch options](../basics/cmdline.md#peachq-specific-options),
 and test your own workload. The [coverage dashboard](/compatibility) reports corpus results;
 its percentage is not a guarantee about an arbitrary application.

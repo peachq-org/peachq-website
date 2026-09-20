@@ -6,9 +6,6 @@ peachq_revision: 49be5a234a51c44a393cf353c0ff0f3f85c9cc4c
 
 # PeachQ additions and compatibility
 
-!!! info "PeachQ documentation snapshot"
-    Reviewed source: **0.84**, `49be5a234a51`. See [source and sync notes](sync.md). Feature-specific status notes below take precedence; this snapshot is not a claim that every example passes.
-
 PeachQ builds on familiar q syntax with richer interactive tools, flexible data readers and connections to other systems. Start with the additions below, then review behaviour changes and unsupported features when bringing an existing application across.
 
 ## More with PeachQ
@@ -23,7 +20,7 @@ PeachQ builds on familiar q syntax with richer interactive tools, flexible data 
 | [Regular expressions — `.regexp`, `rlike`](regexp.md) | RE2-backed matching, extraction, replacement and splitting. |
 | [Typed parameters (design preview)](typed-parameters.md) | Declared types, optional arguments, defaults and varargs, read statically. |
 | [Foreign functions — `.ffi`](ffi.md) | Call into a shared library from q. |
-| [Startup evaluation — `-eval`, `-eval-before`](cmdline.md) | Run q text from argv after / before the startup script; no stdin piping. |
+| [Startup evaluation — `-eval`, `-eval-before`](../basics/cmdline.md#peachq-specific-options) | Run q text from argv after / before the startup script; no stdin piping. |
 | [String helpers — `.str`](repl.md) | `printf`/`format`, strip, prefix and suffix tests, character-class predicates. |
 | [DuckDB-backed storage — `.duckdb`](handles.md) | Experimental native integration: query DuckDB from q and use its Parquet and S3 support. |
 | [Parquet — `.parquet.read`, `.parquet.write`](parquet.md) | Read and write Parquet through DuckDB; supported q types round-trip using PeachQ schema metadata. |
@@ -81,7 +78,7 @@ The following capabilities are unavailable or only partly implemented in this sn
 | [Partitioned and segmented databases](#partitioned-databases) | Do not load. Splayed tables do. |
 | [Splayed and partitioned writing](#storage-writing) | Reading kx on-disk format is in scope; writing it is not. |
 | [Pattern matching (kdb+ 4.1)](typed-parameters.md) | The 4.1 assignment and parameter forms signal `'parse`. |
-| [System commands](syscmds.md) and [launch flags](cmdline.md) | Some are unwired or no-ops; both pages mark every item against kx. |
+| [System commands](../basics/syscmds.md#peachq-specific-commands) and [launch flags](../basics/cmdline.md#peachq-specific-options) | See the reference pages for PeachQ-specific session commands and launch options. |
 
 <a id="partitioned-databases"></a>
 

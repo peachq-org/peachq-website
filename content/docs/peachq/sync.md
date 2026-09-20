@@ -11,7 +11,7 @@ This first draft was synced on **19 September 2026** from the C project's `user-
 |---|---|
 | Source version file | **0.84** |
 | Reviewed source commit | `49be5a234a51c44a393cf353c0ff0f3f85c9cc4c` |
-| Imported user guides | 13 |
+| Imported user guides retained | 11 |
 | Additional review | Changelog, native REPL startup and terminal editing code |
 | Machine-readable record | [sync.json](sync.json) |
 
@@ -21,16 +21,24 @@ The original KX reference has its own [provenance record](../../thanks.md#kx-doc
 
 ## What was adapted
 
-The imported user guides retain their source text with a snapshot notice. Internal
-“Notes for dev” at the end of the command-line guide are omitted. Book links in the
-system-command guide point to the original hosted book, and an FFI heading link is corrected.
+Imported user guides record their source in front matter without a snapshot banner.
+The separate command-line and system-command guides have been removed from the website
+and import list. PeachQ help and display commands are documented at the top of the
+[system-command reference](../basics/syscmds.md#peachq-specific-commands), based on
+`user-docs/syscmds.md` for version 0.84. The older compatibility-status table is not carried over.
+A marked PeachQ-specific section in the [command-line reference](../basics/cmdline.md#peachq-specific-options)
+lists the additions checked against the local 0.84 binary’s `-h` output. The existing command-line and system-command reference text is unchanged. An FFI heading link is corrected.
 The compatibility guide leads with additions, then separates behaviour changes from unsupported
 features. It omits the unchanged CSV operator, links the REPL guide and labels typed parameters as a design preview.
+Loading, CSV and JSON are concise example guides linking to the generated API reference
+for exact specifications. Their transcripts were checked with the local 0.84 binary.
+The regular-expression guide links to its API reference and has a shortened DuckDB comparison.
 Resource and Parquet summaries are qualified by their supported operations and types.
 The website labels the PeachQ DuckDB integration experimental and states its native-runtime
 requirements on the handles and Parquet guides; this does not label DuckDB itself experimental.
-The sync record contains
-source and rendered hashes and lists these adaptations for each page.
+The sync record retains source and website hashes from the last import, with its
+per-page adaptations. Subsequent website edits are described here and recorded in
+Git; their differing hashes prevent the importer from silently overwriting them.
 
 Getting started, this section's index, the REPL guide and recent-change highlights
 are website-authored. The REPL guide draws on issue #62; contributor credit is recorded

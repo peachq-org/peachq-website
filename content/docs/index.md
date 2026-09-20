@@ -14,7 +14,7 @@ PeachQ is an open-source implementation of q. Start with a few expressions in th
 |---|---|
 | Run your first expressions and query a table | [Getting started](peachq/getting-started.md) |
 | Use the terminal or browser editor | [REPL and table display](peachq/repl.md) |
-| Look up q syntax, operators and functions | [q language reference](reference.md) |
+| Look up q syntax, operators and functions | [q language reference](ref/index.md) |
 | Read files, use regular expressions, or call native code | [PeachQ additions](peachq/index.md) |
 | Bring existing q code to PeachQ | [Compatibility and migration](peachq/compatibility.md) |
 | See measured implementation coverage | [Compatibility dashboard](/compatibility) |

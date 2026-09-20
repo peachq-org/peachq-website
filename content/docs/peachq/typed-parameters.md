@@ -6,9 +6,6 @@ peachq_revision: 49be5a234a51c44a393cf353c0ff0f3f85c9cc4c
 
 # Typed parameters
 
-!!! info "PeachQ documentation snapshot"
-    Reviewed source: **0.84**, `49be5a234a51`. See [source and sync notes](sync.md). Feature-specific status notes below take precedence; this snapshot is not a claim that every example passes.
-
 !!! warning "Design documentation"
     The source marks type checks as in review and defaults, varargs and named apply as not yet shipped. Treat this page as a design preview, not a released-feature guide.
 

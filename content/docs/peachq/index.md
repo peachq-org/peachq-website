@@ -14,8 +14,8 @@ This section collects PeachQ-specific documentation. It is separate from the
 |---|---|
 | [Getting started](getting-started.md) | First expressions, tables and the standard library |
 | [REPL and table display](repl.md) | Terminal editing, richer tables and the browser editor |
-| [Command line](cmdline.md) | Launch flags and their compatibility status |
-| [System commands](syscmds.md) | Commands within a running session |
+| [Command line](../basics/cmdline.md#peachq-specific-options) | Standard launch flags and PeachQ-specific options |
+| [System commands](../basics/syscmds.md#peachq-specific-commands) | Commands within a running session |
 | [Compatibility and migration](compatibility.md) | Deliberate differences, unsupported features and additions |
 | [Recent changes](recent-changes.md) | Changes highlighted in the reviewed changelog |
 

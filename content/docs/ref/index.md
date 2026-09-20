@@ -6,8 +6,13 @@ author: KX Systems, Inc., a subsidiary of KX Software Limited
 
 # Reference card
 
-!!! note
-	Want a quick and handy q reference resource? Download the [q Cheat Sheet (PDF download)](../assets/q-cheat-sheet.pdf){:target="_blank"}.
+<!-- PEACHQ-SPECIFIC:BEGIN reference-help | version=0.84 | source=q help index -->
+
+!!! info "PeachQ REPL help"
+    Use `\?` in the REPL to open the help index, `\?name` for a summary
+    (for example, `\?select`), or `\??name` for the full help entry.
+
+<!-- PEACHQ-SPECIFIC:END reference-help -->
 
 ## Keywords
 

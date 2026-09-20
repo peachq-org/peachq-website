@@ -184,7 +184,11 @@ python3 tools/watch-preview.py
 ```
 
 Open `http://peachq.me` on the host and refresh after saving edits. The watcher
-builds in a temporary directory, checks PHP syntax, then copies a successful
+waits for **10 seconds without edits** before rebuilding; each new edit resets
+the timer. Set `--debounce 30` for a longer pause. The initial build and `--once`
+build immediately. Edits made during a build are collected for the next build.
+
+The watcher builds in a temporary directory, checks PHP syntax, then copies a successful
 build into that local Apache directory. Failed builds leave the previous preview
 in place. Local responses disable browser caching. This does not commit, push,
 or change the GitHub publishing workflow.
@@ -254,8 +258,8 @@ above.
 ### Syncing PeachQ documentation
 
 The C project's `user-docs/` owns behavioural documentation. Its copied website
-pages live together in `content/docs/peachq/`. Keep the KX-derived `basics/` and
-`ref/` source files unchanged during this first documentation round. Website
+pages live together in `content/docs/peachq/`. Preserve the KX-derived text in `basics/` and `ref/`; append PeachQ additions
+using the convention below. Website
 introductions and guides live alongside the imports, outside the import manifest.
 
 `content/docs/peachq/sync.json` records the reviewed source SHA/version/date,
@@ -290,5 +294,42 @@ templates, planned behaviour or output-only blocks runnable. The old `repl` keyw
 is unnecessary (accepted for existing markers, but has no effect).
 
 Unchanged examples are reused in the editor when opened again; edited tabs are
-preserved. Copy retains the displayed block. For q session transcripts, the play
-link preloads the `q)` input lines and leaves expected output in the documentation.
+preserved. Copy retains the displayed block. Use `q)` prefixes for commands in session transcripts showing code already run,
+with the captured output on the following lines. Omit the prompt in code-only examples
+intended for the reader to run. For transcripts, the play link preloads only the
+`q)` input lines and leaves output in the documentation. See the
+[keyed-table example](content/docs/peachq/repl.md#reading-tables).
+
+
+### PeachQ-specific additions to reference pages
+
+Place PeachQ-specific material in a separate section, either immediately after the
+page title or below the existing reference text. Introduce it
+with a descriptive heading and an info banner titled **PeachQ-specific additions**.
+Keep the original reference text and attribution intact.
+
+Wrap the entire addition in hidden HTML comments using this format:
+
+```markdown
+<!-- PEACHQ-SPECIFIC:BEGIN cmdline | version=0.84 | source=rayforce/q -h -->
+
+## PeachQ-specific options
+
+!!! info "PeachQ-specific additions"
+    The options below extend the command-line reference above for PeachQ.
+
+...additional documentation...
+
+<!-- PEACHQ-SPECIFIC:END cmdline -->
+```
+
+Use a stable section identifier in both markers. Record the PeachQ version and
+source actually reviewed; update these when reviewing the content against a newer
+version. Add a source revision when available. These comments are hidden in the
+rendered page, but remain public source metadata. Do not put private notes in them.
+Find all additions with `rg 'PEACHQ-SPECIFIC:' content/`.
+
+See [the command-line page](content/docs/basics/cmdline.md) for a section at the bottom
+and [the system-command page](content/docs/basics/syscmds.md) for a section at the top.
+Keep imported-guide source/version records in front matter and the sync notes;
+do not add a documentation-snapshot banner to each page.
