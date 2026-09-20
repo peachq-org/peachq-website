@@ -88,9 +88,8 @@ has "docs loads PeachQ theming"      /docs/ 'css/extra.css'
 has "news wordmark has a peach Q"    /news/ 'peachq-wordmark__q'
 has "docs wordmark has a peach Q"    /docs/ 'peachq-wordmark__q'
 has "wordmark links to the site root" /docs/ 'class="md-ellipsis peachq-wordmark" href="\.\./"'
-# Search and the header repo link are deliberately omitted; GitHub moved to the
-# footer. If a Material upgrade reinstates them, this catches it.
-lacks "docs header has no search"    /docs/ 'md-search'
+# Docs expose search; the source widget remains replaced by a plain GitHub link.
+has "docs header has search"         /docs/ 'data-md-component="search-query"'
 lacks "docs header has no source"    /docs/ 'md-header__source'
 has "docs footer links to GitHub"    /docs/ 'rel="noreferrer">GitHub'
 # The nav is rendered inline in the header, not in a tabs row.

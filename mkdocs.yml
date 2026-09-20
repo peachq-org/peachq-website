@@ -37,6 +37,9 @@ theme:
     - content.code.copy
     - content.action.edit
 
+extra_javascript:
+  - js/docs-search.js
+
 extra_css:
   - css/extra.css
 
@@ -46,6 +49,12 @@ hooks:
   - hooks/relative_urls.py
   - hooks/imported_docs.py
   - hooks/repl_examples.py
+  - hooks/docs_search.py
+
+watch:
+  - static/docs/api
+  - data/help
+  - tools/build-help-index.php
 
 plugins:
   - search

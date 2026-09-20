@@ -7,13 +7,14 @@ import os
 from pathlib import Path
 import shutil
 import subprocess
+import sys
 import tempfile
 import time
 
 ROOT = Path(__file__).resolve().parent.parent
 TARGET = Path('/srv/git/timestored.com/peachq.org/public_html')
 CACHE = Path.home() / '.cache/peachq-preview'
-WATCH = ('static', 'content', 'overrides', 'hooks', 'tools',
+WATCH = ('static', 'content', 'overrides', 'hooks', 'tools', 'data',
          'mkdocs.yml', 'requirements.txt')
 PHP = os.environ.get('PEACHQ_PREVIEW_PHP', shutil.which('php7.3') or 'php')
 
@@ -58,6 +59,7 @@ def build(static_only=False):
             if static_only and previous.exists():
                 shutil.copytree(previous, output)
                 shutil.copytree(ROOT / 'static', output, dirs_exist_ok=True)
+                run([sys.executable, str(ROOT / 'hooks/docs_search.py'), str(output)])
             else:
                 env = dict(os.environ, PEACHQ_BUILD_DIR=str(output))
                 result = subprocess.run(['sh', 'tools/build.sh'], cwd=ROOT, env=env,
@@ -76,12 +78,12 @@ def build(static_only=False):
                 if source.exists():
                     shutil.copytree(source, output / name, dirs_exist_ok=True)
             with (output / '.htaccess').open('a') as config:
-                config.write('\n# Local preview only: always fetch current assets.\n'
+                config.write('\n# Local preview only: refresh unversioned assets; cache content-hashed search assets.\n'
                              '<IfModule mod_expires.c>\nExpiresActive Off\n</IfModule>\n'
                              '<IfModule mod_headers.c>\n'
                              'Header unset Expires\n'
-                             'Header always set Cache-Control "no-store"\n'
-                             'Header unset Cache-Control\n</IfModule>\n')
+                             'Header always set Cache-Control "no-store" env=!PEACHQ_SEARCH_CACHE\n'
+                             'Header unset Cache-Control env=!PEACHQ_SEARCH_CACHE\n</IfModule>\n')
             TARGET.mkdir(parents=True, exist_ok=True)
             # No owner/mode changes: the target is a VirtualBox shared folder.
             run(['rsync', '-rc', '--delete-delay', '--delay-updates',

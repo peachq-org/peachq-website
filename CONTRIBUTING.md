@@ -23,7 +23,8 @@ pip install -r requirements.txt
 mkdocs serve
 ```
 
-Open <http://127.0.0.1:8000/docs/>. Pages reload as you save.
+Open <http://127.0.0.1:8000/docs/>. Pages reload as you save. PHP 8 CLI must
+also be installed: documentation search uses the shared PHP help-index generator.
 
 Everything under `content/` is Markdown.
 
@@ -333,3 +334,60 @@ See [the command-line page](content/docs/basics/cmdline.md) for a section at the
 and [the system-command page](content/docs/basics/syscmds.md) for a section at the top.
 Keep imported-guide source/version records in front matter and the sync notes;
 do not add a documentation-snapshot banner to each page.
+
+### Documentation search
+
+The docs header uses Material search, with case-sensitive q names and glyphs
+shown first. `hooks/docs_search.py` builds `search/q_lookup.json` from the shared
+help destinations and a checked-in builtin-description snapshot, and adds public
+module/function entries from `static/docs/api/*.q.html` to Material's full-text
+index. Overloaded glyphs lead to their multiple-meaning reference sections.
+Namespace prefixes such as `.csv.` list matching API names. Both indexes refresh
+with `mkdocs serve`, full builds and the watcher's static-only refresh.
+
+`data/help/source.json` records the source revision and hash of
+`data/help/help-builtins.tsv`. To resync from a reviewed PeachQ commit:
+
+```bash
+python3 tools/sync-search-help.py --source ../rayforce --revision COMMIT
+./tools/build.sh
+python3 -m unittest discover -s tests -p 'test_*.py'
+npm ci
+npx playwright install chromium
+npm run test:search
+```
+
+The sync command reads committed content, not local edits. Review the description
+and source-record diff together. Normal builds need neither the source checkout
+nor a running q process. API entries refresh from the existing qDoc snapshot;
+regenerate that snapshot separately when its source changes.
+
+Browser checks exercise glyphs, keywords, API prose queries, keyboard controls,
+mobile layout and the same build installed under a subdirectory. Python checks
+validate every added result's page/fragment and ensure repeated index updates
+replace old API entries. Node and Playwright are test dependencies only.
+
+### Search caching
+
+The search build emits content-hashed JSON indexes and JavaScript consumers.
+Unchanged content retains its URL; changed indexes update the script URLs in
+rendered pages. Keep the unhashed build inputs for static-only preview refreshes.
+The pinned Material bundle's index URL is checked during the build; review this
+integration when upgrading Material.
+
+`static/.htaccess` is copied into the published site, including mirror installs.
+It enables JSON gzip compression when Apache mod_deflate is available and gives
+hashed search assets immutable caching. The local preview preserves this caching
+while disabling caching for unversioned assets. Check actual response headers and
+browser transfers when changing these rules; the PHP development server does not
+apply `.htaccess`.
+
+Against an Apache preview or deployed site, verify compression and cache reuse:
+
+```bash
+SEARCH_DELIVERY_URL=http://peachq.me node tests/test_search_delivery.cjs
+```
+
+This checks glyph and API results, hashed URLs, compressed responses and zero
+index transfer on a second documentation page. Use the site's root URL, including
+any mirror prefix. Leave browser caching enabled when checking transfers manually.
