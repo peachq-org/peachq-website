@@ -320,3 +320,32 @@ body {
 .peachq-repl-link svg { width: .85rem; height: .85rem; fill: currentColor; }
 .md-typeset .peachq-repl-link:hover,
 .md-typeset .peachq-repl-link:focus-visible { color: var(--peachq-peach-strong); opacity: 1; }
+
+/* Exact q matches share Material's search panel and scroll area. */
+.peachq-search[hidden] { display: none; }
+.peachq-search { border-bottom: 1px solid var(--md-default-fg-color--lightest); }
+.peachq-search .md-search-result__title { overflow-wrap: anywhere; }
+.peachq-search .md-search-result__teaser { max-height: none; }
+.peachq-search a:focus { outline: 2px solid var(--md-accent-fg-color); outline-offset: -2px; }
+@media screen and (min-width: 60em) {
+  .md-header__title { flex-shrink: 0; min-width: 4rem; }
+  .peachq-nav { min-width: 0; overflow-x: auto; }
+  .md-search { flex: 0 0 10rem; }
+  .md-search__inner { width: 10rem; }
+  [data-md-toggle="search"]:checked ~ .md-header .md-search__inner {
+    position: absolute;
+    left: auto;
+    right: 1rem;
+    top: .8rem;
+    width: min(34.4rem, calc(100vw - 2rem));
+  }
+}
+/* A glyph can have an exact hit without any full-text tokens. */
+.peachq-search:not([hidden]) + .md-search-result:has(.md-search-result__list:empty) {
+  display: none;
+}
+@media screen and (max-width: 59.984375em) {
+  /* A backdrop filter makes the header the containing block for the fixed
+     mobile dialog. Let Material size that dialog against the viewport. */
+  [data-md-toggle="search"]:checked ~ .md-header { backdrop-filter: none; }
+}

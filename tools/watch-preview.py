@@ -7,13 +7,14 @@ import os
 from pathlib import Path
 import shutil
 import subprocess
+import sys
 import tempfile
 import time
 
 ROOT = Path(__file__).resolve().parent.parent
 TARGET = Path('/srv/git/timestored.com/peachq.org/public_html')
 CACHE = Path.home() / '.cache/peachq-preview'
-WATCH = ('static', 'content', 'overrides', 'hooks', 'tools',
+WATCH = ('static', 'content', 'overrides', 'hooks', 'tools', 'data',
          'mkdocs.yml', 'requirements.txt')
 PHP = os.environ.get('PEACHQ_PREVIEW_PHP', shutil.which('php7.3') or 'php')
 
@@ -58,6 +59,7 @@ def build(static_only=False):
             if static_only and previous.exists():
                 shutil.copytree(previous, output)
                 shutil.copytree(ROOT / 'static', output, dirs_exist_ok=True)
+                run([sys.executable, str(ROOT / 'hooks/docs_search.py'), str(output)])
             else:
                 env = dict(os.environ, PEACHQ_BUILD_DIR=str(output))
                 result = subprocess.run(['sh', 'tools/build.sh'], cwd=ROOT, env=env,

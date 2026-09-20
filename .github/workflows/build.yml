@@ -27,6 +27,20 @@ jobs:
       - name: Build
         run: ./tools/build.sh
 
+      - name: Verify search indexes and preview watcher
+        run: python -m unittest discover -s tests -p 'test_*.py'
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - name: Verify browser search
+        run: |
+          npm ci
+          npx playwright install --with-deps chromium
+          npm run test:search
+
       - name: Verify pages
         run: ./tests/test_pages.sh
 

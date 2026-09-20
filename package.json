@@ -1,0 +1,10 @@
+{
+  "name": "peachq-website-checks",
+  "private": true,
+  "scripts": {
+    "test:search": "node tests/test_docs_search.cjs"
+  },
+  "devDependencies": {
+    "playwright": "1.61.1"
+  }
+}
