@@ -75,6 +75,10 @@ The browser page has its own editor; the native terminal shortcuts above are not
 promise about browser key bindings.
 
 - Type a short expression at the console and press Enter.
+- Use **Examples** above the console to run a sample expression or table query.
+- **Reset session** restarts q using the already loaded runtime, without reloading
+  the page or downloading the runtime and samples again. It clears console output and history.
+  Editor tabs are kept; session variables, settings and temporary files are discarded.
 - Open **Editor mode** for multiple lines and editor tabs.
 - Use **Run line** (Ctrl-Enter) or **Run selection** (Ctrl-E).
 - Use **Open** for example scripts, and workspace import/export to move your editor work.
@@ -87,3 +91,8 @@ examples marked `runnable` (passing the automated code-block checker) execute
 automatically after the runtime loads.
 Other examples are preloaded for you to edit or run. A checked example may still
 need capabilities absent from the browser runtime.
+
+Shared commands and automatically run documentation examples execute once when
+opened. Their execution flags are removed from the URL before evaluation, so
+refreshing the page does not run them again. Saved editor text and console output
+are restored without executing commands.

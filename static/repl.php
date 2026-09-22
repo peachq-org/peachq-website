@@ -8,6 +8,28 @@ peachq_page_start('PeachQ Browser REPL', 'Try PeachQ in a browser REPL.', 'repl'
 <div class="repl-toolbar">
   <span>PeachQ browser REPL</span>
   <div class="repl-actions">
+<div class="repl-menu">
+  <button type="button" id="replExamplesToggle" aria-expanded="false" aria-controls="replExamplesMenu">Examples <span aria-hidden="true">▾</span></button>
+  <div class="repl-menu-panel" id="replExamplesMenu" hidden>
+    <strong>Run an example</strong>
+<button data-example="til 10">til 10</button>
+<button data-example="sum 2 3 4 5">sum 2 3 4 5</button>
+<button data-example="avg 10 20 30">avg 10 20 30</button>
+<button data-example="reverse 1 2 3 4">reverse 1 2 3 4</button>
+<button data-example="6*7">6*7</button>
+<button data-example="trade:([]sym:`AAPL`MSFT;px:211.2 493.7)">sample table</button>
+<button data-example="trade:([]sym:`AAPL`MSFT;px:211.2 493.7);select avg px by sym from trade">sample qSQL</button>
+<strong>Tables and lists</strong>
+    <button type="button" data-rich-example="t:([]a:1 2 3;b:10 20 30);select a,b from t where a&gt;1">select with where</button>
+    <button type="button" data-rich-example="t:([]a:1 2 3;b:10 20 30);select sum a from t">aggregate table column</button>
+    <button type="button" data-rich-example="t:([]sym:`AAPL`MSFT`NVDA;px:211.2 493.7 167.9);select avg px by sym from t">group by symbol</button>
+    <button type="button" data-rich-example="(+) scan 1 2 3 4 5">running sum</button>
+    <button type="button" data-rich-example="(*) over 1 2 3 4 5">product over list</button>
+    <button type="button" data-rich-example="flip `sym`price`size!(`IBM`MSFT;10.2 23.45;100 100)">flip dictionary to table</button>
+    <button type="button" data-rich-example="x:([]a:1 2 3;b:`I`J`K;c:10 20 30);y:([a:1 3;b:`I`K]c:1 2;d:10 20);x lj y">left join keyed table</button>
+  </div>
+</div>
+    <button type="button" id="replReset" title="Start a fresh runtime and clear console history. Editor tabs are kept; session variables and files are discarded.">Reset session</button>
     <button type="button" id="replCopy">Copy output</button>
     <button type="button" id="replShare">Share latest</button>
     <button type="button" class="repl-icon-button repl-full-theme" data-repl-theme-toggle aria-label="Toggle color theme" title="Toggle light/dark theme">◐</button>
@@ -54,31 +76,10 @@ peachq_page_start('PeachQ Browser REPL', 'Try PeachQ in a browser REPL.', 'repl'
   </section>
 </div>
 </div>
-<aside class="card examples"><h3>Examples</h3>
-<button data-example="til 10">til 10</button>
-<button data-example="sum 2 3 4 5">sum 2 3 4 5</button>
-<button data-example="avg 10 20 30">avg 10 20 30</button>
-<button data-example="reverse 1 2 3 4">reverse 1 2 3 4</button>
-<button data-example="6*7">6*7</button>
-<button data-example="trade:([]sym:`AAPL`MSFT;px:211.2 493.7)">sample table</button>
-<button data-example="trade:([]sym:`AAPL`MSFT;px:211.2 493.7);select avg px by sym from trade">sample qSQL</button>
-<div class="repl-menu">
-  <button type="button" id="replExamplesToggle" aria-expanded="false" aria-controls="replExamplesMenu">More examples <span aria-hidden="true">▾</span></button>
-  <div class="repl-menu-panel" id="replExamplesMenu" hidden>
-    <strong>Snippet examples</strong>
-    <button type="button" data-rich-example="t:([]a:1 2 3;b:10 20 30);select a,b from t where a&gt;1">select with where</button>
-    <button type="button" data-rich-example="t:([]a:1 2 3;b:10 20 30);select sum a from t">aggregate table column</button>
-    <button type="button" data-rich-example="t:([]sym:`AAPL`MSFT`NVDA;px:211.2 493.7 167.9);select avg px by sym from t">group by symbol</button>
-    <button type="button" data-rich-example="(+) scan 1 2 3 4 5">running sum</button>
-    <button type="button" data-rich-example="(*) over 1 2 3 4 5">product over list</button>
-    <button type="button" data-rich-example="flip `sym`price`size!(`IBM`MSFT;10.2 23.45;100 100)">flip dictionary to table</button>
-    <button type="button" data-rich-example="x:([]a:1 2 3;b:`I`J`K;c:10 20 30);y:([a:1 3;b:`I`K]c:1 2;d:10 20);x lj y">left join keyed table</button>
-  </div>
-</div>
-<div class="repl-help">
+
+</div><div class="container repl-help">
   <a href="docs/peachq/repl/">REPL guide and keyboard shortcuts</a>
   <a class="repl-bug-button" id="replBugLink" href="https://github.com/peachq-org/peachq/issues/new" target="_blank" rel="noreferrer">Report a bug</a>
 </div>
-</aside>
-</div></section></main>
+</section></main>
 <?php peachq_page_end(['repl.js']); ?>

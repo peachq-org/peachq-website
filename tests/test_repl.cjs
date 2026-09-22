@@ -3,6 +3,7 @@ const path = require('node:path');
 const {spawn} = require('node:child_process');
 const {chromium} = require('playwright');
 const {checkQFiles} = require('./repl-console.cjs');
+const {checkReplUI} = require('./repl-ui.cjs');
 const root = path.resolve(__dirname, '..');
 let server, browser;
 
@@ -26,6 +27,7 @@ let server, browser;
   await page.waitForFunction(() => document.querySelector('#replStatus').getAttribute('aria-label') === 'runtime ready',
     null, {timeout: 120000});
   await checkQFiles(page);
+  await checkReplUI(page, origin);
 })().catch(error => {console.error(error); process.exitCode = 1;}).finally(async () => {
   try {
     if (browser) await browser.close();
