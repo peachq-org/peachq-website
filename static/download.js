@@ -3,24 +3,6 @@
   const versionEl = document.querySelector("[data-release-version]");
   const uploadedEl = document.querySelector("[data-release-uploaded]");
 
-  function command(platform, file) {
-    if (platform === "windows") {
-      return [
-        `Invoke-WebRequest https://peachq.org/file/${file} -OutFile ${file}`,
-        `Expand-Archive ${file} -DestinationPath peachq`,
-        "cd peachq",
-        ".\\q.exe"
-      ].join("\n");
-    }
-    return [
-      `curl -LO https://peachq.org/file/${file}`,
-      "mkdir -p peachq",
-      `tar -xzf ${file} -C peachq`,
-      "cd peachq",
-      "./q"
-    ].join("\n");
-  }
-
   function setText(selector, text) {
     document.querySelectorAll(selector).forEach(el => {
       el.textContent = text;
@@ -74,21 +56,27 @@
     .then(release => {
       if (!release || !release.files) return;
       if (release.version && versionEl) {
-        versionEl.textContent = release.version;
+        versionEl.textContent = release.version.replace(/^(v\d+\.\d+)\.\d+$/, "$1");
+        document.querySelector("[data-release-summary]").hidden = false;
+        document.querySelector("[data-release-unavailable]").hidden = true;
+        document.querySelector("[data-release-notes]").href =
+          "https://github.com/peachq-org/peachq/releases/tag/" + encodeURIComponent(release.version);
       }
       if (release.uploaded && uploadedEl) {
         uploadedEl.textContent = release.uploaded;
         uploadedEl.dateTime = release.uploaded;
       }
-      ["windows", "mac", "linux"].forEach(platform => {
+      Object.keys(release.files).forEach(platform => {
         const file = releaseFile(release.files[platform]);
         if (!file) return;
         setText(`[data-release-file="${platform}"]`, file.name);
         setMeta(platform, file);
+        document.querySelectorAll(`[data-release-optional="${platform}"]`).forEach(el => {
+          el.hidden = false;
+        });
         document.querySelectorAll(`[data-release-link="${platform}"]`).forEach(link => {
           link.href = fileBase + encodeURIComponent(file.name);
         });
-        setText(`[data-release-command="${platform}"]`, command(platform, file.name));
       });
     })
     .catch(() => {});
