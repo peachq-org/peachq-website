@@ -175,6 +175,30 @@ php -S 127.0.0.1:8000 -t site tools/preview-router.php
 
 Fixtures land in `site/`, are never committed, and are wiped by the next build.
 
+### Stable download URLs
+
+The download page remains at `/download`. Scripts can use these aliases for
+the current release; each responds with an uncached HTTP 302 redirect to the
+versioned archive named in `file/latest.json`:
+
+| Platform | Standard | With DuckDB |
+|---|---|---|
+| Windows x64 | `/download/peachq.zip` | `/download/peachq-duckdb.zip` |
+| macOS Apple silicon | `/download/peachq-mac-arm64.tar.gz` | `/download/peachq-mac-arm64-duckdb.tar.gz` |
+| Linux x64 | `/download/peachq-linux-x64.tar.gz` | `/download/peachq-linux-x64-duckdb.tar.gz` |
+
+The Linux DuckDB archive requires glibc. For example:
+
+```sh
+curl -fLO https://peachq.org/download/peachq-duckdb.zip
+```
+
+Unknown aliases return 404; missing or invalid archive entries in the release
+manifest return 503.
+The uploader publishes the manifest after the archives, so these URLs need no
+website change for a new release. Use versioned URLs and checksums when a script
+must retrieve a fixed release. The aliases also work under a mirror's site prefix.
+
 ### Local Apache preview at peachq.me
 
 On the development VM, the existing `peachq.me` Apache virtual host serves

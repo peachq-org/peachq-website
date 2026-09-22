@@ -46,6 +46,9 @@ SetEnvIf Request_URI "\.(css|js|wasm)$" PEACHQ_SHORT_CACHE=1
 <IfModule mod_rewrite.c>
 	RewriteEngine on
 
+	# Stable archive names resolve through the current release manifest.
+	RewriteRule ^download/[^/]+$ download-latest.php [L]
+
 	# Keep the REPL page reachable beside its sample-files directory.
 	RewriteRule ^repl/?$ repl.php [L]
 
