@@ -697,6 +697,32 @@ function loadScript(src) {
   });
 }
 
+async function loadSampleFiles() {
+  const response = await fetch("repl/files.json", {cache: "no-cache", signal: AbortSignal.timeout(30000)});
+  if (!response.ok) throw new Error("sample manifest: HTTP " + response.status);
+  const files = await response.json();
+  if (!Array.isArray(files)) throw new Error("invalid sample manifest");
+  // Download everything before installation, so a failed request leaves no partial set.
+  const downloaded = await Promise.all(files.map(async file => {
+    if (!file || typeof file.path !== "string" ||
+        !file.path.split("/").every(part => part && part !== "." && part !== "..") ||
+        /[\\\x00-\x1f]/.test(file.path) || !/^[a-f0-9]{64}$/.test(file.sha256)) {
+      throw new Error("invalid sample path or hash");
+    }
+    const url = "repl/files/" + file.path.split("/").map(encodeURIComponent).join("/") +
+      "?v=" + file.sha256;
+    const result = await fetch(url, {signal: AbortSignal.timeout(30000)});
+    if (!result.ok) throw new Error(file.path + ": HTTP " + result.status);
+    return {path: "/" + file.path, bytes: new Uint8Array(await result.arrayBuffer())};
+  }));
+  downloaded.forEach(file => {
+    if (runtime.FS.analyzePath(file.path).exists) return;
+    runtime.FS.mkdirTree(file.path.slice(0, file.path.lastIndexOf("/")) || "/");
+    runtime.FS.writeFile(file.path, file.bytes);
+  });
+  return files.map(file => file.path);
+}
+
 async function loadRuntime() {
   input.disabled = true;
   setExamplesEnabled(false);
@@ -718,6 +744,13 @@ async function loadRuntime() {
       });
       runtime.ccall("q_wasm_init", "number", [], []);
       activeRuntime = candidate;
+      setStatus("loading sample files");
+      try {
+        const samples = await loadSampleFiles();
+        print("Sample files: " + samples.join(", "), "sys");
+      } catch (err) {
+        print("Sample files unavailable: " + err.message + ". Refresh to retry; other commands still work.", "error");
+      }
       input.disabled = false;
       setExamplesEnabled(true);
       input.focus();

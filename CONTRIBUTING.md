@@ -391,3 +391,52 @@ SEARCH_DELIVERY_URL=http://peachq.me node tests/test_search_delivery.cjs
 This checks glyph and API results, hashed URLs, compressed responses and zero
 index transfer on a second documentation page. Use the site's root URL, including
 any mirror prefix. Leave browser caching enabled when checking transfers manually.
+
+### Browser REPL sample files
+
+Add files under `static/repl/files/`; the build generates `repl/files.json`
+from that directory, including nested paths and content hashes. No separate file
+list needs updating. The static-only preview refresh regenerates it too.
+Files download only when the REPL runtime starts, before its controls are enabled.
+For example, `static/repl/files/dowjones.csv` becomes `/dowjones.csv` in the
+browser's temporary filesystem; `examples/dowjones.q` can be loaded with
+`\l examples/dowjones.q`. Changes made in that filesystem last for the current
+page session only. Startup failures report that samples are unavailable while
+leaving ordinary REPL commands usable. HTTP operations inside q are separate
+runtime functionality and are not enabled by this loader.
+
+The unmodified CSV and JSON samples were retrieved on 2026-09-20 from:
+
+- <https://www.timestored.com/data/sample/dowjones.csv>
+- <https://www.timestored.com/data/sample/price.json>
+
+These are historical examples, not current market data. The two `.q` scripts
+are website examples. Keep provenance notes here, outside the mounted directory.
+To test against the current browser runtime after building, fetch development
+fixtures and run `npm run test:repl`.
+
+### REPL q console tests
+
+Add a `.q` file under `tests/repl/`. Put each command on one line, followed by
+its expected console output in `/=>` comments:
+
+```q
+answer:6*7
+answer
+/=> 42
+```
+
+A command without `/=>` lines must produce no output. For multiline output,
+use one `/=>` line per output line, with a final bare `/=>` when output ends in
+a newline (as with `show`). A lone bare `/=>` means empty output. Spaces after
+the comment separator are significant. The files are also
+valid q scripts that can be pasted into the REPL editor and run manually.
+
+`npm run test:repl` discovers the files in filename order, types each command
+into the console and compares the displayed output, including errors and
+`show` output. Every file and command shares one initialized REPL session:
+there is no reload or runtime reset between
+q tests, so variables and filesystem changes persist. Use distinct variable
+names or clean up your own state. Failures identify the q file,
+line and command with the expected and actual output. The runner uses the local
+WASM fixtures; it does not call a native q executable or mock evaluation.
