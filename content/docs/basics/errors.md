@@ -288,7 +288,7 @@ mismatch
 [](){#mlim}
 mlim
 
-:   Too many nested columns in [splayed tables](../kb/splayed-tables.md).
+:   Too many nested columns in [splayed tables](https://code.kx.com/q/kb/splayed-tables/).
     (Prior to V3.0, limited to 999; from V3.0, 251; from V3.3, 65530)
 
 [](){#mq}
@@ -304,7 +304,7 @@ name too long
 [](){#need-zlib-to-compress}
 need zlib to compress
 
-:   zlib not available. [Install zlib libraries](../kb/file-compression.md#gzip) if ability to compress or decompress gzip is required.
+:   zlib not available. [Install zlib libraries](https://code.kx.com/q/kb/file-compression/#gzip) if ability to compress or decompress gzip is required.
 
 [](){#noamend}
 noamend
@@ -444,7 +444,7 @@ s-fail
 [](){#splay}
 splay
 
-:   nyi op on [splayed table](../kb/splayed-tables.md)
+:   nyi op on [splayed table](https://code.kx.com/q/kb/splayed-tables/)
 
 [](){#stack}
 stack

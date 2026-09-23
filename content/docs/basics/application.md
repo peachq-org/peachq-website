@@ -44,7 +44,7 @@ By extension,
 
     :fontawesome-solid-street-view:
     _Q for Mortals_
-    [§6.5 Everything Is a Map](/q4m3/6_Functions/#everything-is-a-map)
+    [§6.5 Everything Is a Map](https://code.kx.com/q4m3/6_Functions/#65-everything-is-a-map)
 
 
 ## Application
@@ -426,7 +426,7 @@ q){x}[;1]
 
 :fontawesome-solid-street-view:
 _Q for Mortals_
-[§6.4 Projection](/q4m3/6_Functions/#64-projection)
+[§6.4 Projection](https://code.kx.com/q4m3/6_Functions/#64-projection)
 <br>
 :fontawesome-brands-wikipedia-w:
 [Currying](https://en.wikipedia.org/wiki/Currying)
@@ -575,4 +575,4 @@ Above, the list of three keywords is applied to (indexed by) the first argument,
 
 :fontawesome-solid-street-view:
 _Q for Mortals_
-[§6.8 General Application](/q4m3/6_Functions/#68-general-application)
+[§6.8 General Application](https://code.kx.com/q4m3/6_Functions/#68-general-application)

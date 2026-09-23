@@ -5,6 +5,7 @@ const exampleButtons = Array.from(document.querySelectorAll("[data-example]"));
 const bugLink = document.getElementById("replBugLink");
 const copyButton = document.getElementById("replCopy");
 const shareButton = document.getElementById("replShare");
+const resetButton = document.getElementById("replReset");
 const expandButton = document.getElementById("replExpand");
 const closeButton = document.getElementById("replClose");
 const toast = document.getElementById("replToast");
@@ -45,6 +46,9 @@ const qBuiltins = ".Q.addmonths .Q.addr .Q.host .Q.chk .Q.cn .Q.pn .Q.D .Q.dd .Q
 
 let runtime = null;
 let activeRuntime = null;
+let runtimeFactory = null;
+let compiledRuntime = null;
+let sampleFiles = null;
 let history = [];
 let historyIndex = 0;
 let transcript = [];
@@ -697,8 +701,61 @@ function loadScript(src) {
   });
 }
 
+async function loadSampleFiles() {
+  if (sampleFiles !== null) {
+    installSampleFiles(sampleFiles);
+    return sampleFiles.map(file => file.path.slice(1));
+  }
+  const response = await fetch("repl/files.json", {cache: "no-cache", signal: AbortSignal.timeout(30000)});
+  if (!response.ok) throw new Error("sample manifest: HTTP " + response.status);
+  const files = await response.json();
+  if (!Array.isArray(files)) throw new Error("invalid sample manifest");
+  // Download everything before installation, so a failed request leaves no partial set.
+  const downloaded = await Promise.all(files.map(async file => {
+    if (!file || typeof file.path !== "string" ||
+        !file.path.split("/").every(part => part && part !== "." && part !== "..") ||
+        /[\\\x00-\x1f]/.test(file.path) || !/^[a-f0-9]{64}$/.test(file.sha256)) {
+      throw new Error("invalid sample path or hash");
+    }
+    const url = "repl/files/" + file.path.split("/").map(encodeURIComponent).join("/") +
+      "?v=" + file.sha256;
+    const result = await fetch(url, {signal: AbortSignal.timeout(30000)});
+    if (!result.ok) throw new Error(file.path + ": HTTP " + result.status);
+    return {path: "/" + file.path, bytes: new Uint8Array(await result.arrayBuffer())};
+  }));
+  sampleFiles = downloaded;
+  installSampleFiles(sampleFiles);
+  return files.map(file => file.path);
+}
+
+function installSampleFiles(files) {
+  files.forEach(file => {
+    if (runtime.FS.analyzePath(file.path).exists) return;
+    runtime.FS.mkdirTree(file.path.slice(0, file.path.lastIndexOf("/")) || "/");
+    runtime.FS.writeFile(file.path, file.bytes);
+  });
+}
+
+async function createRuntime(factory, module, candidate) {
+  const instance = await factory({
+    locateFile(path) {
+      return runtimeSibling(path, candidate.script);
+    },
+    instantiateWasm(imports, receiveInstance) {
+      const wasm = new WebAssembly.Instance(module, imports);
+      receiveInstance(wasm, module);
+      return wasm.exports;
+    }
+  });
+  if (instance.ccall("q_wasm_init", "number", [], []) !== 0) {
+    throw new Error("q initialization failed");
+  }
+  return instance;
+}
+
 async function loadRuntime() {
   input.disabled = true;
+  resetButton.disabled = true;
   setExamplesEnabled(false);
   setStatus("loading runtime");
   print("Loading PeachQ WebAssembly runtime...", "sys");
@@ -711,14 +768,23 @@ async function loadRuntime() {
       const beforeFactories = factorySnapshot();
       await loadScript(candidate.script);
       const factory = findFactory(candidate, beforeFactories);
-      runtime = await factory({
-        locateFile(path) {
-          return runtimeSibling(path, candidate.script);
-        }
-      });
-      runtime.ccall("q_wasm_init", "number", [], []);
+      const binaryName = new URL(candidate.script, document.baseURI).pathname.split("/").pop().replace(/\.js$/, ".wasm");
+      const binary = await fetch(runtimeSibling(binaryName, candidate.script), {signal: AbortSignal.timeout(30000)});
+      if (!binary.ok) throw new Error("runtime binary: HTTP " + binary.status);
+      const module = await WebAssembly.compile(await binary.arrayBuffer());
+      runtime = await createRuntime(factory, module, candidate);
+      runtimeFactory = factory;
+      compiledRuntime = module;
       activeRuntime = candidate;
+      setStatus("loading sample files");
+      try {
+        const samples = await loadSampleFiles();
+        print("Sample files: " + samples.join(", "), "sys");
+      } catch (err) {
+        print("Sample files unavailable: " + err.message + ". Refresh to retry; other commands still work.", "error");
+      }
       input.disabled = false;
+      resetButton.disabled = false;
       setExamplesEnabled(true);
       input.focus();
       setStatus("runtime ready", "ready");
@@ -877,6 +943,13 @@ async function loadEditorExample(path) {
 }
 
 function replaySharedRuns() {
+  // Consume URL execution flags before evaluating: reload must not repeat bad code.
+  if (pendingDocsCode !== null || sharedRuns.length) {
+    const url = new URL(window.location.href);
+    url.searchParams.delete("run");
+    url.searchParams.delete("autorun");
+    window.history.replaceState(window.history.state, "", url);
+  }
   if (pendingDocsCode !== null) {
     const code = pendingDocsCode;
     pendingDocsCode = null;
@@ -1129,9 +1202,49 @@ input.addEventListener("keydown", e => {
 exampleButtons.forEach(button => {
   button.addEventListener("click", () => {
     run(button.dataset.example || "");
+    setExamplesOpen(false);
     input.value = "";
     input.focus();
   });
+});
+
+resetButton.addEventListener("click", async () => {
+  if (!runtimeFactory || !compiledRuntime || resetButton.disabled) return;
+  resetButton.disabled = true;
+  input.disabled = true;
+  setExamplesEnabled(false);
+  setExamplesOpen(false);
+  setStatus("restarting runtime");
+  saveEditor();
+  history = [];
+  historyIndex = 0;
+  transcript = [];
+  output.replaceChildren();
+  input.value = "";
+  sharedRuns = [];
+  pendingDocsCode = null;
+  storageRemove(storageKeys.history);
+  storageRemove(storageKeys.transcript);
+  const url = new URL(window.location.href);
+  ["run", "code", "autorun", "title", "example"].forEach(key => url.searchParams.delete(key));
+  window.history.replaceState(window.history.state, "", url);
+  runtime = null;
+  try {
+    runtime = await createRuntime(runtimeFactory, compiledRuntime, activeRuntime);
+    installSampleFiles(sampleFiles || []);
+    print("Session reset. Editor tabs kept.", "sys");
+    if (sampleFiles === null) print("Sample files unavailable. Refresh to retry downloading them.", "error");
+    input.disabled = false;
+    setExamplesEnabled(true);
+    setStatus("runtime ready", "ready");
+    input.focus();
+  } catch (err) {
+    runtime = null;
+    setStatus("restart failed", "error");
+    print("Could not restart q: " + err.message + ". Try Reset session again.", "error");
+  } finally {
+    resetButton.disabled = false;
+  }
 });
 
 function setExamplesOpen(open) {

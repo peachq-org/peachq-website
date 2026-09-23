@@ -91,7 +91,7 @@ Text-file primitives handle text files.
 
 kdb+ uses files and directories to persist database tables.
 [Partitioning a table](../kb/partition.md) divides its rows across multiple directories.
-[Splaying a table](../kb/splayed-tables.md) stores each column as a separate file.
+[Splaying a table](https://code.kx.com/q/kb/splayed-tables/) stores each column as a separate file.
 
 
 ## :fontawesome-solid-handshake-angle: Connections
@@ -169,7 +169,7 @@ Relative filepaths are sought in the following locations, in order.
 
 ---
 :fontawesome-solid-database:
-[File compression](../kb/file-compression.md)
+[File compression](https://code.kx.com/q/kb/file-compression/)
 <br>
 :fontawesome-solid-street-view:
 _Q for Mortals_

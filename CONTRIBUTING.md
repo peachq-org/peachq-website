@@ -23,7 +23,8 @@ pip install -r requirements.txt
 mkdocs serve
 ```
 
-Open <http://127.0.0.1:8000/docs/>. Pages reload as you save.
+Open <http://127.0.0.1:8000/docs/>. Pages reload as you save. PHP 8 CLI must
+also be installed: documentation search uses the shared PHP help-index generator.
 
 Everything under `content/` is Markdown.
 
@@ -197,6 +198,30 @@ php -S 127.0.0.1:8000 -t site tools/preview-router.php
 
 Fixtures land in `site/`, are never committed, and are wiped by the next build.
 
+### Stable download URLs
+
+The download page remains at `/download`. Scripts can use these aliases for
+the current release; each responds with an uncached HTTP 302 redirect to the
+versioned archive named in `file/latest.json`:
+
+| Platform | Standard | With DuckDB |
+|---|---|---|
+| Windows x64 | `/download/peachq.zip` | `/download/peachq-duckdb.zip` |
+| macOS Apple silicon | `/download/peachq-mac-arm64.tar.gz` | `/download/peachq-mac-arm64-duckdb.tar.gz` |
+| Linux x64 | `/download/peachq-linux-x64.tar.gz` | `/download/peachq-linux-x64-duckdb.tar.gz` |
+
+The Linux DuckDB archive requires glibc. For example:
+
+```sh
+curl -fLO https://peachq.org/download/peachq-duckdb.zip
+```
+
+Unknown aliases return 404; missing or invalid archive entries in the release
+manifest return 503.
+The uploader publishes the manifest after the archives, so these URLs need no
+website change for a new release. Use versioned URLs and checksums when a script
+must retrieve a fixed release. The aliases also work under a mirror's site prefix.
+
 ### Local Apache preview at peachq.me
 
 On the development VM, the existing `peachq.me` Apache virtual host serves
@@ -365,3 +390,109 @@ See [the command-line page](content/docs/basics/cmdline.md) for a section at the
 and [the system-command page](content/docs/basics/syscmds.md) for a section at the top.
 Keep imported-guide source/version records in front matter and the sync notes;
 do not add a documentation-snapshot banner to each page.
+
+### Documentation search
+
+The docs header uses Material search, with case-sensitive q names and glyphs
+shown first. `hooks/docs_search.py` builds `search/q_lookup.json` from the shared
+help destinations and a checked-in builtin-description snapshot, and adds public
+module/function entries from `static/docs/api/*.q.html` to Material's full-text
+index. Overloaded glyphs lead to their multiple-meaning reference sections.
+Namespace prefixes such as `.csv.` list matching API names. Both indexes refresh
+with `mkdocs serve`, full builds and the watcher's static-only refresh.
+
+`data/help/source.json` records the source revision and hash of
+`data/help/help-builtins.tsv`. To resync from a reviewed PeachQ commit:
+
+```bash
+python3 tools/sync-search-help.py --source ../rayforce --revision COMMIT
+./tools/build.sh
+python3 -m unittest discover -s tests -p 'test_*.py'
+npm ci
+npx playwright install chromium
+npm run test:search
+```
+
+The sync command reads committed content, not local edits. Review the description
+and source-record diff together. Normal builds need neither the source checkout
+nor a running q process. API entries refresh from the existing qDoc snapshot;
+regenerate that snapshot separately when its source changes.
+
+Browser checks exercise glyphs, keywords, API prose queries, keyboard controls,
+mobile layout and the same build installed under a subdirectory. Python checks
+validate every added result's page/fragment and ensure repeated index updates
+replace old API entries. Node and Playwright are test dependencies only.
+
+### Search caching
+
+The search build emits content-hashed JSON indexes and JavaScript consumers.
+Unchanged content retains its URL; changed indexes update the script URLs in
+rendered pages. Keep the unhashed build inputs for static-only preview refreshes.
+The pinned Material bundle's index URL is checked during the build; review this
+integration when upgrading Material.
+
+`static/.htaccess` is copied into the published site, including mirror installs.
+It enables JSON gzip compression when Apache mod_deflate is available and gives
+hashed search assets immutable caching. The local preview preserves this caching
+while disabling caching for unversioned assets. Check actual response headers and
+browser transfers when changing these rules; the PHP development server does not
+apply `.htaccess`.
+
+Against an Apache preview or deployed site, verify compression and cache reuse:
+
+```bash
+SEARCH_DELIVERY_URL=http://peachq.me node tests/test_search_delivery.cjs
+```
+
+This checks glyph and API results, hashed URLs, compressed responses and zero
+index transfer on a second documentation page. Use the site's root URL, including
+any mirror prefix. Leave browser caching enabled when checking transfers manually.
+
+### Browser REPL sample files
+
+Add files under `static/repl/files/`; the build generates `repl/files.json`
+from that directory, including nested paths and content hashes. No separate file
+list needs updating. The static-only preview refresh regenerates it too.
+Files download only when the REPL runtime starts, before its controls are enabled.
+For example, `static/repl/files/dowjones.csv` becomes `/dowjones.csv` in the
+browser's temporary filesystem; `examples/dowjones.q` can be loaded with
+`\l examples/dowjones.q`. Changes made in that filesystem last for the current
+page session only. Startup failures report that samples are unavailable while
+leaving ordinary REPL commands usable. HTTP operations inside q are separate
+runtime functionality and are not enabled by this loader.
+
+The unmodified CSV and JSON samples were retrieved on 2026-09-20 from:
+
+- <https://www.timestored.com/data/sample/dowjones.csv>
+- <https://www.timestored.com/data/sample/price.json>
+
+These are historical examples, not current market data. The two `.q` scripts
+are website examples. Keep provenance notes here, outside the mounted directory.
+To test against the current browser runtime after building, fetch development
+fixtures and run `npm run test:repl`.
+
+### REPL q console tests
+
+Add a `.q` file under `tests/repl/`. Put each command on one line, followed by
+its expected console output in `/=>` comments:
+
+```q
+answer:6*7
+answer
+/=> 42
+```
+
+A command without `/=>` lines must produce no output. For multiline output,
+use one `/=>` line per output line, with a final bare `/=>` when output ends in
+a newline (as with `show`). A lone bare `/=>` means empty output. Spaces after
+the comment separator are significant. The files are also
+valid q scripts that can be pasted into the REPL editor and run manually.
+
+`npm run test:repl` discovers the files in filename order, types each command
+into the console and compares the displayed output, including errors and
+`show` output. Every file and command shares one initialized REPL session:
+there is no reload or runtime reset between
+q tests, so variables and filesystem changes persist. Use distinct variable
+names or clean up your own state. Failures identify the q file,
+line and command with the expected and actual output. The runner uses the local
+WASM fixtures; it does not call a native q executable or mock evaluation.

@@ -1,8 +1,8 @@
 """Keep deferred link cleanup in the imported documentation out of strict CI.
 
-The initial basics/ref snapshot is intentionally byte-for-byte upstream while
-only those two sections have been imported. MkDocs consequently reports links
-to the upstream repository's other sections as missing. Downgrade warnings for
+The basics/ref snapshot imports only those two upstream sections. Some links
+to the upstream repository's other sections remain unresolved after targeted
+repairs, so MkDocs reports them as missing. Downgrade warnings for
 those two source trees only; warnings in PeachQ-authored documentation remain
 warnings and still fail ``mkdocs build --strict``.
 """

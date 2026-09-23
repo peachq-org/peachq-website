@@ -72,5 +72,5 @@ k c   v
 <br>
 
 _Q for Mortals_
-[§9.9.5 Equi Join](/q4m3/9_Queries_q-sql/#995-equijoin-ej)
+[§9.9.5 Equi Join](https://code.kx.com/q4m3/9_Queries_q-sql/#995-equijoin-ej)
 

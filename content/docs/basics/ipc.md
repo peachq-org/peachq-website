@@ -412,4 +412,4 @@ The compression/decompression algorithms are proprietary and implemented as the 
 <br>
 :fontawesome-solid-street-view:
 _Q for Mortals_
-[§11.6 Interprocess Communication](/q4m3/11_IO/#116-interprocess-communication)
+[§11.6 Interprocess Communication](https://code.kx.com/q4m3/11_IO/#116-interprocess-communication)

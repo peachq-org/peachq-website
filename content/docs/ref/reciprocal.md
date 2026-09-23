@@ -22,7 +22,9 @@ q)reciprocal 1b
 1f
 ```
 
+<!--
 `reciprocal` is a [multithreaded primitive](../kb/mt-primitives.md).
+-->
 
 ## Implicit iteration
 

@@ -34,7 +34,9 @@ q)neg 2000.01.01 2012.01.01     / negates the underlying data value
 
 An atomic function.
 
+<!--
 `neg` is a [multithreaded primitive](../kb/mt-primitives.md).
+-->
 
 
 ## Domain and range
@@ -57,8 +59,8 @@ Range: `ihjefpmdznuvt`
 <br>
 
 _Q for Mortals_
-[§4.3.2 Not Zero `not`](/q4m3/4_Operators/#432-not-zero-not)
+[§4.3.2 Not Zero `not`](https://code.kx.com/q4m3/4_Operators/#432-not-zero-not)
 <br>
 
 _Q for Mortals_
-[§4.9.2 Temporal Arithmetic](/q4m3/4_Operators/#492-temporal-arithmetic)
+[§4.9.2 Temporal Arithmetic](https://code.kx.com/q4m3/4_Operators/#492-temporal-arithmetic)

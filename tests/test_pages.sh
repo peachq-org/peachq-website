@@ -88,9 +88,8 @@ has "docs loads PeachQ theming"      /docs/ 'css/extra.css'
 has "news wordmark has a peach Q"    /news/ 'peachq-wordmark__q'
 has "docs wordmark has a peach Q"    /docs/ 'peachq-wordmark__q'
 has "wordmark links to the site root" /docs/ 'class="md-ellipsis peachq-wordmark" href="\.\./"'
-# Search and the header repo link are deliberately omitted; GitHub moved to the
-# footer. If a Material upgrade reinstates them, this catches it.
-lacks "docs header has no search"    /docs/ 'md-search'
+# Docs expose search; the source widget remains replaced by a plain GitHub link.
+has "docs header has search"         /docs/ 'data-md-component="search-query"'
 lacks "docs header has no source"    /docs/ 'md-header__source'
 has "docs footer links to GitHub"    /docs/ 'rel="noreferrer">GitHub'
 # The nav is rendered inline in the header, not in a tabs row.
@@ -223,7 +222,8 @@ echo "--- download page follows latest.json ---"
 # tools/dev-fixtures.sh may have left a real latest.json in site/. Move it aside
 # so these assertions test the code rather than whatever is currently published.
 if [ -e site/file ]; then mv site/file site/.file-testbak; fi
-has "download falls back without latest.json" /download 'peachq-v0.41.0-linux-x86_64.tar.gz'
+has "download explains missing release metadata" /download 'Release information is unavailable'
+lacks "download has no hardcoded release fallback" /download 'peachq-v0.41.0'
 mkdir -p site/file
 cat > site/file/latest.json <<'JSON'
 {
@@ -239,7 +239,9 @@ JSON
 has "download shows latest.json version"  /download 'v9.9'
 has "download shows latest.json date"     /download '2099-01-02'
 has "download shows latest.json filename" /download 'peachq-v9.9.9-linux-x86_64.tar.gz'
-has "install command uses that filename"  /download 'tar -xzf peachq-v9.9.9-linux-x86_64.tar.gz'
+has "Linux command downloads the stable alias" /download 'curl -fLO https://peachq.org/download/peachq-linux-x64.tar.gz'
+has "Linux command extracts the short filename" /download 'tar -xzf peachq-linux-x64.tar.gz'
+has "PowerShell command downloads the stable alias" /download 'Invoke-WebRequest https://peachq.org/download/peachq.zip -OutFile peachq.zip'
 lacks "stale hardcoded version is gone"   /download 'peachq-v0.41.0-linux'
 rm -rf site/file
 if [ -e site/.file-testbak ]; then mv site/.file-testbak site/file; fi
@@ -280,6 +282,12 @@ done
 echo "--- imported documentation serves as HTML and Markdown ---"
 has "datatypes renders through Material" /docs/basics/datatypes/ 'class="md-content"'
 has "datatypes renders its typewriter block" /docs/basics/datatypes/ '<p><strong>Basic datatypes</strong>'
+has "datatypes renders a collapsible infinity note" /docs/basics/datatypes/ '<summary>To infinity and beyond</summary>'
+has "datatypes keeps the infinity note body" /docs/basics/datatypes/ 'Floating-point arithmetic follows'
+for page in basics/datatypes basics/cmdline basics/implicit-iteration ref/wj ref/cast ref/differ ref/fby ref/uj; do
+  has "$page renders collapsible notes" "/docs/$page/" '<details class='
+  lacks "$page has no literal details markup" "/docs/$page/" '??? '
+done
 lacks "imported basics page omits repeated attribution" /docs/basics/datatypes/ 'Thanks and documentation attribution'
 has "asc renders through Material"       /docs/ref/asc/             'class="md-content"'
 lacks "imported ref page omits repeated attribution" /docs/ref/asc/            'Thanks and documentation attribution'

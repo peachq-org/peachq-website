@@ -240,7 +240,7 @@ QLIC     | folder searched for `k4.lic` or `kc.lic` license key file | `$QHOME`:
 
 :fontawesome-solid-book-open:
 [Dictionaries](dictsandtables.md),
-[Tables](../kb/faq.md)
+[Tables](https://code.kx.com/q/kb/faq/)
 
 
 ## Strings
@@ -259,7 +259,7 @@ QLIC     | folder searched for `k4.lic` or `kc.lic` license key file | `$QHOME`:
 </div>
 
 
-## [Tables](../kb/faq.md)
+## [Tables](https://code.kx.com/q/kb/faq/)
 
 <div markdown="1" class="typewriter">
 [cols](../ref/cols.md)     column names             [ungroup](../ref/ungroup.md)  normalize

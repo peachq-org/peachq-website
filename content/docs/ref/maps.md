@@ -223,7 +223,7 @@ Parallel processing
 <br>
 
 _Q for Mortals_
-[A.49 `peach`](/q4m3/A_Built-in_Functions/#a68-peach)
+[A.49 `peach`](https://code.kx.com/q4m3/A_Built-in_Functions/#a68-peach)
 
 
 ## Each Prior
@@ -280,7 +280,7 @@ q){x+2*y}':[2 3 4]
 
 
 _Q for Mortals_
-[§6.7.9 Each Prior](/q4m3/6_Functions/#679-each-prior)
+[§6.7.9 Each Prior](https://code.kx.com/q4m3/6_Functions/#679-each-prior)
 
 
 ### `prior` keyword

@@ -27,7 +27,7 @@ On a compressed/encrypted file returns the size of the original uncompressed/une
 [File system](../basics/files.md)
 <br>
 
-[File compression](../kb/file-compression.md)
+[File compression](https://code.kx.com/q/kb/file-compression/)
 <br>
 
 [Data at rest encryption (DARE)](../kb/dare.md)

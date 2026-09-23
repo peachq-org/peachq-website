@@ -47,7 +47,9 @@ q)(1 3 10 6 4;"acyxmpu") within ((2;"b");(6;"r"))
 
 `within` uses [Find](find.md) to search for `x` in `y`.
 
+<!--
 `within` is a [multithreaded primitive](../kb/mt-primitives.md).
+-->
 
 
 ----

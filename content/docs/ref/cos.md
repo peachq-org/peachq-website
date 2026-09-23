@@ -36,7 +36,9 @@ q)acos -0.4                     / arccosine
 1.982313
 ```
 
+<!--
 `cos` and `acos` are [multithreaded primitives](../kb/mt-primitives.md).
+-->
 
 ## Domain and range
 

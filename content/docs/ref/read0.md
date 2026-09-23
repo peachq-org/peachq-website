@@ -101,4 +101,4 @@ q)read0(h;8)
 <br>
 
 _Q for Mortals_
-[§11.4.1 Reading and Writing Text Files](/q4m3/11_IO/#1141-reading-and-writing-text-files)
+[§11.4.1 Reading and Writing Text Files](https://code.kx.com/q4m3/11_IO/#1141-reading-and-writing-text-files)

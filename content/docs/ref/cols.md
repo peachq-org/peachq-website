@@ -64,7 +64,7 @@ q)([q:`r]) xcol t              / nonexistent column names in key x signal a leng
 ```
 
 _Q for Mortals_
-[§9.8.1 `xcol`](/q4m3/9_Queries_q-sql/#981-xcol)
+[§9.8.1 `xcol`](https://code.kx.com/q4m3/9_Queries_q-sql/#981-xcol)
 
 ## `xcols`
 
@@ -95,7 +95,7 @@ q)cols t
 ```
 
 _Q for Mortals_
-[§9.8.2 `xcols`](/q4m3/9_Queries_q-sql/#982-xcols)
+[§9.8.2 `xcols`](https://code.kx.com/q4m3/9_Queries_q-sql/#982-xcols)
 
 ----
 
@@ -103,4 +103,4 @@ _Q for Mortals_
 [Metadata](../basics/metadata.md)
 <br>
 
-[Tables](../kb/faq.md)
+[Tables](https://code.kx.com/q/kb/faq/)

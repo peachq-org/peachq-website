@@ -52,6 +52,8 @@ q)\ts `=v
 66 268435648
 ```
 
+<!--
 `null` is a [multithreaded primitive](../kb/mt-primitives.md).
+-->
 
 

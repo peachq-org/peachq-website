@@ -507,7 +507,7 @@ q)\head test.txt
 
 String: location of the webserver root.
 
-[HTTP](../kb/http.md)
+[HTTP](https://code.kx.com/q/kb/http/)
 
 ## `.h.iso8601` (ISO timestamp)
 
@@ -593,7 +593,7 @@ Running an HTTP client such as cURL, from the same machine, shows the connection
 curl -v -v http://localhost:1234 http://localhost:1234
 ```
 
-[HTTP](../kb/http.md)
+[HTTP](https://code.kx.com/q/kb/http/)
 
 ## `.h.logo` (KX logo)
 

@@ -118,4 +118,4 @@ q)sp:get `:sp/        / equivalent to rload `sp
 <br>
 
 _Q for Mortals_
-[§11.2 Save and Load on Tables](/q4m3/11_IO/#112-save-and-load-on-tables)
+[§11.2 Save and Load on Tables](https://code.kx.com/q4m3/11_IO/#112-save-and-load-on-tables)

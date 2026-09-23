@@ -25,7 +25,9 @@ q)"sat" and "cow"
 "cat"
 ```
 
+<!--
 `and` is a [multithreaded primitive](../kb/mt-primitives.md).
+-->
 
 :fontawesome-solid-book: 
 [Lesser](lesser.md)

@@ -141,4 +141,4 @@ see [qSQL](../basics/qsql.md#cond).
 <br>
 
 _Q for Mortals_
-[§9.5 The `update` template](/q4m3/9_Queries_q-sql/#95-the-update-template)
+[§9.5 The `update` template](https://code.kx.com/q4m3/9_Queries_q-sql/#95-the-update-template)

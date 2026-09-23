@@ -16,7 +16,11 @@ Where
 - `x` is a non-negative numeric atom
 - `y` is numeric or temporal
 
-returns `y` rounded down to the nearest multiple of `x`. `xbar` is a [multithreaded primitive](../kb/mt-primitives.md).
+returns `y` rounded down to the nearest multiple of `x`.
+
+<!--
+`xbar` is a [multithreaded primitive](../kb/mt-primitives.md).
+-->
 
 ```q
 q)3 xbar til 16

@@ -37,7 +37,9 @@ q)distinct 2 + 0f,10 xexp -13
 2 2.0000000000001
 ```
 
+<!--
 `distinct` is a [multithreaded primitive](../kb/mt-primitives.md).
+-->
 
 ```txt
 domain: B G X H I J E F C S P M D Z N U V T

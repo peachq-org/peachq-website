@@ -169,6 +169,6 @@ q)handles:`u#`int$();
 <br>
 :fontawesome-solid-street-view:
 _Q for Mortals_
-[§A.68 `peach`](/q4m3/A_Built-in_Functions/#a68-peach)
+[§A.68 `peach`](https://code.kx.com/q4m3/A_Built-in_Functions/#a68-peach)
 
 <!-- FIXME replicate discussion in Q4M §A.68 -->

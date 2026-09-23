@@ -312,7 +312,7 @@ type/attr error amending file test
 <br>
 
 _Q for Mortals_
-[§6.8.3 General Form of Amend At and Amend](/q4m3/6_Functions/#683-general-form-of-function-application)
+[§6.8.3 General Form of Amend At and Amend](https://code.kx.com/q4m3/6_Functions/#683-general-form-of-function-application)
 
 <!--
 ## Functional Amend

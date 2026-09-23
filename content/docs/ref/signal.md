@@ -164,4 +164,4 @@ q))a
 <br>
 
 _Q for Mortals_
-[§10.1.8 Return and Signal](/q4m3/10_Execution_Control/#1017-return-and-signal)
+[§10.1.8 Return and Signal](https://code.kx.com/q4m3/10_Execution_Control/#1017-return-and-signal)

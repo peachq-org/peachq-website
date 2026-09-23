@@ -1,0 +1,520 @@
+# help-builtins - the builtin one-liners: name<TAB>call<TAB>meaning, ONE ROW PER MEANING.
+# Order is display order; the FIRST row of a name is what the REPL hint (.help.oneline) shows.
+# call: one idiomatic invocation, <=36 chars, copy-paste executable where it can be.
+# meaning: lowercase verb phrase, no trailing period, a whole thought on its own.
+# The RESULT column is NOT here - tools/gen-help-builtins.py witnesses it by running the call.
+# Longer explanations are the website's job (\??topic). Edit this file, rerun the generator, commit both.
+abs	abs -5 3 -2	take the magnitude, dropping the sign
+aj	aj[`sym`time;trade;quote]	as-of join: take the last y row at or before each x time
+aj0	aj0[`sym`time;trade;quote]	as-of join that keeps the matched row's own time
+ajf	ajf[`sym`time;trade;quote]	as-of join that fills nulls from the left table
+ajf0	ajf0[`sym`time;trade;quote]	as-of join filling nulls, keeping the matched time
+all	all 1 2 3=1 2 4	test whether every item is true
+any	any 1 2 3=1 20 30	test whether at least one item is true
+and	1010b and 1100b	take the lesser of two values - logical AND on booleans
+asc	asc 2 1 3 2	sort a list, dictionary or table ascending
+iasc	iasc 2 1 3	grade up: the indices that would sort a list ascending
+xasc	`price xasc trade	sort a table ascending by the named columns
+asof	trade asof `AAPL	take the last row of a table at or before a key value
+attr	attr `s#1 3 4	report an object's attribute: s, u, p or g
+avg	avg 1 2 3 4	take the average: the arithmetic mean, as a float
+avgs	avgs 1 2 3 4	take the running average at every position
+mavg	3 mavg 1 2 3 4 5	take the moving average over a sliding window of x items
+wavg	1 2 3 wavg 10 20 30	take the mean of y weighted by x
+bin	bin[1 3 5;4]	binary-search for the index of the last item up to y
+binr	binr[1 3 5;4]	binary-search for the index of the first item from y
+ceiling	ceiling 2.1 -2.1	round up to the next whole number
+count	count ([]a:1 2;b:3 4)	count the items of a list, dictionary or table
+mcount	3 mcount 1 2 3 4	count the non-null items in a moving window of x items
+cols	cols ([]a:1 2;b:3 4)	list a table's column names
+xcol	`x`y xcol ([]a:1 2;b:3 4)	rename a table's leading columns
+xcols	`b`a xcols ([]a:1 2;b:3 4)	reorder a table's columns, the named ones first
+cor	cor[1 2 3;2 4 7]	measure the correlation of two lists, from -1 to 1
+cos	cos 0 1	take the cosine of an angle in radians
+acos	acos 1	take the arccosine, in radians
+cov	cov[1 2 3;2 4 7]	measure the covariance of two lists
+scov	scov[1 2 3;2 4 7]	measure the sample covariance of two lists
+cross	1 2 cross `a`b	pair every item of x with every item of y
+csv	csv vs "a,b,c"	name the comma delimiter, for csv text
+cut	2 cut til 6	cut a list into pieces of x items each
+cut	1 3 cut til 6	cut a list at each of the indices in x
+delete	delete b from ([]a:1 2;b:3 4)	drop rows or columns from a table
+deltas	deltas 1 4 9	take the difference between adjacent items
+desc	desc 2 1 3	sort descending
+idesc	idesc 2 1 3	grade down: the indices that would sort a list descending
+xdesc	`price xdesc trade	sort a table descending by the named columns
+dev	dev 1 2 3 4	measure the standard deviation of a list
+mdev	3 mdev 1 2 3 4	measure the standard deviation over a moving window
+sdev	sdev 1 2 3 4	measure the sample standard deviation
+differ	differ 1 1 2 2 3	flag each item that differs from the one before it
+distinct	distinct 1 2 1 3	keep the unique items, in first-seen order
+div	7 div 2	divide and round the quotient down to a whole number
+dsave	`:db dsave `trade	write global tables to disk splayed and enumerated
+each	count each ("ab";"cde")	apply a function to every item separately
+peach	count peach ("ab";"cde")	apply a function to every item on secondary threads
+ej	ej[`a;([]a:1 2);([]a:1 2;b:`x`y)]	equi join: match two tables on equal values of the named columns
+ema	0.5 ema 1 2 3	take the exponentially weighted moving average
+enlist	enlist 1 2 3	wrap the arguments as a single list
+eval	eval parse "2+3"	evaluate a parse tree
+reval	reval parse "2+3"	evaluate a parse tree under the remote-client restrictions
+except	1 2 3 4 except 2 4	drop from x every item that appears in y
+exec	exec a from ([]a:1 2)	read columns out of a table as values, not as a table
+exit	exit 0	end the process with an exit code
+exp	exp 1	take the exponential: raise e to a power
+xexp	2 xexp 10	raise x to the power y
+fby	select from t where a=(max;a) fby b	compare each row against an aggregate of its group
+fills	fills 1 0N 3 0N	replace each null with the last non-null before it
+first	first 1 2 3	take the first item
+last	last 1 2 3	take the last item
+fkeys	fkeys t	map a table's foreign-key columns to the tables they cite
+flip	flip (1 2;3 4)	transpose a matrix, dictionary or table
+floor	floor 2.7 -2.7	round down to the next whole number
+get	a:42;get `a	read the value bound to a name
+get	get `:trade	read or memory-map a kdb+ data file
+set	`a set 42	bind a value to a global name
+set	`:t.dat set til 3	write a value to a file
+getenv	getenv `HOME	read an environment variable
+setenv	`FOO setenv "bar"	set an environment variable for this process
+group	group "mississippi"	map each distinct item to the indices where it occurs
+gtime	gtime 2000.01.01D12:00:00	convert a local timestamp to UTC
+ltime	ltime 2000.01.01D12:00:00	convert a UTC timestamp to local time
+hcount	hcount `:trade.csv	report a file's size in bytes
+hdel	hdel `:trade.csv	delete a file, or an empty directory
+hopen	hopen `::5000	open a connection to a process, file or fifo
+hclose	hclose h	close a connection handle
+hsym	hsym `trade.csv	turn a symbol into a file or process handle symbol
+ij	ij[([]a:1 2);([a:1 2]b:`x`y)]	inner join: keep x's rows whose key matches y, adding y's columns
+ijf	ijf[([]a:1 2);([a:1 2]b:`x`y)]	inner join that keeps x's values where y is null
+in	2 in 1 2 3	test whether each item of x appears in y
+insert	t:([]a:1 2;b:`x`y);`t insert(3;`z)	append records to a table named by symbol
+inter	1 2 3 inter 2 3 4	keep the items that appear in both lists
+inv	inv 2 2#1 0 0 1f	invert a non-singular float matrix
+key	key `a`b!1 2	list a dictionary's keys
+key	key ([a:1 2]b:3 4)	take a keyed table's key table
+key	key 4	list the first x integers, as til does
+key	key `:.	list the files in a directory
+keys	keys ([a:1 2]b:3 4)	name a table's primary-key columns
+xkey	`a xkey ([]a:1 2;b:3 4)	make the named columns a table's primary key
+like	"quick" like "qu*"	match text against a glob pattern
+lj	([]a:1 2)lj([a:1 2]b:`x`y)	left join: add y's columns to x, matching on y's key
+ljf	([]a:1 2)ljf([a:1 2]b:`x`y)	left join that keeps x's values where y is null
+load	load `:trade	read a binary file or splayed table into a global
+rload	rload `trade	read a splayed table from a directory of that name
+log	log 1 2	take the natural logarithm
+xlog	2 xlog 8	take the logarithm of y in base x
+lower	lower "ABC"	fold text or symbols to lower case
+upper	upper "abc"	fold text or symbols to upper case
+lsq	(1 2#1 2f)lsq 2 2#1 0 0 1f	solve x=y by least squares matrix divide
+max	max 3 1 4	take the maximum: the largest item of a list
+maxs	maxs 3 1 4	take the running maximum
+mmax	2 mmax 3 1 4	take the maximum over a moving window of x items
+md5	md5 "hello"	hash text with MD5, as bytes
+med	med 1 2 3 100	take the median
+meta	meta ([]a:1 2;b:`x`y)	describe a table's columns: type, attribute and foreign key
+min	min 3 1 4	take the minimum: the smallest item of a list
+mins	mins 3 1 4	take the running minimum
+mmin	2 mmin 3 1 4	take the minimum over a moving window of x items
+mmu	(2 2#1 0 0 1f)mmu 2 2#1 2 3 4f	matrix multiply: multiply two float matrices
+mod	7 mod 3	take the modulo: the remainder left by whole division
+neg	neg 1 -2 3	negate: flip the sign of every item
+next	next 1 2 3	shift each item one place earlier
+prev	prev 1 2 3	shift each item one place later
+xprev	2 xprev 1 2 3 4	take the item x places earlier
+not	not 0 1 2	flag the items that are zero
+null	null 0N 1	flag the items that are null
+or	1010b or 1100b	take the greater of two values - logical OR on booleans
+over	(+) over 1 2 3	reduce a list with a function, keeping only the last result
+scan	(+) scan 1 2 3	accumulate a function along a list, keeping every step
+parse	parse "2+3"	turn source text into a parse tree
+pj	pj[([]a:1 2;b:0 0);([a:1 2]b:1 2)]	plus join: add y's matching numeric columns into x
+prd	prd 1 2 3 4	take the product: multiply the items together
+prds	prds 1 2 3 4	take the running product
+prior	(-) prior 1 4 9	apply a function to each item and the one before it
+rand	rand 10	pick a random number below x, or an item from a list
+rank	rank 3 1 4	give each item its position in the sorted list
+ratios	ratios 1 4 8	divide each item by the one before it
+raze	raze (1 2;3 4)	join the items, collapsing one level of nesting
+read0	read0 `:trade.csv	read a file, or a handle, as lines of text
+read1	read1 `:trade.csv	read a file, or a handle, as raw bytes
+reciprocal	reciprocal 0 2 4	divide one by each item
+reverse	reverse 1 2 3	reverse the order of the items
+rotate	2 rotate 1 2 3 4 5	shift the items left, wrapping round; right if x is negative
+save	save `:trade.csv	write a global to a file, format chosen by the suffix
+rsave	rsave `trade	write a table splayed to a directory of that name
+select	select a from ([]a:1 2)	read rows and columns from a table
+from	select a from trade	name the table a select, exec, update or delete reads
+show	show 1 2 3	format a value and write it to the console
+signum	signum -3 0 2	report the sign as -1, 0 or 1
+sin	sin 0 1	take the sine of an angle in radians
+asin	asin 1	take the arcsine, in radians
+sqrt	sqrt 2 9	take the square root
+ss	"a cat" ss "at"	string search: find every position where a pattern occurs
+ssr	ssr["hello";"l";"L"]	string search and replace: swap every occurrence of a pattern
+string	string 42	render a value as text
+sublist	2 sublist 1 2 3 4	take up to x items from the front, or a slice x[0] x[1]
+sum	sum 1 2 3	add the items together
+sums	sums 1 2 3	take the running total
+msum	2 msum 1 2 3 4	take the moving sum: total a sliding window of x items
+wsum	1 2 3 wsum 10 20 30	total y weighted by x
+sv	"," sv ("ab";"cd")	join strings with a delimiter
+sv	` sv `path`to`file	join symbols into one dotted symbol
+sv	2 sv 1 0 1 0b	evaluate digits y in base x
+sv	` sv (`:/tmp;`a.txt)	append a filename to a directory handle
+system	system "t"	run a system command and take its output as a value
+tables	tables `.	list the tables of a namespace
+tan	tan 0 1	take the tangent of an angle in radians
+atan	atan 1	take the arctangent, in radians
+til	til 5	list the first x integers from zero
+trim	trim "  ab  "	drop blanks from both ends of text
+ltrim	ltrim "  ab"	drop blanks from the front of text
+rtrim	rtrim "ab  "	drop blanks from the end of text
+type	type 1 2 3	report the type number of a value
+uj	([]a:1 2)uj([]b:`x`y)	union join: combine two tables, unioning their columns
+ujf	([]a:1 2)ujf([]b:`x`y)	union join that keeps x's values where y is null
+union	1 2 3 union 3 4	join both lists and keep the distinct items
+ungroup	ungroup ([]a:1 2;b:(1 2;3 4))	flatten a table whose cells hold lists
+update	update a:0 from ([]a:1 2)	add or amend the columns of a table
+upsert	t:([a:1 2]b:`x`y);`t upsert(1;`z)	append records, replacing any with a matching key
+value	value "2+3"	evaluate text, or unwrap a name, dictionary or function
+var	var 1 2 3 4	measure the variance
+svar	svar 1 2 3 4	measure the sample variance
+view	view `v	show the expression a view is defined by
+views	views[]	list the views defined in a namespace
+vs	"," vs "a,b,c"	split a string on a delimiter
+vs	` vs `path.to.file	split a dotted symbol, or a file handle, into parts
+vs	10 vs 1234	take the digits of y in base x
+where	where 1 0 1 1b	give the indices of the items that are true
+where	where 2 3	repeat each index as many times as its count says
+within	5 within 1 10	test whether items fall inside a range, ends included
+wj	wj[w;`sym`time;t;(q;(max;`bid))]	window join: aggregate y's rows over a window around each x row
+wj1	wj1[w;`sym`time;t;(q;(max;`bid))]	window join counting only rows strictly inside the window
+xbar	5 xbar 3 7 11 18	round down to the nearest multiple of x
+xgroup	`a xgroup ([]a:1 1 2;b:1 2 3)	key a table by the named columns, grouping the rest
+xrank	3 xrank til 6	label each item with its bucket in an x-way split
+do	i:0;do[3;i+:1];i	repeat expressions a fixed number of times
+if	if[1<2;r:"yes"];r	evaluate expressions only when a condition holds
+while	i:0;while[i<3;i+:1];i	repeat expressions while a condition holds
+\a	\a	list the tables of a namespace
+\b	\b	list the views defined in a namespace
+\B	\B	list the views awaiting recalculation
+\c	\c 25 200	show or set the console page size, rows then columns
+\C	\C 36 2000	show or set the page size used for HTTP output
+\cd	\cd /tmp	show or set the working directory
+\d	\d .foo	show or set the namespace new definitions land in
+\e	\e 1	show or set error trapping for client requests
+\E	\E 1	show or set TLS server mode
+\f	\f .q	list the functions of a namespace
+\g	\g 1	show or set garbage collection to immediate or deferred
+\l	\l script.q	load a script, or a database directory
+\o	\o 0	show or set the local time offset in hours from UTC
+\p	\p 5000	show or set the port this process listens on
+\P	\P 7	show or set how many digits floats display
+\r	\r	show or set the replication primary
+\r	\r a.txt b.txt	rename a file
+\s	\s 4	show or set how many secondary threads are available
+\S	\S 42	show or set the seed the random generator starts from
+\t	\t sum til 1000	time an expression in milliseconds
+\t	\t 1000	show or set the timer interval feeding .z.ts
+\T	\T 5	show or set the client execution timeout in seconds
+\ts	\ts sum til 1000	time an expression and report the bytes it used
+\u	\u	reload the user-password file
+\v	\v	list the variables of a namespace
+\w	\w	report memory usage, or show and set the workspace limit
+\W	\W 2	show or set which day the week starts on
+\x	\x .z.pi	restore a callback such as .z.pi to its default
+\z	\z 1	show or set the date format "D"$ parses
+\1	\1 out.txt	redirect stdout to a file
+\2	\2 err.txt	redirect stderr to a file
+\_	\_ script.q	hide a script's source, or ask whether one is hidden
+\\	\\	end the q process
+.Q.A	.Q.A	name the upper-case alphabet
+.Q.a	.Q.a	name the lower-case alphabet
+.Q.an	.Q.an	name the letters and digits, both cases
+.Q.b6	.Q.b6	name the base-64 alphabet
+.Q.n	.Q.n	name the decimal digits
+.Q.nA	.Q.nA	name the digits with the upper-case alphabet
+.Q.addmonths	.Q.addmonths[2000.01.15;1]	add a number of months to a date
+.Q.addr	.Q.addr `localhost	resolve a hostname to an IP address as an int
+.Q.host	.Q.host .Q.addr `localhost	resolve an IP address int back to a hostname
+.Q.bt	.Q.bt[]	dump the backtrace of the current execution to stdout
+.Q.sbt	.Q.sbt .Q.bt[]	render a backtrace object as display text
+.Q.trp	.Q.trp[{x+1};`a;{y}]	trap a unary and hand the handler a backtrace
+.Q.trpd	.Q.trpd[+;(1;2);{y}]	trap a function of any rank with a backtrace
+.Q.btoa	.Q.btoa "hello"	encode text as base-64
+.Q.atob	.Q.atob "aGVsbG8="	decode base-64 text back to bytes
+.Q.sha1	.Q.sha1 "hello"	hash text with SHA-1
+.Q.gz	.Q.gz(6;20#0x2a)	compress or decompress a byte vector with zlib
+.Q.bv	.Q.bv[]	fill missing tables across partitions with empty schemas
+.Q.bvi	.Q.bvi[]	extend .Q.bv over the partitions added since it last ran
+.Q.chk	.Q.chk `:db	create any partition directories a table is missing
+.Q.cn	.Q.cn trade	count the rows of a partitioned table
+.Q.D	.Q.D	list each segment's partitions, in .Q.P order
+.Q.P	.Q.P	list the segments of a segmented database
+.Q.PD	.Q.PD	list where each partition lives on disk
+.Q.pd	.Q.pd	list the partition locations .Q.view leaves in play
+.Q.PV	.Q.PV	list the partition value behind each partition location
+.Q.pv	.Q.pv	list the partition values .Q.view leaves in play
+.Q.pf	.Q.pf	name the partition column: date, month, year or int
+.Q.pn	.Q.pn	report the cached row counts per table per partition
+.Q.pt	.Q.pt	list the partitioned tables
+.Q.par	.Q.par[`:db;2024.01.01;`trade]	locate the directory holding one partition of a table
+.Q.view	.Q.view 2024.01.01	restrict every partitioned query to these partitions
+.Q.vp	.Q.vp	list the schemas standing in for tables missing partitions
+.Q.vt	.Q.vt	record which tables .Q.bv filled in
+.Q.U	.Q.U	tell whether each partition sits in exactly one segment
+.Q.MAP	.Q.MAP[]	keep partitions mapped instead of remapping per query
+.Q.M	.Q.M	set the chunk size .Q.dsftg loads in
+.Q.ind	.Q.ind[trade;0 1]	index a partitioned table by absolute row number
+.Q.dpft	.Q.dpft[`:db;2024.01.01;`sym;`trade]	save a table to a partition, sorted and parted by a column
+.Q.dpfts	.Q.dpfts[`:db;d;`sym;`trade;s]	save a partition reusing an existing symbol file
+.Q.dpt	.Q.dpt[`:db;2024.01.01;`trade]	save a table to a partition without parting it
+.Q.dpts	.Q.dpts[`:db;d;`trade;s]	save an unparted partition reusing a symbol file
+.Q.hdpf	.Q.hdpf[5000;`:db;d;`sym]	save every in-memory table to a partition and reload
+.Q.dsftg	.Q.dsftg[(0;10);h;4;3 1;`I`s;g]	load, convert and save data in fixed-size chunks
+.Q.en	.Q.en[`:db;trade]	enumerate a table's symbol columns against a sym file
+.Q.ens	.Q.ens[`:db;trade;`mysym]	enumerate against a named domain rather than sym
+.Q.f	.Q.f[2;3.14159]	format a number to x decimal places
+.Q.fmt	.Q.fmt[8;2;3.14159]	format a number to x characters and y decimals
+.Q.fc	.Q.fc[sum;til 10]	apply a function to a vector split across threads
+.Q.ff	.Q.ff[([]a:1 2);([]b:3 4)]	append the columns of y that x lacks
+.Q.fk	.Q.fk `trade.sym	name the table a foreign-key column points at
+.Q.ft	.Q.ft[0!;([a:1 2]b:3 4)]	apply a simple-table function to a keyed table
+.Q.fu	.Q.fu[{x*2};1 1 2 2]	apply a function to the distinct items only
+.Q.fs	.Q.fs[{show x};`:trade.csv]	feed a file to a function in chunks
+.Q.fsn	.Q.fsn[{show x};`:t.csv;100000]	feed a file to a function in chunks of a given size
+.Q.fps	.Q.fps[{show x};`:pipe]	feed a named pipe to a function in chunks
+.Q.fpn	.Q.fpn[{show x};`:pipe;100000]	feed a named pipe in chunks of a given size
+.Q.gc	.Q.gc[]	return unused memory to the operating system
+.Q.w	.Q.w[]	report memory statistics as a readable dictionary
+.Q.ts	.Q.ts[sum;enlist til 1000]	apply a function and report the time and space it took
+.Q.st	.Q.st[sum;enlist til 1000]	apply a function and report its time and space in detail
+.Q.prf0	.Q.prf0 .z.i	snapshot another q process's call stack
+.Q.hg	.Q.hg `$":http://localhost"	fetch a URL with HTTP GET
+.Q.hp	.Q.hp[`$":http://x";.h.ty`json;"{}"]	post a body to a URL with HTTP POST
+.Q.id	.Q.id `$"a b"	sanitize a symbol, or a table's columns, into valid names
+.Q.dd	.Q.dd[`a;`b]	glue two symbols together with a dot
+.Q.j10	.Q.j10 "hello"	encode a string as a long in base 36 with punctuation
+.Q.x10	.Q.x10 .Q.j10 "hello"	decode a base-36 long back to a string
+.Q.j12	.Q.j12 `hello	encode a symbol as a long in base 36
+.Q.x12	.Q.x12 .Q.j12 `hello	decode a base-36 long back to a symbol
+.Q.k	.Q.k	report the kdb+ compatibility level as a float (5.0), as .z.K does
+.Q.K	.Q.K	report the interpreter version date
+.Q.opt	.Q.opt .z.x	read command-line arguments as a dictionary
+.Q.def	.Q.def[`p!enlist 80;()!()]	apply defaults and types to parsed command-line arguments
+.Q.x	.Q.x	list the command-line arguments that were not options
+.Q.res	.Q.res	list the reserved words and control words
+.Q.s	.Q.s til 3	format a value as the console would print it
+.Q.s1	.Q.s1 til 3	format a value on one line, as 0N! does
+.Q.t	.Q.t	list the type character of every datatype, indexed by type
+.Q.ty	.Q.ty 1 2 3	report the type character of a value
+.Q.V	.Q.V ([]a:1 2)	take a table's columns as a dictionary
+.Q.v	.Q.v `:trade	read a value from disk, or pass a value through
+.Q.l	.Q.l `db	load a database directory as \l does
+.Q.lo	.Q.lo[`db;0;0]	load a database without changing directory or running scripts
+.Q.li	.Q.li 2024.01.02	add partitions to the loaded database
+.Q.ld	.Q.ld read0 `:script.q	group a script's lines into evaluable statements
+.Q.qt	.Q.qt ([]a:1 2)	tell whether a value is a table
+.Q.qp	.Q.qp trade	tell whether a table is partitioned
+.Q.ps	.Q.ps[`trade;();();()]	run a select over each partition in turn
+.Q.p1	.Q.p1[`trade;2024.01.01;()]	select from one partition, for .Q.ps
+.Q.u	.Q.u	tell whether the partitions are date based
+.Q.Cf	.Q.Cf	create an empty nested-column file (deprecated)
+.Q.Xf	.Q.Xf[`j;`:f]	create an empty mapped file of a type (deprecated)
+.z.a	.z.a	report the current connection's IP address as an int
+.z.ac	.z.ac:{[rh] (1;"")}	hook that authorizes or authenticates an HTTP request
+.z.b	.z.b	map each name a view depends on to its dependents
+.z.bm	.z.bm:{[x] x}	hook that validates an incoming IPC message
+.z.c	.z.c	count the physical cores of this machine
+.z.d	.z.d	take today's UTC date
+.z.D	.z.D	take today's local date
+.z.e	.z.e	report the TLS details of the current connection
+.z.ex	.z.ex	name the primitive that failed, in the debugger
+.z.ey	.z.ey	take the argument the failed primitive was given
+.z.exit	.z.exit:{[x] show "bye"}	hook run as the process exits, given the exit code
+.z.f	.z.f	name the script this process was started with
+.z.H	.z.H	list the active socket handles
+.z.h	.z.h	name the host this process runs on
+.z.i	.z.i	report this process id
+.z.K	.z.K	report the kdb+ compatibility level as a float (5.0)
+.z.k	.z.k	report the release date of the interpreter
+.z.l	.z.l	list the license details
+.z.M	.z.M	name the module namespace being loaded
+.z.m	.z.m	take the module namespace being loaded
+.z.N	.z.N	take the local time as a timespan
+.z.n	.z.n	take the UTC time as a timespan
+.z.o	.z.o	name the operating system this build was made for
+.z.P	.z.P	take the local timestamp now
+.z.p	.z.p	take the UTC timestamp now
+.z.pc	.z.pc:{[h] show h}	hook run after a connection closes, given its handle
+.z.pd	.z.pd:`u#hopen each 20000+til 4	supply the handles peach spreads work across
+.z.pg	.z.pg:{value x}	hook that answers a synchronous IPC request
+.z.ph	.z.ph:{[x] .h.hy[`html;"hi"]}	hook that answers an HTTP GET
+.z.pi	.z.pi:{show value x}	hook that evaluates a line of console input
+.z.pm	.z.pm:{[x] show x}	hook that answers HTTP methods other than GET and POST
+.z.po	.z.po:{[h] show h}	hook run after a connection opens, given its handle
+.z.pp	.z.pp:{[x] .h.hy[`txt;"ok"]}	hook that answers an HTTP POST
+.z.pq	.z.pq:{value x}	hook that answers a qcon text-protocol request
+.z.ps	.z.ps:{value x}	hook that runs an asynchronous IPC message
+.z.pw	.z.pw:{[u;p] 1b}	hook that accepts or rejects a user and password
+.z.q	.z.q	tell whether quiet mode is on
+.z.r	.z.r	tell whether updates are blocked in this context
+.z.s	.z.s	refer to the function currently running, for recursion
+.z.T	.z.T	take the local time
+.z.t	.z.t	take the UTC time
+.z.ts	.z.ts:{[x] show x}	hook run on every timer tick
+.z.u	.z.u	name the user of the current handle
+.z.v	.z.v	peachq version and environment (version QCFG QHOME QLIC QINIT QPATH)
+.z.vs	.z.vs:{[n;i] show n}	hook run after a global is amended
+.z.W	.z.W	report the bytes queued on each outbound handle
+.z.w	.z.w	report the current handle, zero in the console
+.z.wc	.z.wc:{[h] show h}	hook run after a websocket closes
+.z.wo	.z.wo:{[h] show h}	hook run after a websocket opens
+.z.ws	.z.ws:{[x] neg[.z.w] x}	hook that answers a websocket message
+.z.X	.z.X	list the raw command line, unfiltered
+.z.x	.z.x	list the command-line arguments after the script
+.z.Z	.z.Z	take the local datetime now
+.z.z	.z.z	take the UTC datetime now
+.z.zd	.z.zd:17 2 6	set the default compression: block size, algorithm, level
+.h.br	.h.br	name the HTML line break
+.h.c0	.h.c0	name the first colour the web console uses
+.h.c1	.h.c1	name the second colour the web console uses
+.h.cd	.h.cd ([]a:1 2;b:3 4)	render a table as comma-separated lines
+.h.code	.h.code "a\tb"	render tab-separated text as an HTML table row
+.h.d	.h.d	name the delimiter .h.cd joins nested items with
+.h.ed	.h.ed ([]a:1 2)	render a table as an Excel XML workbook
+.h.edsn	.h.edsn ([]a:1 2)	render an Excel workbook from several tables
+.h.fram	.h.fram[`title;(`a;`b)]	build an HTML page of two frames
+.h.ha	.h.ha[`$"/a";"link"]	build an HTML anchor
+.h.hb	.h.hb[`$"/a";"link"]	build an HTML anchor that opens in a named target
+.h.hc	.h.hc "a<b"	escape the angle brackets in text
+.h.he	.h.he "a<b"	escape text and mark it as an XML entity
+.h.hn	.h.hn["200 OK";`txt;"hi"]	build a complete HTTP response
+.h.hp	.h.hp enlist "hi"	build an HTTP response holding pre-formatted text
+.h.hr	.h.hr "abcd"	build a rule of dashes as long as the text
+.h.ht	.h.ht `index	generate HTML documentation from a q script
+.h.hta	.h.hta[`a;(1#`href)!1#"/"]	build an HTML start tag with attributes
+.h.htac	.h.htac[`a;(1#`href)!1#"/";"x"]	build an HTML element with attributes and content
+.h.htc	.h.htc[`b;"bold"]	build an HTML element around some content
+.h.html	.h.html "hi"	wrap body text as a whole HTML page
+.h.http	.h.http "see http://x.com"	turn bare URLs in text into HTML links
+.h.hu	.h.hu "a b"	escape text for use in a URL
+.h.hug	.h.hug .h.sc	build the escape table .h.hu uses
+.h.hy	.h.hy[`json;"{}"]	build an HTTP response of a given content type
+.h.HOME	.h.HOME	name the directory the web server serves files from
+.h.iso8601	.h.iso8601 3600000000000	render nanoseconds since 2000 as an ISO 8601 time
+.h.jx	.h.jx[0;`t]	render one page of a table as HTML rows
+.h.ka	.h.ka 5000i	give the HTTP keep-alive header for an idle timeout
+.h.logo	.h.logo	name the HTML for the logo the web console shows
+.h.nbr	.h.nbr "a b"	wrap text so it will not break across lines
+.h.pre	.h.pre ("a";"b")	join lines as pre-formatted HTML text
+.h.sa	.h.sa	name the CSS the web console styles anchors with
+.h.sb	.h.sb	name the CSS the web console styles the body with
+.h.sc	.h.sc	name the characters that need no escaping in a URL
+.h.td	.h.td ([]a:1 2;b:3 4)	render a table as tab-separated lines
+.h.text	.h.text ("a";"b")	render lines as HTML text nodes
+.h.tx	.h.tx	map each file type to the function that renders it
+.h.ty	.h.ty	map each content type to its media type
+.h.uh	.h.uh "a%20b"	decode the percent escapes in a URL
+.h.val	.h.val "2+3"	evaluate a request, as .z.ph does
+.h.xd	.h.xd ([]a:1 2)	render a table as an XML table
+.h.xmp	.h.xmp ("a";"b")	render lines inside an HTML xmp element
+.h.xs	.h.xs "a<b"	escape text for XML
+.h.xt	.h.xt[`json;enlist"{}"]	parse text of a given type into a value
+.j.j	.j.j `a`b!1 2	render a value as JSON text
+.j.k	.j.k "[1,2,3]"	parse JSON text into a value
+.j.jd	.j.jd (1b;0w)	render JSON, choosing how to write infinities
+0:	("II";",") 0: "1,2"	parse delimited text into typed columns
+0:	`:t.csv 0: csv 0: ([]a:1 2)	write text lines to a file
+0:	("SI";4 3)0:"abc 123"	parse fixed-width fields into typed columns
+1:	(enlist"j";enlist 8)1:8#0x00	parse fixed-width binary into typed values
+1:	`:t.bin 1: 0x2a	write raw bytes to a file
+2:	`f 2:(`fname;1)	load a function from a shared library
+1	1 "hello\n"	write text to stdout
+2	2 "oops\n"	write text to stderr
++	1 2 3+10	add, item by item, spreading an atom over a list
+-	5-2	subtract
+*	2*3	multiply
+%	7%2	divide, always giving a float
+=	1 2 3=2	test equality, item by item
+<>	1 2 3<>2	test inequality, item by item
+<	2<3	test whether x is less than y
+>	3>2	test whether x is greater than y
+<=	2<=3	test whether x is at most y
+>=	3>=2	test whether x is at least y
+&	2&3	take the lesser of two values - logical AND on booleans
+|	2|3	take the greater of two values - logical OR on booleans
+^	0^1 0N 3	fill the nulls in y with x
+^	([]a:1 0N)^([]a:0N 2)	coalesce two tables, taking non-null values from y
+,	1 2,3 4	join values into one list
+,	([]a:1 2),([]a:3 4)	append the rows of two matching tables
+~	1 2~1 2	test whether two values match exactly, type included
+#	3#til 10	take the first x items, recycling the list if needed
+#	-2#til 10	take the last items, when x is negative
+#	2 3#til 6	reshape a list into x rows of y
+#	`a`c#`a`b`c!1 2 3	keep only the named entries of a dictionary
+_	2_til 6	drop the first x items
+_	-2_til 6	drop the last items, when x is negative
+_	1 3_til 6	cut a list at each of the given indices
+_	`a _ `a`b!1 2	drop the named entries from a dictionary
+_	(til 6)_2	drop the item at one index
+$	"J"$"42"	cast a value, or parse text, to a type
+$	$[1b;"yes";"no"]	choose between expressions - the conditional
+$	10$"abc"	pad text to a fixed width, on the right
+$	`sym$`a	enumerate symbols against a domain
+$	(2 2#1 0 0 1f)$1 2f	multiply a matrix by a matrix or vector
+?	1 2 3?2	find where a value first occurs, or the count if absent
+?	5?10	pick items at random, or deal x distinct ones
+?	?[([]a:1 2);();0b;(1#`a)!1#`a]	query a table, as select does
+?	?[1 0 1b;`a;`b]	choose item by item - the vector conditional
+!	`a`b!1 2	make a dictionary from keys and values
+!	![([]a:1 2;b:3 4);();0b;1#`a]	update or delete on a table, as update does
+!	0N!til 3	print a value and return it, for tracing
+@	9 8 7@1 2	index a list, or apply a function
+@	v:1 2 3;@[v;1;:;9]	amend an item at an index
+@	r:@[{1+x};`a;{"err"}]	apply a function and catch any error
+.	(1 2;3 4) . 1 1	index at depth, one index per level
+.	.[+;(2;3)]	apply a function to a list of arguments
+.	.[(1 2;3 4);(0;1);:;9]	amend at depth
+.	.[{x+y};(1;2);{"err"}]	apply a function of any rank and catch any error
+:	a:42	bind a value to a name
+:	f:{:x*2}	return from a function early
+::	a:1;v::a+1	define a view, recomputed when its inputs change
+::	a::42	assign a global from inside a function
+::	(::)	name the identity function, and the generic null
+'	,'[1 2;3 4]	pair up the arguments item by item - each
+':	(-':)1 4 9	apply to each item and the one before - each prior
+/:	1 2 3+/:10 20	apply to each item on the right - each right
+\:	10 20+\:1 2 3	apply to each item on the left - each left
+/	(+/)1 2 3	reduce a list to one value - over
+/	10+/1 2 3	reduce from a starting value
+/	{x*2}/[3;1]	apply a function x times, or until it converges
+\	(+\)1 2 3	accumulate along a list, keeping every step - scan
+\	10+\1 2 3	accumulate from a starting value
+'type	1+`a	a value has the wrong type for the operation
+'length	1 2 3+1 2	the arguments do not conform in length
+'rank	+[2;3;4]	a function was applied to the wrong number of arguments
+'domain	til -1	an argument is outside the verb's domain
+'parse	value "1+("	the text is not valid q
+'assign	cos:12	tried to redefine a reserved word
+'mismatch	([]a:1 2),([]b:3 4)	the tables or dictionaries do not line up
+'insert	t:([a:1 2j]b:3 4);`t insert(1j;5)	a keyed insert would duplicate a key that is already there
+'limit	f:{f x};f 1	an engine limit was hit - recursion depth, or a size cap
+'nyi	3?`a	the operation makes sense but is not implemented yet
+'os	system "nosuchcommand"	the operating system refused the request
+'io	read0 `:/no/such/file	a file or handle could not be read or written
+'oom	0W#2	the allocation failed - not enough memory
+started	\?started	learn q in one minute · page
+started	10 20 30 40	a LIST is values side by side, no commas
+started	(10 20 30 40)1 3	index a list by position, counting from zero
+started	1 2 3+10	verbs are atomic: they spread over a whole list
+started	sum 10 20 30	aggregates collapse a list to one value
+started	`a`b`c!10 20 30	a DICTIONARY maps keys to values with !
+started	([]s:`a`b;p:10 20)	a TABLE is a list of equal-length named columns
+started	select from ([]p:10 20)where p>15	qsql picks rows and columns out of a table
+started	{x*2} 5	a FUNCTION is braces; x y z are its implicit arguments
+started	(+/)1 2 3 4	an ITERATOR: / folds a verb along a list
+started	count each ("ab";"cde")	each applies a verb item by item
+started	2#"abcdef"	# takes items; a string is a list of characters
+started	"J"$"42"	$ casts: "J" long, "F" float, "D" date, "S" symbol
+started	("SJ";enlist",")0:("a,b";"x,1")	0: parses delimited text into a table
+started	\?types	keep going: \?types \?math \?joins \?strings \?temporal \?table

@@ -34,7 +34,9 @@ q)select min price by sym from t   / use in a select statement
 
 `min` is an aggregate function, equivalent to `&/`.
 
+<!--
 `min` is a [multithreaded primitive](../kb/mt-primitives.md).
+-->
 
 ## `mins`
 
@@ -81,7 +83,7 @@ q)3 mmin 0N -3 -2 1 0N -0W    / null is the minimum value
 
 `mmin` is a uniform function.
 
-[Sliding windows](../kb/programming-idioms.md#how-do-i-apply-a-function-to-a-sequence-sliding-window)  
+[Sliding windows](https://code.kx.com/q/kb/programming-idioms/#how-do-i-apply-a-function-to-a-sequence-sliding-window)  
 
 ## Domain and range
 

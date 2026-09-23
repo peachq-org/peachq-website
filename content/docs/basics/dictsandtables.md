@@ -292,8 +292,8 @@ john 1990.11.16 m
 [Step dictionaries](../ref/apply.md#step-dictionaries)
 <br>
 :fontawesome-solid-book-open:
-[Tables](../kb/faq.md)
+[Tables](https://code.kx.com/q/kb/faq/)
 <br>
 :fontawesome-solid-street-view:
 _Q for Mortals_
-[§5. Dictionaries](/q4m3/5_Dictionaries/),
+[§5. Dictionaries](https://code.kx.com/q4m3/5_Dictionaries/),

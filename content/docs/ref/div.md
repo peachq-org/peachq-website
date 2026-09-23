@@ -48,7 +48,9 @@ q)"\023" div 8
 2i
 ```
 
+<!--
 `div` is a [multithreaded primitive](../kb/mt-primitives.md).
+-->
 
 ## Implicit iteration
 
@@ -115,4 +117,4 @@ The possible range of output types are `dfijmnptuvz`.
 [Mathematics](../basics/math.md)
 <br>
 
-_Q for Mortals_: [§4.8.1 Integer Division `div` and Modulus `mod`](/q4m3/4_Operators/#481-integer-division-div-and-modulus-mod)
+_Q for Mortals_: [§4.8.1 Integer Division `div` and Modulus `mod`](https://code.kx.com/q4m3/4_Operators/#481-integer-division-div-and-modulus-mod)

@@ -94,7 +94,7 @@ t     table
 y     (any)            any q object
 ```
 
-[Compression parameters `alg`, `lbs`, and `lvl`](../kb/file-compression.md#compression-parameters)
+[Compression parameters `alg`, `lbs`, and `lvl`](https://code.kx.com/q/kb/file-compression/#compression-parameters)
 <br>
 
 [Encryption parameters `alg` and `lbs`](../kb/dare.md#configuration)
@@ -156,7 +156,7 @@ To splay a table `t` to directory `dir`
 - columns of `t` must be vectors or [compound lists](../basics/glossary.md#compound-list)
 - symbol columns in `t` must be fully enumerated
 
-[Splayed tables](../kb/splayed-tables.md)
+[Splayed tables](https://code.kx.com/q/kb/splayed-tables/)
 
 ### Format
 
@@ -185,7 +185,7 @@ For
 (dir;lbs;alg;lvl) set t   / splay t to dir, compressed and/or encrypted
 ```
 
-Arguments `lbs`, `alg`, and `lvl` are [compression parameters](../kb/file-compression.md#compression-parameters) and/or [encryption parameters](../kb/dare.md#configuration).
+Arguments `lbs`, `alg`, and `lvl` are [compression parameters](https://code.kx.com/q/kb/file-compression/#compression-parameters) and/or [encryption parameters](../kb/dare.md#configuration).
 
 Splay table `t` to directory `ztbl/` with gzip compression:
 
@@ -217,14 +217,33 @@ q)(`:ztbl/;dic) set t               / splay table compressed
 `:ztbl/
 ```
 
-!!! warning "Compression may speed up or slow down the execution of `set`. The [performance impact](../kb/file-compression.md#performance) depends mainly on the data characteristics and the storage speed."
+!!! warning "Compression may speed up or slow down the execution of `set`. The [performance impact](https://code.kx.com/q/kb/file-compression/#performance) depends mainly on the data characteristics and the storage speed."
 
 ----
 
 [File system](../basics/files.md)
 <br>
 
-[File compression](../kb/file-compression.md)
+[File compression](https://code.kx.com/q/kb/file-compression/)
 <br>
 
 [Data at rest encryption (DARE)](../kb/dare.md)
+
+<!-- PEACHQ-SPECIFIC:BEGIN get-set-files | version=0.84 | source=native file checks -->
+
+## PeachQ file formats
+
+!!! info "PeachQ-specific additions"
+    A `.csv` or `.json` suffix makes `set` write text and `get` read a table.
+
+```q
+tbl:([]qty:100 250;price:171.4 402.3)
+`:a.csv set tbl
+`:a.json set tbl
+get `:a.json
+```
+
+Parquet files also support `set` and `get` after `\l pq`, using PeachQ's experimental native DuckDB integration; DuckDB must be available.
+See [Reading CSV](../peachq/csv.md), [Reading JSON](../peachq/json.md), [Parquet](../peachq/parquet.md) and [Handles and resources](../peachq/handles.md).
+
+<!-- PEACHQ-SPECIFIC:END get-set-files -->

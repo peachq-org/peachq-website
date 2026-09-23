@@ -165,8 +165,8 @@ Upserting to a splayed table appends new values to the column files.
  
 [Joins](../basics/joins.md),
 [qSQL](../basics/qsql.md),
-[Tables](../kb/faq.md) 
+[Tables](https://code.kx.com/q/kb/faq/) 
 <br>
  
 _Q for Mortals_
-[§9.2 Upsert](/q4m3/9_Queries_q-sql/#92-upsert)
+[§9.2 Upsert](https://code.kx.com/q4m3/9_Queries_q-sql/#92-upsert)

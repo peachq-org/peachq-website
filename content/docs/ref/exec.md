@@ -174,4 +174,4 @@ see [qSQL](../basics/qsql.md#cond).
 <br>
 
 _Q for Mortals_
-[§9.4 The `exec` Template](/q4m3/9_Queries_q-sql/#94-the-exec-template)  
+[§9.4 The `exec` Template](https://code.kx.com/q4m3/9_Queries_q-sql/#94-the-exec-template)  

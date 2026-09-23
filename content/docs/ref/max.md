@@ -37,7 +37,9 @@ domain: b g x h i j e f c s p m d z n u v t
 range:  b . x h i j e f c . p m d z n u v t
 ```
 
+<!--
 `max` is a [multithreaded primitive](../kb/mt-primitives.md).
+-->
 
 ## `maxs`
 
@@ -176,4 +178,4 @@ q)max (1 2;0N 4)
 [Mathematics](../basics/math.md)
 <br>
 
-[Sliding windows](../kb/programming-idioms.md#how-do-i-apply-a-function-to-a-sequence-sliding-window)
+[Sliding windows](https://code.kx.com/q/kb/programming-idioms/#how-do-i-apply-a-function-to-a-sequence-sliding-window)

@@ -12,6 +12,7 @@ mkdocs build --strict --site-dir "$output"
 # afterwards means Apache serves index.php, repl.php and friends from the root
 # while /docs and /news come from the build.
 cp -a static/. "$output/"
+python3 tools/build-repl-files.py "$output"
 
 # Keep the source form of the language documentation beside MkDocs' rendered
 # pages. This gives each topic a stable pair of URLs, for example
