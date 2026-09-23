@@ -64,9 +64,50 @@ History and line editing are built in; a separate `rlwrap` is unnecessary.
 | Ctrl-U | Clear the line |
 | Tab | Complete a name |
 
-The editor highlights q as you type and offers inline completion suggestions.
+The editor offers inline completion suggestions.
 History is saved in `.qhist` under your home directory, with a current-directory fallback
 when no home directory is available. Enter `\?` for the help entry point.
+
+## Syntax highlighting
+
+The native terminal colours q as you type: builtin keywords, strings and their escapes,
+comments, symbols, numbers, dates, times and nulls, operators, system names such as `.z.p`
+and `-8!`, and `\` commands. With the cursor on or inside a bracket or quote, the matching
+pair is highlighted too.
+
+Colour depends only on the text you type. A builtin looks the same with or without its
+namespace, so `count` and `.q.count` match. Your own variables are left uncoloured.
+
+### Changing the colours
+
+The palette is the dictionary `.pq.hl`, mapping each role to a colour:
+
+| Role | Colours | Role | Colours |
+|---|---|---|---|
+| `kw` | keywords | `tmp` | dates, times, nulls |
+| `str` | strings | `op` | operators and iterators |
+| `esc` | string escapes | `sys` | system names |
+| `cmt` | comments | `cmd` | `\` commands |
+| `sym` | symbols | `match` | matching bracket or quote |
+| `num` | numbers | | |
+
+A value is a 256-colour index (0–255), or a terminal SGR string such as `"1;38;5;141"`
+for bold or other effects. Set it in your `QINIT` startup file so it applies to every session:
+
+```q
+.pq.hl[`kw]:141          / keywords in violet
+.pq.hl[`cmt]:"3;38;5;244" / comments in grey italics
+```
+
+Roles you don't set keep their defaults, and an invalid value falls back to its role's
+default. `\?.pq.hl` shows the current reference. Reloading the standard library
+(`\l pq`) resets the palette to the defaults.
+
+### Turning colour off
+
+Set `NO_COLOR` (any non-empty value) or `PEACHQ_COLORS=0` in the environment before
+starting PeachQ. This turns off all console colour, including highlighting.
+`PEACHQ_COLORS=1` forces colour on, even when `NO_COLOR` is set.
 
 ## In the browser
 
@@ -75,10 +116,6 @@ The browser page has its own editor; the native terminal shortcuts above are not
 promise about browser key bindings.
 
 - Type a short expression at the console and press Enter.
-- Use **Examples** above the console to run a sample expression or table query.
-- **Reset session** restarts q using the already loaded runtime, without reloading
-  the page or downloading the runtime and samples again. It clears console output and history.
-  Editor tabs are kept; session variables, settings and temporary files are discarded.
 - Open **Editor mode** for multiple lines and editor tabs.
 - Use **Run line** (Ctrl-Enter) or **Run selection** (Ctrl-E).
 - Use **Open** for example scripts, and workspace import/export to move your editor work.
@@ -91,8 +128,3 @@ examples marked `runnable` (passing the automated code-block checker) execute
 automatically after the runtime loads.
 Other examples are preloaded for you to edit or run. A checked example may still
 need capabilities absent from the browser runtime.
-
-Shared commands and automatically run documentation examples execute once when
-opened. Their execution flags are removed from the URL before evaluation, so
-refreshing the page does not run them again. Saved editor text and console output
-are restored without executing commands.
