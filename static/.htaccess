@@ -21,7 +21,7 @@ SetEnvIf Request_URI "/file/latest\.json$" PEACHQ_NO_CACHE=1
 SetEnvIf Request_URI "/(search/(search_index|q_lookup)\.[a-f0-9]{16}\.json|js/docs-search\.[a-f0-9]{16}\.js|assets/javascripts/bundle\.[a-f0-9]{16}\.min\.js)$" PEACHQ_SEARCH_CACHE=1
 
 <IfModule mod_deflate.c>
-	AddOutputFilterByType DEFLATE application/json application/wasm
+	AddOutputFilterByType DEFLATE application/json application/wasm text/javascript application/javascript text/css
 </IfModule>
 
 SetEnvIf Request_URI "/img/" PEACHQ_IMMUTABLE=1
