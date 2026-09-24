@@ -9,6 +9,7 @@ Options All -Indexes
 DirectoryIndex index.php index.html
 
 AddType application/wasm .wasm
+AddType text/javascript .cjs
 AddType "text/markdown; charset=UTF-8" .md
 
 SetEnvIf Request_URI "/wasm/latest/" PEACHQ_NO_CACHE=1
@@ -20,11 +21,15 @@ SetEnvIf Request_URI "/file/latest\.json$" PEACHQ_NO_CACHE=1
 SetEnvIf Request_URI "/(search/(search_index|q_lookup)\.[a-f0-9]{16}\.json|js/docs-search\.[a-f0-9]{16}\.js|assets/javascripts/bundle\.[a-f0-9]{16}\.min\.js)$" PEACHQ_SEARCH_CACHE=1
 
 <IfModule mod_deflate.c>
-	AddOutputFilterByType DEFLATE application/json
+	AddOutputFilterByType DEFLATE application/json application/wasm
 </IfModule>
 
 SetEnvIf Request_URI "/img/" PEACHQ_IMMUTABLE=1
 SetEnvIf Request_URI "\.(css|js|wasm)$" PEACHQ_SHORT_CACHE=1
+# DuckDB's browser build: a directory per version, published once and never rewritten (the peachq repo's
+# tools/duckdb-wasm-publish.sh), so a browser keeps it for good.
+SetEnvIf Request_URI "/wasm/duckdb/[^/]+/" PEACHQ_IMMUTABLE=1
+SetEnvIf Request_URI "/wasm/duckdb/[^/]+/" !PEACHQ_SHORT_CACHE
 
 <FilesMatch "\.(ico|jpg|jpeg|png|gif|woff|woff2|mp4|webp|svg)$">
 	ExpiresActive on
