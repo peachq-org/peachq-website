@@ -451,15 +451,15 @@ any mirror prefix. Leave browser caching enabled when checking transfers manuall
 ### Browser REPL sample files
 
 Add files under `static/repl/files/`; the build generates `repl/files.json`
-from that directory, including nested paths and content hashes. No separate file
+from that directory, with content hashes. No separate file
 list needs updating. The static-only preview refresh regenerates it too.
-Files download only when the REPL runtime starts, before its controls are enabled.
-For example, `static/repl/files/dowjones.csv` becomes `/dowjones.csv` in the
-browser's temporary filesystem; `examples/dowjones.q` can be loaded with
-`\l examples/dowjones.q`. Changes made in that filesystem last for the current
-page session only. Startup failures report that samples are unavailable while
-leaving ordinary REPL commands usable. HTTP operations inside q are separate
-runtime functionality and are not enabled by this loader.
+The files mount lazily in `/home/q`, the session's start directory, next to the
+examples PeachQ itself ships (`trades.q`, `csv.q`, `prices.csv`, `adverbs.q`):
+`\ls` lists them all at once, and a file downloads only when q first reads it.
+Keep this directory flat and never reuse a PeachQ example's file name or the
+table it defines (`trades`, `prices`) — ours would silently shadow theirs. For
+example, `static/repl/files/dowjones.q` loads with `\l dowjones.q`. Changes made
+in that filesystem last for the current page session only.
 
 The unmodified CSV and JSON samples were retrieved on 2026-09-20 from:
 
