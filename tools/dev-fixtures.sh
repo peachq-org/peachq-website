@@ -59,6 +59,17 @@ if [ -f "$OUTPUT/wasm/latest/manifest.json" ]; then
       *.js) fetch "wasm/latest/$(basename "$s" .js).wasm" ;;
     esac
   done
+  # The page loads the client the manifest names; the client runs worker.js, which loads
+  # engine.js and mounts the runtime's own files.json lazily from files/.
+  client=$(sed -n 's/.*"client"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p' "$OUTPUT/wasm/latest/manifest.json")
+  for f in ${client:-peachq-client.js} worker.js engine.js files.json; do
+    fetch "wasm/latest/$f"
+  done
+  if [ -f "$OUTPUT/wasm/latest/files.json" ]; then
+    for p in $(sed -n 's/.*"path"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p' "$OUTPUT/wasm/latest/files.json"); do
+      fetch "wasm/latest/files/$p"
+    done
+  fi
 fi
 
 # The release archives, for a mirror that has to serve downloads itself.

@@ -1,4 +1,5 @@
 /* Run after build + dev-fixtures; all q tests share one browser REPL. */
+const assert = require('node:assert/strict');
 const path = require('node:path');
 const {spawn} = require('node:child_process');
 const {chromium} = require('playwright');
@@ -23,10 +24,18 @@ let server, browser;
       {executablePath: process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH} : {})});
   const page = await browser.newPage();
   await page.route('**/*', route => route.request().url().startsWith(origin + '/') ? route.continue() : route.abort());
+  const sampleDownloads = [];
+  page.context().on('request', request => {
+    const url = new URL(request.url());
+    if (url.pathname.startsWith('/repl/files/')) sampleDownloads.push(url.pathname);
+  });
   await page.goto(origin + '/repl');
   await page.waitForFunction(() => document.querySelector('#replStatus').getAttribute('aria-label') === 'runtime ready',
     null, {timeout: 120000});
+  // Samples are mounted lazily: none is downloaded until q reads it.
+  assert.deepEqual(sampleDownloads, [], 'no sample file is downloaded before it is read');
   await checkQFiles(page);
+  assert(sampleDownloads.includes('/repl/files/dowjones.csv'), 'reading a sample downloads it');
   await checkReplUI(page, origin);
 })().catch(error => {console.error(error); process.exitCode = 1;}).finally(async () => {
   try {

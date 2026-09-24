@@ -4,4 +4,3 @@ replTestValue
 /=> 42
 show 1 2 3
 /=> 1 2 3
-/=>

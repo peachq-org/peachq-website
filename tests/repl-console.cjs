@@ -19,12 +19,18 @@ function readCases(file) {
   return cases;
 }
 
+// q runs in a Worker: the console marks its output aria-busy from Enter until every queued line has answered.
+async function idle(page) {
+  await page.waitForFunction(() => !document.querySelector('#replOutput').hasAttribute('aria-busy'), null,
+    {timeout: 60000});
+}
+
 async function checkCommand(page, command, expected, label = command) {
   const output = page.locator('#replOutput > div');
   const start = await output.count();
   await page.locator('#replInput').fill(command);
-  // The console's Enter handler runs q synchronously, including printed output.
   await page.locator('#replInput').press('Enter');
+  await idle(page);
   const entries = (await output.allTextContents()).slice(start);
   assert.equal(entries.shift(), 'q)' + command, `${label}: console prompt`);
   assert.equal(entries.join('\n'), expected, `${label}: console output`);
@@ -44,4 +50,4 @@ async function checkQFiles(page, directory = path.join(__dirname, 'repl')) {
   console.log(`${files.length} q files, ${count} commands passed in one REPL session`);
 }
 
-module.exports = {checkQFiles};
+module.exports = {checkQFiles, idle};
