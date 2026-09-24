@@ -1,6 +1,6 @@
 ---
 title: PeachQ documentation
-description: Learn q, explore PeachQ additions, and find the language reference.
+description: Learn q, use PeachQ and find the language reference.
 ---
 
 # PeachQ documentation
@@ -13,10 +13,11 @@ PeachQ is an open-source implementation of q. Start with a few expressions in th
 | What you want to do | Where to go |
 |---|---|
 | Run your first expressions and query a table | [Getting started](peachq/getting-started.md) |
-| Use the terminal or browser editor | [REPL and table display](peachq/repl.md) |
+| Use the terminal or browser editor | [REPL and console](peachq/repl.md) |
 | Look up q syntax, operators and functions | [q language reference](ref/index.md) |
-| Read files, use regular expressions, or call native code | [PeachQ additions](peachq/index.md) |
+| Read files, use regular expressions, or call native code | [Using PeachQ](peachq/index.md) |
 | Bring existing q code to PeachQ | [Compatibility and migration](peachq/compatibility.md) |
+| Run an existing q framework | [TorQ on PeachQ](cookbook/torq.md) |
 | See measured implementation coverage | [Compatibility dashboard](/compatibility) |
 
 ## Coming from q?

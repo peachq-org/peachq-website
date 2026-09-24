@@ -1,23 +1,22 @@
 ---
-title: PeachQ additions and differences
-description: PeachQ-specific guides, extensions and migration notes.
+title: Using PeachQ
+description: Work with the console, load data and use PeachQ libraries.
 ---
 
-# PeachQ additions and differences
+# Using PeachQ
 
-This section collects PeachQ-specific documentation. It is separate from the
-[inherited q reference](../reference.md), so additions and differences are easy to find.
+Use the console, load data and connect PeachQ to other systems. Start with the
+guides below, or look up syntax and functions in the [q language reference](../reference.md).
 
 ## Working with PeachQ
 
 | Guide | Covers |
 |---|---|
 | [Getting started](getting-started.md) | First expressions, tables and the standard library |
-| [REPL and table display](repl.md) | Terminal editing, richer tables and the browser editor |
+| [REPL and console](repl.md) | Terminal editing, richer tables and the browser editor |
 | [Command line](../basics/cmdline.md#peachq-specific-options) | Standard launch flags and PeachQ-specific options |
 | [System commands](../basics/syscmds.md#peachq-specific-commands) | Commands within a running session |
 | [Compatibility and migration](compatibility.md) | Deliberate differences, unsupported features and additions |
-| [Recent changes](recent-changes.md) | Changes highlighted in the reviewed changelog |
 
 ## Data and integrations
 
@@ -31,12 +30,9 @@ This section collects PeachQ-specific documentation. It is separate from the
 | [Library API](/docs/api/) | Function reference generated from the PeachQ library source |
 | [Regular expressions](regexp.md) | RE2 matching, extraction and replacement |
 | [Foreign functions](ffi.md) | Calling native shared libraries |
-| [Writing resource providers](resource-handle-implementer.md) | The provider contract for implementers |
 
 ## Design preview
 
 [Typed parameters](typed-parameters.md) describes staged work. Its source marks type
 checks as in review, and defaults, varargs and named apply as not yet shipped. Do not
 assume that a documented design is available in your downloaded runtime.
-
-See [source and sync notes](sync.md) for the version behind this draft.

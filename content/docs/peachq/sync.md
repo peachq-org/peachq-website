@@ -1,6 +1,8 @@
 ---
 title: Documentation source and sync notes
 description: Source revision, provenance and open questions for the first PeachQ docs draft.
+search:
+  exclude: true
 ---
 
 # Documentation source and sync notes
