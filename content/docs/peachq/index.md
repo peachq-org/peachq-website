@@ -30,6 +30,7 @@ guides below, or look up syntax and functions in the [q language reference](../r
 | [Library API](/docs/api/) | Function reference generated from the PeachQ library source |
 | [Regular expressions](regexp.md) | RE2 matching, extraction and replacement |
 | [Foreign functions](ffi.md) | Calling native shared libraries |
+| [C extensions (`2:`)](c-extensions.md) | Loading extensions built with the `k.h` interface |
 
 ## Design preview
 

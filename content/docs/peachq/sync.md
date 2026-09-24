@@ -46,6 +46,14 @@ Getting started, this section's index, the REPL guide and recent-change highligh
 are website-authored. The REPL guide draws on issue #62; contributor credit is recorded
 on the [Thanks page](../../thanks.md).
 
+## Later guide additions
+
+[C extensions with `2:`](c-extensions.md) was adapted on 24 September 2026 from
+`user-docs/c-extensions.md` at `67c9201eaa849669fb302261b08f717d6d6a9094`.
+It is a separate addition to the initial snapshot above. Its front matter records
+the source revision; `demos/c-extensions/` records adaptations and executable
+checks. The source MIT licence accompanies the downloadable C example.
+
 ## Open questions and status
 
 - The typed-parameter guide describes staged work, including features marked not yet shipped.
