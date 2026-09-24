@@ -222,6 +222,9 @@ Keep the `.so` and loading expression, then check the extension's requirements:
 - Check entry-point names with `nm -D --defined-only myext.so`.
 - Run the extension's tests, including object lifetime, errors and callbacks.
 
+See [Python with embedPy](../cookbook/embedpy.md) for an example using NumPy,
+pandas, SciPy and matplotlib from q, with its required setup.
+
 ### Provided API symbols
 
 The interface provides these API symbols. The boundary restrictions below still
