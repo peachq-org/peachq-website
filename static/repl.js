@@ -33,22 +33,17 @@ const storageKeys = {
   workspace: "peachq-repl-workspace"
 };
 
-const defaultRuntimeScripts = [
-  "wasm/latest/peachq.js",
-  "wasm/latest/openq.js",
-  "wasm/latest/rayforce.js"
-];
-const factoryNames = ["createPeachQ", "createOpenQ", "createRayforce"];
 const sqlTypes = "array binary bit boolean char character clob date decimal double float int integer interval large national nchar nclob numeric object precision real smallint time timestamp varchar varying";
 const sqlKeywords = "absolute action add after all allocate alter and any are as asc assertion at authorization before begin between both breadth by call cascade cascaded case cast catalog check close collate collation column commit condition connect connection constraint constraints constructor continue corresponding count create cross cube current current_date current_default_transform_group current_transform_group_for_type current_path current_role current_time current_timestamp current_user cursor cycle data day deallocate declare default deferrable deferred delete depth deref desc describe descriptor deterministic diagnostics disconnect distinct do domain drop dynamic each else elseif end end-exec equals escape except exception exec execute exists exit external fetch first for foreign found from free full function general get global go goto grant group grouping handle having hold hour identity if immediate in indicator initially inner inout input insert intersect into is isolation join key language last lateral leading leave left level like limit local localtime localtimestamp locator loop map match method minute modifies module month names natural nesting new next no none not of old on only open option or order ordinality out outer output overlaps pad parameter partial path prepare preserve primary prior privileges procedure public read reads recursive redo ref references referencing relative release repeat resignal restrict result return returns revoke right role rollback rollup routine row rows savepoint schema scroll search second section select session session_user set sets signal similar size some space specific specifictype sql sqlexception sqlstate sqlwarning start state static system_user table temporary then timezone_hour timezone_minute to trailing transaction translation treat trigger under undo union unique unnest until update usage user using value values view when whenever where while with without work write year zone";
 const qKeywords = "xlog xdesc wj1 while sums rsave read1 read0 prior prev prds next mmin mins md5 mavg lsq load if hopen hclose get first exit exec do dev deltas cut cov cor binr attr and avg asc all bin cross count differ each eval except exp fby fills fkeys flip getenv group gtime hcount hsym iasc idesc in inter insert inv key keys ltime max maxs mcount mdev med meta mmax mmu mod msum neg not null or over parse peach prd rand rank ratios raze reciprocal reverse rload rotate save scan set setenv show signum ss ssr like string sublist sv system tables til type ungroup union upsert value var view views vs where within wj wsum xasc xbar xcol xcols xexp xgroup xkey xprev xrank lj pj ij ej uj aj select update delete lower upper trim rtrim ltrim cols sin asin cos acos tan atan log sqrt abs min sum last wavg hdel enlist ceiling floor any";
 const qBuiltins = ".Q.addmonths .Q.addr .Q.host .Q.chk .Q.cn .Q.pn .Q.D .Q.dd .Q.dpft .Q.dsftg .Q.en .Q.fc .Q.fk .Q.fmt .Q.fs .Q.ft .Q.gc .Q.hdpf .Q.ind .Q.P .Q.par .Q.PD .Q.pd .Q.pf .Q.PV .Q.pv .Q.qp .Q.qt .Q.s .Q.ty .Q.u .Q.v .Q.V .Q.view .Q.def .Q.ff .Q.fsn .Q.fu .Q.id .Q.j10 .Q.x10 .Q.j12 .Q.x12 .Q.k .Q.MAP .Q.opt .Q.w .Q.pt .Q.bv .Q.vp .Q.U .z.c .z.exit .z.pd .z.q .z.W .z.zd .z.ws .z.bm .z.a .z.ac .z.b .z.d .z.D .z.f .z.h .z.i .z.k .z.K .z.l .z.o .z.pc .z.pg .z.ph .z.pi .z.po .z.pp .z.ps .z.pw .z.1 .z.s .z.t .z.T .z.ts .z.u .z.vs .z.w .z.x .z.z .z.Z .z.n .z.N .z.p .z.P";
 
-let runtime = null;
+let session = null;
 let activeRuntime = null;
-let runtimeFactory = null;
-let compiledRuntime = null;
 let sampleFiles = null;
+let runQueue = Promise.resolve();
+let pendingRuns = 0;
+let runGeneration = 0;
 let history = [];
 let historyIndex = 0;
 let transcript = [];
@@ -701,56 +696,50 @@ function loadScript(src) {
   });
 }
 
-async function loadSampleFiles() {
-  if (sampleFiles !== null) {
-    installSampleFiles(sampleFiles);
-    return sampleFiles.map(file => file.path.slice(1));
-  }
+async function sampleManifest() {
+  if (sampleFiles !== null) return sampleFiles;
   const response = await fetch("repl/files.json", {cache: "no-cache", signal: AbortSignal.timeout(30000)});
   if (!response.ok) throw new Error("sample manifest: HTTP " + response.status);
   const files = await response.json();
   if (!Array.isArray(files)) throw new Error("invalid sample manifest");
-  // Download everything before installation, so a failed request leaves no partial set.
-  const downloaded = await Promise.all(files.map(async file => {
+  files.forEach(file => {
     if (!file || typeof file.path !== "string" ||
         !file.path.split("/").every(part => part && part !== "." && part !== "..") ||
         /[\\\x00-\x1f]/.test(file.path) || !/^[a-f0-9]{64}$/.test(file.sha256)) {
       throw new Error("invalid sample path or hash");
     }
-    const url = "repl/files/" + file.path.split("/").map(encodeURIComponent).join("/") +
-      "?v=" + file.sha256;
-    const result = await fetch(url, {signal: AbortSignal.timeout(30000)});
-    if (!result.ok) throw new Error(file.path + ": HTTP " + result.status);
-    return {path: "/" + file.path, bytes: new Uint8Array(await result.arrayBuffer())};
-  }));
-  sampleFiles = downloaded;
-  installSampleFiles(sampleFiles);
+  });
+  sampleFiles = files;
+  return files;
+}
+
+// Samples are mounted, not downloaded: each file is fetched (with ?v=<sha256>) when q first reads it,
+// and the session keeps them mounted across a reset.
+async function loadSampleFiles() {
+  const files = await sampleManifest();
+  await session.addFiles(files, "repl/files/");
   return files.map(file => file.path);
 }
 
-function installSampleFiles(files) {
-  files.forEach(file => {
-    if (runtime.FS.analyzePath(file.path).exists) return;
-    runtime.FS.mkdirTree(file.path.slice(0, file.path.lastIndexOf("/")) || "/");
-    runtime.FS.writeFile(file.path, file.bytes);
-  });
+// The release manifest names the page-side client; the runtime beside it is the client's business.
+async function runtimeClient() {
+  const base = new URL("wasm/latest/", document.baseURI);
+  let client = "peachq-client.js";
+  try {
+    const response = await fetch("wasm/latest/manifest.json", {cache: "no-store"});
+    if (response.ok) {
+      const manifest = await response.json();
+      if (manifest && typeof manifest.client === "string") client = manifest.client;
+    }
+  } catch (_err) {}
+  const script = new URL(client, base);
+  return {script: sameOriginPath(script), base: sameOriginPath(new URL(".", script))};
 }
 
-async function createRuntime(factory, module, candidate) {
-  const instance = await factory({
-    locateFile(path) {
-      return runtimeSibling(path, candidate.script);
-    },
-    instantiateWasm(imports, receiveInstance) {
-      const wasm = new WebAssembly.Instance(module, imports);
-      receiveInstance(wasm, module);
-      return wasm.exports;
-    }
-  });
-  if (instance.ccall("q_wasm_init", "number", [], []) !== 0) {
-    throw new Error("q initialization failed");
-  }
-  return instance;
+function runtimeStatus(state) {
+  if (state !== "failed" || !session) return;
+  setStatus("runtime stopped", "error");
+  print("The runtime stopped. Reset the session to start a fresh one.", "error");
 }
 
 async function loadRuntime() {
@@ -760,133 +749,77 @@ async function loadRuntime() {
   setStatus("loading runtime");
   print("Loading PeachQ WebAssembly runtime...", "sys");
 
-  const runtimeCandidates = await runtimeList();
-  const failures = [];
-  for (const candidate of runtimeCandidates) {
-    try {
-      setStatus("trying " + candidate.script);
-      const beforeFactories = factorySnapshot();
-      await loadScript(candidate.script);
-      const factory = findFactory(candidate, beforeFactories);
-      const binaryName = new URL(candidate.script, document.baseURI).pathname.split("/").pop().replace(/\.js$/, ".wasm");
-      const binary = await fetch(runtimeSibling(binaryName, candidate.script), {signal: AbortSignal.timeout(30000)});
-      if (!binary.ok) throw new Error("runtime binary: HTTP " + binary.status);
-      const module = await WebAssembly.compile(await binary.arrayBuffer());
-      runtime = await createRuntime(factory, module, candidate);
-      runtimeFactory = factory;
-      compiledRuntime = module;
-      activeRuntime = candidate;
-      setStatus("loading sample files");
-      try {
-        const samples = await loadSampleFiles();
-        print("Sample files: " + samples.join(", "), "sys");
-      } catch (err) {
-        print("Sample files unavailable: " + err.message + ". Refresh to retry; other commands still work.", "error");
-      }
-      input.disabled = false;
-      resetButton.disabled = false;
-      setExamplesEnabled(true);
-      input.focus();
-      setStatus("runtime ready", "ready");
-      print("Runtime ready.", "result");
-      print("Try: til 10, sum 2 3 4 5, avg 10 20 30", "sys");
-      replaySharedRuns();
-      return;
-    } catch (err) {
-      failures.push(candidate.script + " (" + err.message + ")");
-    }
-  }
-
-  setStatus("runtime missing", "error");
-  setExamplesEnabled(false);
-  print("Runtime was not found.", "error");
-  print("Deploy one of these generated artifacts and refresh:", "sys");
-  runtimeCandidates.forEach(candidate => print("  " + candidate.script, "sys"));
-  print("Details:", "sys");
-  failures.forEach(failure => print("  " + failure, "sys"));
-}
-
-async function runtimeList() {
-  const defaults = defaultRuntimeScripts.map(script => ({ script }));
+  let candidate = null;
   try {
-    const response = await fetch("wasm/latest/manifest.json", { cache: "no-store" });
-    if (!response.ok) return defaults;
-    const manifest = await response.json();
-    const scripts = Array.isArray(manifest.scripts)
-      ? manifest.scripts
-      : [{ script: manifest.script || manifest.js, factory: manifest.factory }];
-    const base = new URL("wasm/latest/", document.baseURI).href;
-    const seen = new Set();
-    return scripts
-      .filter(item => item && item.script)
-      .map(item => ({
-        script: sameOriginPath(new URL(item.script, base)),
-        factory: item.factory
-      }))
-      .concat(defaults)
-      .filter(item => {
-        if (seen.has(item.script)) return false;
-        seen.add(item.script);
-        return true;
-      });
-  } catch (_err) {
-    return defaults;
+    candidate = await runtimeClient();
+    await loadScript(candidate.script);
+    if (!window.PeachQ) throw new Error("no PeachQ client in " + candidate.script);
+    session = await window.PeachQ.start({base: candidate.base, onStatus: runtimeStatus});
+  } catch (err) {
+    session = null;
+    setStatus("runtime missing", "error");
+    print("Runtime was not found.", "error");
+    print("Deploy the generated runtime and refresh:", "sys");
+    print("  " + (candidate ? candidate.script : "wasm/latest/peachq-client.js"), "sys");
+    print("Details: " + err.message, "sys");
+    return;
   }
+  activeRuntime = candidate;
+  setStatus("loading sample files");
+  try {
+    const samples = await loadSampleFiles();
+    print("Sample files: " + samples.join(", "), "sys");
+  } catch (err) {
+    print("Sample files unavailable: " + err.message + ". Refresh to retry; other commands still work.", "error");
+  }
+  input.disabled = false;
+  resetButton.disabled = false;
+  setExamplesEnabled(true);
+  input.focus();
+  setStatus("runtime ready", "ready");
+  print("Runtime ready.", "result");
+  print("Try: til 10, sum 2 3 4 5, avg 10 20 30", "sys");
+  replaySharedRuns();
 }
 
 function sameOriginPath(url) {
   return url.origin === window.location.origin ? url.pathname : url.href;
 }
 
-function runtimeSibling(path, script) {
-  const scriptUrl = new URL(script, window.location.href);
-  return sameOriginPath(new URL(path, scriptUrl));
-}
-
-function factorySnapshot() {
-  return Object.fromEntries(factoryNames.map(name => [name, window[name]]));
-}
-
-function findFactory(candidate, beforeFactories) {
-  const names = candidate.factory ? [candidate.factory].concat(factoryNames) : factoryNames;
-  for (const name of names) {
-    if (typeof window[name] === "function" && window[name] !== beforeFactories[name]) {
-      return window[name];
-    }
-  }
-  throw new Error("no new runtime factory found");
-}
-
-function evalWasm(code) {
-  const ptr = runtime.ccall("q_wasm_eval", "number", ["string"], [code]);
-  const text = runtime.UTF8ToString(ptr);
-  runtime.ccall("q_wasm_free", null, ["number"], [ptr]);
-  return text;
-}
-
+// Lines run one at a time and in order; #replOutput is aria-busy until the queue drains.
 function run(code) {
   const source = code.trim();
-  if (!source) return;
-  if (!runtime) {
-    print("q)" + source, "prompt");
-    print("runtime is not ready", "error");
-    return;
-  }
+  if (!source) return runQueue;
   history.push(source);
   if (history.length > 80) {
     history = history.slice(-80);
   }
   historyIndex = history.length;
   saveHistory();
+  pendingRuns += 1;
+  output.setAttribute("aria-busy", "true");
+  const generation = runGeneration;
+  runQueue = runQueue.then(() => runNow(source, generation)).catch(() => {}).then(() => {
+    pendingRuns -= 1;
+    if (pendingRuns === 0) output.removeAttribute("aria-busy");
+  });
+  return runQueue;
+}
+
+async function runNow(source, generation) {
+  if (generation !== runGeneration) return;
   print("q)" + source, "prompt");
+  if (!session) {
+    print("runtime is not ready", "error");
+    return;
+  }
   try {
-    const result = evalWasm(source);
-    if (result) {
-      const cls = /^(parse error|error:|')/.test(result) ? "error" : "result";
-      print(result, cls);
-    }
+    const result = await session.eval(source);
+    if (generation !== runGeneration) return;
+    if (result.out) print(result.out, "result");
+    if (result.err) print(result.err, "error");
   } catch (err) {
-    print("error: " + err.message, "error");
+    if (generation === runGeneration) print("error: " + err.message, "error");
   }
 }
 
@@ -1209,13 +1142,14 @@ exampleButtons.forEach(button => {
 });
 
 resetButton.addEventListener("click", async () => {
-  if (!runtimeFactory || !compiledRuntime || resetButton.disabled) return;
+  if (!session || resetButton.disabled) return;
   resetButton.disabled = true;
   input.disabled = true;
   setExamplesEnabled(false);
   setExamplesOpen(false);
   setStatus("restarting runtime");
   saveEditor();
+  runGeneration += 1;
   history = [];
   historyIndex = 0;
   transcript = [];
@@ -1228,10 +1162,9 @@ resetButton.addEventListener("click", async () => {
   const url = new URL(window.location.href);
   ["run", "code", "autorun", "title", "example"].forEach(key => url.searchParams.delete(key));
   window.history.replaceState(window.history.state, "", url);
-  runtime = null;
   try {
-    runtime = await createRuntime(runtimeFactory, compiledRuntime, activeRuntime);
-    installSampleFiles(sampleFiles || []);
+    // A fresh engine in a fresh Worker: this is also how a runaway query is stopped.
+    await session.restart();
     print("Session reset. Editor tabs kept.", "sys");
     if (sampleFiles === null) print("Sample files unavailable. Refresh to retry downloading them.", "error");
     input.disabled = false;
@@ -1239,7 +1172,6 @@ resetButton.addEventListener("click", async () => {
     setStatus("runtime ready", "ready");
     input.focus();
   } catch (err) {
-    runtime = null;
     setStatus("restart failed", "error");
     print("Could not restart q: " + err.message + ". Try Reset session again.", "error");
   } finally {

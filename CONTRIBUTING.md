@@ -181,7 +181,7 @@ them straight to the server with `make q-upload`:
 | Path | Contains | Used by |
 |---|---|---|
 | `/file/` | Release archives and `latest.json` | Download page version, names, checksums |
-| `/wasm/latest/` | The WebAssembly runtime and its manifest | The browser REPL |
+| `/wasm/latest/` | The WebAssembly runtime, its Worker and client, its example files and its manifest | The browser REPL |
 | `/data/qdash/` | Conformance results | The compatibility chart |
 
 The deploy excludes all three from `rsync --delete`, so publishing the website
