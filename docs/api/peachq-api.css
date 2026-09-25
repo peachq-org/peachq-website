@@ -1,0 +1,67 @@
+/* Site shell comes from template.php; these rules adapt qDoc's content layout. */
+.peachq-api { background: var(--bg); }
+.peachq-api .brand, .peachq-api .brand:visited { color: var(--text); }
+.peachq-api h1, .peachq-api h2, .peachq-api h3 { font-family: inherit; color: var(--text); }
+.peachq-api h1 { font-size: 2rem; line-height: 1.2; letter-spacing: -.035em; max-width: none; }
+.peachq-api h2 { font-size: 1.3rem; overflow-wrap: anywhere; }
+.peachq-api .wy-grid-for-nav { display: flex; position: static; height: auto; min-height: calc(100vh - 73px); }
+.peachq-api .section { padding: 0; }
+.peachq-api .wy-nav-side { position: sticky; top: 73px; bottom: auto; width: 260px; height: calc(100vh - 73px); flex: 0 0 260px; align-self: flex-start; background: var(--bg); border-right: 1px solid var(--line); }
+.peachq-api .wy-side-scroll { width: auto; height: 100%; overflow-y: auto; }
+.peachq-api .wy-side-nav-search { width: auto; background: none; border-bottom: 1px solid var(--line); color: var(--text); }
+.peachq-api .wy-side-nav-search a { color: var(--text); }
+.peachq-api .wy-side-nav-search p { margin-bottom: .5rem; }
+.peachq-api .wy-menu-vertical { width: auto; }
+.peachq-api .wy-menu-vertical a { color: var(--muted); }
+.peachq-api .wy-menu-vertical a:hover, .peachq-api .wy-menu-vertical li.current > a { background: var(--surface-solid); color: var(--text); border-color: var(--line); }
+.peachq-api .wy-menu-vertical li.current { background: none; }
+.peachq-api .wy-menu-vertical p.caption { color: var(--text); }
+.peachq-api .wy-nav-content-wrap { margin-left: 0; flex: 1; min-width: 0; background: none; }
+.peachq-api .wy-nav-content { max-width: 1100px; margin: auto; background: none; padding: 2rem 3rem; }
+.peachq-api .rst-content { color: var(--text); overflow-wrap: anywhere; }
+.peachq-api .rst-content a { color: var(--peach-strong); }
+.peachq-api .rst-content h2[id], .peachq-api .entity[id] { scroll-margin-top: 90px; }
+.peachq-api .rst-content table { width: 100%; background: var(--surface-solid); color: var(--text); border-color: var(--line); }
+.peachq-api .rst-content td, .peachq-api .rst-content th { padding: .55rem; text-align: left; border-color: var(--line); }
+.peachq-api .overviewSummary th:first-child, .peachq-api .overviewSummary td:first-child { width: 1%; min-width: 10rem; white-space: nowrap; overflow-wrap: normal; }
+.peachq-api .rst-content tr { background: transparent; }
+.peachq-api .rst-content pre, .peachq-api .rst-content code { background: var(--surface-solid); color: var(--text); border-color: var(--line); }
+.peachq-api .rst-content pre { overflow-x: auto; }
+/* qDoc's bundled highlighting theme is light-only. */
+html[data-theme="dark"] .peachq-api .hljs span { color: inherit; }
+html[data-theme="dark"] .peachq-api .hljs .hljs-string,
+html[data-theme="dark"] .peachq-api .hljs .hljs-regexp { color: #a5d6ff; }
+html[data-theme="dark"] .peachq-api .hljs .hljs-keyword,
+html[data-theme="dark"] .peachq-api .hljs .hljs-operator { color: #ff9bce; }
+html[data-theme="dark"] .peachq-api .hljs .hljs-number,
+html[data-theme="dark"] .peachq-api .hljs .hljs-literal,
+html[data-theme="dark"] .peachq-api .hljs .hljs-symbol { color: #ffb38a; }
+html[data-theme="dark"] .peachq-api .hljs .hljs-built_in,
+html[data-theme="dark"] .peachq-api .hljs .hljs-title { color: #d2a8ff; }
+html[data-theme="dark"] .peachq-api .hljs .hljs-comment { color: #9da4ae; }
+.peachq-api .peachq-api-load { margin: 1.5rem 0 2rem; padding: 1.25rem; border: 1px solid var(--line); border-left: 4px solid var(--peach-strong); border-radius: 8px; background: var(--surface-solid); }
+.peachq-api .peachq-api-load h2 { margin: 0 0 .75rem; }
+.peachq-api .peachq-api-load p { margin: .75rem 0; }
+.peachq-api .peachq-api-load pre { margin: 0; }
+.peachq-api .rst-content .qd-example-link { background: var(--surface-solid); color: var(--text); border-color: var(--line); }
+.peachq-api .rst-content .qd-example-link:hover { background: var(--surface); color: var(--text); }
+.peachq-api button.qd-example-link { padding: 0 .5rem; cursor: pointer; font-family: inherit; }
+.peachq-api .qd-example { position: relative; }
+.peachq-api .qd-copy-status { position: absolute; right: 0; top: 100%; font-size: .75rem; color: var(--text); background: var(--surface-solid); z-index: 1; }
+.peachq-api .rst-content hr { border-color: var(--line); }
+.peachq-api .rst-content footer { color: var(--muted); font-size: .8rem; }
+.peachq-api-links { display: inline; margin-left: .5rem; }
+.peachq-api-reports { font-size: .65rem; margin: .5rem 0; }
+.peachq-api .footer { margin-top: 0; position: relative; }
+.peachq-api .footer a { color: inherit; }
+.peachq-api .wy-nav-top { background: var(--surface-solid); color: var(--text); }
+.peachq-api .wy-nav-top a { color: var(--text); }
+.peachq-api [data-api-menu] { color: var(--text); background: var(--surface-solid); border: 1px solid var(--line); padding: .5rem; border-radius: 6px; cursor: pointer; }
+@media (max-width: 768px) {
+  .peachq-api .wy-grid-for-nav { display: block; }
+  .peachq-api .wy-nav-side { display: none; }
+  .peachq-api.api-nav-open .wy-nav-side { display: block; position: fixed; left: 0; top: 137px; height: calc(100vh - 137px); z-index: 40; }
+  .peachq-api .wy-nav-top { display: flex; align-items: center; justify-content: space-between; padding: .5rem 1rem; line-height: 2rem; }
+  .peachq-api .wy-nav-content { padding: 1.5rem 1rem; }
+  .peachq-api .rst-content table { display: block; overflow-x: auto; }
+}

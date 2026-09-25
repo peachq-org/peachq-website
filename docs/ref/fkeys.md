@@ -1,0 +1,35 @@
+---
+title: fkeys – Reference – kdb+ and q documentation
+description: fkeys is a q keyword that returns the foreign-key columns of a table.
+author: KX Systems, Inc., a subsidiary of KX Software Limited
+keywords: column, foreign key, kdb+, q, table
+---
+# `fkeys`
+
+_Foreign-key columns of a table_
+
+
+
+```syntax
+fkeys x    fkeys[x]
+```
+
+Where `x` is a table, returns a dictionary that maps foreign-key columns to their tables.
+
+```q
+q)f:([x:1 2 3]y:10 20 30)
+q)t:([]a:`f$2 2 2;b:0;c:`f$1 1 1)
+q)meta t
+c| t f a
+-| -----
+a| j f
+b| j
+c| j f
+q)fkeys t
+a| f
+c| f
+```
+
+---
+
+[Metadata](../basics/metadata.md)

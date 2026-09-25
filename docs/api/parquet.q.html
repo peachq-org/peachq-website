@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<!-- Resolves every relative URL below against the site root rather than the
+     requested path. See peachq_install_path(). -->
+
+<title>parquet.q - PeachQ API</title>
+<link rel="canonical" href="https://peachq.org/docs/api/parquet.q.html">
+<link rel="icon" href="../../img/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="16x16" href="../../img/peachq-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../../img/peachq-32x32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../../img/peachq-180x180.png">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" />
+<link rel="stylesheet" href="qdoc2.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/q.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/shell.min.js"></script>
+<script>hljs.highlightAll();</script>
+<link rel="stylesheet" href="../../css/styles.css">
+<link rel="stylesheet" href="peachq-api.css">
+<script src="../../mirror-banner.js" defer></script>
+<!-- Matomo. Self-hosted at timestored.com/mat, so no third-party analytics
+     service sees the traffic. Site 4 is "peachq"; site 1 is TimeStored's own
+     site, and pointing this at 1 filed every PeachQ visit under TimeStored.
+     Keep in sync with overrides/main.html, which carries the same snippet for
+     the MkDocs half of the site; tests/test_pages.sh checks the id matches. -->
+<script>
+  var _paq = window._paq = window._paq || [];
+  /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u="//www.timestored.com/mat/";
+    _paq.push(['setTrackerUrl', u+'matomo.php']);
+    _paq.push(['setSiteId', '4']);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+</head>
+<body class="peachq-api">
+<header class="nav">
+  <div class="container nav-inner">
+    <a class="brand" href="../.././"><img class="logo" src="../../img/peachq-logo.svg" alt="PeachQ logo"><span>Peach<span style="color:var(--peach-strong)">Q</span></span></a>
+    <button class="mobile-menu" type="button" data-mobile-menu aria-expanded="false" aria-controls="siteNav">Menu</button>
+    <nav class="nav-links" id="siteNav">
+      <a href="../../repl" class="nav-cta">Try Live</a>
+      <a href="../../download">Download</a>
+      <a href="../../docs/" class="active">Docs</a>
+      <a href="../../compatibility">Compatibility</a>
+      <a href="../../news/">News</a>
+      <a href="../../about">About</a>
+      <a href="https://github.com/peachq-org/peachq" target="_blank" rel="noreferrer">GitHub ↗</a>
+      <button class="theme-toggle" data-theme-toggle aria-label="Toggle theme"></button>
+    </nav>
+  </div>
+</header>
+<div class="preview-ribbon" aria-hidden="true">Early preview</div>
+
+
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav" id="api-sidebar">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+<p><a href="../">← PeachQ docs</a></p>
+        <a href="./"  class="icon icon-home"> PeachQ API</a><div role="search">
+  <!-- form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form -->
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Namespaces</span></p>
+
+
+<ul><li class="toctree-l1 cls-csv-cls"><a class="reference internal cls-csv-cls" href='csv.q.html' >.csv</a></li>
+	<li class="toctree-l1 cls-duckdb-cls"><a class="reference internal cls-duckdb-cls" href='duckdb.q.html' >.duckdb</a></li>
+	<li class="toctree-l1 cls-ffi-cls"><a class="reference internal cls-ffi-cls" href='ffi.q.html' >.ffi</a></li>
+	<li class="toctree-l1 cls-j-cls"><a class="reference internal cls-j-cls" href='j.q.html' >.j</a></li>
+	<li class="toctree-l1 cls-massive-cls"><a class="reference internal cls-massive-cls" href='massive.q.html' >.massive</a></li>
+	<li class="toctree-l1 current"><a class="reference internal current" href='parquet.q.html' >.parquet</a></li>
+	<li class="toctree-l1 cls-pq-cls"><a class="reference internal cls-pq-cls" href='pq.q.html' >.pq</a></li>
+	<li class="toctree-l1 cls-regexp-cls"><a class="reference internal cls-regexp-cls" href='regexp.q.html' >.regexp</a></li>
+	<li class="toctree-l1 cls-str-cls"><a class="reference internal cls-str-cls" href='str.q.html' >.str</a></li>
+	<li class="toctree-l1 cls-termbox-cls"><a class="reference internal cls-termbox-cls" href='termbox.q.html' >.termbox</a></li>
+</ul><!--NAMESPACE_END-->
+
+              <p class="caption"><span class="caption-text">Files</span></p>
+
+<ul><li class="toctree-l1 cls-csv-cls"><a class="reference internal cls-csv-cls" href='csv.q.html' >csv.q</a></li>
+	<li class="toctree-l1 cls-duckdb-cls"><a class="reference internal cls-duckdb-cls" href='duckdb.q.html' >duckdb.q</a></li>
+	<li class="toctree-l1 cls-ffi-cls"><a class="reference internal cls-ffi-cls" href='ffi.q.html' >ffi.q</a></li>
+	<li class="toctree-l1 cls-j-cls"><a class="reference internal cls-j-cls" href='j.q.html' >j.q</a></li>
+	<li class="toctree-l1 cls-massive-cls"><a class="reference internal cls-massive-cls" href='massive.q.html' >massive.q</a></li>
+	<li class="toctree-l1 current"><a class="reference internal current" href='parquet.q.html' >parquet.q</a></li>
+	<li class="toctree-l1 cls-pq-cls"><a class="reference internal cls-pq-cls" href='pq.q.html' >pq.q</a></li>
+	<li class="toctree-l1 cls-qpc-cls"><a class="reference internal cls-qpc-cls" href='qpc.q.html' >qpc.q</a></li>
+	<li class="toctree-l1 cls-regexp-cls"><a class="reference internal cls-regexp-cls" href='regexp.q.html' >regexp.q</a></li>
+	<li class="toctree-l1 cls-str-cls"><a class="reference internal cls-str-cls" href='str.q.html' >str.q</a></li>
+	<li class="toctree-l1 cls-termbox-cls"><a class="reference internal cls-termbox-cls" href='termbox.q.html' >termbox.q</a></li>
+</ul><!--FILES_END-->
+
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <button type="button" data-api-menu aria-expanded="false" aria-controls="api-sidebar">☰ API menu</button>
+          <a href="./">PeachQ API</a>
+
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="./" class="icon icon-home" aria-label="Docs"></a></li>
+          <!-- li class="breadcrumb-item">Files-Breadcrumb</li -->
+      <li class="breadcrumb-item active">parquet.q</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+
+                <h1 id="foobar">parquet.q</h1>
+
+
+
+	<div id='headerDoc'>Read and write parquet files through DuckDB: .parquet.read answers a table, .parquet.write writes one, and the schema, metadata, file_metadata, kv_metadata and bloom_probe verbs answer DuckDB's own inspection tables. `select from `:x.parquet` and `:x.parquet set t are the shortest spellings; save `t.parquet also works. A file written from a q table carries its q types in the key-value metadata, so it reads back as written; a foreign file comes back as DuckDB reads it (text is text, never symbols).  A URL (s3:// ...) passes straight through.
+
+<div class='qd-examples'><h3>Examples</h3><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.parquet.write[`:trade.parquet;([] sym:`a`b; px:1.5 2.5);()]
+.parquet.read[`:trade.parquet;();()]
+select from `:trade.parquet where px>2</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div></div></div>
+	<div id='summary'><h2>Entity Summary</h2><table class='overviewSummary'><tbody>
+<tr><th>Entities</th><th>Short Description</th></tr>
+		<tr><td><a href='#-parquet-bloom_probe'>.parquet.bloom_probe[file;column;val]</a></td><td>Per row group, whether the bloom filter on a column excludes a value: DuckDB's parquet_bloom_probe.</td></tr>
+		<tr><td><a href='#-parquet-file_metadata'>.parquet.file_metadata[file]</a></td><td>The file-level metadata: created_by, num_rows, num_row_groups, format_version, encryption_algorithm.</td></tr>
+		<tr><td><a href='#-parquet-kv_metadata'>.parquet.kv_metadata[file]</a></td><td>The file's key-value metadata, one row per key (a q-written file carries q_schema).</td></tr>
+		<tr><td><a href='#-parquet-metadata'>.parquet.metadata[file]</a></td><td>One row per column chunk per row group: DuckDB's parquet_metadata.</td></tr>
+		<tr><td><a href='#-parquet-read'>.parquet.read[file;opts;query]</a></td><td>Read a parquet file (or files) as a table, optionally through a select pushed down to DuckDB.</td></tr>
+		<tr><td><a href='#-parquet-schema'>.parquet.schema[file]</a></td><td>The file's schema: one row per column, DuckDB's parquet_schema columns verbatim.</td></tr>
+		<tr><td><a href='#-parquet-write'>.parquet.write[file;table;opts]</a></td><td>Write a table to a parquet file and answer the file.</td></tr>
+</tbody></table></div>
+	<div class='details'>
+	<h2>Entity Details</h2>
+		<div class='entity' id='-parquet-bloom_probe'><h2>.parquet.bloom_probe[file;column;val]</h2><p class='qd-description'>Per row group, whether the bloom filter on a column excludes a value: DuckDB's parquet_bloom_probe.</p><div class='qd-examples'><h3>Examples</h3><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.parquet.bloom_probe[`:t.parquet;`a;1]</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div></div></div>
+		<div class='entity' id='-parquet-file_metadata'><h2>.parquet.file_metadata[file]</h2><p class='qd-description'>The file-level metadata: created_by, num_rows, num_row_groups, format_version, encryption_algorithm.</p><div class='qd-examples'><h3>Examples</h3><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.parquet.file_metadata `:t.parquet</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div></div></div>
+		<div class='entity' id='-parquet-kv_metadata'><h2>.parquet.kv_metadata[file]</h2><p class='qd-description'>The file's key-value metadata, one row per key (a q-written file carries q_schema).</p><div class='qd-examples'><h3>Examples</h3><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.parquet.kv_metadata `:t.parquet</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div></div></div>
+		<div class='entity' id='-parquet-metadata'><h2>.parquet.metadata[file]</h2><p class='qd-description'>One row per column chunk per row group: DuckDB's parquet_metadata.</p><div class='qd-examples'><h3>Examples</h3><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>select path_in_schema, row_group_id, num_values from .parquet.metadata `:t.parquet</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div></div></div>
+		<div class='entity' id='-parquet-read'><h2>.parquet.read[file;opts;query]</h2><p class='qd-description'>Read a parquet file (or files) as a table, optionally through a select pushed down to DuckDB.</p><table class='qd-tags qd-parameters'>
+<tr><th>Parameters: </th><td><ul class='qd-parameters'>
+	<li><strong>file</strong> - `:x.parquet, a glob as `$":data/*.parquet", a URL, or a list of them</li>
+	<li><strong>opts</strong> - a dict of read_parquet options passed verbatim (hive_partitioning, union_by_name, filename ...); () for none</li>
+	<li><strong>query</strong> - () or :: for every row, else a parsed select tree (parse "select ... from t") whose table is ignored</li></ul></td></tr>
+<tr><th>throws: </th><td>type query is not a select tree</td></tr></table><div class='qd-examples'><h3>Examples</h3><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.parquet.read[`:t.parquet;();()]</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.parquet.read[`$":t/*/*.parquet";(enlist `hive_partitioning)!enlist 1b;()]</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.parquet.read[`:t.parquet;();parse "select sum a from t where a>1"]</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div></div></div>
+		<div class='entity' id='-parquet-schema'><h2>.parquet.schema[file]</h2><p class='qd-description'>The file's schema: one row per column, DuckDB's parquet_schema columns verbatim.</p><div class='qd-examples'><h3>Examples</h3><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.parquet.schema `:t.parquet</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div></div></div>
+		<div class='entity' id='-parquet-write'><h2>.parquet.write[file;table;opts]</h2><p class='qd-description'>Write a table to a parquet file and answer the file.  A DuckDB-backed table copies in place; any other table is staged through the main DuckDB database first.</p><table class='qd-tags qd-parameters'>
+<tr><th>Parameters: </th><td><ul class='qd-parameters'>
+	<li><strong>file</strong> - `:out.parquet, a directory `:out/ with partition_by, or a URL</li>
+	<li><strong>opts</strong> - a dict of COPY options passed verbatim (compression, row_group_size, partition_by, field_ids ...): a symbol list is an identifier list, a dict a struct; () for none</li></ul></td></tr>
+<tr><th>throws: </th><td>type file is not a symbol, or table is not a table</td></tr></table><div class='qd-examples'><h3>Examples</h3><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.parquet.write[`:t.parquet;([] a:1 2);(enlist `compression)!enlist `zstd]</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.parquet.write[`:t/;([] d:2026.01.01 2026.01.02; a:1 2);(enlist `partition_by)!enlist `d]</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div></div></div></div><!--MAIN_END-->
+
+
+            </div>
+
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <!-- a href="../foo/" class="btn btn-neutral float-left" title="Foo"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../../namespaces/bar/" class="btn btn-neutral float-right" title="Bar">Next <span class="icon icon-circle-arrow-right"></span></a -->
+    </div>
+
+  <hr/>
+
+
+
+  <div role="contentinfo">
+    <!-- Copyright -->
+  </div>
+
+  Built with <a href="https://www.timestored.com/qstudio/help/qdoc">QDoc</a> provided by <a href="https://www.timestored.com/">TimeStored</a>. <nav class="peachq-api-links" aria-label="PeachQ links"><a href="../">Docs</a> · <a href="../../thanks/">Thanks</a> · <a href="source.json">Source</a></nav>
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+
+
+
+
+
+
+
+<script src="peachq-api.js"></script><footer class="footer">
+  <div class="container footer-inner">
+    <div>PeachQ - MIT-licensed open source q, built on Rayforce with DuckDB storage in progress.
+      <a href="../../thanks/">Thanks</a>
+    </div>
+    <nav class="footer-links" aria-label="Footer">
+      <a href="../../repl">Try Live</a><a href="../../download">Download</a><a href="../../docs/">Docs</a>
+      <a href="../../compatibility">Compatibility</a><a href="../../roadmap">Roadmap</a><a href="../../news/">News</a>
+      <a href="../../about">About</a><a href="../../contact">Contact</a>
+      <a href="https://github.com/peachq-org/peachq" target="_blank" rel="noreferrer">GitHub ↗</a>
+    </nav>
+  </div>
+</footer>
+<script src="../../script.js"></script>
+</body>
+</html>

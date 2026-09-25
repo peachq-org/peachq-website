@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<!-- Resolves every relative URL below against the site root rather than the
+     requested path. See peachq_install_path(). -->
+
+<title>massive.q - PeachQ API</title>
+<link rel="canonical" href="https://peachq.org/docs/api/massive.q.html">
+<link rel="icon" href="../../img/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="16x16" href="../../img/peachq-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../../img/peachq-32x32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../../img/peachq-180x180.png">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" />
+<link rel="stylesheet" href="qdoc2.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/q.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/shell.min.js"></script>
+<script>hljs.highlightAll();</script>
+<link rel="stylesheet" href="../../css/styles.css">
+<link rel="stylesheet" href="peachq-api.css">
+<script src="../../mirror-banner.js" defer></script>
+<!-- Matomo. Self-hosted at timestored.com/mat, so no third-party analytics
+     service sees the traffic. Site 4 is "peachq"; site 1 is TimeStored's own
+     site, and pointing this at 1 filed every PeachQ visit under TimeStored.
+     Keep in sync with overrides/main.html, which carries the same snippet for
+     the MkDocs half of the site; tests/test_pages.sh checks the id matches. -->
+<script>
+  var _paq = window._paq = window._paq || [];
+  /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u="//www.timestored.com/mat/";
+    _paq.push(['setTrackerUrl', u+'matomo.php']);
+    _paq.push(['setSiteId', '4']);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+</head>
+<body class="peachq-api">
+<header class="nav">
+  <div class="container nav-inner">
+    <a class="brand" href="../.././"><img class="logo" src="../../img/peachq-logo.svg" alt="PeachQ logo"><span>Peach<span style="color:var(--peach-strong)">Q</span></span></a>
+    <button class="mobile-menu" type="button" data-mobile-menu aria-expanded="false" aria-controls="siteNav">Menu</button>
+    <nav class="nav-links" id="siteNav">
+      <a href="../../repl" class="nav-cta">Try Live</a>
+      <a href="../../download">Download</a>
+      <a href="../../docs/" class="active">Docs</a>
+      <a href="../../compatibility">Compatibility</a>
+      <a href="../../news/">News</a>
+      <a href="../../about">About</a>
+      <a href="https://github.com/peachq-org/peachq" target="_blank" rel="noreferrer">GitHub ↗</a>
+      <button class="theme-toggle" data-theme-toggle aria-label="Toggle theme"></button>
+    </nav>
+  </div>
+</header>
+<div class="preview-ribbon" aria-hidden="true">Early preview</div>
+
+
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav" id="api-sidebar">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+<p><a href="../">← PeachQ docs</a></p>
+        <a href="./"  class="icon icon-home"> PeachQ API</a><div role="search">
+  <!-- form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form -->
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Namespaces</span></p>
+
+
+<ul><li class="toctree-l1 cls-csv-cls"><a class="reference internal cls-csv-cls" href='csv.q.html' >.csv</a></li>
+	<li class="toctree-l1 cls-duckdb-cls"><a class="reference internal cls-duckdb-cls" href='duckdb.q.html' >.duckdb</a></li>
+	<li class="toctree-l1 cls-ffi-cls"><a class="reference internal cls-ffi-cls" href='ffi.q.html' >.ffi</a></li>
+	<li class="toctree-l1 cls-j-cls"><a class="reference internal cls-j-cls" href='j.q.html' >.j</a></li>
+	<li class="toctree-l1 current"><a class="reference internal current" href='massive.q.html' >.massive</a></li>
+	<li class="toctree-l1 cls-parquet-cls"><a class="reference internal cls-parquet-cls" href='parquet.q.html' >.parquet</a></li>
+	<li class="toctree-l1 cls-pq-cls"><a class="reference internal cls-pq-cls" href='pq.q.html' >.pq</a></li>
+	<li class="toctree-l1 cls-regexp-cls"><a class="reference internal cls-regexp-cls" href='regexp.q.html' >.regexp</a></li>
+	<li class="toctree-l1 cls-str-cls"><a class="reference internal cls-str-cls" href='str.q.html' >.str</a></li>
+	<li class="toctree-l1 cls-termbox-cls"><a class="reference internal cls-termbox-cls" href='termbox.q.html' >.termbox</a></li>
+</ul><!--NAMESPACE_END-->
+
+              <p class="caption"><span class="caption-text">Files</span></p>
+
+<ul><li class="toctree-l1 cls-csv-cls"><a class="reference internal cls-csv-cls" href='csv.q.html' >csv.q</a></li>
+	<li class="toctree-l1 cls-duckdb-cls"><a class="reference internal cls-duckdb-cls" href='duckdb.q.html' >duckdb.q</a></li>
+	<li class="toctree-l1 cls-ffi-cls"><a class="reference internal cls-ffi-cls" href='ffi.q.html' >ffi.q</a></li>
+	<li class="toctree-l1 cls-j-cls"><a class="reference internal cls-j-cls" href='j.q.html' >j.q</a></li>
+	<li class="toctree-l1 current"><a class="reference internal current" href='massive.q.html' >massive.q</a></li>
+	<li class="toctree-l1 cls-parquet-cls"><a class="reference internal cls-parquet-cls" href='parquet.q.html' >parquet.q</a></li>
+	<li class="toctree-l1 cls-pq-cls"><a class="reference internal cls-pq-cls" href='pq.q.html' >pq.q</a></li>
+	<li class="toctree-l1 cls-qpc-cls"><a class="reference internal cls-qpc-cls" href='qpc.q.html' >qpc.q</a></li>
+	<li class="toctree-l1 cls-regexp-cls"><a class="reference internal cls-regexp-cls" href='regexp.q.html' >regexp.q</a></li>
+	<li class="toctree-l1 cls-str-cls"><a class="reference internal cls-str-cls" href='str.q.html' >str.q</a></li>
+	<li class="toctree-l1 cls-termbox-cls"><a class="reference internal cls-termbox-cls" href='termbox.q.html' >termbox.q</a></li>
+</ul><!--FILES_END-->
+
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <button type="button" data-api-menu aria-expanded="false" aria-controls="api-sidebar">☰ API menu</button>
+          <a href="./">PeachQ API</a>
+
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="./" class="icon icon-home" aria-label="Docs"></a></li>
+          <!-- li class="breadcrumb-item">Files-Breadcrumb</li -->
+      <li class="breadcrumb-item active">massive.q</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+
+                <h1 id="foobar">massive.q</h1>
+
+
+
+	<div id='headerDoc'>Market data from the Massive REST API (massive.com) as q tables: bars, daily aggregates, snapshots, trades, quotes, tickers, splits, dividends, IPOs and news.  Set MASSIVE_API_KEY in the environment or call .massive.setKey. The last argument of every call is an options dict, ()!() for none: `max and `maxpages bound the paging, any other key is passed to the API as a query parameter.
+
+<div class='qd-examples'><h3>Examples</h3><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.massive.setKey "your-api-key"
+.massive.bars[`AAPL;2026.08.01;2026.09.05;()!()]
+.massive.tickers[(enlist `search)!enlist "apple"]</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div></div></div>
+	<div id='summary'><h2>Entity Summary</h2><table class='overviewSummary'><tbody>
+<tr><th>Entities</th><th>Short Description</th></tr>
+		<tr><td>.massive.apikey</td><td>The API key, read from MASSIVE_API_KEY at load.</td></tr>
+		<tr><td>.massive.bardefaults</td><td>The default bar options: `mult and `span set the bar size, `adjusted and `limit pass to the API.</td></tr>
+		<tr><td><a href='#-massive-bars'>.massive.bars[ticker;start;end;opts]</a></td><td>Bars for a ticker between two dates.</td></tr>
+		<tr><td><a href='#-massive-daily'>.massive.daily[date;adjusted;opts]</a></td><td>Every US stock's daily bar for one date.</td></tr>
+		<tr><td>.massive.defaults</td><td>The default options every call starts from: paging stops after `max rows or `maxpages pages (a page that arrived is kept whole, so the result may exceed `max).</td></tr>
+		<tr><td><a href='#-massive-divs'>.massive.divs[opts]</a></td><td>Dividends.</td></tr>
+		<tr><td>.massive.envelope</td><td>The last response's envelope: status, count, next_url and, after a paged call, truncated.</td></tr>
+		<tr><td><a href='#-massive-fetch'>.massive.fetch[request]</a></td><td>GET any API path and answer its payload as a table (one page, no paging).</td></tr>
+		<tr><td><a href='#-massive-ipos'>.massive.ipos[opts]</a></td><td>IPOs.</td></tr>
+		<tr><td><a href='#-massive-news'>.massive.news[opts]</a></td><td>News articles.</td></tr>
+		<tr><td><a href='#-massive-ohlc'>.massive.ohlc[ticker;date;opts]</a></td><td>One ticker's open, high, low and close for one date.</td></tr>
+		<tr><td>.massive.ok</td><td>The response statuses accepted as success; any other status is signalled verbatim.</td></tr>
+		<tr><td>.massive.pay</td><td>The response keys whose value is the payload, in the order tried.</td></tr>
+		<tr><td><a href='#-massive-prevclose'>.massive.prevclose[ticker;opts]</a></td><td>The previous day's open, high, low, close and volume for a ticker.</td></tr>
+		<tr><td><a href='#-massive-quotes'>.massive.quotes[ticker;opts]</a></td><td>Tick-level quotes for a ticker.</td></tr>
+		<tr><td>.massive.setKey[apikey]</td><td>Set the API key for this session.</td></tr>
+		<tr><td><a href='#-massive-snap'>.massive.snap[tickers;opts]</a></td><td>The current snapshot (last trade, last quote, today's bar) for a list of tickers.</td></tr>
+		<tr><td><a href='#-massive-splits'>.massive.splits[opts]</a></td><td>Stock splits.</td></tr>
+		<tr><td><a href='#-massive-status'>.massive.status[]</a></td><td>Whether the market is open now: the exchanges, their state and the server time.</td></tr>
+		<tr><td>.massive.tcols</td><td>The response columns holding epoch timestamps (ms or ns, told apart by magnitude).</td></tr>
+		<tr><td><a href='#-massive-tickers'>.massive.tickers[opts]</a></td><td>The reference list of tickers.</td></tr>
+		<tr><td>.massive.times</td><td>Convert epoch timestamp columns (t, updated, *_utc) to q timestamps on the way in.</td></tr>
+		<tr><td><a href='#-massive-trades'>.massive.trades[ticker;opts]</a></td><td>Tick-level trades for a ticker.</td></tr>
+		<tr><td>.massive.url</td><td>The API base URL.</td></tr>
+</tbody></table></div>
+	<div class='details'>
+	<h2>Entity Details</h2>
+		<div class='entity' id='-massive-bars'><h2>.massive.bars[ticker;start;end;opts]</h2><p class='qd-description'>Bars for a ticker between two dates.</p><table class='qd-tags qd-parameters'>
+<tr><th>Parameters: </th><td><ul class='qd-parameters'>
+	<li><strong>opts</strong> - `span (`day `hour `minute) and `mult set the bar size: `mult`span!(5;`minute) is 5-minute bars</li></ul></td></tr></table><div class='qd-examples'><h3>Examples</h3><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.massive.bars[`AAPL;2026.08.01;2026.09.05;()!()]</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.massive.bars[`AAPL;2026.09.05;2026.09.05;`mult`span!(5;`minute)]</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div></div></div>
+		<div class='entity' id='-massive-daily'><h2>.massive.daily[date;adjusted;opts]</h2><p class='qd-description'>Every US stock's daily bar for one date.</p><table class='qd-tags qd-parameters'>
+<tr><th>Parameters: </th><td><ul class='qd-parameters'>
+	<li><strong>adjusted</strong> - 1b for split-adjusted prices</li></ul></td></tr></table><div class='qd-examples'><h3>Examples</h3><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.massive.daily[2026.09.05;1b;()!()]</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div></div></div>
+		<div class='entity' id='-massive-divs'><h2>.massive.divs[opts]</h2><p class='qd-description'>Dividends.</p><table class='qd-tags qd-parameters'>
+<tr><th>Parameters: </th><td><ul class='qd-parameters'>
+	<li><strong>opts</strong> - API filters such as `ticker`ex_dividend_date</li></ul></td></tr></table><div class='qd-examples'><h3>Examples</h3><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.massive.divs[(enlist `ticker)!enlist `AAPL]</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div></div></div>
+		<div class='entity' id='-massive-fetch'><h2>.massive.fetch[request]</h2><p class='qd-description'>GET any API path and answer its payload as a table (one page, no paging).</p><table class='qd-tags qd-parameters'>
+<tr><th>Parameters: </th><td><ul class='qd-parameters'>
+	<li><strong>request</strong> - a path string, or (path;params dict)</li></ul></td></tr></table><div class='qd-examples'><h3>Examples</h3><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.massive.fetch ("/v3/reference/tickers";(enlist `limit)!enlist 5)</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div></div></div>
+		<div class='entity' id='-massive-ipos'><h2>.massive.ipos[opts]</h2><p class='qd-description'>IPOs.</p><table class='qd-tags qd-parameters'>
+<tr><th>Parameters: </th><td><ul class='qd-parameters'>
+	<li><strong>opts</strong> - API filters such as `ticker`listing_date</li></ul></td></tr></table></div>
+		<div class='entity' id='-massive-news'><h2>.massive.news[opts]</h2><p class='qd-description'>News articles.</p><table class='qd-tags qd-parameters'>
+<tr><th>Parameters: </th><td><ul class='qd-parameters'>
+	<li><strong>opts</strong> - API filters such as `ticker`published_utc</li></ul></td></tr></table><div class='qd-examples'><h3>Examples</h3><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.massive.news[`ticker`max!(`AAPL;20)]</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div></div></div>
+		<div class='entity' id='-massive-ohlc'><h2>.massive.ohlc[ticker;date;opts]</h2><p class='qd-description'>One ticker's open, high, low and close for one date.</p><div class='qd-examples'><h3>Examples</h3><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.massive.ohlc[`AAPL;2026.09.05;()!()]</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div></div></div>
+		<div class='entity' id='-massive-prevclose'><h2>.massive.prevclose[ticker;opts]</h2><p class='qd-description'>The previous day's open, high, low, close and volume for a ticker.</p><div class='qd-examples'><h3>Examples</h3><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.massive.prevclose[`AAPL;()!()]</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div></div></div>
+		<div class='entity' id='-massive-quotes'><h2>.massive.quotes[ticker;opts]</h2><p class='qd-description'>Tick-level quotes for a ticker.</p><table class='qd-tags qd-parameters'>
+<tr><th>Parameters: </th><td><ul class='qd-parameters'>
+	<li><strong>opts</strong> - API filters such as `timestamp`limit bound the range</li></ul></td></tr></table><div class='qd-examples'><h3>Examples</h3><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.massive.quotes[`AAPL;`timestamp`limit!(2026.09.05;100)]</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div></div></div>
+		<div class='entity' id='-massive-snap'><h2>.massive.snap[tickers;opts]</h2><p class='qd-description'>The current snapshot (last trade, last quote, today's bar) for a list of tickers.</p><div class='qd-examples'><h3>Examples</h3><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.massive.snap[`AAPL`MSFT;()!()]</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div></div></div>
+		<div class='entity' id='-massive-splits'><h2>.massive.splits[opts]</h2><p class='qd-description'>Stock splits.</p><table class='qd-tags qd-parameters'>
+<tr><th>Parameters: </th><td><ul class='qd-parameters'>
+	<li><strong>opts</strong> - API filters such as `ticker`execution_date</li></ul></td></tr></table><div class='qd-examples'><h3>Examples</h3><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.massive.splits[(enlist `ticker)!enlist `AAPL]</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div></div></div>
+		<div class='entity' id='-massive-status'><h2>.massive.status[]</h2><p class='qd-description'>Whether the market is open now: the exchanges, their state and the server time.</p><div class='qd-examples'><h3>Examples</h3><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.massive.status[]</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div></div></div>
+		<div class='entity' id='-massive-tickers'><h2>.massive.tickers[opts]</h2><p class='qd-description'>The reference list of tickers.</p><table class='qd-tags qd-parameters'>
+<tr><th>Parameters: </th><td><ul class='qd-parameters'>
+	<li><strong>opts</strong> - API filters such as `market`exchange`search`active</li></ul></td></tr></table><div class='qd-examples'><h3>Examples</h3><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.massive.tickers[`search`active!("apple";1b)]</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div></div></div>
+		<div class='entity' id='-massive-trades'><h2>.massive.trades[ticker;opts]</h2><p class='qd-description'>Tick-level trades for a ticker.</p><table class='qd-tags qd-parameters'>
+<tr><th>Parameters: </th><td><ul class='qd-parameters'>
+	<li><strong>opts</strong> - API filters such as `timestamp`limit bound the range</li></ul></td></tr></table><div class='qd-examples'><h3>Examples</h3><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.massive.trades[`AAPL;`timestamp`limit!(2026.09.05;100)]</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div></div></div></div><!--MAIN_END-->
+
+
+            </div>
+
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <!-- a href="../foo/" class="btn btn-neutral float-left" title="Foo"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../../namespaces/bar/" class="btn btn-neutral float-right" title="Bar">Next <span class="icon icon-circle-arrow-right"></span></a -->
+    </div>
+
+  <hr/>
+
+
+
+  <div role="contentinfo">
+    <!-- Copyright -->
+  </div>
+
+  Built with <a href="https://www.timestored.com/qstudio/help/qdoc">QDoc</a> provided by <a href="https://www.timestored.com/">TimeStored</a>. <nav class="peachq-api-links" aria-label="PeachQ links"><a href="../">Docs</a> · <a href="../../thanks/">Thanks</a> · <a href="source.json">Source</a></nav>
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+
+
+
+
+
+
+
+<script src="peachq-api.js"></script><footer class="footer">
+  <div class="container footer-inner">
+    <div>PeachQ - MIT-licensed open source q, built on Rayforce with DuckDB storage in progress.
+      <a href="../../thanks/">Thanks</a>
+    </div>
+    <nav class="footer-links" aria-label="Footer">
+      <a href="../../repl">Try Live</a><a href="../../download">Download</a><a href="../../docs/">Docs</a>
+      <a href="../../compatibility">Compatibility</a><a href="../../roadmap">Roadmap</a><a href="../../news/">News</a>
+      <a href="../../about">About</a><a href="../../contact">Contact</a>
+      <a href="https://github.com/peachq-org/peachq" target="_blank" rel="noreferrer">GitHub ↗</a>
+    </nav>
+  </div>
+</footer>
+<script src="../../script.js"></script>
+</body>
+</html>

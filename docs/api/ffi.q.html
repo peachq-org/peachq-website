@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<!-- Resolves every relative URL below against the site root rather than the
+     requested path. See peachq_install_path(). -->
+
+<title>ffi.q - PeachQ API</title>
+<link rel="canonical" href="https://peachq.org/docs/api/ffi.q.html">
+<link rel="icon" href="../../img/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="16x16" href="../../img/peachq-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../../img/peachq-32x32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../../img/peachq-180x180.png">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" />
+<link rel="stylesheet" href="qdoc2.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/q.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/shell.min.js"></script>
+<script>hljs.highlightAll();</script>
+<link rel="stylesheet" href="../../css/styles.css">
+<link rel="stylesheet" href="peachq-api.css">
+<script src="../../mirror-banner.js" defer></script>
+<!-- Matomo. Self-hosted at timestored.com/mat, so no third-party analytics
+     service sees the traffic. Site 4 is "peachq"; site 1 is TimeStored's own
+     site, and pointing this at 1 filed every PeachQ visit under TimeStored.
+     Keep in sync with overrides/main.html, which carries the same snippet for
+     the MkDocs half of the site; tests/test_pages.sh checks the id matches. -->
+<script>
+  var _paq = window._paq = window._paq || [];
+  /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u="//www.timestored.com/mat/";
+    _paq.push(['setTrackerUrl', u+'matomo.php']);
+    _paq.push(['setSiteId', '4']);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+</head>
+<body class="peachq-api">
+<header class="nav">
+  <div class="container nav-inner">
+    <a class="brand" href="../.././"><img class="logo" src="../../img/peachq-logo.svg" alt="PeachQ logo"><span>Peach<span style="color:var(--peach-strong)">Q</span></span></a>
+    <button class="mobile-menu" type="button" data-mobile-menu aria-expanded="false" aria-controls="siteNav">Menu</button>
+    <nav class="nav-links" id="siteNav">
+      <a href="../../repl" class="nav-cta">Try Live</a>
+      <a href="../../download">Download</a>
+      <a href="../../docs/" class="active">Docs</a>
+      <a href="../../compatibility">Compatibility</a>
+      <a href="../../news/">News</a>
+      <a href="../../about">About</a>
+      <a href="https://github.com/peachq-org/peachq" target="_blank" rel="noreferrer">GitHub ↗</a>
+      <button class="theme-toggle" data-theme-toggle aria-label="Toggle theme"></button>
+    </nav>
+  </div>
+</header>
+<div class="preview-ribbon" aria-hidden="true">Early preview</div>
+
+
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav" id="api-sidebar">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+<p><a href="../">← PeachQ docs</a></p>
+        <a href="./"  class="icon icon-home"> PeachQ API</a><div role="search">
+  <!-- form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form -->
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Namespaces</span></p>
+
+
+<ul><li class="toctree-l1 cls-csv-cls"><a class="reference internal cls-csv-cls" href='csv.q.html' >.csv</a></li>
+	<li class="toctree-l1 cls-duckdb-cls"><a class="reference internal cls-duckdb-cls" href='duckdb.q.html' >.duckdb</a></li>
+	<li class="toctree-l1 current"><a class="reference internal current" href='ffi.q.html' >.ffi</a></li>
+	<li class="toctree-l1 cls-j-cls"><a class="reference internal cls-j-cls" href='j.q.html' >.j</a></li>
+	<li class="toctree-l1 cls-massive-cls"><a class="reference internal cls-massive-cls" href='massive.q.html' >.massive</a></li>
+	<li class="toctree-l1 cls-parquet-cls"><a class="reference internal cls-parquet-cls" href='parquet.q.html' >.parquet</a></li>
+	<li class="toctree-l1 cls-pq-cls"><a class="reference internal cls-pq-cls" href='pq.q.html' >.pq</a></li>
+	<li class="toctree-l1 cls-regexp-cls"><a class="reference internal cls-regexp-cls" href='regexp.q.html' >.regexp</a></li>
+	<li class="toctree-l1 cls-str-cls"><a class="reference internal cls-str-cls" href='str.q.html' >.str</a></li>
+	<li class="toctree-l1 cls-termbox-cls"><a class="reference internal cls-termbox-cls" href='termbox.q.html' >.termbox</a></li>
+</ul><!--NAMESPACE_END-->
+
+              <p class="caption"><span class="caption-text">Files</span></p>
+
+<ul><li class="toctree-l1 cls-csv-cls"><a class="reference internal cls-csv-cls" href='csv.q.html' >csv.q</a></li>
+	<li class="toctree-l1 cls-duckdb-cls"><a class="reference internal cls-duckdb-cls" href='duckdb.q.html' >duckdb.q</a></li>
+	<li class="toctree-l1 current"><a class="reference internal current" href='ffi.q.html' >ffi.q</a></li>
+	<li class="toctree-l1 cls-j-cls"><a class="reference internal cls-j-cls" href='j.q.html' >j.q</a></li>
+	<li class="toctree-l1 cls-massive-cls"><a class="reference internal cls-massive-cls" href='massive.q.html' >massive.q</a></li>
+	<li class="toctree-l1 cls-parquet-cls"><a class="reference internal cls-parquet-cls" href='parquet.q.html' >parquet.q</a></li>
+	<li class="toctree-l1 cls-pq-cls"><a class="reference internal cls-pq-cls" href='pq.q.html' >pq.q</a></li>
+	<li class="toctree-l1 cls-qpc-cls"><a class="reference internal cls-qpc-cls" href='qpc.q.html' >qpc.q</a></li>
+	<li class="toctree-l1 cls-regexp-cls"><a class="reference internal cls-regexp-cls" href='regexp.q.html' >regexp.q</a></li>
+	<li class="toctree-l1 cls-str-cls"><a class="reference internal cls-str-cls" href='str.q.html' >str.q</a></li>
+	<li class="toctree-l1 cls-termbox-cls"><a class="reference internal cls-termbox-cls" href='termbox.q.html' >termbox.q</a></li>
+</ul><!--FILES_END-->
+
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <button type="button" data-api-menu aria-expanded="false" aria-controls="api-sidebar">☰ API menu</button>
+          <a href="./">PeachQ API</a>
+
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="./" class="icon icon-home" aria-label="Docs"></a></li>
+          <!-- li class="breadcrumb-item">Files-Breadcrumb</li -->
+      <li class="breadcrumb-item active">ffi.q</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+
+                <h1 id="foobar">ffi.q</h1>
+
+
+
+	<div id='headerDoc'>Call C from q: .ffi.bind turns a symbol in any shared library into a q function, .ffi.callFunction is the one-shot form.  The surface and type letters are KX ffikdb's, so its published examples run unchanged.
+
+<div class='qd-examples'><h3>Examples</h3><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>pow:.ffi.bind[`libm.so.6`pow;"ff";"f"]
+pow (2f;10f;::)</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div></div></div>
+	<div id='summary'><h2>Entity Summary</h2><table class='overviewSummary'><tbody>
+<tr><th>Entities</th><th>Short Description</th></tr>
+		<tr><td><a href='#-ffi-bind'>.ffi.bind[funcname;argtypes;returntype]</a></td><td>Resolve a C function once and answer a q function that calls it.</td></tr>
+		<tr><td><a href='#-ffi-callFunction'>.ffi.callFunction[returnfunc;arglist]</a></td><td>Call a C function, resolving it every time, with argument types inferred from the values.</td></tr>
+		<tr><td><a href='#-ffi-cvar'>.ffi.cvar[returnvar]</a></td><td>Read a C global variable.</td></tr>
+		<tr><td><a href='#-ffi-extension'>.ffi.extension[]</a></td><td>This platform's shared-library extension.</td></tr>
+		<tr><td><a href='#-ffi-os'>.ffi.os[]</a></td><td>This platform's OS letter, as ffikdb examples branch on it.</td></tr>
+		<tr><td><a href='#-ffi-ptrsize'>.ffi.ptrsize[]</a></td><td>The width of a pointer on this platform, in bytes.</td></tr>
+		<tr><td><a href='#-ffi-setErrno'>.ffi.setErrno[errnum]</a></td><td>Set errno and answer its previous value; anything but an int atom reads without setting.</td></tr>
+</tbody></table></div>
+	<div class='details'>
+	<h2>Entity Details</h2>
+		<div class='entity' id='-ffi-bind'><h2>.ffi.bind[funcname;argtypes;returntype]</h2><p class='qd-description'>Resolve a C function once and answer a q function that calls it.  The result is unary: it takes ONE list of arguments ending in (::) - the trailing :: stops q collapsing same-type arguments into a vector.</p><table class='qd-tags qd-parameters'>
+<tr><th>Parameters: </th><td><ul class='qd-parameters'>
+	<li><strong>funcname</strong> - `fn resolvable in this process, or `lib`fn to load a library</li>
+	<li><strong>argtypes</strong> - one type letter per argument (i j f C ... uppercase for a pointer, "k" a callback), "" for none</li>
+	<li><strong>returntype</strong> - one type letter as a char atom, " " for void</li></ul></td></tr>
+<tr><th>throws: </th><td>os funcname did not resolve</td></tr></table><div class='qd-examples'><h3>Examples</h3><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.ffi.bind[`libm.so.6`sqrt;"f";"f"] (16f;::)</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div></div></div>
+		<div class='entity' id='-ffi-callFunction'><h2>.ffi.callFunction[returnfunc;arglist]</h2><p class='qd-description'>Call a C function, resolving it every time, with argument types inferred from the values.</p><table class='qd-tags qd-parameters'>
+<tr><th>Parameters: </th><td><ul class='qd-parameters'>
+	<li><strong>arglist</strong> - the arguments, ending in (::)</li>
+	<li><strong>returnfunc</strong> - `fn, `lib`fn, or (returnletter;fn) - the letter defaults to "i"</li></ul></td></tr></table><div class='qd-examples'><h3>Examples</h3><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.ffi.callFunction[("f";`libm.so.6`sqrt)] (16f;::)</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div></div></div>
+		<div class='entity' id='-ffi-cvar'><h2>.ffi.cvar[returnvar]</h2><p class='qd-description'>Read a C global variable.</p><table class='qd-tags qd-parameters'>
+<tr><th>Parameters: </th><td><ul class='qd-parameters'>
+	<li><strong>returnvar</strong> - `var, `lib`var, or (typeletter;var)</li></ul></td></tr></table></div>
+		<div class='entity' id='-ffi-extension'><h2>.ffi.extension[]</h2><p class='qd-description'>This platform's shared-library extension.</p><table class='qd-tags'>
+<tr><th>Return: </th><td>`so, `dll or `dylib</td></tr></table><div class='qd-examples'><h3>Examples</h3><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>` sv `libmylib,.ffi.extension[]</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div></div></div>
+		<div class='entity' id='-ffi-os'><h2>.ffi.os[]</h2><p class='qd-description'>This platform's OS letter, as ffikdb examples branch on it.</p><table class='qd-tags'>
+<tr><th>Return: </th><td>"l", "w" or "m"</td></tr></table><div class='qd-examples'><h3>Examples</h3><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>"l"=.ffi.os[]</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div></div></div>
+		<div class='entity' id='-ffi-ptrsize'><h2>.ffi.ptrsize[]</h2><p class='qd-description'>The width of a pointer on this platform, in bytes.</p><table class='qd-tags'>
+<tr><th>Return: </th><td>8i, or 4i on a 32-bit host</td></tr></table></div>
+		<div class='entity' id='-ffi-setErrno'><h2>.ffi.setErrno[errnum]</h2><p class='qd-description'>Set errno and answer its previous value; anything but an int atom reads without setting.</p><table class='qd-tags'>
+<tr><th>Return: </th><td>the previous errno</td></tr></table><div class='qd-examples'><h3>Examples</h3><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.ffi.setErrno[]</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div></div></div></div><!--MAIN_END-->
+
+
+            </div>
+
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <!-- a href="../foo/" class="btn btn-neutral float-left" title="Foo"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../../namespaces/bar/" class="btn btn-neutral float-right" title="Bar">Next <span class="icon icon-circle-arrow-right"></span></a -->
+    </div>
+
+  <hr/>
+
+
+
+  <div role="contentinfo">
+    <!-- Copyright -->
+  </div>
+
+  Built with <a href="https://www.timestored.com/qstudio/help/qdoc">QDoc</a> provided by <a href="https://www.timestored.com/">TimeStored</a>. <nav class="peachq-api-links" aria-label="PeachQ links"><a href="../">Docs</a> · <a href="../../thanks/">Thanks</a> · <a href="source.json">Source</a></nav>
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+
+
+
+
+
+
+
+<script src="peachq-api.js"></script><footer class="footer">
+  <div class="container footer-inner">
+    <div>PeachQ - MIT-licensed open source q, built on Rayforce with DuckDB storage in progress.
+      <a href="../../thanks/">Thanks</a>
+    </div>
+    <nav class="footer-links" aria-label="Footer">
+      <a href="../../repl">Try Live</a><a href="../../download">Download</a><a href="../../docs/">Docs</a>
+      <a href="../../compatibility">Compatibility</a><a href="../../roadmap">Roadmap</a><a href="../../news/">News</a>
+      <a href="../../about">About</a><a href="../../contact">Contact</a>
+      <a href="https://github.com/peachq-org/peachq" target="_blank" rel="noreferrer">GitHub ↗</a>
+    </nav>
+  </div>
+</footer>
+<script src="../../script.js"></script>
+</body>
+</html>

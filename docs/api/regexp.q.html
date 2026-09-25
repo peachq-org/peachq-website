@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<!-- Resolves every relative URL below against the site root rather than the
+     requested path. See peachq_install_path(). -->
+
+<title>regexp.q - PeachQ API</title>
+<link rel="canonical" href="https://peachq.org/docs/api/regexp.q.html">
+<link rel="icon" href="../../img/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="16x16" href="../../img/peachq-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../../img/peachq-32x32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../../img/peachq-180x180.png">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" />
+<link rel="stylesheet" href="qdoc2.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/q.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/shell.min.js"></script>
+<script>hljs.highlightAll();</script>
+<link rel="stylesheet" href="../../css/styles.css">
+<link rel="stylesheet" href="peachq-api.css">
+<script src="../../mirror-banner.js" defer></script>
+<!-- Matomo. Self-hosted at timestored.com/mat, so no third-party analytics
+     service sees the traffic. Site 4 is "peachq"; site 1 is TimeStored's own
+     site, and pointing this at 1 filed every PeachQ visit under TimeStored.
+     Keep in sync with overrides/main.html, which carries the same snippet for
+     the MkDocs half of the site; tests/test_pages.sh checks the id matches. -->
+<script>
+  var _paq = window._paq = window._paq || [];
+  /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u="//www.timestored.com/mat/";
+    _paq.push(['setTrackerUrl', u+'matomo.php']);
+    _paq.push(['setSiteId', '4']);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+</head>
+<body class="peachq-api">
+<header class="nav">
+  <div class="container nav-inner">
+    <a class="brand" href="../.././"><img class="logo" src="../../img/peachq-logo.svg" alt="PeachQ logo"><span>Peach<span style="color:var(--peach-strong)">Q</span></span></a>
+    <button class="mobile-menu" type="button" data-mobile-menu aria-expanded="false" aria-controls="siteNav">Menu</button>
+    <nav class="nav-links" id="siteNav">
+      <a href="../../repl" class="nav-cta">Try Live</a>
+      <a href="../../download">Download</a>
+      <a href="../../docs/" class="active">Docs</a>
+      <a href="../../compatibility">Compatibility</a>
+      <a href="../../news/">News</a>
+      <a href="../../about">About</a>
+      <a href="https://github.com/peachq-org/peachq" target="_blank" rel="noreferrer">GitHub ↗</a>
+      <button class="theme-toggle" data-theme-toggle aria-label="Toggle theme"></button>
+    </nav>
+  </div>
+</header>
+<div class="preview-ribbon" aria-hidden="true">Early preview</div>
+
+
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav" id="api-sidebar">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+<p><a href="../">← PeachQ docs</a></p>
+        <a href="./"  class="icon icon-home"> PeachQ API</a><div role="search">
+  <!-- form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form -->
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Namespaces</span></p>
+
+
+<ul><li class="toctree-l1 cls-csv-cls"><a class="reference internal cls-csv-cls" href='csv.q.html' >.csv</a></li>
+	<li class="toctree-l1 cls-duckdb-cls"><a class="reference internal cls-duckdb-cls" href='duckdb.q.html' >.duckdb</a></li>
+	<li class="toctree-l1 cls-ffi-cls"><a class="reference internal cls-ffi-cls" href='ffi.q.html' >.ffi</a></li>
+	<li class="toctree-l1 cls-j-cls"><a class="reference internal cls-j-cls" href='j.q.html' >.j</a></li>
+	<li class="toctree-l1 cls-massive-cls"><a class="reference internal cls-massive-cls" href='massive.q.html' >.massive</a></li>
+	<li class="toctree-l1 cls-parquet-cls"><a class="reference internal cls-parquet-cls" href='parquet.q.html' >.parquet</a></li>
+	<li class="toctree-l1 cls-pq-cls"><a class="reference internal cls-pq-cls" href='pq.q.html' >.pq</a></li>
+	<li class="toctree-l1 current"><a class="reference internal current" href='regexp.q.html' >.regexp</a></li>
+	<li class="toctree-l1 cls-str-cls"><a class="reference internal cls-str-cls" href='str.q.html' >.str</a></li>
+	<li class="toctree-l1 cls-termbox-cls"><a class="reference internal cls-termbox-cls" href='termbox.q.html' >.termbox</a></li>
+</ul><!--NAMESPACE_END-->
+
+              <p class="caption"><span class="caption-text">Files</span></p>
+
+<ul><li class="toctree-l1 cls-csv-cls"><a class="reference internal cls-csv-cls" href='csv.q.html' >csv.q</a></li>
+	<li class="toctree-l1 cls-duckdb-cls"><a class="reference internal cls-duckdb-cls" href='duckdb.q.html' >duckdb.q</a></li>
+	<li class="toctree-l1 cls-ffi-cls"><a class="reference internal cls-ffi-cls" href='ffi.q.html' >ffi.q</a></li>
+	<li class="toctree-l1 cls-j-cls"><a class="reference internal cls-j-cls" href='j.q.html' >j.q</a></li>
+	<li class="toctree-l1 cls-massive-cls"><a class="reference internal cls-massive-cls" href='massive.q.html' >massive.q</a></li>
+	<li class="toctree-l1 cls-parquet-cls"><a class="reference internal cls-parquet-cls" href='parquet.q.html' >parquet.q</a></li>
+	<li class="toctree-l1 cls-pq-cls"><a class="reference internal cls-pq-cls" href='pq.q.html' >pq.q</a></li>
+	<li class="toctree-l1 cls-qpc-cls"><a class="reference internal cls-qpc-cls" href='qpc.q.html' >qpc.q</a></li>
+	<li class="toctree-l1 current"><a class="reference internal current" href='regexp.q.html' >regexp.q</a></li>
+	<li class="toctree-l1 cls-str-cls"><a class="reference internal cls-str-cls" href='str.q.html' >str.q</a></li>
+	<li class="toctree-l1 cls-termbox-cls"><a class="reference internal cls-termbox-cls" href='termbox.q.html' >termbox.q</a></li>
+</ul><!--FILES_END-->
+
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <button type="button" data-api-menu aria-expanded="false" aria-controls="api-sidebar">☰ API menu</button>
+          <a href="./">PeachQ API</a>
+
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="./" class="icon icon-home" aria-label="Docs"></a></li>
+          <!-- li class="breadcrumb-item">Files-Breadcrumb</li -->
+      <li class="breadcrumb-item active">regexp.q</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+
+                <h1 id="foobar">regexp.q</h1>
+
+
+
+	<div id='headerDoc'>Regular expressions in RE2 syntax: match, extract, capture groups, replace, split and escape. subject is one string or a list of them; flags go inside the pattern: (?i) (?s) (?m).  Every function is fixed-arity, so there is no options argument.
+
+<div class='qd-examples'><h3>Examples</h3><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.regexp.extract["order 123 of 456";"[0-9]+"]</code></pre><a class="qd-example-link" href="../../repl?code=.regexp.extract%5B%22order+123+of+456%22%3B%22%5B0-9%5D%2B%22%5D&amp;title=regexp.q" target="_blank" rel="noopener noreferrer" title="Open in REPL" aria-label="Open example in REPL (new tab)">&#8599;</a></div><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.regexp.replace_all[("a-b";"c-d");"-";"_"]</code></pre><a class="qd-example-link" href="../../repl?code=.regexp.replace_all%5B%28%22a-b%22%3B%22c-d%22%29%3B%22-%22%3B%22_%22%5D&amp;title=regexp.q" target="_blank" rel="noopener noreferrer" title="Open in REPL" aria-label="Open example in REPL (new tab)">&#8599;</a></div></div></div>
+	<div id='summary'><h2>Entity Summary</h2><table class='overviewSummary'><tbody>
+<tr><th>Entities</th><th>Short Description</th></tr>
+		<tr><td><a href='#-regexp-duckdb_match'>.regexp.duckdb_match[handle]</a></td><td>Whether an open DuckDB handle's RE2 is the version vendored here; answers a boolean rather than signalling, since PEACHQ_DUCKDB_LIB may legitimately point at another release.</td></tr>
+		<tr><td><a href='#-regexp-escape'>.regexp.escape[text]</a></td><td>The pattern that matches text literally (RE2's QuoteMeta).</td></tr>
+		<tr><td><a href='#-regexp-extract'>.regexp.extract[subject;pattern]</a></td><td>The first matched text, "" when nothing matches.</td></tr>
+		<tr><td><a href='#-regexp-extract_all'>.regexp.extract_all[subject;pattern]</a></td><td>Every non-overlapping match.</td></tr>
+		<tr><td><a href='#-regexp-full_match'>.regexp.full_match[subject;pattern]</a></td><td>Does the pattern match the whole subject?</td></tr>
+		<tr><td><a href='#-regexp-groups'>.regexp.groups[subject;pattern]</a></td><td>The capture groups of the first match, () when nothing matches.</td></tr>
+		<tr><td><a href='#-regexp-groups_all'>.regexp.groups_all[subject;pattern]</a></td><td>One group list per match, so .regexp.groups_all[...][;1] is the second group across every match.</td></tr>
+		<tr><td><a href='#-regexp-matches'>.regexp.matches[subject;pattern]</a></td><td>Does the pattern match anywhere in the subject?</td></tr>
+		<tr><td><a href='#-regexp-replace'>.regexp.replace[subject;pattern;replacement]</a></td><td>The first match replaced.</td></tr>
+		<tr><td><a href='#-regexp-replace_all'>.regexp.replace_all[subject;pattern;replacement]</a></td><td>Every match replaced.</td></tr>
+		<tr><td><a href='#-regexp-split'>.regexp.split[subject;pattern]</a></td><td>The subject split on the pattern; no match answers the subject itself as one piece.</td></tr>
+</tbody></table></div>
+	<div class='details'>
+	<h2>Entity Details</h2>
+		<div class='entity' id='-regexp-duckdb_match'><h2>.regexp.duckdb_match[handle]</h2><p class='qd-description'>Whether an open DuckDB handle's RE2 is the version vendored here; answers a boolean rather than signalling, since PEACHQ_DUCKDB_LIB may legitimately point at another release.</p><div class='qd-examples'><h3>Examples</h3><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.regexp.duckdb_match .duckdb.main[]</code></pre><a class="qd-example-link" href="../../repl?code=.regexp.duckdb_match+.duckdb.main%5B%5D&amp;title=regexp.q" target="_blank" rel="noopener noreferrer" title="Open in REPL" aria-label="Open example in REPL (new tab)">&#8599;</a></div></div></div>
+		<div class='entity' id='-regexp-escape'><h2>.regexp.escape[text]</h2><p class='qd-description'>The pattern that matches text literally (RE2's QuoteMeta).</p><div class='qd-examples'><h3>Examples</h3><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.regexp.matches["1+1=2";.regexp.escape "1+1"]</code></pre><a class="qd-example-link" href="../../repl?code=.regexp.matches%5B%221%2B1%3D2%22%3B.regexp.escape+%221%2B1%22%5D&amp;title=regexp.q" target="_blank" rel="noopener noreferrer" title="Open in REPL" aria-label="Open example in REPL (new tab)">&#8599;</a></div></div></div>
+		<div class='entity' id='-regexp-extract'><h2>.regexp.extract[subject;pattern]</h2><p class='qd-description'>The first matched text, "" when nothing matches.</p><div class='qd-examples'><h3>Examples</h3><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.regexp.extract["abc123";"[0-9]+"]</code></pre><a class="qd-example-link" href="../../repl?code=.regexp.extract%5B%22abc123%22%3B%22%5B0-9%5D%2B%22%5D&amp;title=regexp.q" target="_blank" rel="noopener noreferrer" title="Open in REPL" aria-label="Open example in REPL (new tab)">&#8599;</a></div></div></div>
+		<div class='entity' id='-regexp-extract_all'><h2>.regexp.extract_all[subject;pattern]</h2><p class='qd-description'>Every non-overlapping match.</p><div class='qd-examples'><h3>Examples</h3><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.regexp.extract_all["a1b22c333";"[0-9]+"]</code></pre><a class="qd-example-link" href="../../repl?code=.regexp.extract_all%5B%22a1b22c333%22%3B%22%5B0-9%5D%2B%22%5D&amp;title=regexp.q" target="_blank" rel="noopener noreferrer" title="Open in REPL" aria-label="Open example in REPL (new tab)">&#8599;</a></div></div></div>
+		<div class='entity' id='-regexp-full_match'><h2>.regexp.full_match[subject;pattern]</h2><p class='qd-description'>Does the pattern match the whole subject?</p><div class='qd-examples'><h3>Examples</h3><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.regexp.full_match["abc";"a.c"]</code></pre><a class="qd-example-link" href="../../repl?code=.regexp.full_match%5B%22abc%22%3B%22a.c%22%5D&amp;title=regexp.q" target="_blank" rel="noopener noreferrer" title="Open in REPL" aria-label="Open example in REPL (new tab)">&#8599;</a></div></div></div>
+		<div class='entity' id='-regexp-groups'><h2>.regexp.groups[subject;pattern]</h2><p class='qd-description'>The capture groups of the first match, () when nothing matches.</p><div class='qd-examples'><h3>Examples</h3><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.regexp.groups["2026-09-19";"(\\d+)-(\\d+)-(\\d+)"]</code></pre><a class="qd-example-link" href="../../repl?code=.regexp.groups%5B%222026-09-19%22%3B%22%28%5C%5Cd%2B%29-%28%5C%5Cd%2B%29-%28%5C%5Cd%2B%29%22%5D&amp;title=regexp.q" target="_blank" rel="noopener noreferrer" title="Open in REPL" aria-label="Open example in REPL (new tab)">&#8599;</a></div></div></div>
+		<div class='entity' id='-regexp-groups_all'><h2>.regexp.groups_all[subject;pattern]</h2><p class='qd-description'>One group list per match, so .regexp.groups_all[...][;1] is the second group across every match.</p><div class='qd-examples'><h3>Examples</h3><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.regexp.groups_all["a=1, b=2";"(\\w)=(\\d)"]</code></pre><a class="qd-example-link" href="../../repl?code=.regexp.groups_all%5B%22a%3D1%2C+b%3D2%22%3B%22%28%5C%5Cw%29%3D%28%5C%5Cd%29%22%5D&amp;title=regexp.q" target="_blank" rel="noopener noreferrer" title="Open in REPL" aria-label="Open example in REPL (new tab)">&#8599;</a></div></div></div>
+		<div class='entity' id='-regexp-matches'><h2>.regexp.matches[subject;pattern]</h2><p class='qd-description'>Does the pattern match anywhere in the subject?</p><div class='qd-examples'><h3>Examples</h3><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.regexp.matches["Hello";"(?i)^h"]</code></pre><a class="qd-example-link" href="../../repl?code=.regexp.matches%5B%22Hello%22%3B%22%28%3Fi%29%5Eh%22%5D&amp;title=regexp.q" target="_blank" rel="noopener noreferrer" title="Open in REPL" aria-label="Open example in REPL (new tab)">&#8599;</a></div></div></div>
+		<div class='entity' id='-regexp-replace'><h2>.regexp.replace[subject;pattern;replacement]</h2><p class='qd-description'>The first match replaced.</p><table class='qd-tags qd-parameters'>
+<tr><th>Parameters: </th><td><ul class='qd-parameters'>
+	<li><strong>replacement</strong> - may name capture groups as \1 to \9</li></ul></td></tr></table><div class='qd-examples'><h3>Examples</h3><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.regexp.replace["2026-09-19";"(\\d+)-(\\d+)-(\\d+)";"\\3/\\2/\\1"]</code></pre><a class="qd-example-link" href="../../repl?code=.regexp.replace%5B%222026-09-19%22%3B%22%28%5C%5Cd%2B%29-%28%5C%5Cd%2B%29-%28%5C%5Cd%2B%29%22%3B%22%5C%5C3%2F%5C%5C2%2F%5C%5C1%22%5D&amp;title=regexp.q" target="_blank" rel="noopener noreferrer" title="Open in REPL" aria-label="Open example in REPL (new tab)">&#8599;</a></div></div></div>
+		<div class='entity' id='-regexp-replace_all'><h2>.regexp.replace_all[subject;pattern;replacement]</h2><p class='qd-description'>Every match replaced.</p><table class='qd-tags qd-parameters'>
+<tr><th>Parameters: </th><td><ul class='qd-parameters'>
+	<li><strong>replacement</strong> - may name capture groups as \1 to \9</li></ul></td></tr></table><div class='qd-examples'><h3>Examples</h3><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.regexp.replace_all["a1b2";"[0-9]";"#"]</code></pre><a class="qd-example-link" href="../../repl?code=.regexp.replace_all%5B%22a1b2%22%3B%22%5B0-9%5D%22%3B%22%23%22%5D&amp;title=regexp.q" target="_blank" rel="noopener noreferrer" title="Open in REPL" aria-label="Open example in REPL (new tab)">&#8599;</a></div></div></div>
+		<div class='entity' id='-regexp-split'><h2>.regexp.split[subject;pattern]</h2><p class='qd-description'>The subject split on the pattern; no match answers the subject itself as one piece.</p><div class='qd-examples'><h3>Examples</h3><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.regexp.split["a, b;c";"[,;] *"]</code></pre><a class="qd-example-link" href="../../repl?code=.regexp.split%5B%22a%2C+b%3Bc%22%3B%22%5B%2C%3B%5D+*%22%5D&amp;title=regexp.q" target="_blank" rel="noopener noreferrer" title="Open in REPL" aria-label="Open example in REPL (new tab)">&#8599;</a></div></div></div></div><!--MAIN_END-->
+
+
+            </div>
+
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <!-- a href="../foo/" class="btn btn-neutral float-left" title="Foo"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../../namespaces/bar/" class="btn btn-neutral float-right" title="Bar">Next <span class="icon icon-circle-arrow-right"></span></a -->
+    </div>
+
+  <hr/>
+
+
+
+  <div role="contentinfo">
+    <!-- Copyright -->
+  </div>
+
+  Built with <a href="https://www.timestored.com/qstudio/help/qdoc">QDoc</a> provided by <a href="https://www.timestored.com/">TimeStored</a>. <nav class="peachq-api-links" aria-label="PeachQ links"><a href="../">Docs</a> · <a href="../../thanks/">Thanks</a> · <a href="source.json">Source</a></nav>
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+
+
+
+
+
+
+
+<script src="peachq-api.js"></script><footer class="footer">
+  <div class="container footer-inner">
+    <div>PeachQ - MIT-licensed open source q, built on Rayforce with DuckDB storage in progress.
+      <a href="../../thanks/">Thanks</a>
+    </div>
+    <nav class="footer-links" aria-label="Footer">
+      <a href="../../repl">Try Live</a><a href="../../download">Download</a><a href="../../docs/">Docs</a>
+      <a href="../../compatibility">Compatibility</a><a href="../../roadmap">Roadmap</a><a href="../../news/">News</a>
+      <a href="../../about">About</a><a href="../../contact">Contact</a>
+      <a href="https://github.com/peachq-org/peachq" target="_blank" rel="noreferrer">GitHub ↗</a>
+    </nav>
+  </div>
+</footer>
+<script src="../../script.js"></script>
+</body>
+</html>

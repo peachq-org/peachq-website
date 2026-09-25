@@ -1,0 +1,18 @@
+[
+  {
+    "path": "crypto.q",
+    "sha256": "7fe06e70505c97194c29f17d3d9601b4c8e552cedbfc5b83288450c5b29c29b6"
+  },
+  {
+    "path": "dowjones.csv",
+    "sha256": "8b1bc96432981689eb6d00de1909fb1f61aa82064418a39104ec186dfd22c539"
+  },
+  {
+    "path": "dowjones.q",
+    "sha256": "0d815c8fa0caf3ccbce86d943294c22a85b7de78ba55e937dfa41b8585919f9a"
+  },
+  {
+    "path": "price.json",
+    "sha256": "2ac24cf94dd617f53da87375c5871cc85a1dd48b89baa5121e710229c7d7520e"
+  }
+]

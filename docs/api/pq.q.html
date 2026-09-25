@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<!-- Resolves every relative URL below against the site root rather than the
+     requested path. See peachq_install_path(). -->
+
+<title>pq.q - PeachQ API</title>
+<link rel="canonical" href="https://peachq.org/docs/api/pq.q.html">
+<link rel="icon" href="../../img/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="16x16" href="../../img/peachq-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../../img/peachq-32x32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../../img/peachq-180x180.png">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" />
+<link rel="stylesheet" href="qdoc2.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/q.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/shell.min.js"></script>
+<script>hljs.highlightAll();</script>
+<link rel="stylesheet" href="../../css/styles.css">
+<link rel="stylesheet" href="peachq-api.css">
+<script src="../../mirror-banner.js" defer></script>
+<!-- Matomo. Self-hosted at timestored.com/mat, so no third-party analytics
+     service sees the traffic. Site 4 is "peachq"; site 1 is TimeStored's own
+     site, and pointing this at 1 filed every PeachQ visit under TimeStored.
+     Keep in sync with overrides/main.html, which carries the same snippet for
+     the MkDocs half of the site; tests/test_pages.sh checks the id matches. -->
+<script>
+  var _paq = window._paq = window._paq || [];
+  /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u="//www.timestored.com/mat/";
+    _paq.push(['setTrackerUrl', u+'matomo.php']);
+    _paq.push(['setSiteId', '4']);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+</head>
+<body class="peachq-api">
+<header class="nav">
+  <div class="container nav-inner">
+    <a class="brand" href="../.././"><img class="logo" src="../../img/peachq-logo.svg" alt="PeachQ logo"><span>Peach<span style="color:var(--peach-strong)">Q</span></span></a>
+    <button class="mobile-menu" type="button" data-mobile-menu aria-expanded="false" aria-controls="siteNav">Menu</button>
+    <nav class="nav-links" id="siteNav">
+      <a href="../../repl" class="nav-cta">Try Live</a>
+      <a href="../../download">Download</a>
+      <a href="../../docs/" class="active">Docs</a>
+      <a href="../../compatibility">Compatibility</a>
+      <a href="../../news/">News</a>
+      <a href="../../about">About</a>
+      <a href="https://github.com/peachq-org/peachq" target="_blank" rel="noreferrer">GitHub ↗</a>
+      <button class="theme-toggle" data-theme-toggle aria-label="Toggle theme"></button>
+    </nav>
+  </div>
+</header>
+<div class="preview-ribbon" aria-hidden="true">Early preview</div>
+
+
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav" id="api-sidebar">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+<p><a href="../">← PeachQ docs</a></p>
+        <a href="./"  class="icon icon-home"> PeachQ API</a><div role="search">
+  <!-- form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form -->
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Namespaces</span></p>
+
+
+<ul><li class="toctree-l1 cls-csv-cls"><a class="reference internal cls-csv-cls" href='csv.q.html' >.csv</a></li>
+	<li class="toctree-l1 cls-duckdb-cls"><a class="reference internal cls-duckdb-cls" href='duckdb.q.html' >.duckdb</a></li>
+	<li class="toctree-l1 cls-ffi-cls"><a class="reference internal cls-ffi-cls" href='ffi.q.html' >.ffi</a></li>
+	<li class="toctree-l1 cls-j-cls"><a class="reference internal cls-j-cls" href='j.q.html' >.j</a></li>
+	<li class="toctree-l1 cls-massive-cls"><a class="reference internal cls-massive-cls" href='massive.q.html' >.massive</a></li>
+	<li class="toctree-l1 cls-parquet-cls"><a class="reference internal cls-parquet-cls" href='parquet.q.html' >.parquet</a></li>
+	<li class="toctree-l1 current"><a class="reference internal current" href='pq.q.html' >.pq</a></li>
+	<li class="toctree-l1 cls-regexp-cls"><a class="reference internal cls-regexp-cls" href='regexp.q.html' >.regexp</a></li>
+	<li class="toctree-l1 cls-str-cls"><a class="reference internal cls-str-cls" href='str.q.html' >.str</a></li>
+	<li class="toctree-l1 cls-termbox-cls"><a class="reference internal cls-termbox-cls" href='termbox.q.html' >.termbox</a></li>
+</ul><!--NAMESPACE_END-->
+
+              <p class="caption"><span class="caption-text">Files</span></p>
+
+<ul><li class="toctree-l1 cls-csv-cls"><a class="reference internal cls-csv-cls" href='csv.q.html' >csv.q</a></li>
+	<li class="toctree-l1 cls-duckdb-cls"><a class="reference internal cls-duckdb-cls" href='duckdb.q.html' >duckdb.q</a></li>
+	<li class="toctree-l1 cls-ffi-cls"><a class="reference internal cls-ffi-cls" href='ffi.q.html' >ffi.q</a></li>
+	<li class="toctree-l1 cls-j-cls"><a class="reference internal cls-j-cls" href='j.q.html' >j.q</a></li>
+	<li class="toctree-l1 cls-massive-cls"><a class="reference internal cls-massive-cls" href='massive.q.html' >massive.q</a></li>
+	<li class="toctree-l1 cls-parquet-cls"><a class="reference internal cls-parquet-cls" href='parquet.q.html' >parquet.q</a></li>
+	<li class="toctree-l1 current"><a class="reference internal current" href='pq.q.html' >pq.q</a></li>
+	<li class="toctree-l1 cls-qpc-cls"><a class="reference internal cls-qpc-cls" href='qpc.q.html' >qpc.q</a></li>
+	<li class="toctree-l1 cls-regexp-cls"><a class="reference internal cls-regexp-cls" href='regexp.q.html' >regexp.q</a></li>
+	<li class="toctree-l1 cls-str-cls"><a class="reference internal cls-str-cls" href='str.q.html' >str.q</a></li>
+	<li class="toctree-l1 cls-termbox-cls"><a class="reference internal cls-termbox-cls" href='termbox.q.html' >termbox.q</a></li>
+</ul><!--FILES_END-->
+
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <button type="button" data-api-menu aria-expanded="false" aria-controls="api-sidebar">☰ API menu</button>
+          <a href="./">PeachQ API</a>
+
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="./" class="icon icon-home" aria-label="Docs"></a></li>
+          <!-- li class="breadcrumb-item">Files-Breadcrumb</li -->
+      <li class="breadcrumb-item active">pq.q</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+
+                <h1 id="foobar">pq.q</h1>
+
+
+
+	<div id='headerDoc'>The session itself: version, open connections, terminal size and colour support.  Loaded by \l pq.
+
+<div class='qd-examples'><h3>Examples</h3><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.pq.version</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>select handle, alias from .pq.conns[]</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div></div></div>
+	<div id='summary'><h2>Entity Summary</h2><table class='overviewSummary'><tbody>
+<tr><th>Entities</th><th>Short Description</th></tr>
+		<tr><td><a href='#-pq-cancolor'>.pq.cancolor[x]</a></td><td>Whether stdout should carry ANSI colour: PEACHQ_COLORS=0/1 overrides everything, then NO_COLOR (off), FORCE_COLOR (on), else a tty whose TERM is not dumb.</td></tr>
+		<tr><td><a href='#-pq-conns'>.pq.conns[]</a></td><td>Every open connection, one row each.</td></tr>
+		<tr><td><a href='#-pq-dr'>.pq.dr[verb]</a></td><td>Print a verb's domain and range grid in the layout the KX reference pages use, probed by casting a sample of every type: a lower-case letter is an atom result, upper-case a list, "." an error.</td></tr>
+		<tr><td><a href='#-pq-termsize'>.pq.termsize[x]</a></td><td>The live terminal size, with the 25/80 fallback and [10,2000] clamp that \c 0N uses.</td></tr>
+		<tr><td>.pq.version</td><td>The peachq version string.</td></tr>
+</tbody></table></div>
+	<div class='details'>
+	<h2>Entity Details</h2>
+		<div class='entity' id='-pq-cancolor'><h2>.pq.cancolor[x]</h2><p class='qd-description'>Whether stdout should carry ANSI colour: PEACHQ_COLORS=0/1 overrides everything, then NO_COLOR (off), FORCE_COLOR (on), else a tty whose TERM is not dumb.</p><table class='qd-tags'>
+<tr><th>Return: </th><td>boolean</td></tr></table><div class='qd-examples'><h3>Examples</h3><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.pq.cancolor[]</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div></div></div>
+		<div class='entity' id='-pq-conns'><h2>.pq.conns[]</h2><p class='qd-description'>Every open connection, one row each.  The single-letter columns p f z n m are the -38! names so kdb code ports.</p><table class='qd-tags'>
+<tr><th>Columns: </th><td><ul class='qd-columns'>
+	<li><strong>alias</strong> - the :pq: alias, when the connection opened with one</li>
+	<li><strong>handle</strong> - what hclose takes: the alias symbol of a :pq: provider, else the fd int</li></ul></td></tr></table><div class='qd-examples'><h3>Examples</h3><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.pq.conns[]</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div></div></div>
+		<div class='entity' id='-pq-dr'><h2>.pq.dr[verb]</h2><p class='qd-description'>Print a verb's domain and range grid in the layout the KX reference pages use, probed by casting a sample of every type: a lower-case letter is an atom result, upper-case a list, "." an error.</p><table class='qd-tags qd-parameters'>
+<tr><th>Parameters: </th><td><ul class='qd-parameters'>
+	<li><strong>verb</strong> - a symbol or char naming a verb in .Q.ops[], or a function</li></ul></td></tr></table><div class='qd-examples'><h3>Examples</h3><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.pq.dr `neg</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.pq.dr "+"</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div></div></div>
+		<div class='entity' id='-pq-termsize'><h2>.pq.termsize[x]</h2><p class='qd-description'>The live terminal size, with the 25/80 fallback and [10,2000] clamp that \c 0N uses.</p><table class='qd-tags'>
+<tr><th>Return: </th><td>(rows;cols)</td></tr></table><div class='qd-examples'><h3>Examples</h3><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.pq.termsize[]</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div></div></div></div><!--MAIN_END-->
+
+
+            </div>
+
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <!-- a href="../foo/" class="btn btn-neutral float-left" title="Foo"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../../namespaces/bar/" class="btn btn-neutral float-right" title="Bar">Next <span class="icon icon-circle-arrow-right"></span></a -->
+    </div>
+
+  <hr/>
+
+
+
+  <div role="contentinfo">
+    <!-- Copyright -->
+  </div>
+
+  Built with <a href="https://www.timestored.com/qstudio/help/qdoc">QDoc</a> provided by <a href="https://www.timestored.com/">TimeStored</a>. <nav class="peachq-api-links" aria-label="PeachQ links"><a href="../">Docs</a> · <a href="../../thanks/">Thanks</a> · <a href="source.json">Source</a></nav>
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+
+
+
+
+
+
+
+<script src="peachq-api.js"></script><footer class="footer">
+  <div class="container footer-inner">
+    <div>PeachQ - MIT-licensed open source q, built on Rayforce with DuckDB storage in progress.
+      <a href="../../thanks/">Thanks</a>
+    </div>
+    <nav class="footer-links" aria-label="Footer">
+      <a href="../../repl">Try Live</a><a href="../../download">Download</a><a href="../../docs/">Docs</a>
+      <a href="../../compatibility">Compatibility</a><a href="../../roadmap">Roadmap</a><a href="../../news/">News</a>
+      <a href="../../about">About</a><a href="../../contact">Contact</a>
+      <a href="https://github.com/peachq-org/peachq" target="_blank" rel="noreferrer">GitHub ↗</a>
+    </nav>
+  </div>
+</footer>
+<script src="../../script.js"></script>
+</body>
+</html>

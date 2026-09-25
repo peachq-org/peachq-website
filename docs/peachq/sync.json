@@ -1,0 +1,98 @@
+{
+  "repository": "peachq C project (local rayforce checkout)",
+  "revision": "49be5a234a51c44a393cf353c0ff0f3f85c9cc4c",
+  "version": "0.84",
+  "synced_on": "2026-09-19",
+  "review_basis": [
+    "user-docs/",
+    "CHANGELOG.md",
+    "src/qlang/repl/qmain.c",
+    "src/qlang/repl/q_repl.c",
+    "src/app/term.c"
+  ],
+  "examples_checked": false,
+  "open_questions": [
+    "Typed-parameter source describes stages not yet shipped.",
+    "C-project documentation checker integration is owned by the C project."
+  ],
+  "files": {
+    "bad-rows.md": {
+      "source": "user-docs/bad-rows.md",
+      "source_sha256": "380a4fe0dd7a909bc264722a5f62d1ec10b2c6eac3a64c0bd3faf8f0319b9569",
+      "website_sha256": "9bcae32523138c45ac339630e89c4e0714748467dc29a483c2b054abc13ac60b",
+      "adaptations": []
+    },
+    "compatibility.md": {
+      "source": "user-docs/compatibility.md",
+      "source_sha256": "615d567e3ae2bd16f4bcff4686f6b34051680399b65f72d93b4c0c624f7686de",
+      "website_sha256": "afe8c93910be55d55c9c1a750f2fa7f027fc7a1ea1cac9387e6fd2810a0dc1f3",
+      "adaptations": [
+        "Lead with additions, separate behaviour changes and unsupported features; omit unchanged CSV operator",
+        "Link the website REPL guide and label typed parameters as design preview",
+        "Use page names instead of filenames for link labels",
+        "Link the Feature column and remove the separate More column",
+        "Qualify resource and Parquet support; label the PeachQ DuckDB integration experimental"
+      ]
+    },
+    "csv.md": {
+      "source": "user-docs/csv.md",
+      "source_sha256": "a4ff11b568049c0b58c34cd9d03d4a0e9afbe471b36cab70e2986f19c9b2c67b",
+      "website_sha256": "c453e70cedd3a87c90e84a12721cc8d0dc60e12b7b13d4c072451fd9b526597c",
+      "adaptations": []
+    },
+    "ffi.md": {
+      "source": "user-docs/ffi.md",
+      "source_sha256": "7ba23d993cfc6ea5f96135578d054c67d145acfcba78c984ad765329d78cf0e6",
+      "website_sha256": "af4febf53f42b09aff58fd69783d5e578c45b876d25b89862f79d5979969f257",
+      "adaptations": [
+        "Correct FFI argument-list anchor for the rendered heading"
+      ]
+    },
+    "handles.md": {
+      "source": "user-docs/handles.md",
+      "source_sha256": "452a4afeeeb4b6e2fbad54a064b2e0c643122ad188d3d6991b7d39502e7e9c6a",
+      "website_sha256": "45fc8058c1b7fd3446d2a4f63af955cee4bd11a6af621e4c575d71475c7c482c",
+      "adaptations": [
+        "Add experimental status and native-runtime requirements for the PeachQ DuckDB integration"
+      ]
+    },
+    "json.md": {
+      "source": "user-docs/json.md",
+      "source_sha256": "6fa637c7b4ec2314b54ec76c32ba48cbcdd493f6cb3d48aa4e13140ead7b26d4",
+      "website_sha256": "d3a6cc5b2b664ea05e2a8361b4de7c5b920aa1a27f63a4fa0ba00e281cb6ae2d",
+      "adaptations": []
+    },
+    "loading.md": {
+      "source": "user-docs/loading.md",
+      "source_sha256": "1f61a5709a104f0c573eaa8556161a893db34067bb81f8a8f3b3e502423d9146",
+      "website_sha256": "05500769b33aee22ff8705a8b98e299fd853d0aa469f6540d8166dab21b0c2ba",
+      "adaptations": []
+    },
+    "parquet.md": {
+      "source": "user-docs/parquet.md",
+      "source_sha256": "aadac4fb5f9dda48d72953fc76822ff302dd379e5332ddd5771cdffa27f12ab5",
+      "website_sha256": "846207a53302a25d52830c95df0644e3f34b34ba8f05234a492b91af89e9f83e",
+      "adaptations": [
+        "Add experimental status and native-runtime requirements for the PeachQ DuckDB integration"
+      ]
+    },
+    "regexp.md": {
+      "source": "user-docs/regexp.md",
+      "source_sha256": "f9bfcdab4099cab293b8632c825c67a986cd66eb34f5b3cb2acaa46a1f1d2d06",
+      "website_sha256": "7c4cd25c23737823922be28f0dea813b850527e1c58d1d8fbea963e7bcc91453",
+      "adaptations": []
+    },
+    "resource-handle-implementer.md": {
+      "source": "user-docs/resource-handle-implementer.md",
+      "source_sha256": "4c103aba268d140c176b62c6829e436ae54b4bffb879318e45f1ed461af11f7d",
+      "website_sha256": "9108a5de9f8864ec088c3facd202050c606df83b646e21806824b3c9aec0629e",
+      "adaptations": []
+    },
+    "typed-parameters.md": {
+      "source": "user-docs/typed-parameters.md",
+      "source_sha256": "c34ca82f4b07dee618fa9a203257e224a62ffe56673d6abc05733b54ec2241c2",
+      "website_sha256": "4d076d0aa9c2d1bcdd39045ad8cc0bed8f1fd08dbad87a4e2df1544ac4496391",
+      "adaptations": []
+    }
+  }
+}

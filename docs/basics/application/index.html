@@ -1,0 +1,8468 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Everything in q is a value and almost everything can be applied to some other values. Projection (or currying) is a partial application in which one or more values are bound.">
+      
+      
+        <meta name="author" content="Stephen Taylor">
+      
+      
+        <link rel="canonical" href="https://peachq.org/docs/basics/application/">
+      
+      
+        <link rel="prev" href="../../ref/">
+      
+      
+        <link rel="next" href="../atomic/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../img/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Application, projection, and indexing | Basics | kdb+ and q documentation - PeachQ</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../css/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  
+  <script src="../../../mirror-banner.js"></script>
+  <script>
+    (function() {
+      // Local previews do not send analytics.
+      var host = window.location.hostname;
+      if (host === 'localhost' || host.endsWith('.localhost') ||
+          /^127\./.test(host) || host === '[::1]' || host === '::1') return;
+      var _paq = window._paq = window._paq || [];
+      _paq.push(['trackPageView']);
+      _paq.push(['enableLinkTracking']);
+      var u="//www.timestored.com/mat/";
+      _paq.push(['setTrackerUrl', u+'matomo.php']);
+      _paq.push(['setSiteId', '4']);
+      var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+      g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+    })();
+  </script>
+
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#application-projection-and-indexing" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../" title="PeachQ" class="md-header__button md-logo" aria-label="PeachQ" data-md-component="logo">
+      
+  <img src="../../../img/peachq-logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <a class="md-ellipsis peachq-wordmark" href="../../../">
+            Peach<span class="peachq-wordmark__q">Q</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    
+    <nav class="peachq-nav" aria-label="Site">
+      
+      
+      
+        
+        <a class="peachq-nav__link" href="../../../repl">Try Live</a>
+      
+        
+        <a class="peachq-nav__link" href="../../../download">Download</a>
+      
+        
+        <a class="peachq-nav__link peachq-nav__link--active" href="../../../docs/">Docs</a>
+      
+        
+        <a class="peachq-nav__link" href="../../../compatibility">Compatibility</a>
+      
+        
+        <a class="peachq-nav__link" href="../../../news/">News</a>
+      
+        
+        <a class="peachq-nav__link" href="../../../about">About</a>
+      
+      <a class="peachq-nav__link" href="https://github.com/peachq-org/peachq" target="_blank" rel="noreferrer">GitHub &#8599;</a>
+    </nav>
+
+    
+      <label class="md-header__button md-icon" for="__search" aria-label="Search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="PeachQ" class="md-nav__button md-logo" aria-label="PeachQ" data-md-component="logo">
+      
+  <img src="../../../img/peachq-logo.svg" alt="logo">
+
+    </a>
+    PeachQ
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/peachq-org/peachq" class="md-source" target="_blank" rel="noreferrer">
+  <div class="md-source__repository">GitHub ↗</div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Docs
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_1" id="__nav_1_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Docs
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../peachq/getting-started/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_3" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../ref/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    q language reference
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_1_3" id="__nav_1_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_1_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    q language reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_3_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_1_3_2" id="__nav_1_3_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Language basics
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_1_3_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_1_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Language basics
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Application, projection, and indexing
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Application, projection, and indexing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#values" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Values
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#application" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Application
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bracket-application" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bracket application
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#infix-application" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Infix application
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#apply-operator" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Apply operator
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#apply-at-operator" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Apply At operator
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prefix-application" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prefix application
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#postfix-application" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Postfix application
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#application-syntax" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Application syntax
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#long-right-scope" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Long right scope
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#iterators" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Iterators
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rank-and-syntax" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rank and syntax
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#postfix-yields-infix" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Postfix yields infix
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#projection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Projection
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#applying-a-list-with-elided-items" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Applying a list with elided items
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#indexing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Indexing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Indexing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#indexing-out-of-bounds" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Indexing out of bounds
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-thing-and-the-name-of-the-thing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The thing and the name of the thing
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#application-and-indexing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Application and indexing
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../atomic/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Atomic functions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../by-topic/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Q language resources by topic
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cmdline/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Command line options
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../comparison/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Comparison
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../conformable/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Conformable data objects
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../control/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Controlling evaluation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../datatypes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Datatypes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../debug/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Debugging
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dictsandtables/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dictionaries
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../enumerations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Enumerations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../errors/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Errors
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../exposed-infrastructure/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Exposed infrastructure
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../files/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    File system
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../function-notation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Function notation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../funsql/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Functional qSQL
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../handles/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Connection handles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../implicit-iteration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Implicit iteration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../internal/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Internal functions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ipc/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Interprocess communication
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../iteration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Iteration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../joins/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Joins
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../listening-port/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Listening port
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../math/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mathematics and statistics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../metadata/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Metadata
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../namespaces/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Namespaces
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../parsetrees/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Parse trees
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pattern/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pattern Matching
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../peach/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Parallel processing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../precision/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Precision
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../qsql/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    QSQL query templates
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../regex/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Regular expressions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../syntax/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Syntax
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../syscmds/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    System commands
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../variadic/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Variadic syntax
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_3_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_3_3" id="__nav_1_3_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Functions and operators
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_1_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Functions and operators
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/abs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    abs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/accumulators/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Accumulators
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/add/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    + Add
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/aj/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    aj, aj0, ajf, ajf0
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/all-any/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    all, any
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/amend/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    . @ Amend, Amend At
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/and/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    and
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/apply/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    . Apply, Index, Trap@ Apply At, Index At, Trap At
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/asc/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    asc, iasc, xasc
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/asof/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    asof
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/assign/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Assign
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/attr/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    attr
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/avg/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    avg, avgs, mavg, wavg
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/bin/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    bin, binr
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/cast/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    $ Cast
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/ceiling/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ceiling
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/coalesce/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ^ Coalesce
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/cols/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    cols, xcol, xcols
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/compose/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ' Compose
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/cond/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    $ Cond
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/cor/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    cor
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/cos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    cos, acos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/count/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    count, mcount
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/cov/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    cov, scov
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/cross/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    cross
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/csv/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    csv
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/cut/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    _ Cut, cut
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/deal/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ? Roll, Deal, Permute
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/delete/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    delete
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/deltas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    deltas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/desc/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    desc, idesc, xdesc
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/dev/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    dev, mdev, sdev
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/dict/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ! Dict
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/differ/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    differ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/display/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ! Display
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/distinct/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    distinct
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/div/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    div
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/divide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    % Divide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/do/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    do
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/doth/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The .h namespace
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/dotj/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The .j namespace
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/dotm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The .m namespace
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/dotq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The .Q namespace
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/dotz/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The .z namespace
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/drop/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    _ Drop
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/dsave/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    dsave
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/dynamic-load/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2: Dynamic Load
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/each/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    each, peach
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/ej/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ej
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/ema/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ema
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/enkey/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ! Enkey, Unkey
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/enlist/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    enlist
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/enum-extend/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ? Enum Extend
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/enumerate/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    $ Enumerate
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/enumeration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ! Enumeration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/equal/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    = Equal
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/eval/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    eval, reval
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/except/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    except
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/exec/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    exec
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/exit/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    exit
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/exp/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    exp, xexp
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/fby/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    fby
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/file-binary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1: File Binary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/file-text/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0: File Text
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/fill/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ^ Fill, fills
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/find/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ? Find
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/first/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    first, last
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/fkeys/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    fkeys
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/flip-splayed/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ! Flip Splayed or Partitioned
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/flip/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    flip
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/floor/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    floor
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/get/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    get, set
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/getenv/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    getenv
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/greater-than/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    > Greater Than >= At Least
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/greater/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    | Greater, or
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/group/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    group
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/gtime/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    gtime, ltime
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/hcount/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    hcount
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/hdel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    hdel
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/hopen/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    hopen, hclose
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/hsym/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    hsym
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/identity/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Identity, Null
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/if/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    if
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/ij/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ij, ijf
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/in/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    in
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/insert/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    insert
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/inter/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    inter
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/inv/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    inv
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/iterators/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Iterators
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/join/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    , ,: Join and Append
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/key/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    key
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/keys/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    keys, xkey
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/less-than/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    <= Up To
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/lesser/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    & Lesser, and
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/like/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    like
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/lj/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    lj, ljf
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/load/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    load, rload
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/log/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    log, xlog
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/lower/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    lower, upper
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/lsq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    lsq
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/maps/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Map iterators
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/match/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ~ Match
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/max/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    max, maxs, mmax
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/md5/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    md5
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/med/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    med
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/meta/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    meta
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/min/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    min, mins, mmin
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/mmu/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    $ Matrix Multiply, mmu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/mod/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    mod
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/multiply/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Multiply
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/neg/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    neg
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/next/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    next, prev, xprev
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/not-equal/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    <> Not Equal
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/not/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    not
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/null/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    null
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/or/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    or
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/over/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    over, scan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/overloads/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overloaded glyphs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/pad/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    $ Pad
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/parse/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    parse
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/pj/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    pj
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/prd/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    prd, prds
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/prior/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    prior
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/rand/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    rand
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/rank/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    rank
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/ratios/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ratios
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/raze/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    raze
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/read0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    read0
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/read1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    read1
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/reciprocal/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    reciprocal
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/reverse/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    reverse
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/rotate/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    rotate
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/save/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    save, rsave
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/select/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    select
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/set-attribute/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    # Set Attribute
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/show/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    show
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/signal/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ' Signal
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/signum/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    signum
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/simple-exec/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ? Simple Exec
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/sin/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    sin, asin
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/sqrt/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    sqrt
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/ss/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ss, ssr
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/string/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    string
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/sublist/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    sublist
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/subtract/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    - Subtract
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/sum/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    sum, sums, msum, wsum
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/sv/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    sv
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/system/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    system
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/tables/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    tables
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/take/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    # Take
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/tan/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    tan, atan
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/til/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    til
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/tok/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    $ Tok
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/trim/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    trim, ltrim, rtrim
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/type/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    type
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/uj/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    uj, ujf
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/ungroup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ungroup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/union/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    union
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/update/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    update
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/upsert/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    upsert
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/value/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    value
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/var/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    var, svar
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/vector-conditional/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ? Vector Conditional
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/view/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    view, views
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/vs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    vs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/where/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    where
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/while/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    while
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/within/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    within
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/wj/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    wj, wj1
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/xbar/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    xbar
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/xgroup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    xgroup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ref/xrank/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    xrank
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../peachq/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Using PeachQ
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_1_4" id="__nav_1_4_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Using PeachQ
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../peachq/compatibility/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Compatibility and migration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../peachq/repl/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    REPL and console
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../peachq/loading/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Loading data
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../peachq/bad-rows/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bad rows and errors
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../peachq/handles/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Handles and resources
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../peachq/typed-parameters/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Typed parameters (design)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_5" id="__nav_1_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Library API
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Library API
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../docs/api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Docs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../peachq/csv/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CSV (.csv)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../peachq/json/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    JSON (.j)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../peachq/regexp/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Regular expressions (.regexp)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../peachq/parquet/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Parquet (.parquet)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../peachq/ffi/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Foreign functions (.ffi)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../thanks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Thanks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#values" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Values
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#application" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Application
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bracket-application" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bracket application
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#infix-application" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Infix application
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#apply-operator" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Apply operator
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#apply-at-operator" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Apply At operator
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prefix-application" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prefix application
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#postfix-application" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Postfix application
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#application-syntax" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Application syntax
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#long-right-scope" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Long right scope
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#iterators" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Iterators
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rank-and-syntax" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rank and syntax
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#postfix-yields-infix" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Postfix yields infix
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#projection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Projection
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#applying-a-list-with-elided-items" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Applying a list with elided items
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#indexing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Indexing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Indexing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#indexing-out-of-bounds" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Indexing out of bounds
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-thing-and-the-name-of-the-thing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The thing and the name of the thing
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#application-and-indexing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Application and indexing
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/peachq-org/peachq-website/edit/main/content/docs/basics/application.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+
+
+<h1 id="application-projection-and-indexing">Application, projection, and indexing<a class="headerlink" href="#application-projection-and-indexing" title="Permanent link">&para;</a></h1>
+<h2 id="values">Values<a class="headerlink" href="#values" title="Permanent link">&para;</a></h2>
+<p>Everything in q is a value, and almost all values can be applied.</p>
+<ul>
+<li>A list can be applied to its indexes to get its items.</li>
+<li>A list with an elided item or items can be applied to a fill item or list of items</li>
+<li>A dictionary can be applied to its keys to get its values.</li>
+<li>A matrix can be applied its row indexes to get its rows; 
+or to its row and column indexes to get its items. </li>
+<li>A table can be applied to its row indexes to get its tuples; 
+to its column names to get its columns;
+or to its row indexes and column names to get its items.</li>
+<li>A function (operator, keyword, or lambda) can be applied to its argument/s to get a result. </li>
+<li>A file or process handle can be applied to a string or parse tree</li>
+</ul>
+<p>The <em>domain</em> of a function is all valid values of its argument/s; its <em>range</em> is all its possible results. 
+For example, the domain of Add is numeric and temporal values, as is its range. 
+By extension, </p>
+<ul>
+<li>the domain of a list is its indexes; its range, its items</li>
+<li>the domains of a matrix are its row and column indexes</li>
+<li>the domain of a dictionary is its keys; its range is its values</li>
+<li>the domains of a table are its row indexes and column names</li>
+</ul>
+<div class="admonition info">
+<p class="admonition-title">Atoms need not apply</p>
+<p>The only values that cannot be applied are atoms that are not file or process handles, nor the name of a variable or lambda.</p>
+<p>In what follows, <em>value</em> means <em>applicable value</em>.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Application and indexing</p>
+<p>Most programming languages treat the indexing of arrays and the application of functions as separate. Q conflates them. This is deliberate, and fundamental to the design of the language. </p>
+<p>It also provides useful alternatives to control structures. See <a href="#application-and-indexing"><em>Application and indexing</em></a> below.</p>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M256 0a64 64 0 1 1 0 128 64 64 0 1 1 0-128m-32 160h64c35.3 0 64 28.7 64 64v48c0 17.7-14.3 32-32 32h-1.8l-11.1 99.5c-1.8 16.2-15.5 28.5-31.8 28.5h-38.7c-16.3 0-30-12.3-31.8-28.5L193.7 304h-1.8c-17.7 0-32-14.3-32-32v-48c0-35.3 28.7-64 64-64zm188.4 240.2c-16.1-4.2-34.8-7.6-55.4-10.2l5.3-47.7c22.7 2.9 43.7 6.7 62.1 11.5 22.4 5.8 42.6 13.3 57.8 23.3 14.7 9.6 29.8 24.9 29.8 47s-15.1 37.4-29.8 47c-15.2 9.9-35.5 17.5-57.8 23.3-45.1 11.7-105.3 17.8-168.4 17.8s-123.3-6.1-168.4-17.8c-22.4-6-42.6-13.5-57.8-23.4C15.1 461.4 0 446.1 0 424s15.1-37.4 29.8-47c15.2-9.9 35.5-17.5 57.8-23.3 18.5-4.8 39.5-8.6 62.1-11.5L155 390c-20.6 2.6-39.3 6.1-55.4 10.2-56.6 14.6-56.6 32.9 0 47.5 39.9 10.3 95.8 16.2 156.4 16.2s116.5-5.9 156.4-16.2c56.6-14.6 56.6-32.9 0-47.5"/></svg></span>
+<em>Q for Mortals</em>
+<a href="https://code.kx.com/q4m3/6_Functions/#65-everything-is-a-map">§6.5 Everything Is a Map</a></p>
+</div>
+<h2 id="application">Application<a class="headerlink" href="#application" title="Permanent link">&para;</a></h2>
+<p>To <em>apply a value</em> means </p>
+<ul>
+<li>to evaluate a function on its arguments</li>
+<li>to select items from a list or dictionary</li>
+<li>to write to a file or process handle</li>
+</ul>
+<p>The syntax provides several ways to apply a value.</p>
+<h2 id="bracket-application">Bracket application<a class="headerlink" href="#bracket-application" title="Permanent link">&para;</a></h2>
+<p>All values can be applied with bracket notation. </p>
+<div class="peachq-example">
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="s2">"abcdef"</span><span class="p">[</span><span class="il">1</span><span class="w"> </span><span class="il">4</span><span class="w"> </span><span class="il">3</span><span class="p">]</span>
+<span class="s2">"bed"</span>
+<span class="gp">q)</span><span class="nb">count</span><span class="p">[</span><span class="il">1</span><span class="w"> </span><span class="il">4</span><span class="w"> </span><span class="il">3</span><span class="p">]</span>
+<span class="il">3</span>
+<span class="gp">q)</span><span class="p">{</span><span class="n">x</span><span class="o">*</span><span class="n">x</span><span class="p">}[</span><span class="il">4</span><span class="p">]</span>
+<span class="il">16</span>
+<span class="gp">q)</span><span class="o">+</span><span class="p">[</span><span class="il">2</span><span class="p">;</span><span class="il">3</span><span class="p">]</span>
+<span class="il">5</span>
+<span class="gp">q)</span><span class="nv">d</span><span class="o">:</span><span class="ss">`cat`cow`dog`sheep</span><span class="o">!</span><span class="ss">`chat`vache`chien`mouton</span>
+<span class="gp">q)</span><span class="n">d</span><span class="p">[</span><span class="ss">`cow`sheep</span><span class="p">]</span>
+<span class="ss">`vache`mouton</span>
+<span class="gp">q)</span><span class="nb">ssr</span><span class="p">[</span><span class="s2">"Hello word!"</span><span class="p">;</span><span class="s2">"rd"</span><span class="p">;</span><span class="s2">"rld"</span><span class="p">]</span>
+<span class="s2">"Hello world!"</span>
+<span class="gp">q)</span><span class="nv">m</span><span class="o">:</span><span class="p">(</span><span class="s2">"abc"</span><span class="p">;</span><span class="s2">"def"</span><span class="p">;</span><span class="s2">"ghi"</span><span class="p">;</span><span class="s2">"jkl"</span><span class="p">)</span><span class="w">       </span><span class="c1">/ a matrix</span>
+<span class="gp">q)</span><span class="n">m</span><span class="p">[</span><span class="il">3</span><span class="w"> </span><span class="il">1</span><span class="p">]</span><span class="w">                            </span><span class="c1">/ m is a list (unary)</span>
+<span class="s2">"jkl"</span>
+<span class="s2">"def"</span>
+<span class="gp">q)</span><span class="n">m</span><span class="p">[</span><span class="il">0</span><span class="p">;</span><span class="il">2</span><span class="w"> </span><span class="il">0</span><span class="w"> </span><span class="il">1</span><span class="p">]</span><span class="w">                        </span><span class="c1">/ and also a matrix (binary)</span>
+<span class="s2">"cab"</span>
+<span class="gp">q)</span><span class="n">main</span><span class="p">[]</span><span class="w">                            </span><span class="c1">/ nullary lambda</span>
+</code></pre></div>
+<p><a class="peachq-repl-link" href="../../../repl?code=%22abcdef%22%5B1+4+3%5D%0Acount%5B1+4+3%5D%0A%7Bx%2Ax%7D%5B4%5D%0A%2B%5B2%3B3%5D%0Ad%3A%60cat%60cow%60dog%60sheep%21%60chat%60vache%60chien%60mouton%0Ad%5B%60cow%60sheep%5D%0Assr%5B%22Hello+word%21%22%3B%22rd%22%3B%22rld%22%5D%0Am%3A%28%22abc%22%3B%22def%22%3B%22ghi%22%3B%22jkl%22%29+++++++%2F+a+matrix%0Am%5B3+1%5D++++++++++++++++++++++++++++%2F+m+is+a+list+%28unary%29%0Am%5B0%3B2+0+1%5D++++++++++++++++++++++++%2F+and+also+a+matrix+%28binary%29%0Amain%5B%5D++++++++++++++++++++++++++++%2F+nullary+lambda&amp;title=Bracket+application&amp;example=docs%2Fbasics%2Fapplication.md%3A1" target="_blank" rel="noopener noreferrer" aria-label="Open in REPL (new tab)" title="Open in REPL (new tab)"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5v14l11-7z"/></svg></a></p>
+</div>
+<h2 id="infix-application">Infix application<a class="headerlink" href="#infix-application" title="Permanent link">&para;</a></h2>
+<p>Operators, and some binary keywords and derived functions can also be applied infix.</p>
+<div class="peachq-example">
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="il">2</span><span class="o">+</span><span class="il">3</span><span class="w">                           </span><span class="c1">/ operator</span>
+<span class="il">5</span>
+<span class="gp">q)</span><span class="il">2</span><span class="w"> </span><span class="il">3</span><span class="w"> </span><span class="il">4</span><span class="w"> </span><span class="il">5</span><span class="w"> </span><span class="nb">mod</span><span class="w"> </span><span class="il">2</span><span class="w">                 </span><span class="c1">/ keyword</span>
+<span class="il">0</span><span class="w"> </span><span class="il">1</span><span class="w"> </span><span class="il">0</span><span class="w"> </span><span class="il">1</span>
+<span class="gp">q)</span><span class="il">1000</span><span class="o">+\</span><span class="il">2</span><span class="w"> </span><span class="il">3</span><span class="w"> </span><span class="il">4</span><span class="w">                   </span><span class="c1">/ derived function</span>
+<span class="il">1002</span><span class="w"> </span><span class="il">1005</span><span class="w"> </span><span class="il">1009</span>
+</code></pre></div>
+<p><a class="peachq-repl-link" href="../../../repl?code=2%2B3+++++++++++++++++++++++++++%2F+operator%0A2+3+4+5+mod+2+++++++++++++++++%2F+keyword%0A1000%2B%5C2+3+4+++++++++++++++++++%2F+derived+function&amp;title=Infix+application&amp;example=docs%2Fbasics%2Fapplication.md%3A2" target="_blank" rel="noopener noreferrer" aria-label="Open in REPL (new tab)" title="Open in REPL (new tab)"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5v14l11-7z"/></svg></a></p>
+</div>
+<h2 id="apply-operator">Apply operator<a class="headerlink" href="#apply-operator" title="Permanent link">&para;</a></h2>
+<p>Any applicable value can be applied by the <a href="../../ref/apply/">Apply</a> operator to a list of its arguments: one item per argument. </p>
+<div class="peachq-example">
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="p">(</span><span class="o">+</span><span class="p">)</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="il">2</span><span class="w"> </span><span class="il">3</span><span class="w">                         </span><span class="c1">/ apply + to a list of its 2 arguments</span>
+<span class="il">5</span>
+<span class="gp">q)</span><span class="o">.</span><span class="p">[</span><span class="o">+</span><span class="p">;</span><span class="il">2</span><span class="w"> </span><span class="il">3</span><span class="p">]</span><span class="w">                          </span><span class="c1">/ apply + to a list of its 2 arguments</span>
+<span class="il">5</span>
+<span class="gp">q)</span><span class="nb">ssr</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="p">(</span><span class="s2">"Hello word!"</span><span class="p">;</span><span class="s2">"rd"</span><span class="p">;</span><span class="s2">"rld"</span><span class="p">)</span><span class="w">  </span><span class="c1">/ apply ssr to a list of its 3 arguments</span>
+<span class="s2">"Hello world!"</span>
+<span class="gp">q)</span><span class="nb">count</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="ow">enlist</span><span class="w"> </span><span class="il">1</span><span class="w"> </span><span class="il">4</span><span class="w"> </span><span class="il">3</span><span class="w">              </span><span class="c1">/ apply count to a list of its 1 argument</span>
+<span class="il">3</span>
+</code></pre></div>
+<p><a class="peachq-repl-link" href="../../../repl?code=%28%2B%29+.+2+3+++++++++++++++++++++++++%2F+apply+%2B+to+a+list+of+its+2+arguments%0A.%5B%2B%3B2+3%5D++++++++++++++++++++++++++%2F+apply+%2B+to+a+list+of+its+2+arguments%0Assr+.+%28%22Hello+word%21%22%3B%22rd%22%3B%22rld%22%29++%2F+apply+ssr+to+a+list+of+its+3+arguments%0Acount+.+enlist+1+4+3++++++++++++++%2F+apply+count+to+a+list+of+its+1+argument&amp;title=Apply+operator&amp;example=docs%2Fbasics%2Fapplication.md%3A3" target="_blank" rel="noopener noreferrer" aria-label="Open in REPL (new tab)" title="Open in REPL (new tab)"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5v14l11-7z"/></svg></a></p>
+</div>
+<h2 id="apply-at-operator">Apply At operator<a class="headerlink" href="#apply-at-operator" title="Permanent link">&para;</a></h2>
+<p>Lists, dictionaries and unary functions can be applied more conveniently with the <a href="../../ref/apply/#amend-amend-at">Apply At</a> operator. </p>
+<div class="peachq-example">
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="s2">"abcdef"</span><span class="o">@</span><span class="il">1</span><span class="w"> </span><span class="il">4</span><span class="w"> </span><span class="il">3</span>
+<span class="s2">"bed"</span>
+<span class="gp">q)</span><span class="o">@</span><span class="p">[</span><span class="nb">count</span><span class="p">;</span><span class="il">1</span><span class="w"> </span><span class="il">4</span><span class="w"> </span><span class="il">3</span><span class="p">]</span>
+<span class="il">3</span>
+<span class="gp">q)</span><span class="n">d</span><span class="w"> </span><span class="o">@</span><span class="w"> </span><span class="ss">`cow`sheep</span><span class="w">                    </span><span class="c1">/ dictionary to its keys</span>
+<span class="ss">`vache`mouton</span>
+<span class="gp">q)</span><span class="o">@</span><span class="p">[</span><span class="n">d</span><span class="p">;</span><span class="ss">`cow`sheep</span><span class="p">]</span><span class="w">                   </span><span class="c1">/ dictionary to its keys</span>
+<span class="ss">`vache`mouton</span>
+</code></pre></div>
+<p><a class="peachq-repl-link" href="../../../repl?code=%22abcdef%22%401+4+3%0A%40%5Bcount%3B1+4+3%5D%0Ad+%40+%60cow%60sheep++++++++++++++++++++%2F+dictionary+to+its+keys%0A%40%5Bd%3B%60cow%60sheep%5D+++++++++++++++++++%2F+dictionary+to+its+keys&amp;title=Apply+At+operator&amp;example=docs%2Fbasics%2Fapplication.md%3A4" target="_blank" rel="noopener noreferrer" aria-label="Open in REPL (new tab)" title="Open in REPL (new tab)"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5v14l11-7z"/></svg></a></p>
+</div>
+<p>Apply At is syntactic sugar: <code>x@y</code> is equivalent to <code>x . enlist y</code>.</p>
+<h2 id="prefix-application">Prefix application<a class="headerlink" href="#prefix-application" title="Permanent link">&para;</a></h2>
+<p>Lists, dictionaries and unary keywords and lambdas can also be applied prefix. 
+As this is equivalent to simply omitting the Apply At operator, the <code>@</code> is mostly redundant.</p>
+<div class="peachq-example">
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="s2">"abcdef"</span><span class="w"> </span><span class="il">1</span><span class="w"> </span><span class="il">4</span><span class="w"> </span><span class="il">3</span>
+<span class="s2">"bed"</span>
+<span class="gp">q)</span><span class="nb">count</span><span class="w"> </span><span class="il">1</span><span class="w"> </span><span class="il">4</span><span class="w"> </span><span class="il">3</span>
+<span class="il">3</span>
+<span class="gp">q)</span><span class="p">{</span><span class="n">x</span><span class="o">*</span><span class="n">x</span><span class="p">}</span><span class="il">4</span>
+<span class="il">16</span>
+<span class="gp">q)</span><span class="n">d</span><span class="ss">`cow`sheep</span>
+<span class="ss">`vache`mouton</span>
+</code></pre></div>
+<p><a class="peachq-repl-link" href="../../../repl?code=%22abcdef%22+1+4+3%0Acount+1+4+3%0A%7Bx%2Ax%7D4%0Ad%60cow%60sheep&amp;title=Prefix+application&amp;example=docs%2Fbasics%2Fapplication.md%3A5" target="_blank" rel="noopener noreferrer" aria-label="Open in REPL (new tab)" title="Open in REPL (new tab)"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5v14l11-7z"/></svg></a></p>
+</div>
+<h2 id="postfix-application">Postfix application<a class="headerlink" href="#postfix-application" title="Permanent link">&para;</a></h2>
+<p>Iterators are unary operators that can be (and almost always are) applied postfix. They derive functions from their value arguments. </p>
+<p>Some derived functions are variadic: they can be applied either unary or binary. </p>
+<div class="peachq-example">
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="o">+\</span><span class="p">[</span><span class="il">2</span><span class="w"> </span><span class="il">3</span><span class="w"> </span><span class="il">4</span><span class="p">]</span><span class="w">                             </span><span class="c1">/ derived fn applied unary</span>
+<span class="il">2</span><span class="w"> </span><span class="il">5</span><span class="w"> </span><span class="il">9</span>
+<span class="gp">q)</span><span class="o">+\</span><span class="p">[</span><span class="il">1000</span><span class="p">;</span><span class="il">2</span><span class="w"> </span><span class="il">3</span><span class="w"> </span><span class="il">4</span><span class="p">]</span><span class="w">                        </span><span class="c1">/ derived fn applied binary</span>
+<span class="il">1002</span><span class="w"> </span><span class="il">1005</span><span class="w"> </span><span class="il">1009</span>
+<span class="gp">q)</span><span class="nb">count</span><span class="o">'</span><span class="p">[(</span><span class="s2">"the"</span><span class="p">;</span><span class="s2">"quick"</span><span class="p">;</span><span class="s2">"brown"</span><span class="p">;</span><span class="s2">"fox"</span><span class="p">)]</span><span class="w"> </span><span class="c1">/ derived fn applied unary</span>
+<span class="il">3</span><span class="w"> </span><span class="il">5</span><span class="w"> </span><span class="il">5</span><span class="w"> </span><span class="il">3</span>
+</code></pre></div>
+<p><a class="peachq-repl-link" href="../../../repl?code=%2B%5C%5B2+3+4%5D+++++++++++++++++++++++++++++%2F+derived+fn+applied+unary%0A%2B%5C%5B1000%3B2+3+4%5D++++++++++++++++++++++++%2F+derived+fn+applied+binary%0Acount%27%5B%28%22the%22%3B%22quick%22%3B%22brown%22%3B%22fox%22%29%5D+%2F+derived+fn+applied+unary&amp;title=Postfix+application&amp;example=docs%2Fbasics%2Fapplication.md%3A6" target="_blank" rel="noopener noreferrer" aria-label="Open in REPL (new tab)" title="Open in REPL (new tab)"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5v14l11-7z"/></svg></a></p>
+</div>
+<div class="admonition info">
+<p class="admonition-title">Postfix yields infix.</p>
+<p>Functions derived by applying an iterator postfix have infix syntax – <em>no matter how many arguments they take</em>. </p>
+</div>
+<p>Derived functions <code>+\</code> and <code>count'</code> have infix syntax. 
+They can be applied unary by parenthesizing them.</p>
+<div class="peachq-example">
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="p">(</span><span class="o">+\</span><span class="p">)</span><span class="il">2</span><span class="w"> </span><span class="il">3</span><span class="w"> </span><span class="il">4</span>
+<span class="il">100</span><span class="w"> </span><span class="il">1005</span><span class="w"> </span><span class="il">1009</span>
+<span class="gp">q)</span><span class="p">(</span><span class="nb">count</span><span class="o">'</span><span class="p">)(</span><span class="s2">"the"</span><span class="p">;</span><span class="s2">"quick"</span><span class="p">;</span><span class="s2">"brown"</span><span class="p">;</span><span class="s2">"fox"</span><span class="p">)</span>
+<span class="il">3</span><span class="w"> </span><span class="il">5</span><span class="w"> </span><span class="il">5</span><span class="w"> </span><span class="il">3</span>
+</code></pre></div>
+<p><a class="peachq-repl-link" href="../../../repl?code=%28%2B%5C%292+3+4%0A%28count%27%29%28%22the%22%3B%22quick%22%3B%22brown%22%3B%22fox%22%29&amp;title=Postfix+application&amp;example=docs%2Fbasics%2Fapplication.md%3A7" target="_blank" rel="noopener noreferrer" aria-label="Open in REPL (new tab)" title="Open in REPL (new tab)"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5v14l11-7z"/></svg></a></p>
+</div>
+<h2 id="application-syntax">Application syntax<a class="headerlink" href="#application-syntax" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>rank   bracket                                     other
+of f   notation       Apply             Apply At   syntax        note 
+................................................................................
+0      f[]            f . enlist(::)    f@(::)               
+1      f[x]           f . enlist x      f@x        f x,  x f     prefix, postfix
+2      f[x;y]         f . (x;y)                    x f y         infix
+3-8    f[x;y;z;…]     f . (x;y;z;…)                           
+</code></pre></div>
+<h2 id="long-right-scope">Long right scope<a class="headerlink" href="#long-right-scope" title="Permanent link">&para;</a></h2>
+<p>Values applied prefix or infix have long right scope. 
+In other words:</p>
+<p>When a unary value is applied prefix, its argument is <em>everything to its right</em>.</p>
+<div class="peachq-example">
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="ow">sqrt</span><span class="w"> </span><span class="nb">count</span><span class="w"> </span><span class="s2">"It's about time!"</span>
+<span class="il">4</span>
+</code></pre></div>
+<p><a class="peachq-repl-link" href="../../../repl?code=sqrt+count+%22It%27s+about+time%21%22&amp;title=Long+right+scope&amp;example=docs%2Fbasics%2Fapplication.md%3A8" target="_blank" rel="noopener noreferrer" aria-label="Open in REPL (new tab)" title="Open in REPL (new tab)"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5v14l11-7z"/></svg></a></p>
+</div>
+<p>When a binary value is applied infix, its right argument is <em>everything to its right</em>.</p>
+<div class="peachq-example">
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="il">7</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="il">2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="il">4</span>
+<span class="il">42</span>
+</code></pre></div>
+<p><a class="peachq-repl-link" href="../../../repl?code=7+%2A+2+%2B+4&amp;title=Long+right+scope&amp;example=docs%2Fbasics%2Fapplication.md%3A9" target="_blank" rel="noopener noreferrer" aria-label="Open in REPL (new tab)" title="Open in REPL (new tab)"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5v14l11-7z"/></svg></a></p>
+</div>
+<div class="admonition info">
+<p class="admonition-title">Republic of values</p>
+<p>There is no precedence among values. 
+In <code>7*2+4</code> the right argument of <code>*</code> is the result of evaluating the expression on its right. </p>
+<p>This rule applies without exception. </p>
+</div>
+<h2 id="iterators">Iterators<a class="headerlink" href="#iterators" title="Permanent link">&para;</a></h2>
+<p>The <a href="../../ref/iterators/">iterators</a> are almost invariably applied postfix. </p>
+<div class="peachq-example">
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="o">+/</span><span class="p">[</span><span class="il">17</span><span class="w"> </span><span class="il">13</span><span class="w"> </span><span class="il">12</span><span class="p">]</span>
+<span class="il">42</span>
+</code></pre></div>
+<p><a class="peachq-repl-link" href="../../../repl?code=%2B%2F%5B17+13+12%5D&amp;title=Iterators&amp;example=docs%2Fbasics%2Fapplication.md%3A10" target="_blank" rel="noopener noreferrer" aria-label="Open in REPL (new tab)" title="Open in REPL (new tab)"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5v14l11-7z"/></svg></a></p>
+</div>
+<p>In the above, the Over iterator <code>/</code> is applied postfix to its single argument <code>+</code> to derive the function <code>+/</code> (sum). </p>
+<p>An iterator applied postfix has <em>short left scope</em>. That is, its argument is the <em>value immediately to its left</em>. For the <a href="../../ref/maps/#case">Case</a> iterator that value is an int vector. An iterator’s argument may itself be a derived function.</p>
+<div class="peachq-example">
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="nv">txt</span><span class="o">:</span><span class="p">((</span><span class="s2">"Now"</span><span class="p">;</span><span class="s2">"is"</span><span class="p">;</span><span class="s2">"the"</span><span class="p">;</span><span class="s2">"time"</span><span class="p">);(</span><span class="s2">"for"</span><span class="p">;</span><span class="s2">"all"</span><span class="p">;</span><span class="s2">"good"</span><span class="p">;</span><span class="s2">"folk"</span><span class="p">))</span>
+<span class="gp">q)</span><span class="n">txt</span>
+<span class="s2">"Now"</span><span class="w"> </span><span class="s2">"is"</span><span class="w">  </span><span class="s2">"the"</span><span class="w">  </span><span class="s2">"time"</span>
+<span class="s2">"for"</span><span class="w"> </span><span class="s2">"all"</span><span class="w"> </span><span class="s2">"good"</span><span class="w"> </span><span class="s2">"folk"</span>
+<span class="gp">q)</span><span class="nb">count</span><span class="p">[</span><span class="n">txt</span><span class="p">]</span>
+<span class="il">2</span>
+<span class="gp">q)</span><span class="nb">count</span><span class="o">'</span><span class="p">[</span><span class="n">txt</span><span class="p">]</span>
+<span class="il">4</span><span class="w"> </span><span class="il">4</span>
+<span class="gp">q)</span><span class="nb">count</span><span class="o">''</span><span class="p">[</span><span class="n">txt</span><span class="p">]</span>
+<span class="il">3</span><span class="w"> </span><span class="il">2</span><span class="w"> </span><span class="il">3</span><span class="w"> </span><span class="il">4</span>
+<span class="il">3</span><span class="w"> </span><span class="il">3</span><span class="w"> </span><span class="il">4</span><span class="w"> </span><span class="il">4</span>
+</code></pre></div>
+<p><a class="peachq-repl-link" href="../../../repl?code=txt%3A%28%28%22Now%22%3B%22is%22%3B%22the%22%3B%22time%22%29%3B%28%22for%22%3B%22all%22%3B%22good%22%3B%22folk%22%29%29%0Atxt%0Acount%5Btxt%5D%0Acount%27%5Btxt%5D%0Acount%27%27%5Btxt%5D&amp;title=Iterators&amp;example=docs%2Fbasics%2Fapplication.md%3A11" target="_blank" rel="noopener noreferrer" aria-label="Open in REPL (new tab)" title="Open in REPL (new tab)"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5v14l11-7z"/></svg></a></p>
+</div>
+<p>In the last example, the derived function <code>count'</code> is the argument of the second <code>'</code> (Each). </p>
+<p>Only iterators can be applied postfix. </p>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M384 512H96c-53 0-96-43-96-96V96C0 43 43 0 96 0h304c26.5 0 48 21.5 48 48v288c0 20.9-13.4 38.7-32 45.3V448c17.7 0 32 14.3 32 32s-14.3 32-32 32zM96 384c-17.7 0-32 14.3-32 32s14.3 32 32 32h256v-64zm32-232c0 13.3 10.7 24 24 24h176c13.3 0 24-10.7 24-24s-10.7-24-24-24H152c-13.3 0-24 10.7-24 24m24 72c-13.3 0-24 10.7-24 24s10.7 24 24 24h176c13.3 0 24-10.7 24-24s-10.7-24-24-24z"/></svg></span>
+<a href="../../ref/apply/">Apply/Index and Apply/Index At</a> for how to apply functions and index lists</p>
+<h2 id="rank-and-syntax">Rank and syntax<a class="headerlink" href="#rank-and-syntax" title="Permanent link">&para;</a></h2>
+<p>The <em>rank</em> of a value is the number of </p>
+<ul>
+<li>arguments it evaluates, if it is a function</li>
+<li>indexes required to select an atom, if it is a list or dictionary</li>
+</ul>
+<p>A value is <em>variadic</em> if it can be used with more than one rank.
+All matrixes and some derived functions are variadic.</p>
+<div class="peachq-example">
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="o">+/</span><span class="p">[</span><span class="nb">til</span><span class="w"> </span><span class="il">5</span><span class="p">]</span><span class="w">           </span><span class="c1">/ unary</span>
+<span class="il">10</span>
+<span class="gp">q)</span><span class="o">+/</span><span class="p">[</span><span class="il">1000000</span><span class="p">;</span><span class="nb">til</span><span class="w"> </span><span class="il">5</span><span class="p">]</span><span class="w">   </span><span class="c1">/ binary</span>
+<span class="il">1000010</span>
+</code></pre></div>
+<p><a class="peachq-repl-link" href="../../../repl?code=%2B%2F%5Btil+5%5D+++++++++++%2F+unary%0A%2B%2F%5B1000000%3Btil+5%5D+++%2F+binary&amp;title=Rank+and+syntax&amp;example=docs%2Fbasics%2Fapplication.md%3A12" target="_blank" rel="noopener noreferrer" aria-label="Open in REPL (new tab)" title="Open in REPL (new tab)"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5v14l11-7z"/></svg></a></p>
+</div>
+<p><em>Rank</em> is a semantic property, and is <em>independent of syntax</em>. This is a ripe source of confusion.</p>
+<h2 id="postfix-yields-infix">Postfix yields infix<a class="headerlink" href="#postfix-yields-infix" title="Permanent link">&para;</a></h2>
+<p>The syntax of a derived function is determined by the application that produced it.</p>
+<p>The derived function <code>+/</code> is variadic but has infix syntax. 
+Applying it infix is straightforward.</p>
+<div class="peachq-example">
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="il">1000000</span><span class="o">+/</span><span class="nb">til</span><span class="w"> </span><span class="il">5</span>
+<span class="il">1000010</span>
+</code></pre></div>
+<p><a class="peachq-repl-link" href="../../../repl?code=1000000%2B%2Ftil+5&amp;title=Postfix+yields+infix&amp;example=docs%2Fbasics%2Fapplication.md%3A13" target="_blank" rel="noopener noreferrer" aria-label="Open in REPL (new tab)" title="Open in REPL (new tab)"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5v14l11-7z"/></svg></a></p>
+</div>
+<p>How then to apply it as a unary? 
+Bracket notation ‘overrides’ infix syntax.</p>
+<div class="peachq-example">
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="o">+/</span><span class="p">[</span><span class="nb">til</span><span class="w"> </span><span class="il">5</span><span class="p">]</span><span class="w">           </span><span class="c1">/ unary</span>
+<span class="il">10</span>
+<span class="gp">q)</span><span class="o">+/</span><span class="p">[</span><span class="il">1000000</span><span class="p">;</span><span class="nb">til</span><span class="w"> </span><span class="il">5</span><span class="p">]</span><span class="w">   </span><span class="c1">/ binary</span>
+<span class="il">1000010</span>
+</code></pre></div>
+<p><a class="peachq-repl-link" href="../../../repl?code=%2B%2F%5Btil+5%5D+++++++++++%2F+unary%0A%2B%2F%5B1000000%3Btil+5%5D+++%2F+binary&amp;title=Postfix+yields+infix&amp;example=docs%2Fbasics%2Fapplication.md%3A14" target="_blank" rel="noopener noreferrer" aria-label="Open in REPL (new tab)" title="Open in REPL (new tab)"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5v14l11-7z"/></svg></a></p>
+</div>
+<p>Or isolate it with parentheses.
+It remains variadic.</p>
+<div class="peachq-example">
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="p">(</span><span class="o">+/</span><span class="p">)</span><span class="nb">til</span><span class="w"> </span><span class="il">5</span><span class="w">           </span><span class="c1">/ unary</span>
+<span class="il">10</span>
+<span class="gp">q)</span><span class="p">(</span><span class="o">+/</span><span class="p">)[</span><span class="il">1000000</span><span class="p">;</span><span class="nb">til</span><span class="w"> </span><span class="il">5</span><span class="p">]</span><span class="w"> </span><span class="c1">/ binary</span>
+<span class="il">1000010</span>
+</code></pre></div>
+<p><a class="peachq-repl-link" href="../../../repl?code=%28%2B%2F%29til+5+++++++++++%2F+unary%0A%28%2B%2F%29%5B1000000%3Btil+5%5D+%2F+binary&amp;title=Postfix+yields+infix&amp;example=docs%2Fbasics%2Fapplication.md%3A15" target="_blank" rel="noopener noreferrer" aria-label="Open in REPL (new tab)" title="Open in REPL (new tab)"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5v14l11-7z"/></svg></a></p>
+</div>
+<p>The potential for confusion is even greater when the argument of a unary operator is a unary function. Here the derived function is unary – but it is still an infix! 
+Parentheses or brackets can save us.</p>
+<div class="peachq-example">
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="nb">count</span><span class="o">'</span><span class="p">[</span><span class="n">txt</span><span class="p">]</span>
+<span class="il">4</span><span class="w"> </span><span class="il">4</span>
+<span class="gp">q)</span><span class="p">(</span><span class="nb">count</span><span class="o">'</span><span class="p">)</span><span class="n">txt</span>
+<span class="il">4</span><span class="w"> </span><span class="il">4</span>
+</code></pre></div>
+<p><a class="peachq-repl-link" href="../../../repl?code=count%27%5Btxt%5D%0A%28count%27%29txt&amp;title=Postfix+yields+infix&amp;example=docs%2Fbasics%2Fapplication.md%3A16" target="_blank" rel="noopener noreferrer" aria-label="Open in REPL (new tab)" title="Open in REPL (new tab)"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5v14l11-7z"/></svg></a></p>
+</div>
+<p>Or a keyword.</p>
+<div class="peachq-example">
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="nb">count</span><span class="w"> </span><span class="nb">each</span><span class="w"> </span><span class="n">txt</span>
+<span class="il">4</span><span class="w"> </span><span class="il">4</span>
+</code></pre></div>
+<p><a class="peachq-repl-link" href="../../../repl?code=count+each+txt&amp;title=Postfix+yields+infix&amp;example=docs%2Fbasics%2Fapplication.md%3A17" target="_blank" rel="noopener noreferrer" aria-label="Open in REPL (new tab)" title="Open in REPL (new tab)"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5v14l11-7z"/></svg></a></p>
+</div>
+<p>Conversely, if the unary operator is applied not postfix but with bracket notation, the derived function is <em>not</em> an infix.
+But it can still be variadic.</p>
+<div class="peachq-example">
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="o">'</span><span class="p">[</span><span class="nb">count</span><span class="p">]</span><span class="n">txt</span><span class="w">             </span><span class="c1">/ unary derived function, applied prefix</span>
+<span class="il">4</span><span class="w"> </span><span class="il">4</span>
+<span class="gp">q)</span><span class="o">/</span><span class="p">[</span><span class="o">+</span><span class="p">]</span><span class="nb">til</span><span class="w"> </span><span class="il">5</span><span class="w">               </span><span class="c1">/ oops, a comment</span>
+<span class="gp">q)</span><span class="p">;</span><span class="o">/</span><span class="p">[</span><span class="o">+</span><span class="p">]</span><span class="nb">til</span><span class="w"> </span><span class="il">5</span><span class="w">              </span><span class="c1">/ unary derived function, applied prefix</span>
+<span class="il">10</span>
+<span class="gp">q)</span><span class="p">;</span><span class="o">\</span><span class="p">[</span><span class="o">+</span><span class="p">][</span><span class="nb">til</span><span class="w"> </span><span class="il">5</span><span class="p">]</span><span class="w">            </span><span class="c1">/ variadic derived function: applied unary</span>
+<span class="il">0</span><span class="w"> </span><span class="il">1</span><span class="w"> </span><span class="il">3</span><span class="w"> </span><span class="il">6</span><span class="w"> </span><span class="il">10</span>
+<span class="gp">q)</span><span class="p">;</span><span class="o">\</span><span class="p">[</span><span class="o">+</span><span class="p">][</span><span class="il">1000</span><span class="p">;</span><span class="nb">til</span><span class="w"> </span><span class="il">5</span><span class="p">]</span><span class="w">       </span><span class="c1">/ variadic derived function: applied binary</span>
+<span class="il">1000</span><span class="w"> </span><span class="il">1001</span><span class="w"> </span><span class="il">1003</span><span class="w"> </span><span class="il">1006</span><span class="w"> </span><span class="il">1010</span>
+<span class="gp">q)</span><span class="il">1000</span><span class="o">/</span><span class="p">[</span><span class="o">+</span><span class="p">]</span><span class="nb">til</span><span class="w"> </span><span class="il">5</span><span class="w">           </span><span class="c1">/ but not infix</span>
+<span class="o">'</span><span class="nb">type</span>
+<span class="w">  </span><span class="p">[</span><span class="il">0</span><span class="p">]</span><span class="w">  </span><span class="il">1000</span><span class="o">/</span><span class="p">[</span><span class="o">+</span><span class="p">]</span><span class="nb">til</span><span class="w"> </span><span class="il">5</span>
+<span class="w">             </span><span class="o">^</span>
+</code></pre></div>
+<p><a class="peachq-repl-link" href="../../../repl?code=%27%5Bcount%5Dtxt+++++++++++++%2F+unary+derived+function%2C+applied+prefix%0A%2F%5B%2B%5Dtil+5+++++++++++++++%2F+oops%2C+a+comment%0A%3B%2F%5B%2B%5Dtil+5++++++++++++++%2F+unary+derived+function%2C+applied+prefix%0A%3B%5C%5B%2B%5D%5Btil+5%5D++++++++++++%2F+variadic+derived+function%3A+applied+unary%0A%3B%5C%5B%2B%5D%5B1000%3Btil+5%5D+++++++%2F+variadic+derived+function%3A+applied+binary%0A1000%2F%5B%2B%5Dtil+5+++++++++++%2F+but+not+infix&amp;title=Postfix+yields+infix&amp;example=docs%2Fbasics%2Fapplication.md%3A18" target="_blank" rel="noopener noreferrer" aria-label="Open in REPL (new tab)" title="Open in REPL (new tab)"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5v14l11-7z"/></svg></a></p>
+</div>
+<div class="admonition danger">
+<p class="admonition-title">Applying a unary operator with bracket notation is unusual and discouraged.</p>
+</div>
+<h2 id="projection">Projection<a class="headerlink" href="#projection" title="Permanent link">&para;</a></h2>
+<p>When a value of rank $n$ is applied to $m$ arguments and $m&lt;n$, the result is a <em>projection</em> of the value onto the supplied arguments (indexes), now known as the <em>projected</em> arguments or indexes. </p>
+<p>In the projection, the values of projected arguments (or indexes) are fixed.</p>
+<p>The rank of the projection is $n-m$.</p>
+<div class="peachq-example" markdown="1">
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="nv">double</span><span class="o">:</span><span class="il">2</span><span class="o">*</span>
+<span class="gp">q)</span><span class="n">double</span><span class="w"> </span><span class="il">5</span><span class="w">                         </span><span class="c1">/ unary</span>
+<span class="il">10</span>
+<span class="gp">q)</span><span class="nv">halve</span><span class="o">:%</span><span class="p">[;</span><span class="il">2</span><span class="p">]</span>
+<span class="gp">q)</span><span class="n">halve</span><span class="p">[</span><span class="il">10</span><span class="p">]</span><span class="w">                        </span><span class="c1">/ unary</span>
+<span class="il">5</span>
+<span class="gp">q)</span><span class="nf">f</span><span class="o">:</span><span class="p">{</span><span class="n">x</span><span class="o">+</span><span class="n">y</span><span class="o">*</span><span class="n">z</span><span class="p">}</span><span class="w">                        </span><span class="c1">/ ternary</span>
+<span class="gp">q)</span><span class="n">f</span><span class="p">[</span><span class="il">2</span><span class="p">;</span><span class="il">3</span><span class="p">;</span><span class="il">4</span><span class="p">]</span>
+<span class="il">14</span>
+<span class="gp">q)</span><span class="nv">g</span><span class="o">:</span><span class="n">f</span><span class="p">[</span><span class="il">2</span><span class="p">;;</span><span class="il">4</span><span class="p">]</span>
+<span class="gp">q)</span><span class="n">g</span><span class="w"> </span><span class="il">3</span><span class="w">                              </span><span class="c1">/ unary</span>
+<span class="il">14</span>
+<span class="gp">q)</span><span class="p">(</span><span class="n">f</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="il">2</span><span class="w"> </span><span class="il">3</span><span class="p">)</span><span class="w"> </span><span class="il">4</span>
+<span class="il">14</span>
+<span class="gp">q)</span><span class="nv">l</span><span class="o">:</span><span class="p">(</span><span class="s2">"Buddy can you spare"</span><span class="p">;;</span><span class="s2">"?"</span><span class="p">)</span>
+<span class="gp">q)</span><span class="n">l</span><span class="w"> </span><span class="s2">"a dime"</span><span class="w">                       </span><span class="c1">/ unary</span>
+<span class="s2">"Buddy can you spare"</span>
+<span class="s2">"a dime"</span>
+<span class="s2">"?"</span>
+<span class="gp">q)</span><span class="nv">m</span><span class="o">:</span><span class="p">(</span><span class="s2">"The"</span><span class="p">;;;</span><span class="s2">"fox"</span><span class="p">)</span>
+<span class="gp">q)</span><span class="n">m</span><span class="p">[</span><span class="s2">"quick"</span><span class="p">;</span><span class="s2">"brown"</span><span class="p">]</span><span class="w">               </span><span class="c1">/ binary</span>
+<span class="s2">"The"</span>
+<span class="s2">"quick"</span>
+<span class="s2">"brown"</span>
+<span class="s2">"fox"</span>
+</code></pre></div>
+<p><a class="peachq-repl-link" href="../../../repl?code=double%3A2%2A%0Adouble+5+++++++++++++++++++++++++%2F+unary%0Ahalve%3A%25%5B%3B2%5D%0Ahalve%5B10%5D++++++++++++++++++++++++%2F+unary%0Af%3A%7Bx%2By%2Az%7D++++++++++++++++++++++++%2F+ternary%0Af%5B2%3B3%3B4%5D%0Ag%3Af%5B2%3B%3B4%5D%0Ag+3++++++++++++++++++++++++++++++%2F+unary%0A%28f+.+2+3%29+4%0Al%3A%28%22Buddy+can+you+spare%22%3B%3B%22%3F%22%29%0Al+%22a+dime%22+++++++++++++++++++++++%2F+unary%0Am%3A%28%22The%22%3B%3B%3B%22fox%22%29%0Am%5B%22quick%22%3B%22brown%22%5D+++++++++++++++%2F+binary&amp;title=Projection&amp;example=docs%2Fbasics%2Fapplication.md%3A19" target="_blank" rel="noopener noreferrer" aria-label="Open in REPL (new tab)" title="Open in REPL (new tab)"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5v14l11-7z"/></svg></a></p>
+</div>
+<p>The function definition in a projection is set at the time of projection.
+If the function is subsequently redefined, the projection is unaffected.</p>
+<div class="peachq-example">
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="nf">f</span><span class="o">:</span><span class="p">{</span><span class="n">x</span><span class="o">*</span><span class="n">y</span><span class="p">}</span>
+<span class="gp">q)</span><span class="nv">g</span><span class="o">:</span><span class="n">f</span><span class="p">[</span><span class="il">3</span><span class="p">;]</span><span class="w">   </span><span class="c1">/ triple</span>
+<span class="gp">q)</span><span class="n">g</span><span class="w"> </span><span class="il">5</span>
+<span class="il">15</span>
+<span class="gp">q)</span><span class="nf">f</span><span class="o">:</span><span class="p">{</span><span class="n">x</span><span class="o">%</span><span class="n">y</span><span class="p">}</span>
+<span class="gp">q)</span><span class="n">g</span><span class="w"> </span><span class="il">5</span><span class="w">       </span><span class="c1">/ still triple</span>
+<span class="il">15</span>
+</code></pre></div>
+<p><a class="peachq-repl-link" href="../../../repl?code=f%3A%7Bx%2Ay%7D%0Ag%3Af%5B3%3B%5D+++%2F+triple%0Ag+5%0Af%3A%7Bx%25y%7D%0Ag+5+++++++%2F+still+triple&amp;title=Projection&amp;example=docs%2Fbasics%2Fapplication.md%3A20" target="_blank" rel="noopener noreferrer" aria-label="Open in REPL (new tab)" title="Open in REPL (new tab)"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5v14l11-7z"/></svg></a></p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Make projections explicit</p>
+<p>When projecting a function onto an argument list, make the argument list full-length.
+This is not always necessary but it is good style, because it makes it clear the value is being projected, not applied. </p>
+<div class="peachq-example" markdown="1">
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="nf">foo</span><span class="o">:</span><span class="p">{</span><span class="n">x</span><span class="o">+</span><span class="n">y</span><span class="o">+</span><span class="n">z</span><span class="p">}</span>
+<span class="gp">q)</span><span class="nv">goo</span><span class="o">:</span><span class="n">foo</span><span class="p">[</span><span class="il">2</span><span class="p">]</span><span class="w">    </span><span class="c1">/ discouraged</span>
+<span class="gp">q)</span><span class="nv">goo</span><span class="o">:</span><span class="n">foo</span><span class="p">[</span><span class="il">2</span><span class="p">;;]</span><span class="w">  </span><span class="c1">/ recommended</span>
+</code></pre></div>
+<p><a class="peachq-repl-link" href="../../../repl?code=foo%3A%7Bx%2By%2Bz%7D%0Agoo%3Afoo%5B2%5D++++%2F+discouraged%0Agoo%3Afoo%5B2%3B%3B%5D++%2F+recommended&amp;title=Projection&amp;example=docs%2Fbasics%2Fapplication.md%3A21" target="_blank" rel="noopener noreferrer" aria-label="Open in REPL (new tab)" title="Open in REPL (new tab)"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5v14l11-7z"/></svg></a></p>
+</div>
+<p>You could reasonably make an exception for operators and keywords, where the rank is well known.</p>
+<div class="peachq-example" markdown="1">
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="nv">f</span><span class="o">:?</span><span class="p">[</span><span class="s2">"brown"</span><span class="p">]</span>
+<span class="gp">q)</span><span class="n">f</span><span class="w"> </span><span class="s2">"fox"</span>
+<span class="il">5</span><span class="w"> </span><span class="il">2</span><span class="w"> </span><span class="il">5</span>
+<span class="gp">q)</span><span class="nv">g</span><span class="o">:</span><span class="ow">like</span><span class="p">[</span><span class="s2">"brown"</span><span class="p">]</span>
+<span class="gp">q)</span><span class="n">g</span><span class="w"> </span><span class="s2">"</span><span class="se">\*</span><span class="s2">ow</span><span class="se">\*</span><span class="s2">"</span>
+<span class="mb">1b</span>
+</code></pre></div>
+<p><a class="peachq-repl-link" href="../../../repl?code=f%3A%3F%5B%22brown%22%5D%0Af+%22fox%22%0Ag%3Alike%5B%22brown%22%5D%0Ag+%22%5C%2Aow%5C%2A%22&amp;title=Projection&amp;example=docs%2Fbasics%2Fapplication.md%3A22" target="_blank" rel="noopener noreferrer" aria-label="Open in REPL (new tab)" title="Open in REPL (new tab)"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5v14l11-7z"/></svg></a></p>
+</div>
+</div>
+<p>When projecting a <a href="../variadic/">variadic function</a> the argument list must always be full-length.</p>
+<p>Since 4.1t 2021.12.07 projection creation from a lambda/foreign results in a rank error if too many parameters are defined, e.g.</p>
+<div class="peachq-example">
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="p">{</span><span class="n">x</span><span class="p">}[;</span><span class="il">1</span><span class="p">]</span>
+<span class="o">'</span><span class="nb">rank</span>
+</code></pre></div>
+<p><a class="peachq-repl-link" href="../../../repl?code=%7Bx%7D%5B%3B1%5D&amp;title=Projection&amp;example=docs%2Fbasics%2Fapplication.md%3A23" target="_blank" rel="noopener noreferrer" aria-label="Open in REPL (new tab)" title="Open in REPL (new tab)"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5v14l11-7z"/></svg></a></p>
+</div>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M256 0a64 64 0 1 1 0 128 64 64 0 1 1 0-128m-32 160h64c35.3 0 64 28.7 64 64v48c0 17.7-14.3 32-32 32h-1.8l-11.1 99.5c-1.8 16.2-15.5 28.5-31.8 28.5h-38.7c-16.3 0-30-12.3-31.8-28.5L193.7 304h-1.8c-17.7 0-32-14.3-32-32v-48c0-35.3 28.7-64 64-64zm188.4 240.2c-16.1-4.2-34.8-7.6-55.4-10.2l5.3-47.7c22.7 2.9 43.7 6.7 62.1 11.5 22.4 5.8 42.6 13.3 57.8 23.3 14.7 9.6 29.8 24.9 29.8 47s-15.1 37.4-29.8 47c-15.2 9.9-35.5 17.5-57.8 23.3-45.1 11.7-105.3 17.8-168.4 17.8s-123.3-6.1-168.4-17.8c-22.4-6-42.6-13.5-57.8-23.4C15.1 461.4 0 446.1 0 424s15.1-37.4 29.8-47c15.2-9.9 35.5-17.5 57.8-23.3 18.5-4.8 39.5-8.6 62.1-11.5L155 390c-20.6 2.6-39.3 6.1-55.4 10.2-56.6 14.6-56.6 32.9 0 47.5 39.9 10.3 95.8 16.2 156.4 16.2s116.5-5.9 156.4-16.2c56.6-14.6 56.6-32.9 0-47.5"/></svg></span>
+<em>Q for Mortals</em>
+<a href="https://code.kx.com/q4m3/6_Functions/#64-projection">§6.4 Projection</a>
+<br>
+<span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="m640 51.2-.3 12.2c-28.1.8-45 15.8-55.8 40.3-25 57.8-103.3 240-155.3 358.6H415l-81.9-193.1c-32.5 63.6-68.3 130-99.2 193.1-.3.3-15 0-15-.3C172 352.3 122.8 243.4 75.8 133.4 64.4 106.7 26.4 63.4.2 63.7c0-3.1-.3-10-.3-14.2h161.9v13.9c-19.2 1.1-52.8 13.3-43.3 34.2 21.9 49.7 103.6 240.3 125.6 288.6 15-29.7 57.8-109.2 75.3-142.8-13.9-28.3-58.6-133.9-72.8-160-9.7-17.8-36.1-19.4-55.8-19.7V49.8l142.5.3v13.1c-19.4.6-38.1 7.8-29.4 26.1 18.9 40 30.6 68.1 48.1 104.7 5.6-10.8 34.7-69.4 48.1-100.8 8.9-20.6-3.9-28.6-38.6-29.4.3-3.6 0-10.3.3-13.6 44.4-.3 111.1-.3 123.1-.6v13.6c-22.5.8-45.8 12.8-58.1 31.7l-59.2 122.8c6.4 16.1 63.3 142.8 69.2 156.7L559.2 91.8c-8.6-23.1-36.4-28.1-47.2-28.3V49.6l127.8 1.1z"/></svg></span>
+<a href="https://en.wikipedia.org/wiki/Currying">Currying</a></p>
+<h2 id="applying-a-list-with-elided-items">Applying a list with elided items<a class="headerlink" href="#applying-a-list-with-elided-items" title="Permanent link">&para;</a></h2>
+<p>A list with elided items can be applied as if it were a function of the same rank as the number of elided items. </p>
+<div class="peachq-example">
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="p">(</span><span class="s2">"the"</span><span class="p">;</span><span class="s2">"quick"</span><span class="p">;;</span><span class="s2">"fox"</span><span class="p">)</span><span class="s2">"brown"</span>
+<span class="s2">"the"</span>
+<span class="s2">"quick"</span>
+<span class="s2">"brown"</span>
+<span class="s2">"fox"</span>
+
+<span class="gp">q)</span><span class="p">(</span><span class="s2">"the"</span><span class="p">;</span><span class="s2">"quick"</span><span class="p">;;</span><span class="s2">"fox"</span><span class="p">)</span><span class="w"> </span><span class="o">@</span><span class="w"> </span><span class="s2">"brown"</span>
+<span class="s2">"the"</span>
+<span class="s2">"quick"</span>
+<span class="s2">"brown"</span>
+<span class="s2">"fox"</span>
+
+<span class="gp">q)</span><span class="p">(</span><span class="s2">"the"</span><span class="p">;;;</span><span class="s2">"fox"</span><span class="p">)</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="p">(</span><span class="s2">"quick"</span><span class="p">;</span><span class="s2">"brown"</span><span class="p">)</span>
+<span class="s2">"the"</span>
+<span class="s2">"quick"</span>
+<span class="s2">"brown"</span>
+<span class="s2">"fox"</span>
+</code></pre></div>
+<p><a class="peachq-repl-link" href="../../../repl?code=%28%22the%22%3B%22quick%22%3B%3B%22fox%22%29%22brown%22%0A%28%22the%22%3B%22quick%22%3B%3B%22fox%22%29+%40+%22brown%22%0A%28%22the%22%3B%3B%3B%22fox%22%29+.+%28%22quick%22%3B%22brown%22%29&amp;title=Applying+a+list+with+elided+items&amp;example=docs%2Fbasics%2Fapplication.md%3A24" target="_blank" rel="noopener noreferrer" aria-label="Open in REPL (new tab)" title="Open in REPL (new tab)"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5v14l11-7z"/></svg></a></p>
+</div>
+<p>This is subject to the same limitation as <a href="../function-notation/">function notation</a>. 
+If there are more than eight elided items, a rank error is signalled. </p>
+<h2 id="indexing">Indexing<a class="headerlink" href="#indexing" title="Permanent link">&para;</a></h2>
+<p>Indexing a list employs the same syntax as applying a function to arguments and works similarly.</p>
+<div class="peachq-example">
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="nb">show</span><span class="w"> </span><span class="nv">m</span><span class="o">:</span><span class="il">4</span><span class="w"> </span><span class="il">3</span><span class="o">#.</span><span class="n">Q.a</span>
+<span class="s2">"abc"</span>
+<span class="s2">"def"</span>
+<span class="s2">"ghi"</span>
+<span class="s2">"jkl"</span>
+
+<span class="gp">q)</span><span class="n">m</span><span class="p">[</span><span class="il">3</span><span class="p">][</span><span class="il">1</span><span class="p">]</span>
+<span class="s2">"k"</span>
+
+<span class="gp">q)</span><span class="n">m</span><span class="p">[</span><span class="il">3</span><span class="p">;</span><span class="il">1</span><span class="p">]</span>
+<span class="s2">"k"</span>
+
+<span class="gp">q)</span><span class="n">m</span><span class="p">[</span><span class="il">3</span><span class="w"> </span><span class="il">1</span><span class="p">;</span><span class="il">1</span><span class="p">]</span>
+<span class="s2">"ke"</span>
+
+<span class="gp">q)</span><span class="n">m</span><span class="p">[</span><span class="il">3</span><span class="w"> </span><span class="il">1</span><span class="p">;]</span><span class="w">       </span><span class="c1">/ eliding an index means all positions</span>
+<span class="s2">"jkl"</span>
+<span class="s2">"def"</span>
+
+<span class="gp">q)</span><span class="n">m</span><span class="p">[</span><span class="il">3</span><span class="w"> </span><span class="il">1</span><span class="p">]</span><span class="w">        </span><span class="c1">/ trailing indexes can be elided</span>
+<span class="s2">"jkl"</span>
+<span class="s2">"def"</span>
+
+<span class="gp">q)</span><span class="n">m</span><span class="w"> </span><span class="il">3</span><span class="w"> </span><span class="il">1</span><span class="w">         </span><span class="c1">/ brackets can be elided for a single index</span>
+<span class="s2">"jkl"</span>
+<span class="s2">"def"</span>
+
+<span class="gp">q)</span><span class="n">m</span><span class="w"> </span><span class="o">@</span><span class="w"> </span><span class="il">3</span><span class="w"> </span><span class="il">1</span><span class="w">       </span><span class="c1">/ Index At (top level)</span>
+<span class="s2">"jkl"</span>
+<span class="s2">"def"</span>
+
+<span class="gp">q)</span><span class="n">m</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="il">3</span><span class="w"> </span><span class="il">1</span><span class="w">       </span><span class="c1">/ Index (at depth)</span>
+<span class="s2">"k"</span>
+
+<span class="gp">q)</span><span class="n">m</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="p">(</span><span class="il">3</span><span class="w"> </span><span class="il">1</span><span class="p">;</span><span class="il">1</span><span class="p">)</span><span class="w">   </span><span class="c1">/ Index (at depth)</span>
+<span class="s2">"ke"</span>
+</code></pre></div>
+<p><a class="peachq-repl-link" href="../../../repl?code=show+m%3A4+3%23.Q.a%0Am%5B3%5D%5B1%5D%0Am%5B3%3B1%5D%0Am%5B3+1%3B1%5D%0Am%5B3+1%3B%5D+++++++%2F+eliding+an+index+means+all+positions%0Am%5B3+1%5D++++++++%2F+trailing+indexes+can+be+elided%0Am+3+1+++++++++%2F+brackets+can+be+elided+for+a+single+index%0Am+%40+3+1+++++++%2F+Index+At+%28top+level%29%0Am+.+3+1+++++++%2F+Index+%28at+depth%29%0Am+.+%283+1%3B1%29+++%2F+Index+%28at+depth%29&amp;title=Indexing&amp;example=docs%2Fbasics%2Fapplication.md%3A25" target="_blank" rel="noopener noreferrer" aria-label="Open in REPL (new tab)" title="Open in REPL (new tab)"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5v14l11-7z"/></svg></a></p>
+</div>
+<h3 id="indexing-out-of-bounds">Indexing out of bounds<a class="headerlink" href="#indexing-out-of-bounds" title="Permanent link">&para;</a></h3>
+<p>Indexing a list at a non-existent position returns a null of the type of the first item/s.</p>
+<div class="peachq-example">
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="p">(</span><span class="nb">til</span><span class="w"> </span><span class="il">5</span><span class="p">)</span><span class="w"> </span><span class="il">99</span>
+<span class="m">0N</span>
+<span class="gp">q)</span><span class="p">(</span><span class="ss">`a`b`c</span><span class="o">!</span><span class="mf">1.414214</span><span class="w"> </span><span class="mf">2.718282</span><span class="w"> </span><span class="mf">3.141593</span><span class="p">)</span><span class="w"> </span><span class="ss">`x</span>
+<span class="m">0n</span>
+
+<span class="gp">q)</span><span class="n">t</span>
+<span class="n">name</span><span class="w"> </span><span class="n">dob</span><span class="w">        </span><span class="n">sex</span>
+<span class="o">-------------------</span>
+<span class="n">dick</span><span class="w"> </span><span class="ld">1980.05.24</span><span class="w"> </span><span class="n">m</span>
+<span class="n">jane</span><span class="w"> </span><span class="ld">1990.09.03</span><span class="w"> </span><span class="n">f</span>
+<span class="gp">q)</span><span class="n">t</span><span class="w"> </span><span class="il">2</span>
+<span class="n">name</span><span class="o">|</span><span class="w"> </span><span class="ss">`</span>
+<span class="n">dob</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="m">0Nd</span>
+<span class="n">sex</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="ss">`</span>
+
+<span class="gp">q)</span><span class="n">kt</span>
+<span class="n">name</span><span class="w"> </span><span class="n">city</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">eye</span><span class="w">   </span><span class="n">sex</span>
+<span class="o">----------|</span><span class="w"> </span><span class="o">---------</span>
+<span class="n">Tom</span><span class="w">  </span><span class="n">NYC</span><span class="w">  </span><span class="o">|</span><span class="w"> </span><span class="n">green</span><span class="w"> </span><span class="n">m</span>
+<span class="n">Jo</span><span class="w">   </span><span class="n">LA</span><span class="w">   </span><span class="o">|</span><span class="w"> </span><span class="n">blue</span><span class="w">  </span><span class="n">f</span>
+<span class="n">Tom</span><span class="w">  </span><span class="n">Lagos</span><span class="o">|</span><span class="w"> </span><span class="n">brown</span><span class="w"> </span><span class="n">m</span>
+<span class="gp">q)</span><span class="n">kt</span><span class="w"> </span><span class="ss">`Jack`London</span>
+<span class="n">eye</span><span class="o">|</span>
+<span class="n">sex</span><span class="o">|</span>
+</code></pre></div>
+<p><a class="peachq-repl-link" href="../../../repl?code=%28til+5%29+99%0A%28%60a%60b%60c%211.414214+2.718282+3.141593%29+%60x%0At%0At+2%0Akt%0Akt+%60Jack%60London&amp;title=Indexing+out+of+bounds&amp;example=docs%2Fbasics%2Fapplication.md%3A26" target="_blank" rel="noopener noreferrer" aria-label="Open in REPL (new tab)" title="Open in REPL (new tab)"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5v14l11-7z"/></svg></a></p>
+</div>
+<h2 id="the-thing-and-the-name-of-the-thing">The thing and the name of the thing<a class="headerlink" href="#the-thing-and-the-name-of-the-thing" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>What’s in a name? That which we call a rose<br />
+By any other name would smell as sweet;<br />
+—<em>Romeo and Juliet</em></p>
+</blockquote>
+<p>In all of the above you can use the name of a value (as a symbol) as an alternative.</p>
+<div class="peachq-example">
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="nf">f</span><span class="o">:</span><span class="p">{</span><span class="n">x</span><span class="o">+</span><span class="n">y</span><span class="o">*</span><span class="il">3</span><span class="p">}</span>
+<span class="gp">q)</span><span class="n">f</span><span class="p">[</span><span class="il">5</span><span class="p">;</span><span class="il">3</span><span class="p">]</span><span class="w">              </span><span class="c1">/ the rose</span>
+<span class="il">14</span>
+<span class="gp">q)</span><span class="ss">`f</span><span class="p">[</span><span class="il">5</span><span class="p">;</span><span class="il">3</span><span class="p">]</span><span class="w">             </span><span class="c1">/ the name of the rose</span>
+<span class="il">14</span>
+<span class="gp">q)</span><span class="ss">`f</span><span class="w"> </span><span class="o">.</span><span class="w"> </span><span class="il">5</span><span class="w"> </span><span class="il">3</span>
+<span class="il">14</span>
+<span class="gp">q)</span><span class="nv">g</span><span class="o">:</span><span class="ss">`f</span><span class="p">[</span><span class="il">5</span><span class="p">;]</span>
+<span class="gp">q)</span><span class="ss">`g</span><span class="w"> </span><span class="il">3</span>
+<span class="il">14</span>
+</code></pre></div>
+<p><a class="peachq-repl-link" href="../../../repl?code=f%3A%7Bx%2By%2A3%7D%0Af%5B5%3B3%5D++++++++++++++%2F+the+rose%0A%60f%5B5%3B3%5D+++++++++++++%2F+the+name+of+the+rose%0A%60f+.+5+3%0Ag%3A%60f%5B5%3B%5D%0A%60g+3&amp;title=The+thing+and+the+name+of+the+thing&amp;example=docs%2Fbasics%2Fapplication.md%3A27" target="_blank" rel="noopener noreferrer" aria-label="Open in REPL (new tab)" title="Open in REPL (new tab)"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5v14l11-7z"/></svg></a></p>
+</div>
+<p>This applies to values you define in the default or other namespaces. 
+It does not apply to system names, nor to names local to lambdas.</p>
+<h2 id="application-and-indexing">Application and indexing<a class="headerlink" href="#application-and-indexing" title="Permanent link">&para;</a></h2>
+<p>The conflation of application and indexing is deliberate and useful. </p>
+<div class="peachq-example">
+<div class="highlight"><pre><span></span><code><span class="gp">q)</span><span class="p">(</span><span class="ow">sum</span><span class="p">;</span><span class="ow">dev</span><span class="p">;</span><span class="ow">var</span><span class="p">)[</span><span class="il">1</span><span class="p">;</span><span class="nb">til</span><span class="w"> </span><span class="il">5</span><span class="p">]</span>
+<span class="mf">1.414214</span>
+</code></pre></div>
+<p><a class="peachq-repl-link" href="../../../repl?code=%28sum%3Bdev%3Bvar%29%5B1%3Btil+5%5D&amp;title=Application+and+indexing&amp;example=docs%2Fbasics%2Fapplication.md%3A28" target="_blank" rel="noopener noreferrer" aria-label="Open in REPL (new tab)" title="Open in REPL (new tab)"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5v14l11-7z"/></svg></a></p>
+</div>
+<p>Above, the list of three keywords is applied to (indexed by) the first argument, selecting <code>dev</code>, which is then applied to the second argument, <code>til 5</code>.</p>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M256 0a64 64 0 1 1 0 128 64 64 0 1 1 0-128m-32 160h64c35.3 0 64 28.7 64 64v48c0 17.7-14.3 32-32 32h-1.8l-11.1 99.5c-1.8 16.2-15.5 28.5-31.8 28.5h-38.7c-16.3 0-30-12.3-31.8-28.5L193.7 304h-1.8c-17.7 0-32-14.3-32-32v-48c0-35.3 28.7-64 64-64zm188.4 240.2c-16.1-4.2-34.8-7.6-55.4-10.2l5.3-47.7c22.7 2.9 43.7 6.7 62.1 11.5 22.4 5.8 42.6 13.3 57.8 23.3 14.7 9.6 29.8 24.9 29.8 47s-15.1 37.4-29.8 47c-15.2 9.9-35.5 17.5-57.8 23.3-45.1 11.7-105.3 17.8-168.4 17.8s-123.3-6.1-168.4-17.8c-22.4-6-42.6-13.5-57.8-23.4C15.1 461.4 0 446.1 0 424s15.1-37.4 29.8-47c15.2-9.9 35.5-17.5 57.8-23.3 18.5-4.8 39.5-8.6 62.1-11.5L155 390c-20.6 2.6-39.3 6.1-55.4 10.2-56.6 14.6-56.6 32.9 0 47.5 39.9 10.3 95.8 16.2 156.4 16.2s116.5-5.9 156.4-16.2c56.6-14.6 56.6-32.9 0-47.5"/></svg></span>
+<em>Q for Mortals</em>
+<a href="https://code.kx.com/q4m3/6_Functions/#68-general-application">§6.8 General Application</a></p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      
+<div class="md-copyright">
+  <div class="md-copyright__highlight">
+    PeachQ - MIT-licensed open source q, built on Rayforce with DuckDB storage in progress.
+    <a href="../../../thanks/">Thanks</a>
+  </div>
+  <nav class="footer-links" aria-label="Footer">
+    
+      <a href="../../../repl">Try Live</a>
+    
+      <a href="../../../download">Download</a>
+    
+      <a href="../../../docs/">Docs</a>
+    
+      <a href="../../../compatibility">Compatibility</a>
+    
+      <a href="../../../roadmap">Roadmap</a>
+    
+      <a href="../../../news/">News</a>
+    
+      <a href="../../../about">About</a>
+    
+      <a href="../../../contact">Contact</a>
+    
+    <a href="https://github.com/peachq-org/peachq" target="_blank" rel="noreferrer">GitHub ↗</a>
+  </nav>
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.sections", "navigation.indexes", "navigation.top", "content.code.copy", "content.action.edit"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.1967e5947459a7bb.min.js"></script>
+      
+        <script src="../../../js/docs-search.2848daea90007d05.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title desc">
+<title id="title">Yellow duck</title>
+<desc id="desc">A small yellow duck icon.</desc>
+<path d="M15 39c0-9 8-16 19-16h5c7 0 13 5 13 12 0 10-9 18-22 18h-6c-5 0-9-3-9-8v-6Z" fill="#ffd84d" stroke="#c58b15" stroke-width="2" stroke-linejoin="round"/>
+<path d="M26 24c0-8 6-14 14-14 7 0 12 5 12 12 0 6-5 11-12 11h-7c-4 0-7-4-7-9Z" fill="#ffe066" stroke="#c58b15" stroke-width="2" stroke-linejoin="round"/>
+<path d="M50 24h9l-7 6-6-3 4-3Z" fill="#f28b2d" stroke="#a85e14" stroke-width="1.8" stroke-linejoin="round"/>
+<circle cx="42" cy="20" r="2.2" fill="#17140b"/>
+<path d="M19 41c6 4 16 5 25 1" fill="none" stroke="#e6ad24" stroke-width="2" stroke-linecap="round"/>
+</svg>
