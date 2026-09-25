@@ -73,6 +73,7 @@ nav:
       - Getting started: docs/peachq/getting-started.md
       - Cookbook:
           - TorQ on PeachQ: docs/cookbook/torq.md
+          - Python with embedPy: docs/cookbook/embedpy.md
       - q language reference:
           - docs/ref/index.md
           - Language basics:
