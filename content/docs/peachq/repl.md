@@ -1,9 +1,9 @@
 ---
-title: The PeachQ REPL
+title: REPL and console
 description: Modern table display, terminal editing and the browser REPL.
 ---
 
-# The PeachQ REPL
+# REPL and console
 
 Use PeachQ interactively in a native terminal or in the [browser REPL](/repl).
 Both evaluate q expressions. The native executable supplies the terminal editor;

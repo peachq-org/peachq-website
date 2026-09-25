@@ -1,12 +1,14 @@
 ---
-title: Recent changes in the reviewed source
+title: Recent changes
 description: Highlights from the PeachQ 0.84 and 0.83 changelog.
 ---
 
-# Recent changes in the reviewed source
+# Recent changes
 
-These highlights come from the C project's changelog at the [recorded revision](sync.md).
-They describe that source snapshot; use [Downloads](/download) for currently published packages.
+Highlights from the PeachQ 0.84 and 0.83 changelog. See [News](../../news/index.md)
+for release announcements and [Downloads](/download) for available packages.
+
+<!-- Source: PeachQ changelog at revision 49be5a234a51c44a393cf353c0ff0f3f85c9cc4c. -->
 
 ## 0.84 — 17 September 2026
 
