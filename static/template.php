@@ -89,11 +89,14 @@ function peachq_page_start(string $title, string $description = '', string $acti
      Keep in sync with overrides/main.html, which carries the same snippet for
      the MkDocs half of the site; tests/test_pages.sh checks the id matches. -->
 <script>
-  var _paq = window._paq = window._paq || [];
-  /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
-  _paq.push(['trackPageView']);
-  _paq.push(['enableLinkTracking']);
   (function() {
+    // Local previews do not send analytics.
+    var host = window.location.hostname;
+    if (host === 'localhost' || host.endsWith('.localhost') ||
+        /^127\./.test(host) || host === '[::1]' || host === '::1') return;
+    var _paq = window._paq = window._paq || [];
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
     var u="//www.timestored.com/mat/";
     _paq.push(['setTrackerUrl', u+'matomo.php']);
     _paq.push(['setSiteId', '4']);
