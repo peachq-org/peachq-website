@@ -283,30 +283,31 @@ nav:
               - "xbar": docs/ref/xbar.md
               - "xgroup": docs/ref/xgroup.md
               - "xrank": docs/ref/xrank.md
-      - PeachQ additions and differences:
+      - Using PeachQ:
           - Overview: docs/peachq/index.md
           - Compatibility and migration: docs/peachq/compatibility.md
-          - REPL and table display: docs/peachq/repl.md
+          - REPL and console: docs/peachq/repl.md
           - Loading data: docs/peachq/loading.md
-          - Reading CSV: docs/peachq/csv.md
-          - Reading JSON: docs/peachq/json.md
           - Bad rows and errors: docs/peachq/bad-rows.md
           - Handles and resources: docs/peachq/handles.md
-          - Parquet: docs/peachq/parquet.md
-          - Regular expressions: docs/peachq/regexp.md
-          - Foreign functions: docs/peachq/ffi.md
           - Typed parameters (design): docs/peachq/typed-parameters.md
-          - Writing resource providers: docs/peachq/resource-handle-implementer.md
-          - Recent changes: docs/peachq/recent-changes.md
-          - Source and sync notes: docs/peachq/sync.md
-      - Library API: /docs/api/
-  - News: news/index.md
+      - Library API:
+          - API Docs: /docs/api/
+          - "CSV (.csv)": docs/peachq/csv.md
+          - "JSON (.j)": docs/peachq/json.md
+          - "Regular expressions (.regexp)": docs/peachq/regexp.md
+          - "Parquet (.parquet)": docs/peachq/parquet.md
+          - "Foreign functions (.ffi)": docs/peachq/ffi.md
   - Thanks: thanks.md
 
 # The inherited reference remains available through the reference landing page.
 not_in_nav: |
   docs/basics/*.md
   docs/ref/*.md
+  docs/peachq/sync.md
+  docs/peachq/resource-handle-implementer.md
+  docs/peachq/recent-changes.md
+  news/index.md
 
 extra:
   # The site menu, rendered inline by overrides/partials/header.html. It mirrors
