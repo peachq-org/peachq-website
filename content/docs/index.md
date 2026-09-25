@@ -18,6 +18,7 @@ PeachQ is an open-source implementation of q. Start with a few expressions in th
 | Read files, use regular expressions, or call native code | [Using PeachQ](peachq/index.md) |
 | Bring existing q code to PeachQ | [Compatibility and migration](peachq/compatibility.md) |
 | Run an existing q framework | [TorQ on PeachQ](cookbook/torq.md) |
+| Load or write a C extension | [C extensions (`2:`)](peachq/c-extensions.md) |
 | See measured implementation coverage | [Compatibility dashboard](/compatibility) |
 
 ## Coming from q?

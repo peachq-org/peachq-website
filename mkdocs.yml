@@ -292,6 +292,7 @@ nav:
           - Loading data: docs/peachq/loading.md
           - Bad rows and errors: docs/peachq/bad-rows.md
           - Handles and resources: docs/peachq/handles.md
+          - "C extensions (2:)": docs/peachq/c-extensions.md
           - Typed parameters (design): docs/peachq/typed-parameters.md
       - Library API:
           - API Docs: /docs/api/
