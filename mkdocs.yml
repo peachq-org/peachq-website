@@ -71,6 +71,8 @@ nav:
   - Docs:
       - Overview: docs/index.md
       - Getting started: docs/peachq/getting-started.md
+      - Cookbook:
+          - Python API: docs/cookbook/python-api.md
       - q language reference:
           - docs/ref/index.md
           - Language basics:
