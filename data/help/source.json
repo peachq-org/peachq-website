@@ -1,0 +1,9 @@
+{
+  "source_type": "local-git-snapshot",
+  "revision": "1247d134bfa8f890fb3bb2b899766b9993e244c4",
+  "path": "lib/help-builtins.tsv",
+  "sha256": "2731b93bf634cc97f7c83ac383451f0165930601001a88fa8a14e7f3c2118e95",
+  "license_path": "LICENSE",
+  "license_sha256": "831a4345d4a0e5efafcd16f810223b79f26915153d2f084430230b2388a78be1",
+  "last_changed_revision": "b839ff3f9327e50c5db4c1d8b28325595225d250"
+}

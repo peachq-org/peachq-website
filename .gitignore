@@ -1,0 +1,11 @@
+site/
+/build/qdocs/
+/build/recordings/
+__pycache__/
+.venv/
+.DS_Store
+node_modules/
+
+# In-progress recording delivery state (normally removed on success or rollback).
+/content/recordings/.*.next/
+/content/recordings/.*.previous/

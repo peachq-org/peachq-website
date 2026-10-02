@@ -1,0 +1,47 @@
+{
+  "repository": "https://github.com/KxSystems/docs",
+  "revision": "b6646cdb9e9ba313ce10b6dc90cc033c244d724f",
+  "files": [
+    {
+      "file": "h.edsn.png",
+      "source": "https://github.com/KxSystems/docs/blob/b6646cdb9e9ba313ce10b6dc90cc033c244d724f/docs/img/h.edsn.png",
+      "sha256": "48766f3cf020e194c21dd2014168a8d273fb6dd678f171a616908563e22ea2b2",
+      "changes": "Copied unchanged from the recorded KX documentation revision.",
+      "creator": "KX Systems and documentation contributors",
+      "license": "CC-BY-4.0",
+      "license_url": "https://creativecommons.org/licenses/by/4.0/",
+      "license_source": "https://github.com/KxSystems/docs/blob/b6646cdb9e9ba313ce10b6dc90cc033c244d724f/LICENSE.txt"
+    },
+    {
+      "file": "linear-regression.png",
+      "source": "https://github.com/KxSystems/docs/blob/b6646cdb9e9ba313ce10b6dc90cc033c244d724f/docs/img/linear-regression.png",
+      "sha256": "b23fc9a08a5872571769ca58da7479f526df450cb6d77fd3674dbb53cf21e556",
+      "changes": "Copied unchanged from the recorded KX documentation revision.",
+      "creator": "Sewaqu; transparent-background version by RaphaelQS",
+      "original": "https://commons.wikimedia.org/wiki/File:Linear_regression.svg",
+      "license": "Public domain",
+      "license_source": "https://commons.wikimedia.org/wiki/File:Linear_regression.svg#Licensing"
+    },
+    {
+      "file": "matrix-multiplication.png",
+      "source": "https://github.com/KxSystems/docs/blob/b6646cdb9e9ba313ce10b6dc90cc033c244d724f/docs/img/matrix-multiplication.png",
+      "sha256": "bffe62901b571fbab87b47009f0c210f3de9c118d7de54637e84c84b127a5b4c",
+      "changes": "Copied unchanged from the recorded KX documentation revision.",
+      "creator": "Lakeworks",
+      "original": "https://commons.wikimedia.org/wiki/File:Matrix_multiplication_diagram_2.svg",
+      "license": "CC-BY-SA-3.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "adaptation": "PNG rendering of the original SVG, as distributed by KX."
+    },
+    {
+      "file": "uj.gif",
+      "source": "https://github.com/KxSystems/docs/blob/b6646cdb9e9ba313ce10b6dc90cc033c244d724f/docs/img/uj.gif",
+      "sha256": "6cf2773b75ef87138d77fb08619c76d92922a7f8697d93b5b5e84ad7bbacb2d3",
+      "changes": "Copied unchanged from the recorded KX documentation revision.",
+      "creator": "KX Systems and documentation contributors",
+      "license": "CC-BY-4.0",
+      "license_url": "https://creativecommons.org/licenses/by/4.0/",
+      "license_source": "https://github.com/KxSystems/docs/blob/b6646cdb9e9ba313ce10b6dc90cc033c244d724f/LICENSE.txt"
+    }
+  ]
+}
