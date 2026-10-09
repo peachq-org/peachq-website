@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PeachQ live trades</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.min.js"></script>
+<style>
+  :root { --surface: #fcfcfb; --ink: #0b0b0b; --ink-2: #52514e; --line: #e4e3df; }
+  body { margin: 0; padding: 16px; background: var(--surface); color: var(--ink); font: 15px/1.4 system-ui, sans-serif; }
+  header { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; }
+  h1 { margin: 0; font-size: 1.25rem; }
+  #status { color: var(--ink-2); }
+  main { display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); gap: 24px; margin-top: 16px; }
+  @media (max-width: 900px) { main { grid-template-columns: 1fr; } }
+  .charts { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; align-content: start; }
+  .chart { position: relative; height: 400px; }
+  table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+  th, td { padding: 4px 8px; text-align: right; border-bottom: 1px solid var(--line); }
+  th { color: var(--ink-2); font-weight: 600; }
+  th:nth-child(-n+2), td:nth-child(-n+2) { text-align: left; }
+  tbody tr:first-child { background: #fff3e8; }
+</style>
+</head>
+<body>
+<header>
+  <h1>PeachQ live trades</h1>
+  <span id="status">Connecting</span>
+</header>
+<main>
+  <div class="charts" id="charts"></div>
+  <table>
+    <thead><tr><th>Time</th><th>Sym</th><th>Price</th><th>Size</th><th>Cond</th><th>Ex</th></tr></thead>
+    <tbody id="tape"></tbody>
+  </table>
+</main>
+<script>
+  const colours = ['#2a78d6', '#eb6834', '#1baf7a', '#eda100', '#e87ba4', '#008300', '#4a3aa7', '#e34948'];
+  const clock = ms => new Date(ms).toLocaleTimeString('en-GB');
+  const grid = document.getElementById('charts');
+  const charts = new Map();
+
+  function chartFor(sym) {
+    if (charts.has(sym)) return charts.get(sym);
+    const box = document.createElement('div');
+    box.className = 'chart';
+    box.dataset.sym = sym;
+    const next = [...grid.children].find(other => other.dataset.sym > sym);
+    grid.insertBefore(box, next ?? null);
+    box.append(document.createElement('canvas'));
+    const chart = new Chart(box.firstChild, {
+      type: 'line',
+      data: { datasets: [{ label: sym, data: [], borderColor: colours[charts.size % colours.length] }] },
+      options: {
+        animation: false, maintainAspectRatio: false, parsing: false,
+        interaction: { mode: 'nearest', axis: 'x', intersect: false },
+        elements: { line: { borderWidth: 2, tension: 0 }, point: { radius: 0, hitRadius: 8 } },
+        scales: {
+          x: { type: 'linear', ticks: { callback: clock, maxTicksLimit: 6 }, grid: { color: '#e4e3df' } },
+          y: { ticks: { callback: value => value.toFixed(2) }, grid: { color: '#e4e3df' } },
+        },
+        plugins: {
+          legend: { display: false },
+          title: { display: true, text: sym, align: 'start', color: '#0b0b0b', font: { size: 15 } },
+          tooltip: { callbacks: { title: items => clock(items[0].parsed.x) } },
+        },
+      },
+    });
+    charts.set(sym, chart);
+    return chart;
+  }
+
+  const status = document.getElementById('status');
+  const tape = document.getElementById('tape');
+  let received = 0;
+
+  function plot(trade) {
+    const { data } = chartFor(trade.sym).data.datasets[0];
+    data.push({ x: Date.parse(trade.time), y: trade.price });
+    if (data.length > 200) data.shift();
+  }
+
+  function tick(trade) {
+    const row = document.createElement('tr');
+    for (const cell of [clock(Date.parse(trade.time)), trade.sym, trade.price.toFixed(2), trade.size, trade.cond, trade.ex]) {
+      const td = document.createElement('td');
+      td.textContent = cell;
+      row.append(td);
+    }
+    tape.prepend(row);
+    while (tape.children.length > 20) tape.lastChild.remove();
+  }
+
+  const socket = new WebSocket(`ws://${location.host}`);
+  socket.onopen = () => { status.textContent = 'Waiting for trades'; };
+  socket.onclose = () => { status.textContent = 'Relay disconnected'; };
+  socket.onmessage = event => {
+    const { rows } = JSON.parse(event.data);
+    for (const trade of rows) { plot(trade); tick(trade); }
+    received += rows.length;
+    status.textContent = `${received} trades received`;
+    for (const chart of charts.values()) chart.update('none');
+  };
+</script>
+</body>
+</html>

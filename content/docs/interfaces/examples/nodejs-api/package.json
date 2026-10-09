@@ -1,0 +1,15 @@
+{
+  "name": "nodejs-api-examples",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Query PeachQ from Node.js, relay live trades to a browser and send trades with a feed handler",
+  "type": "module",
+  "license": "Apache-2.0",
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "jkdb": "1.4.0",
+    "ws": "8.22.0"
+  }
+}

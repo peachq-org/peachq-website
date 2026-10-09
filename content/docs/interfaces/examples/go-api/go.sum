@@ -1,0 +1,4 @@
+github.com/nu7hatch/gouuid v0.0.0-20131221200532-179d4d0c4d8d h1:VhgPp6v9qf9Agr/56bj7Y/xa04UccTW04VP0Qed4vnQ=
+github.com/nu7hatch/gouuid v0.0.0-20131221200532-179d4d0c4d8d/go.mod h1:YUTz3bUH2ZwIWBy3CJBeOBEugqcmXREj14T+iG/4k4U=
+github.com/sv/kdbgo v0.20.0 h1:7ppEqSFRBl0LNAkdfQT506KJd/ei3qjsngOmPN2oPnw=
+github.com/sv/kdbgo v0.20.0/go.mod h1:2sAxy9L5EdUDmAVc8UlN1kkymZDrfQGrxOWhI7L9T7E=
