@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<!-- Resolves every relative URL below against the site root rather than the
+     requested path. See peachq_install_path(). -->
+
+<title>kafka.q - PeachQ API</title>
+<link rel="canonical" href="https://peachq.org/docs/api/kafka.q.html">
+<link rel="icon" href="../../img/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="16x16" href="../../img/peachq-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../../img/peachq-32x32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../../img/peachq-180x180.png">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" />
+<link rel="stylesheet" href="qdoc2.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/q.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/shell.min.js"></script>
+<script>hljs.highlightAll();</script>
+<link rel="stylesheet" href="../../css/styles.css">
+<link rel="stylesheet" href="peachq-api.css">
+<script src="../../mirror-banner.js" defer></script>
+<!-- Matomo. Self-hosted at timestored.com/mat, so no third-party analytics
+     service sees the traffic. Site 4 is "peachq"; site 1 is TimeStored's own
+     site, and pointing this at 1 filed every PeachQ visit under TimeStored.
+     Keep in sync with overrides/main.html, which carries the same snippet for
+     the MkDocs half of the site; tests/test_pages.sh checks the id matches. -->
+<script>
+  (function() {
+    // Local previews do not send analytics.
+    var host = window.location.hostname;
+    if (host === 'localhost' || host.endsWith('.localhost') ||
+        /^127\./.test(host) || host === '[::1]' || host === '::1') return;
+    var _paq = window._paq = window._paq || [];
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    var u="//www.timestored.com/mat/";
+    _paq.push(['setTrackerUrl', u+'matomo.php']);
+    _paq.push(['setSiteId', '4']);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+</head>
+<body class="peachq-api">
+<header class="nav">
+  <div class="container nav-inner">
+    <a class="brand" href="../.././"><img class="logo" src="../../img/peachq-logo.svg" alt="PeachQ logo"><span>Peach<span style="color:var(--peach-strong)">Q</span></span></a>
+    <button class="mobile-menu" type="button" data-mobile-menu aria-expanded="false" aria-controls="siteNav">Menu</button>
+    <nav class="nav-links" id="siteNav">
+      <a href="../../repl" class="nav-cta">Try Live</a>
+      <a href="../../download">Download</a>
+      <a href="../../docs/" class="active">Docs</a>
+      <a href="../../compatibility">Compatibility</a>
+      <a href="../../news/">News</a>
+      <a href="../../about">About</a>
+      <a href="https://github.com/peachq-org/peachq" target="_blank" rel="noreferrer">GitHub ↗</a>
+      <button class="theme-toggle" data-theme-toggle aria-label="Toggle theme"></button>
+    </nav>
+  </div>
+</header>
+<div class="preview-ribbon" aria-hidden="true">Early preview</div>
+
+
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav" id="api-sidebar">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+<p><a href="../">← PeachQ docs</a></p>
+        <a href="./"  class="icon icon-home"> PeachQ API</a><div role="search">
+  <!-- form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form -->
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Namespaces</span></p>
+
+
+<ul><li class="toctree-l1 cls-crypto-cls"><a class="reference internal cls-crypto-cls" href='crypto.q.html' >.crypto</a></li>
+	<li class="toctree-l1 cls-csv-cls"><a class="reference internal cls-csv-cls" href='csv.q.html' >.csv</a></li>
+	<li class="toctree-l1 cls-duckdb-cls"><a class="reference internal cls-duckdb-cls" href='duckdb.q.html' >.duckdb</a></li>
+	<li class="toctree-l1 cls-ffi-cls"><a class="reference internal cls-ffi-cls" href='ffi.q.html' >.ffi</a></li>
+	<li class="toctree-l1 cls-fs-cls"><a class="reference internal cls-fs-cls" href='fs.q.html' >.fs</a></li>
+	<li class="toctree-l1 cls-hash-cls"><a class="reference internal cls-hash-cls" href='hash.q.html' >.hash</a></li>
+	<li class="toctree-l1 cls-j-cls"><a class="reference internal cls-j-cls" href='j.q.html' >.j</a></li>
+	<li class="toctree-l1 current"><a class="reference internal current" href='kafka.q.html' >.kafka</a></li>
+	<li class="toctree-l1 cls-massive-cls"><a class="reference internal cls-massive-cls" href='massive.q.html' >.massive</a></li>
+	<li class="toctree-l1 cls-md-cls"><a class="reference internal cls-md-cls" href='md.q.html' >.md</a></li>
+	<li class="toctree-l1 cls-parquet-cls"><a class="reference internal cls-parquet-cls" href='parquet.q.html' >.parquet</a></li>
+	<li class="toctree-l1 cls-path-cls"><a class="reference internal cls-path-cls" href='path.q.html' >.path</a></li>
+	<li class="toctree-l1 cls-pkg-cls"><a class="reference internal cls-pkg-cls" href='pkg.q.html' >.pkg</a></li>
+	<li class="toctree-l1 cls-pq-cls"><a class="reference internal cls-pq-cls" href='pq.q.html' >.pq</a></li>
+	<li class="toctree-l1 cls-qunit-cls"><a class="reference internal cls-qunit-cls" href='qunit.q.html' >.qunit</a></li>
+	<li class="toctree-l1 cls-regexp-cls"><a class="reference internal cls-regexp-cls" href='regexp.q.html' >.regexp</a></li>
+	<li class="toctree-l1 cls-s-cls"><a class="reference internal cls-s-cls" href='s.q.html' >.s</a></li>
+	<li class="toctree-l1 cls-sql-cls"><a class="reference internal cls-sql-cls" href='sql.q.html' >.sql</a></li>
+	<li class="toctree-l1 cls-str-cls"><a class="reference internal cls-str-cls" href='str.q.html' >.str</a></li>
+	<li class="toctree-l1 cls-termbox-cls"><a class="reference internal cls-termbox-cls" href='termbox.q.html' >.termbox</a></li>
+	<li class="toctree-l1 cls-yml-cls"><a class="reference internal cls-yml-cls" href='yml.q.html' >.yml</a></li>
+</ul><!--NAMESPACE_END-->
+
+              <p class="caption"><span class="caption-text">Files</span></p>
+
+<ul><li class="toctree-l1 cls-crypto-cls"><a class="reference internal cls-crypto-cls" href='crypto.q.html' >crypto.q</a></li>
+	<li class="toctree-l1 cls-csv-cls"><a class="reference internal cls-csv-cls" href='csv.q.html' >csv.q</a></li>
+	<li class="toctree-l1 cls-duckdb-cls"><a class="reference internal cls-duckdb-cls" href='duckdb.q.html' >duckdb.q</a></li>
+	<li class="toctree-l1 cls-ffi-cls"><a class="reference internal cls-ffi-cls" href='ffi.q.html' >ffi.q</a></li>
+	<li class="toctree-l1 cls-fs-cls"><a class="reference internal cls-fs-cls" href='fs.q.html' >fs.q</a></li>
+	<li class="toctree-l1 cls-hash-cls"><a class="reference internal cls-hash-cls" href='hash.q.html' >hash.q</a></li>
+	<li class="toctree-l1 cls-j-cls"><a class="reference internal cls-j-cls" href='j.q.html' >j.q</a></li>
+	<li class="toctree-l1 current"><a class="reference internal current" href='kafka.q.html' >kafka.q</a></li>
+	<li class="toctree-l1 cls-massive-cls"><a class="reference internal cls-massive-cls" href='massive.q.html' >massive.q</a></li>
+	<li class="toctree-l1 cls-md-cls"><a class="reference internal cls-md-cls" href='md.q.html' >md.q</a></li>
+	<li class="toctree-l1 cls-parquet-cls"><a class="reference internal cls-parquet-cls" href='parquet.q.html' >parquet.q</a></li>
+	<li class="toctree-l1 cls-path-cls"><a class="reference internal cls-path-cls" href='path.q.html' >path.q</a></li>
+	<li class="toctree-l1 cls-pkg-cls"><a class="reference internal cls-pkg-cls" href='pkg.q.html' >pkg.q</a></li>
+	<li class="toctree-l1 cls-pq-cls"><a class="reference internal cls-pq-cls" href='pq.q.html' >pq.q</a></li>
+	<li class="toctree-l1 cls-qunit-cls"><a class="reference internal cls-qunit-cls" href='qunit.q.html' >qunit.q</a></li>
+	<li class="toctree-l1 cls-regexp-cls"><a class="reference internal cls-regexp-cls" href='regexp.q.html' >regexp.q</a></li>
+	<li class="toctree-l1 cls-s-cls"><a class="reference internal cls-s-cls" href='s.q.html' >s.q</a></li>
+	<li class="toctree-l1 cls-sql-cls"><a class="reference internal cls-sql-cls" href='sql.q.html' >sql.q</a></li>
+	<li class="toctree-l1 cls-str-cls"><a class="reference internal cls-str-cls" href='str.q.html' >str.q</a></li>
+	<li class="toctree-l1 cls-termbox-cls"><a class="reference internal cls-termbox-cls" href='termbox.q.html' >termbox.q</a></li>
+	<li class="toctree-l1 cls-yml-cls"><a class="reference internal cls-yml-cls" href='yml.q.html' >yml.q</a></li>
+</ul><!--FILES_END-->
+
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <button type="button" data-api-menu aria-expanded="false" aria-controls="api-sidebar">☰ API menu</button>
+          <a href="./">PeachQ API</a>
+
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="./" class="icon icon-home" aria-label="Docs"></a></li>
+          <!-- li class="breadcrumb-item">Files-Breadcrumb</li -->
+      <li class="breadcrumb-item active">kafka.q</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+
+                <h1 id="foobar">kafka.q</h1>
+
+
+
+	<div id='headerDoc'>Kafka from q: a client is a handle, a subscription delivers ONE table per batch to a target, a topic is a table coordinate, and the same handle publishes bytes or rows.  hopen (`:pq:kafka:c1;cfg) opens the alias; cfg is librdkafka's configuration verbatim, a dict of its keys (metadata.broker.list, group.id, ...) to symbols or strings, judged at the open.  The alias makes its consumer the first time it subscribes, commits, assigns or asks for its offsets, and its producer the first time it publishes or, with no client yet, asks for metadata; both come from cfg (a key librdkafka scopes to the other role is left out of each). .kafka.sub[h;`trades;`trade] decodes each batch's JSON into rows upserted into trade (types: explicit > trade's meta > a sniff); .kafka.sub[h;`trades;{[msgs] ...}] hands the raw batch table (topic partition offset msgtime msgkey headers data) to a function; either way the batch's offsets are committed once the target returns (or, with the option commit `manual, when it hands .kafka.commit what it processed), and a batch that fails is held unread, the topic paused and .kafka.errcb called - never a silent drop, never a redelivery loop. `:pq:kafka:c1:trades/ is the topic as an append-only table: select reads it to its high-water mark at the call, count get is 0N (the rows need a read: count select from it), meta and key decode a sample of its tail, and upsert publishes rows as JSON. h (`trades;msgkey;bytes) publishes one message and waits for its delivery; neg h is fire-and-forget.  hclose closes the alias; .pq.conns[] lists it.
+
+<div class='qd-examples'><h3>Examples</h3><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>h:hopen (`:pq:kafka:c1;`metadata.broker.list`group.id!`localhost:9092`myapp)</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.kafka.pub[h;`trades;"AAPL";"{\"sym\":\"AAPL\",\"px\":1.5}"]</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>`:pq:kafka:c1:trades/ upsert ([] sym:`AAPL`MSFT; px:1.5 2.5)</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>select from `:pq:kafka:c1:trades/ where partition=0, offset within 0 100</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>count select from `:pq:kafka:c1:trades/</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>get `:pq:kafka:c1:trades/</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.kafka.read[h;`trades]</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.kafka.read[h;(`trades;`partition`offset!(0;100 200))]</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.kafka.sub[h;`trades;`trade]</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.kafka.sub[h;`quotes;(`quote;`meta`store_rejects!(`topic`offset`msgtime;1b))]</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.kafka.subs h</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.kafka.subs[]</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.kafka.errcb:{[h;code;reason] -2 "kafka ",string[code]," ",reason`error;}</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div></div></div>
+	<div id='summary'><h2>Entity Summary</h2><table class='overviewSummary'><tbody>
+<tr><th>Entities</th><th>Short Description</th></tr>
+		<tr><td>.kafka.SAMPLE</td><td></td></tr>
+		<tr><td>.kafka.TIMEOUT</td><td>The ms a bounded read waits for a quiet partition before it signals; the messages per partition a sniff samples.</td></tr>
+		<tr><td><a href='#-kafka-assign'>.kafka.assign[h;parts]</a></td><td>Assign partitions to the alias by hand instead of a group subscription: a dict of topic to partitions, a table of topic partition [offset], or `:: to clear the assignment.</td></tr>
+		<tr><td><a href='#-kafka-commit'>.kafka.commit[h;x]</a></td><td>Commit what a target processed, synchronously: x is its rows (any table with topic partition offset - the meta option keeps them) or the misc of a batch from one partition.</td></tr>
+		<tr><td><a href='#-kafka-errcb'>.kafka.errcb</a></td><td>Called with every error an alias meets: a message that does not decode or a target that signals (code `decode or `target), a refused commit, librdkafka's own errors; reason is `topic`partition`offset`error!(...), the message fields null for a library error.</td></tr>
+		<tr><td><a href='#-kafka-flush'>.kafka.flush[h;ms]</a></td><td>Wait up to ms for every message the alias has queued to be delivered.</td></tr>
+		<tr><td><a href='#-kafka-metadata'>.kafka.metadata[h]</a></td><td>The broker's topics as a table of topic partition leader replicas low high; a topic deleted while it is listed is left out.</td></tr>
+		<tr><td><a href='#-kafka-offsets'>.kafka.offsets[h]</a></td><td>The alias's assigned partitions: topic partition committed position low high lag.</td></tr>
+		<tr><td><a href='#-kafka-pub'>.kafka.pub[h;topic;msgkey;data]</a></td><td>Publish to a topic: one message, or one per element when data is a list (key then `:: for none, one key for all, or a list of keys of the same count).</td></tr>
+		<tr><td><a href='#-kafka-read'>.kafka.read[h;spec]</a></td><td>Read a topic to its high-water mark at the call: every message, decoded as .kafka.sub decodes the topic (JSON when unsubscribed), message columns first.</td></tr>
+		<tr><td><a href='#-kafka-statcb'>.kafka.statcb</a></td><td>Called with librdkafka's statistics JSON (a string) every statistics.interval.ms, when that key is set.</td></tr>
+		<tr><td><a href='#-kafka-sub'>.kafka.sub[h;topic;target]</a></td><td>Subscribe the alias to a topic.</td></tr>
+		<tr><td><a href='#-kafka-subs'>.kafka.subs[h]</a></td><td>The subscriptions of an alias (h) or of every alias ([]): topic target decode messages rejected tombstones lastoffset paused, with the handle first when every alias is listed.</td></tr>
+		<tr><td><a href='#-kafka-unsub'>.kafka.unsub[h;topic]</a></td><td>Drop a topic from the alias's subscription.</td></tr>
+		<tr><td><a href='#-kafka-version'>.kafka.version[]</a></td><td>librdkafka's version, the first thing to check when a client does not open.</td></tr>
+</tbody></table></div>
+	<div class='details'>
+	<h2>Entity Details</h2>
+		<div class='entity' id='-kafka-assign'><h2>.kafka.assign[h;parts]</h2><p class='qd-description'>Assign partitions to the alias by hand instead of a group subscription: a dict of topic to partitions, a table of topic partition [offset], or `:: to clear the assignment.</p><div class='qd-examples'><h3>Examples</h3><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.kafka.assign[h;(enlist `trades)!enlist 0 1]</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div></div></div>
+		<div class='entity' id='-kafka-commit'><h2>.kafka.commit[h;x]</h2><p class='qd-description'>Commit what a target processed, synchronously: x is its rows (any table with topic partition offset - the meta option keeps them) or the misc of a batch from one partition.  Each partition's commit is the offset after the last one x holds: the +1 is the library's, never yours.  For a subscription with commit `manual, which never commits by itself; under `auto every batch commits as its target returns.</p><table class='qd-tags qd-parameters'>
+<tr><th>Parameters: </th><td><ul class='qd-parameters'>
+	<li><strong>x</strong> - (any) the processed rows (a table), or a batch's misc (a dict)</li></ul></td></tr>
+<tr><th>throws: </th><td><ul class='qd-tags'>
+	<li><strong>kafka</strong> - the broker refused the commit: the partition is named</li>
+	<li><strong>type</strong> - x is neither, or a misc of several partitions (which cannot say where each one ends)</li></ul></td></tr></table><div class='qd-examples'><h3>Examples</h3><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.kafka.commit[h;([] topic:enlist `trades; partition:enlist 0i; offset:enlist 0)]</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div></div></div>
+		<div class='entity' id='-kafka-errcb'><h2>.kafka.errcb</h2><p class='qd-description'>Called with every error an alias meets: a message that does not decode or a target that signals (code `decode or `target), a refused commit, librdkafka's own errors; reason is `topic`partition`offset`error!(...), the message fields null for a library error.  The default writes one line to stderr; replace it as you would .z.pc - a reload of the library keeps the one you set.</p></div>
+		<div class='entity' id='-kafka-flush'><h2>.kafka.flush[h;ms]</h2><p class='qd-description'>Wait up to ms for every message the alias has queued to be delivered.</p><table class='qd-tags'>
+<tr><th>throws: </th><td>kafka Local: Timed out when some are still queued</td></tr></table><div class='qd-examples'><h3>Examples</h3><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.kafka.flush[h;5000]</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div></div></div>
+		<div class='entity' id='-kafka-metadata'><h2>.kafka.metadata[h]</h2><p class='qd-description'>The broker's topics as a table of topic partition leader replicas low high; a topic deleted while it is listed is left out.</p><div class='qd-examples'><h3>Examples</h3><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.kafka.metadata h</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div></div></div>
+		<div class='entity' id='-kafka-offsets'><h2>.kafka.offsets[h]</h2><p class='qd-description'>The alias's assigned partitions: topic partition committed position low high lag.  position is the next offset the alias reads (the delivered position, else the committed one, else low) and lag is high-position.  The table is empty until the group assigns the partitions, in the first wakes after .kafka.sub; caught up is a non-empty table whose lag is all 0.</p><div class='qd-examples'><h3>Examples</h3><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.kafka.offsets h</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div></div></div>
+		<div class='entity' id='-kafka-pub'><h2>.kafka.pub[h;topic;msgkey;data]</h2><p class='qd-description'>Publish to a topic: one message, or one per element when data is a list (key then `:: for none, one key for all, or a list of keys of the same count).  The messages are queued; .kafka.flush or a sync apply h (topic;msgkey;data) waits for delivery.</p><table class='qd-tags qd-parameters'>
+<tr><th>Parameters: </th><td><ul class='qd-parameters'>
+	<li><strong>data</strong> - (any) a string or byte vector (ONE message), :: (a tombstone: Kafka's null value), or a list of them; the whole call is checked before anything is queued, and () is 'kafka (nothing to publish)</li>
+	<li><strong>msgkey</strong> - (any) a string, byte vector or symbol, or `:: for no key</li></ul></td></tr></table><div class='qd-examples'><h3>Examples</h3><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.kafka.pub[h;`trades;"AAPL";"{\"sym\":\"AAPL\",\"px\":1.5}"]</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.kafka.pub[h;`trades;`;("{\"sym\":\"IBM\",\"px\":1}";"{\"sym\":\"IBM\",\"px\":2}")]</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div></div></div>
+		<div class='entity' id='-kafka-read'><h2>.kafka.read[h;spec]</h2><p class='qd-description'>Read a topic to its high-water mark at the call: every message, decoded as .kafka.sub decodes the topic (JSON when unsubscribed), message columns first.  (topic;opts) narrows or relaxes it.  Three keys bound the read: partition (an int atom or list), offset (a from-to pair, inclusive as within; a null end is open) and msgtime (the earliest time); anything beyond them is a select.  The rest are .kafka.sub's decode options under the same names: types, decode, ignore_errors, store_rejects, rejects_table, tombstones (default `row here) and path.  A read is strict: a message that does not decode signals 'kafka naming it, unless ignore_errors skips it or store_rejects keeps it in the rejects table (keyed by topic partition offset). Any other key, or a bad value, signals 'kafka naming the option.</p><div class='qd-examples'><h3>Examples</h3><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.kafka.read[h;`trades]</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.kafka.read[h;(`trades;`partition`offset!(0;100 200))]</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.kafka.read[h;(`trades;(enlist `ignore_errors)!enlist 1b)]</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div></div></div>
+		<div class='entity' id='-kafka-statcb'><h2>.kafka.statcb</h2><p class='qd-description'>Called with librdkafka's statistics JSON (a string) every statistics.interval.ms, when that key is set.  The default does nothing; a reload of the library keeps the one you set.</p></div>
+		<div class='entity' id='-kafka-sub'><h2>.kafka.sub[h;topic;target]</h2><p class='qd-description'>Subscribe the alias to a topic.  The target decides what a batch becomes: a symbol names a global table each batch's rows are upserted into (created when absent, upserted when keyed; its meta fixes the types), decoded from JSON by default; every target takes options as (target;opts); a function of three arguments {[rows;rejects;misc] ...} receives the decoded rows, the batch's reject records (under ignore_errors too) and misc (`topic`partitions`offsets`rows`tombstones, the last a table of the batch's tombstones); a function of ONE argument receives the raw batch table of topic partition offset msgtime msgkey headers data (msgkey and data byte vectors, headers a dict per message).  The batch's offsets are committed when the target returns, unless the option commit is `manual. A message that fails to decode, or a target that signals, leaves the batch uncommitted, rewinds and pauses the topic, marks it paused in .kafka.subs and calls .kafka.errcb (code `decode or `target, the message named); subscribing again resumes it, and the held batch comes again; subscribing again to a topic that is not paused only changes its target, and unsub leaves a paused topic fetchable.  The alias's config needs group.id. opts: types (a dict of column to type char, as .j.read takes; over the target's meta over a sniff of the batch); meta (the message columns to keep beside the decoded ones, from `topic`partition`offset`msgtime`msgkey, default none); decode (`json, `bytes or `string - the last two land one data column); ignore_errors (1b drops a message that fails to decode); store_rejects (1b keeps it in the rejects table, with topic partition offset msgtime msgkey error bytes - replayable, keyed by topic partition offset); rejects_table (symbol, default `reject_errors, implies store_rejects); max_per_wake (the messages one wake of the consumer delivers at most); path (handed to .j.read unchanged: the part of each message to land); tombstones (what a null value becomes: `row - typed nulls beside its message columns, `:: in data for a raw batch - `skip - counted in .kafka.subs - or `reject; a symbol target's default is `reject, every other target's `row); commit (`auto, the default: each batch commits as its target returns clean, and hclose or exit commits the last of them synchronously; `manual: nothing commits until the target - or anything later - hands .kafka.commit what it processed, and hclose or exit commits nothing more).  Options are checked at the call: a bad one signals 'kafka naming it.</p><table class='qd-tags qd-parameters'>
+<tr><th>Parameters: </th><td><ul class='qd-parameters'>
+	<li><strong>topic</strong> - (symbol)</li>
+	<li><strong>target</strong> - (any) a symbol, (symbol;opts), (function;opts) or a function</li></ul></td></tr>
+<tr><th>throws: </th><td>conn h is not an open alias</td></tr></table><div class='qd-examples'><h3>Examples</h3><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.kafka.sub[h;`trades;`trade]</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.kafka.sub[h;`trades;(`trade;`types`meta!((enlist `px)!enlist "f";`offset`msgtime))]</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.kafka.sub[h;`trades;{[rows;rejects;misc] `trade upsert rows}]</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.kafka.sub[h;`trades;{[msgs] `raw upsert msgs}]</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.kafka.sub[h;`trades;({[rows;rejects;misc] `trade upsert rows; .kafka.commit[h;rows]};`commit`meta!(`manual;`topic`partition`offset))]</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div></div></div>
+		<div class='entity' id='-kafka-subs'><h2>.kafka.subs[h]</h2><p class='qd-description'>The subscriptions of an alias (h) or of every alias ([]): topic target decode messages rejected tombstones lastoffset paused, with the handle first when every alias is listed.  decode is json, bytes or string, or batch for a one-argument target (it gets the raw batch); tombstones counts the null values the tombstones option `skip passed by.</p><div class='qd-examples'><h3>Examples</h3><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.kafka.subs h</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div></div></div>
+		<div class='entity' id='-kafka-unsub'><h2>.kafka.unsub[h;topic]</h2><p class='qd-description'>Drop a topic from the alias's subscription.</p><div class='qd-examples'><h3>Examples</h3><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.kafka.unsub[h;`trades]</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div></div></div>
+		<div class='entity' id='-kafka-version'><h2>.kafka.version[]</h2><p class='qd-description'>librdkafka's version, the first thing to check when a client does not open.</p><table class='qd-tags'>
+<tr><th>Return: </th><td>(string)</td></tr>
+<tr><th>throws: </th><td>kafka librdkafka not found - set PEACHQ_KAFKA_LIB or install it</td></tr></table><div class='qd-examples'><h3>Examples</h3><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.kafka.version[]</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div></div></div></div><!--MAIN_END-->
+
+
+            </div>
+
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <!-- a href="../foo/" class="btn btn-neutral float-left" title="Foo"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../../namespaces/bar/" class="btn btn-neutral float-right" title="Bar">Next <span class="icon icon-circle-arrow-right"></span></a -->
+    </div>
+
+  <hr/>
+
+
+
+  <div role="contentinfo">
+    <!-- Copyright -->
+  </div>
+
+  Built with <a href="https://www.timestored.com/qstudio/help/qdoc">QDoc</a> provided by <a href="https://www.timestored.com/">TimeStored</a>. <nav class="peachq-api-links" aria-label="PeachQ links"><a href="../">Docs</a> · <a href="../../thanks/">Thanks</a> · <a href="https://github.com/peachq-org/peachq/blob/ed338027340745d2d8422b85c7d7d11fea474a51/qlib/kafka.q">Source</a></nav>
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+
+
+
+
+
+
+
+<script src="peachq-api.js"></script><footer class="footer">
+  <div class="container footer-inner">
+    <div>PeachQ - MIT-licensed open source q, built on Rayforce with DuckDB storage in progress.
+      <a href="../../thanks/">Thanks</a>
+    </div>
+    <nav class="footer-links" aria-label="Footer">
+      <a href="../../repl">Try Live</a><a href="../../download">Download</a><a href="../../docs/">Docs</a>
+      <a href="../../compatibility">Compatibility</a><a href="../../roadmap">Roadmap</a><a href="../../news/">News</a>
+      <a href="../../about">About</a><a href="../../contact">Contact</a>
+      <a href="https://github.com/peachq-org/peachq" target="_blank" rel="noreferrer">GitHub ↗</a>
+    </nav>
+  </div>
+</footer>
+<script src="../../script.js"></script>
+</body>
+</html>
