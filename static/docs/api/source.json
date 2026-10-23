@@ -1,0 +1,7 @@
+{
+  "repository": "https://github.com/peachq-org/peachq",
+  "revision": "ed338027340745d2d8422b85c7d7d11fea474a51",
+  "source_directory": "qlib/",
+  "include": "**/*.q",
+  "generator": "https://www.timestored.com/qstudio/files/beta/qstudio.jar"
+}

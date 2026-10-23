@@ -1,0 +1,10 @@
+[package]
+name = "rust-api-examples"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[dependencies]
+kdbplus = { version = "=0.3.8", features = ["ipc"] }
+tokio = { version = "=1.53.2", features = ["macros", "rt-multi-thread", "time"] }
+chrono = "0.4"
