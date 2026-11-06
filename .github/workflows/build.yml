@@ -1,0 +1,72 @@
+name: Build site
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    if: github.repository == 'peachq-org/peachq-website'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - run: pip install -r requirements.txt
+
+      - name: Install PHP
+        run: sudo apt-get update && sudo apt-get install -y php-cli
+
+      - name: Build
+        run: ./tools/build.sh
+
+      - name: Verify search indexes and preview watcher
+        run: python -m unittest discover -s tests -p 'test_*.py'
+
+      - name: Verify pages
+        run: ./tests/test_pages.sh
+
+      # The site is also served from timestored.com/peachq. This serves the same
+      # build from a subdirectory and checks every link still resolves.
+      - name: Verify it works in a subdirectory
+        run: ./tests/test_subdirectory.sh
+
+      # Article videos are uploaded to the server separately, never from
+      # CI, so an article must not publish before its video is on the server.
+      - name: Verify article videos are on peachq.org
+        run: python3 tools/check-site.py --base https://peachq.org --only videos
+
+      # Contributors who cannot run the site locally can download this from the
+      # Checks tab and open it, rather than guessing at how a change looks.
+      # The PHP pages need a PHP server, but the docs and news render as-is.
+      - name: Attach preview build
+        uses: actions/upload-artifact@v4
+        with:
+          name: site-preview
+          path: site/
+          retention-days: 14
+
+      - name: Publish to built branch
+        if: github.ref == 'refs/heads/main'
+        run: |
+          git config user.name "peachq-bot"
+          git config user.email "noreply@peachq.org"
+          git checkout --orphan built-tmp
+          git rm -rf --cached . >/dev/null
+          find . -maxdepth 1 ! -name site ! -name .git ! -name . -exec rm -rf {} +
+          # cp -a site/. copies dotfiles; `mv site/*` would silently drop
+          # .htaccess, which every extensionless URL depends on.
+          cp -a site/. .
+          rm -rf site
+          git add -A
+          git commit -m "Build ${GITHUB_SHA}"
+          git branch -M built-tmp built
+          git push --force origin built

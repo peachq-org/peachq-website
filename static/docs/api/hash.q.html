@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<!-- Resolves every relative URL below against the site root rather than the
+     requested path. See peachq_install_path(). -->
+
+<title>hash.q - PeachQ API</title>
+<link rel="canonical" href="https://peachq.org/docs/api/hash.q.html">
+<link rel="icon" href="../../img/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="16x16" href="../../img/peachq-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../../img/peachq-32x32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../../img/peachq-180x180.png">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" />
+<link rel="stylesheet" href="qdoc2.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/q.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/shell.min.js"></script>
+<script>hljs.highlightAll();</script>
+<link rel="stylesheet" href="../../css/styles.css">
+<link rel="stylesheet" href="peachq-api.css">
+<script src="../../mirror-banner.js" defer></script>
+<!-- Matomo. Self-hosted at timestored.com/mat, so no third-party analytics
+     service sees the traffic. Site 4 is "peachq"; site 1 is TimeStored's own
+     site, and pointing this at 1 filed every PeachQ visit under TimeStored.
+     Keep in sync with overrides/main.html, which carries the same snippet for
+     the MkDocs half of the site; tests/test_pages.sh checks the id matches. -->
+<script>
+  (function() {
+    // Local previews do not send analytics.
+    var host = window.location.hostname;
+    if (host === 'localhost' || host.endsWith('.localhost') ||
+        /^127\./.test(host) || host === '[::1]' || host === '::1') return;
+    var _paq = window._paq = window._paq || [];
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    var u="//www.timestored.com/mat/";
+    _paq.push(['setTrackerUrl', u+'matomo.php']);
+    _paq.push(['setSiteId', '4']);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+</head>
+<body class="peachq-api">
+<header class="nav">
+  <div class="container nav-inner">
+    <a class="brand" href="../.././"><img class="logo" src="../../img/peachq-logo.svg" alt="PeachQ logo"><span>Peach<span style="color:var(--peach-strong)">Q</span></span></a>
+    <button class="mobile-menu" type="button" data-mobile-menu aria-expanded="false" aria-controls="siteNav">Menu</button>
+    <nav class="nav-links" id="siteNav">
+      <a href="../../repl" class="nav-cta">Try Live</a>
+      <a href="../../download">Download</a>
+      <a href="../../docs/" class="active">Docs</a>
+      <a href="../../compatibility">Compatibility</a>
+      <a href="../../news/">News</a>
+      <a href="../../about">About</a>
+      <a href="https://github.com/peachq-org/peachq" target="_blank" rel="noreferrer">GitHub ↗</a>
+      <button class="theme-toggle" data-theme-toggle aria-label="Toggle theme"></button>
+    </nav>
+  </div>
+</header>
+<div class="preview-ribbon" aria-hidden="true">Early preview</div>
+
+
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav" id="api-sidebar">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+<p><a href="../">← PeachQ docs</a></p>
+        <a href="./"  class="icon icon-home"> PeachQ API</a><div role="search">
+  <!-- form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form -->
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Namespaces</span></p>
+
+
+<ul><li class="toctree-l1 cls-crypto-cls"><a class="reference internal cls-crypto-cls" href='crypto.q.html' >.crypto</a></li>
+	<li class="toctree-l1 cls-csv-cls"><a class="reference internal cls-csv-cls" href='csv.q.html' >.csv</a></li>
+	<li class="toctree-l1 cls-duckdb-cls"><a class="reference internal cls-duckdb-cls" href='duckdb.q.html' >.duckdb</a></li>
+	<li class="toctree-l1 cls-ffi-cls"><a class="reference internal cls-ffi-cls" href='ffi.q.html' >.ffi</a></li>
+	<li class="toctree-l1 cls-fs-cls"><a class="reference internal cls-fs-cls" href='fs.q.html' >.fs</a></li>
+	<li class="toctree-l1 current"><a class="reference internal current" href='hash.q.html' >.hash</a></li>
+	<li class="toctree-l1 cls-j-cls"><a class="reference internal cls-j-cls" href='j.q.html' >.j</a></li>
+	<li class="toctree-l1 cls-kafka-cls"><a class="reference internal cls-kafka-cls" href='kafka.q.html' >.kafka</a></li>
+	<li class="toctree-l1 cls-massive-cls"><a class="reference internal cls-massive-cls" href='massive.q.html' >.massive</a></li>
+	<li class="toctree-l1 cls-md-cls"><a class="reference internal cls-md-cls" href='md.q.html' >.md</a></li>
+	<li class="toctree-l1 cls-parquet-cls"><a class="reference internal cls-parquet-cls" href='parquet.q.html' >.parquet</a></li>
+	<li class="toctree-l1 cls-path-cls"><a class="reference internal cls-path-cls" href='path.q.html' >.path</a></li>
+	<li class="toctree-l1 cls-pkg-cls"><a class="reference internal cls-pkg-cls" href='pkg.q.html' >.pkg</a></li>
+	<li class="toctree-l1 cls-pq-cls"><a class="reference internal cls-pq-cls" href='pq.q.html' >.pq</a></li>
+	<li class="toctree-l1 cls-qunit-cls"><a class="reference internal cls-qunit-cls" href='qunit.q.html' >.qunit</a></li>
+	<li class="toctree-l1 cls-regexp-cls"><a class="reference internal cls-regexp-cls" href='regexp.q.html' >.regexp</a></li>
+	<li class="toctree-l1 cls-s-cls"><a class="reference internal cls-s-cls" href='s.q.html' >.s</a></li>
+	<li class="toctree-l1 cls-sql-cls"><a class="reference internal cls-sql-cls" href='sql.q.html' >.sql</a></li>
+	<li class="toctree-l1 cls-str-cls"><a class="reference internal cls-str-cls" href='str.q.html' >.str</a></li>
+	<li class="toctree-l1 cls-termbox-cls"><a class="reference internal cls-termbox-cls" href='termbox.q.html' >.termbox</a></li>
+	<li class="toctree-l1 cls-yml-cls"><a class="reference internal cls-yml-cls" href='yml.q.html' >.yml</a></li>
+</ul><!--NAMESPACE_END-->
+
+              <p class="caption"><span class="caption-text">Files</span></p>
+
+<ul><li class="toctree-l1 cls-crypto-cls"><a class="reference internal cls-crypto-cls" href='crypto.q.html' >crypto.q</a></li>
+	<li class="toctree-l1 cls-csv-cls"><a class="reference internal cls-csv-cls" href='csv.q.html' >csv.q</a></li>
+	<li class="toctree-l1 cls-duckdb-cls"><a class="reference internal cls-duckdb-cls" href='duckdb.q.html' >duckdb.q</a></li>
+	<li class="toctree-l1 cls-ffi-cls"><a class="reference internal cls-ffi-cls" href='ffi.q.html' >ffi.q</a></li>
+	<li class="toctree-l1 cls-fs-cls"><a class="reference internal cls-fs-cls" href='fs.q.html' >fs.q</a></li>
+	<li class="toctree-l1 current"><a class="reference internal current" href='hash.q.html' >hash.q</a></li>
+	<li class="toctree-l1 cls-j-cls"><a class="reference internal cls-j-cls" href='j.q.html' >j.q</a></li>
+	<li class="toctree-l1 cls-kafka-cls"><a class="reference internal cls-kafka-cls" href='kafka.q.html' >kafka.q</a></li>
+	<li class="toctree-l1 cls-massive-cls"><a class="reference internal cls-massive-cls" href='massive.q.html' >massive.q</a></li>
+	<li class="toctree-l1 cls-md-cls"><a class="reference internal cls-md-cls" href='md.q.html' >md.q</a></li>
+	<li class="toctree-l1 cls-parquet-cls"><a class="reference internal cls-parquet-cls" href='parquet.q.html' >parquet.q</a></li>
+	<li class="toctree-l1 cls-path-cls"><a class="reference internal cls-path-cls" href='path.q.html' >path.q</a></li>
+	<li class="toctree-l1 cls-pkg-cls"><a class="reference internal cls-pkg-cls" href='pkg.q.html' >pkg.q</a></li>
+	<li class="toctree-l1 cls-pq-cls"><a class="reference internal cls-pq-cls" href='pq.q.html' >pq.q</a></li>
+	<li class="toctree-l1 cls-qunit-cls"><a class="reference internal cls-qunit-cls" href='qunit.q.html' >qunit.q</a></li>
+	<li class="toctree-l1 cls-regexp-cls"><a class="reference internal cls-regexp-cls" href='regexp.q.html' >regexp.q</a></li>
+	<li class="toctree-l1 cls-s-cls"><a class="reference internal cls-s-cls" href='s.q.html' >s.q</a></li>
+	<li class="toctree-l1 cls-sql-cls"><a class="reference internal cls-sql-cls" href='sql.q.html' >sql.q</a></li>
+	<li class="toctree-l1 cls-str-cls"><a class="reference internal cls-str-cls" href='str.q.html' >str.q</a></li>
+	<li class="toctree-l1 cls-termbox-cls"><a class="reference internal cls-termbox-cls" href='termbox.q.html' >termbox.q</a></li>
+	<li class="toctree-l1 cls-yml-cls"><a class="reference internal cls-yml-cls" href='yml.q.html' >yml.q</a></li>
+</ul><!--FILES_END-->
+
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <button type="button" data-api-menu aria-expanded="false" aria-controls="api-sidebar">☰ API menu</button>
+          <a href="./">PeachQ API</a>
+
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="./" class="icon icon-home" aria-label="Docs"></a></li>
+          <!-- li class="breadcrumb-item">Files-Breadcrumb</li -->
+      <li class="breadcrumb-item active">hash.q</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+
+                <h1 id="foobar">hash.q</h1>
+
+
+
+	<div id='headerDoc'>Non-cryptographic hashes - xxHash (xxh32, xxh64, xxh3_64, xxh3_128), rapidhash and MurmurHash3 - for bucketing, keying, sampling and fingerprinting (md5 and .Q.sha1 are the digests). Every function hashes the bytes of a string, a byte vector or a symbol (its text); a char atom is one byte.  A symbol vector, or a list of those subjects, answers one hash per element in a single call (a list of one-char strings is spelt (enlist "a";enlist "b") - ("a";"b") is the string "ab"); anything else is 'type.  A 32-bit hash rides a long; a 64-bit hash is the long with the same bit pattern (negative when the top bit is set); a 128-bit hash is 16 bytes, a list of them over a collection.  The plain forms use seed 0; .hash.seeded takes the seed explicitly.  The values are those of DuckDB's hashfuncs extension for the same bytes and seed, so a key bucketed in q matches one bucketed in SQL.
+
+<div class='qd-examples'><h3>Examples</h3><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.hash.xxh64 "hello world"</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.hash.xxh64 `AAPL`MSFT`IBM</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.hash.seeded[`murmur3_32;42;"hello world"]</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div></div></div>
+	<div id='summary'><h2>Entity Summary</h2><table class='overviewSummary'><tbody>
+<tr><th>Entities</th><th>Short Description</th></tr>
+		<tr><td><a href='#-hash-murmur3_128'>.hash.murmur3_128[x]</a></td><td>MurmurHash3 x86_128 with seed 0, as the 16 bytes the reference writes (four little-endian words), what every MurmurHash3 library hands back as bytes; `raze string reverse` reads them as one little-endian number.</td></tr>
+		<tr><td><a href='#-hash-murmur3_32'>.hash.murmur3_32[x]</a></td><td>MurmurHash3 x86_32 with seed 0, as a long holding the unsigned 32-bit value.</td></tr>
+		<tr><td><a href='#-hash-murmur3_x64_128'>.hash.murmur3_x64_128[x]</a></td><td>MurmurHash3 x64_128 with seed 0, as the 16 bytes the reference writes (two little-endian words), what every MurmurHash3 library hands back as bytes; `raze string reverse` reads them as one little-endian number.</td></tr>
+		<tr><td><a href='#-hash-rapidhash'>.hash.rapidhash[x]</a></td><td>rapidhash v3 with seed 0, as the long with the same 64 bits.</td></tr>
+		<tr><td><a href='#-hash-seeded'>.hash.seeded[algo;seed;data]</a></td><td>Any of the eight hashes with an explicit seed; seed 0 is the plain form.</td></tr>
+		<tr><td><a href='#-hash-xxh32'>.hash.xxh32[x]</a></td><td>xxHash XXH32 with seed 0, as a long holding the unsigned 32-bit value.</td></tr>
+		<tr><td><a href='#-hash-xxh3_128'>.hash.xxh3_128[x]</a></td><td>xxHash XXH3 128-bit with seed 0, as 16 bytes in xxHash's canonical order (high 64 bits first), so `raze string` of the result is the hex other xxHash implementations print.</td></tr>
+		<tr><td><a href='#-hash-xxh3_64'>.hash.xxh3_64[x]</a></td><td>xxHash XXH3 64-bit with seed 0, as the long with the same 64 bits.</td></tr>
+		<tr><td><a href='#-hash-xxh64'>.hash.xxh64[x]</a></td><td>xxHash XXH64 with seed 0, as the long with the same 64 bits.</td></tr>
+</tbody></table></div>
+	<div class='details'>
+	<h2>Entity Details</h2>
+		<div class='entity' id='-hash-murmur3_128'><h2>.hash.murmur3_128[x]</h2><p class='qd-description'>MurmurHash3 x86_128 with seed 0, as the 16 bytes the reference writes (four little-endian words), what every MurmurHash3 library hands back as bytes; `raze string reverse` reads them as one little-endian number.</p><div class='qd-examples'><h3>Examples</h3><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.hash.murmur3_128 "abc"</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div></div></div>
+		<div class='entity' id='-hash-murmur3_32'><h2>.hash.murmur3_32[x]</h2><p class='qd-description'>MurmurHash3 x86_32 with seed 0, as a long holding the unsigned 32-bit value.</p><div class='qd-examples'><h3>Examples</h3><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.hash.murmur3_32 "abc"</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div></div></div>
+		<div class='entity' id='-hash-murmur3_x64_128'><h2>.hash.murmur3_x64_128[x]</h2><p class='qd-description'>MurmurHash3 x64_128 with seed 0, as the 16 bytes the reference writes (two little-endian words), what every MurmurHash3 library hands back as bytes; `raze string reverse` reads them as one little-endian number.</p><div class='qd-examples'><h3>Examples</h3><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.hash.murmur3_x64_128 "abc"</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div></div></div>
+		<div class='entity' id='-hash-rapidhash'><h2>.hash.rapidhash[x]</h2><p class='qd-description'>rapidhash v3 with seed 0, as the long with the same 64 bits.</p><div class='qd-examples'><h3>Examples</h3><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.hash.rapidhash "abc"</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div></div></div>
+		<div class='entity' id='-hash-seeded'><h2>.hash.seeded[algo;seed;data]</h2><p class='qd-description'>Any of the eight hashes with an explicit seed; seed 0 is the plain form.</p><table class='qd-tags qd-parameters'>
+<tr><th>Return: </th><td>as the algorithm's plain form; a vector (or list of 16-byte vectors) over a collection</td></tr>
+<tr><th>Parameters: </th><td><ul class='qd-parameters'>
+	<li><strong>seed</strong> - (long) any integer atom: xxh32 and the murmur3 hashes take 0 to 4294967295, the others any 64-bit pattern (-1 is the seed 18446744073709551615)</li>
+	<li><strong>data</strong> - (any) the string, byte vector, symbol or char to hash, or a symbol vector / list of those for one hash each</li>
+	<li><strong>algo</strong> - (symbol) one of `xxh32`xxh64`xxh3_64`xxh3_128`rapidhash`murmur3_32`murmur3_128`murmur3_x64_128; the same name as a string also reads</li></ul></td></tr>
+<tr><th>throws: </th><td><ul class='qd-tags'>
+	<li><strong>domain</strong> - an unknown algorithm, or a 32-bit seed out of range</li>
+	<li><strong>type</strong> - data (or an element of it) is not text, bytes or a symbol, or seed is not an integer</li></ul></td></tr></table><div class='qd-examples'><h3>Examples</h3><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.hash.seeded[`xxh64;42;"abc"]</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.hash.seeded[`murmur3_32;42;("abc";`abc;0x616263)]</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div></div></div>
+		<div class='entity' id='-hash-xxh32'><h2>.hash.xxh32[x]</h2><p class='qd-description'>xxHash XXH32 with seed 0, as a long holding the unsigned 32-bit value.</p><div class='qd-examples'><h3>Examples</h3><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.hash.xxh32 "abc"</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div></div></div>
+		<div class='entity' id='-hash-xxh3_128'><h2>.hash.xxh3_128[x]</h2><p class='qd-description'>xxHash XXH3 128-bit with seed 0, as 16 bytes in xxHash's canonical order (high 64 bits first), so `raze string` of the result is the hex other xxHash implementations print.</p><div class='qd-examples'><h3>Examples</h3><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>raze string .hash.xxh3_128 "abc"</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div></div></div>
+		<div class='entity' id='-hash-xxh3_64'><h2>.hash.xxh3_64[x]</h2><p class='qd-description'>xxHash XXH3 64-bit with seed 0, as the long with the same 64 bits.</p><div class='qd-examples'><h3>Examples</h3><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.hash.xxh3_64 "abc"</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div></div></div>
+		<div class='entity' id='-hash-xxh64'><h2>.hash.xxh64[x]</h2><p class='qd-description'>xxHash XXH64 with seed 0, as the long with the same 64 bits.</p><div class='qd-examples'><h3>Examples</h3><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.hash.xxh64 "abc"</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div></div></div></div><!--MAIN_END-->
+
+
+            </div>
+
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <!-- a href="../foo/" class="btn btn-neutral float-left" title="Foo"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../../namespaces/bar/" class="btn btn-neutral float-right" title="Bar">Next <span class="icon icon-circle-arrow-right"></span></a -->
+    </div>
+
+  <hr/>
+
+
+
+  <div role="contentinfo">
+    <!-- Copyright -->
+  </div>
+
+  Built with <a href="https://www.timestored.com/qstudio/help/qdoc">QDoc</a> provided by <a href="https://www.timestored.com/">TimeStored</a>. <nav class="peachq-api-links" aria-label="PeachQ links"><a href="../">Docs</a> · <a href="../../thanks/">Thanks</a> · <a href="https://github.com/peachq-org/peachq/blob/ed338027340745d2d8422b85c7d7d11fea474a51/qlib/hash.q">Source</a></nav>
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+
+
+
+
+
+
+
+<script src="peachq-api.js"></script><footer class="footer">
+  <div class="container footer-inner">
+    <div>PeachQ - MIT-licensed open source q, built on Rayforce with DuckDB storage in progress.
+      <a href="../../thanks/">Thanks</a>
+    </div>
+    <nav class="footer-links" aria-label="Footer">
+      <a href="../../repl">Try Live</a><a href="../../download">Download</a><a href="../../docs/">Docs</a>
+      <a href="../../compatibility">Compatibility</a><a href="../../roadmap">Roadmap</a><a href="../../news/">News</a>
+      <a href="../../about">About</a><a href="../../contact">Contact</a>
+      <a href="https://github.com/peachq-org/peachq" target="_blank" rel="noreferrer">GitHub ↗</a>
+    </nav>
+  </div>
+</footer>
+<script src="../../script.js"></script>
+</body>
+</html>

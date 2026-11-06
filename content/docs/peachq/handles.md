@@ -1,0 +1,594 @@
+---
+title: "Handles and Resources"
+peachq_source: user-docs/handles.md
+peachq_revision: 4d5abf6cfaa00dbdac9b20f75f3198253efc99e6
+---
+
+# Handles and Resources
+
+--8<-- "includes/duckdb-download.md"
+
+PeachQ keeps the familiar kdb+/q handle syntax while giving it a clearer mental model for new resource types.
+
+In kdb+/q, symbols beginning with `:` are commonly described as **file handles**, **process handles**, or **communication handles** depending on how
+they are used. PeachQ preserves those existing behaviours and syntax. For the extended model described here, we use the term **resource
+specification** for a `:...` symbol that identifies something outside the immediate q value space.
+
+For example:
+
+```q
+`:data/trades.csv
+`:localhost:5000
+`:https://www.timestored.com/data/sample/dowjones.csv
+`:pq:duckdb:prod:trade/
+```
+
+A resource specification says **what resource is being referred to**. The operation applied to it determines what PeachQ asks that resource to do.
+
+Existing kdb+/q behaviour takes precedence where it is defined. PeachQ extends the model to additional transports, containers, formats, and providers.
+
+## The mental model
+
+A resource can have one or more capabilities. It may be readable, writable, openable, callable, queryable as a table, or expose other resources.
+
+These capabilities overlap. They are not intended to form a rigid hierarchy of mutually exclusive handle types.
+
+| Resource | Example | Typical behaviour |
+|---|---|---|
+| File | ```:data/x``` | `get`, `set`, `read0`, `read1`, file I/O |
+| Splayed table | ```:data/trade/``` | `get`, `select`, `exec`, table operations |
+| q IPC endpoint | ```:localhost:5000``` | open, synchronous call, asynchronous send |
+| HTTP resource | ```:http://host/x``` | retrieve remote content; `select` and `get` decode a CSV as a table |
+| WebSocket endpoint | ```:ws://host/x``` | connect, then persistent framed messaging |
+| Alias | ```:pq:q:srv```, ```:pq:duckdb:prod:trade/``` | a named connection of one kind, and its tables |
+
+An **opened handle** is different from a resource specification. For example, `hopen` on an IPC resource returns an integer handle. The `:...`
+value identifies the resource; the returned integer represents an opened connection to it. `hopen` on an alias returns the
+**alias symbol** instead (see Aliases below): the handle says what it is, and it is the same value the coordinate forms use.
+
+## Resources as tables
+
+PeachQ extends the existing q idea that some resources can be used directly as tables.
+
+A trailing `/` is an important part of that model. In existing q, a splayed table is addressed by a directory-style resource ending in `/`. An
+alias names its tables the same way, `:<table>/` after the alias:
+
+```q
+`:data/trade/
+`:pq:duckdb:prod:trade/
+```
+
+Both mean the resource is explicitly table- or collection-like. A resource without either remains file-, object-,
+endpoint-, or member-like unless another rule, such as a recognised tabular file format, gives it table semantics.
+
+This gives PeachQ two clear routes into qSQL:
+
+1. An explicit table resource, signalled by a trailing `/`: a splay, or an alias's table (`:<table>/` after the alias).
+2. A file-like resource whose format is known to decode to a table, such as `.csv`, `.tsv`, `.json`, or `.parquet` (see [Parquet](parquet.md)).
+
+Existing q supports operations such as:
+
+```q
+select from `:data/trade/
+```
+
+PeachQ generalises the idea:
+
+```q
+select from `:trades.csv
+select from `:https://www.timestored.com/data/sample/dowjones.csv
+select from `:pq:duckdb:prod:trade/
+```
+
+The intended meaning in each case is:
+
+> Resolve this resource as a table, then apply qSQL to it.
+
+The mechanism used to obtain the table may be completely different for each resource.
+
+A local CSV may be read and decoded into a table. An HTTP CSV may first be downloaded and then decoded. A DuckDB provider may translate and push the
+qSQL query into DuckDB without materialising the full table ([Storing tables in DuckDB](sql-duckdb-storage.md)).
+
+The qSQL expression should not need to know which path was taken.
+
+## Transport, container, format, and provider
+
+When resolving data resources, it is useful to separate four concepts.
+
+| Concept | Examples | Responsibility |
+|---|---|---|
+| **Transport** | file, HTTP, HTTPS, S3 (and the other DuckDB-carried schemes) | Obtain underlying bytes or content; where possible support ranged `read0` / `read1` |
+| **Container** | ZIP | Expose a member or child resource |
+| **Format / decoder** | CSV, TSV, JSON, Parquet | Convert content into a logical value such as a table |
+| **Query provider** | DuckDB, q IPC provider | Expose table/query semantics directly, potentially with pushdown |
+
+These concepts can compose.
+
+For example, the proposed:
+
+```q
+select from `:https://www.timestored.com/data/sample/dowjones.csv
+```
+
+is conceptually:
+
+```text
+HTTP transport
+    -> content
+    -> CSV decoder
+    -> table
+    -> qSQL
+```
+
+A proposed ZIP example:
+
+```q
+select from `:zip://archive.zip/trades.csv
+```
+
+is conceptually:
+
+```text
+file transport
+    -> ZIP container
+    -> trades.csv member
+    -> CSV decoder
+    -> table
+    -> qSQL
+```
+
+ZIP support and `zip://` syntax are **planned, not currently supported**.
+
+This separation is important. HTTP is not a CSV provider: it is a transport. ZIP is not a table format: it is a container. CSV describes how the final
+content is decoded.
+
+### Remote schemes: DuckDB is the transport
+
+`http(s)://` is peachq's own HTTP client. Every other remote scheme is carried by DuckDB's `httpfs` extension under the
+**transport law**: DuckDB is the transport for every scheme it speaks and peachq does not, and a format is decoded by
+whoever owns its meaning.
+
+| Scheme | Transport | Notes |
+|---|---|---|
+| `s3://` (`s3a://`, `s3n://`) | DuckDB httpfs | anonymous for a public bucket; credentials are DuckDB secrets (below) |
+| `gcs://`, `gs://` | DuckDB httpfs | Google Cloud Storage, through its S3-compatible endpoint |
+| `r2://` | DuckDB httpfs | Cloudflare R2 (always needs a secret) |
+| `hf://` | DuckDB httpfs | Hugging Face Hub: `hf://datasets/<owner>/<dataset>/<path>` |
+| `az://` | N/A | **not supported** (needs DuckDB's separate `azure` extension; handed to DuckDB untested) |
+
+`httpfs` (and `aws`, the credential chain) are DuckDB extensions. The `-duckdb` release archive bundles both beside
+`q`, pinned to the bundled DuckDB, and `q` points DuckDB at that `extensions/` directory with auto-install off, so
+every scheme above works offline, with no download at first use. With a DuckDB library you supplied yourself (the
+standard archive plus `PEACHQ_DUCKDB_LIB`, or a system DuckDB), DuckDB's own defaults apply: the first remote read
+auto-installs `httpfs` from `extensions.duckdb.org` into `~/.duckdb`, which needs the network once.
+
+What decodes the bytes is unchanged by the scheme:
+
+```q
+select from `:s3://bucket/trades.csv      / DuckDB fetches the object, peachq's CSV decoder reads it
+select from `:hf://datasets/o/d/x.jsonl   / likewise JSON Lines
+read0 `:s3://bucket/notes.txt              / the lines
+read1 `:s3://bucket/blob.bin               / the bytes
+get `:s3://bucket/trades.csv               / the same table select from reads
+select from `:s3://bucket/x.parquet        / parquet is DuckDB's format: read_parquet on the URL, in place
+```
+
+csv, tsv, json, jsonl, `read0`, `read1` and `get` see the bytes DuckDB's `read_blob('url')` returns; peachq's
+decoders are THE parser of what a cell means, and a second type inference (DuckDB's CSV reader) would disagree with
+them. Parquet is the one format DuckDB owns, so it is read in place with pushdown ([Parquet](parquet.md)).
+
+`read_blob` fetches the **whole object**: a ranged `read1 (`:s3://…;offset;length)` slices that in memory, so it costs
+the object, not the range. On any URL the query string and `#fragment` are not part of the format claim, so
+`` `:…/k.csv?X-Amz-Signature=… `` is still CSV: a presigned S3 URL is an `https://` URL and travels on peachq's own
+client; the same spelling on `s3://` is handed to DuckDB verbatim. An unrecognised ending on a remote resource is
+`'type`; there is no q-object fallback to fetch. A glob names several objects: `` select from `:s3://b/*.parquet ``
+reads them all (DuckDB's door), while `read0`/`read1`/csv/json read ONE resource and answer `'domain`.
+
+Writes follow the same law. `` `:s3://bucket/x.parquet set t `` is DuckDB's `COPY TO`; `` `:s3://bucket/x.csv set t ``
+(and `.json`, `.txt`, `.xml`, `.xls`: every `.h.tx` key that produces lines) writes peachq's own lines through
+DuckDB as a dumb line transport (`.duckdb.i.write0`), byte for byte what the same `set` writes to a local file, so
+`select from` reads them back. The lines must be UTF-8 (DuckDB text is). A `.h.tx` entry that produces BYTES has no
+remote transport (`'nyi`); parquet does not reach that arm.
+
+Credentials are DuckDB secrets on the main instance, through the standard library:
+
+```q
+\l pq
+.duckdb.secret[`aws;`s3;`key_id`secret`region!("AKIA…";"…";"eu-west-1")]   / CREATE OR REPLACE SECRET aws (TYPE s3, KEY_ID '…', …)
+.duckdb.secret[`aws;`s3;`provider`persistent!(`credential_chain;1b)]        / CREATE PERSISTENT SECRET, the AWS SDK chain
+.duckdb.secrets[]                                                          / name type provider persistent storage scope; never the values
+.duckdb.secret[`aws;`;::]                                                  / DROP SECRET aws
+```
+
+Opts ride verbatim as `KEY value` clauses (a string or symbol quoted, a bool or number bare), so DuckDB's own
+documentation of a secret type is the reference and an unknown key is DuckDB's own refusal (`'duckdb`, `.duckdb.err[]`
+the reason). The `-duckdb` download bundles `httpfs`, so it loads offline; with a DuckDB library you supplied yourself it is
+fetched from DuckDB's repository once (see Remote schemes above), and a failed load is the same `'duckdb` with `.duckdb.err[]` saying why. In restricted mode (`-U`) every remote door is
+`'access` before DuckDB is asked.
+
+### HTTPS certificates
+
+peachq's own client (`https://` in `select from`, `read0`, `read1`, `.Q.hg`, `.Q.hp`, and `hopen` of `tcps://` or
+`wss://`) always checks the server's certificate, and needs no setup to do it: with nothing configured it trusts the
+operating system's root certificates: the Windows root store on Windows, OpenSSL's default bundle elsewhere. kdb's
+environment variables change that, read afresh on every connection:
+
+| Variable | Effect |
+|---|---|
+| `SSL_CA_CERT_FILE` | trust only the roots in this PEM bundle (replaces the operating system's) |
+| `SSL_CA_CERT_PATH` | trust only the roots in this directory |
+| `SSL_VERIFY_SERVER=NO` | do not check certificates at all |
+
+A `KX_` prefix (`KX_SSL_CA_CERT_FILE`) wins over the bare name. A certificate that fails the check is `'conn`;
+`.pq.tlsinfo[]` says why, and what each client in the process trusts:
+
+```q
+q)@[.Q.hg;`$":https://self-signed.badssl.com/";{x}]
+"conn"
+q)first exec last_error from .pq.tlsinfo[] where transport=`peachq
+"handshake failed: certificate verify failed: self-signed certificate"
+```
+
+`ca_source` is `` `os `` on Windows, `` `default `` elsewhere and `` `env `` when a variable names the roots;
+`overridden_by` lists the variables in force. Once DuckDB's `httpfs` is loaded a `duckdb` row reports its own
+`ca_cert_file` and `enable_curl_server_cert_verification` settings. DuckDB's remote schemes check certificates with
+their own client, which also needs no setup.
+
+## `get`, `read0`, `read1`, and `select`
+
+These operations ask different questions of a resource.
+
+```q
+get `:some-resource
+```
+
+asks for the resource using its normal q `get` semantics. For ordinary file paths, `get` retains existing q
+object-loading semantics, with one addition: a file whose ending names a table format `select from` reads (`.csv`,
+`.tsv`, `.json`, `.jsonl`, `.ndjson`, `.parquet`) answers that table, so `` get `:trades.csv `` is
+`` select from `:trades.csv `` materialised.
+
+```q
+read0 `:some-resource
+read1 `:some-resource
+```
+
+ask for the textual or binary contents of a resource. PeachQ should preserve the existing q distinction: `read0` is the text-oriented read operation
+and `read1` is the binary read operation.
+
+Both operations should preserve q's ranged-read forms:
+
+```q
+read0 (`:some-resource;offset;length)
+read1 (`:some-resource;offset;length)
+```
+
+Offsets are resource byte offsets. A transport that supports native range reads, such as HTTP, may satisfy these operations without fetching the
+whole object. A transport that does not support efficient ranges falls back to fetching and slicing; the DuckDB-carried schemes (`s3://`
+and the rest of § Remote schemes) do, since `read_blob` answers the whole object.
+
+For HTTP, therefore:
+
+```q
+read0 `:http://example.com/a.txt
+read1 `:http://example.com/a.bin
+read1 (`:http://example.com/large.bin;1048576;65536)
+```
+
+while:
+
+```q
+select from `:http://example.com/a.csv
+```
+
+means:
+
+```text
+HTTP transport
+    -> resource content
+    -> CSV decode
+    -> table
+    -> qSQL
+```
+
+This works today for CSV over `http://` and `https://`. Parquet over HTTP does not decode as a table yet.
+
+The important rule is that `read0` and `read1` retrieve resource content, while the **table resolver used by qSQL**
+performs format interpretation, and `get` asks that resolver, never a resolver of its own.
+
+## Format inference
+
+For table selection, PeachQ should prefer explicit interpretation over inference.
+
+The initial rule is:
+
+1. An explicit scheme or `:pq:` alias wins.
+2. Otherwise, a recognised file ending selects the format.
+3. Otherwise, PeachQ does not invent a tabular interpretation.
+
+For example:
+
+```q
+select from `:trades.csv
+select from `:trades.tsv
+select from `:trades.json
+select from `:trades.jsonl
+select from `:trades.ndjson
+```
+
+can select the CSV/TSV or JSON decoder from the file ending.
+
+The ending is a **declaration**, not a hint, so it can carry more than the decoder's name. `.jsonl` and `.ndjson` say the
+file is JSON Lines and it is read that way; `.json` says only JSON, and the reader decides whether the file is one
+document or a stream. Nothing is inferred from the bytes: a `.jsonl` holding a single JSON array is an error rather than a
+quiet re-reading. [Reading JSON](json.md) covers framing.
+
+The same rule is intended to apply after transport resolution:
+
+```q
+select from `:https://www.timestored.com/data/sample/dowjones.csv
+```
+
+The final `.csv` identifies the decoder after HTTP has retrieved the content.
+
+If the resource does not have a recognised table format:
+
+```q
+select from `:trades.dat
+```
+
+PeachQ should fail rather than guess.
+
+`get` (and `value`, its synonym) asks the same resolver ahead of the q binary reader: a recognised ending answers the
+table, no recognised ending is the q object load as in kdb+, and a missing file is the reader's own error (`'io`). kdb+
+signals `'type` for any non-kdb file there, so no working kdb+ program changes meaning. `read0` and `read1` remain
+independent of table-format inference.
+
+The same ending selects the WRITER. `` `:f.EXT set t `` writes the format `.h.tx` names for `EXT`, for every `.h.tx`
+key: `csv`, `txt`, `xml`, `xls` and `json` through peachq's own writers (the lines `save` would write, so
+`` select from `:f.csv `` reads them back), `parquet` through `.parquet.write` (see [Parquet](parquet.md)). `t`
+must be a table (`'type` otherwise); no recognised ending is the binary form as in kdb+, and a dotfile such as
+`` `:.json `` is not a format claim. This is a documented divergence from kdb+, where the same `set` writes the q
+binary form under any name. To a remote scheme (`s3://`, `gcs://`, `hf://`) the same endings write the same bytes,
+through DuckDB (§ Remote schemes). The read set is the reader's, not `.h.tx`'s: `xml`, `xls`, `txt`
+and `raw` have writers and no reader, so `` get `:f.xml `` stays `'type`.
+
+Applications that know an ambiguously named file is CSV can use the explicit CSV API rather than relying on qSQL inference.
+
+PeachQ should not initially make HTTP `Content-Type`, magic-byte sniffing, or other heuristics part of this contract. They can be considered later
+without changing the basic model.
+
+## CSV and other decoded formats
+
+The explicit CSV API remains:
+
+```q
+.csv.read[file;target;types;opts]
+```
+
+`.csv.read` is a local CSV loader and decoder. It should not need to understand HTTP, ZIP, S3, or every future transport.
+
+For direct qSQL over a local CSV:
+
+```q
+select from `:trades.csv
+```
+
+PeachQ can use the CSV decoder to obtain a table and execute qSQL locally.
+
+For a future remote CSV:
+
+```q
+select from `:https://www.timestored.com/data/sample/dowjones.csv
+```
+
+PeachQ owns the composition:
+
+```text
+HTTP retrieves content
+    -> CSV decodes content
+    -> qSQL evaluates the table
+```
+
+The CSV implementation does not become an HTTP implementation. PeachQ's resource layer obtains the content first and then invokes the CSV decoding
+path.
+
+TSV and JSON follow the same general model where they can be interpreted as tables. A local Parquet file already selects as a table; Parquet over HTTP
+does not yet. Parquet can support more efficient projection or predicate pushdown than a simple materialising decoder.
+
+## Ranged reads
+
+Ranged reads are part of the resource contract because they are useful for both existing file I/O and remote object stores.
+
+```q
+read1 (`:large.bin;1048576;65536)
+read1 (`:s3://bucket/large.parquet;footerOffset;footerLength)
+```
+
+The public operation remains `read0` or `read1`; transports should not require separate user-facing APIs such as `.s3.readRange`. Native range support
+is an implementation optimisation, not a different user model.
+
+This is particularly important for formats such as Parquet, where a decoder may read file metadata and selected row groups without materialising the
+whole object.
+
+## Containers
+
+Containers introduce another resource-resolution step.
+
+The planned ZIP notation is:
+
+```q
+`:zip://archive.zip/member.csv
+```
+
+and, when table selection is supported:
+
+```q
+select from `:zip://archive.zip/member.csv
+```
+
+`zip://` explicitly says that the outer resource is a ZIP container. This avoids relying on the outer filename ending in `.zip`.
+
+The member can then be interpreted independently from the container:
+
+```text
+:zip://anything.dat/member.csv
+             ^          ^
+         ZIP container  CSV format
+```
+
+This is deliberate. A ZIP file does not need to be named `.zip`, and a CSV file does not always need to be named `.csv` when the caller uses an
+explicit decoding API.
+
+Future transports and containers should compose rather than require combined implementations such as "HTTP CSV" or "ZIP CSV".
+
+## Aliases: `:pq:<kind>:<alias>`
+
+Some resources are not naturally modelled as transport + decoder: another q process, a worker, a database. PeachQ
+names each by `:pq:`, the kind, and an alias you choose:
+
+| kind | connection (the alias handle) | table coordinate | opener | its `arg` |
+|---|---|---|---|---|
+| another q process | `` `:pq:q:srv `` | `` `:pq:q:srv:trade/ `` | `.pq.hopen_q[alias;arg]` | anything kdb+ `hopen` takes: a port, `` `::5000 ``, `` `:host:port ``, `` `:host:port:user:pass ``, a string, `` `:unix://5000 ``, `` `:tcps://… ``, the `(conn;timeout)` pair |
+| a fork of this q | `` `:pq:qfork:w1 `` | none | `.pq.hopen_qfork[alias;arg]` | `::` (the defaults) or a timeout in ms |
+| a fresh peachq | `` `:pq:qspawn:w2 `` | none | `.pq.hopen_qspawn[alias;arg]` | its argv, a list of strings (`""` or `::` for none) |
+| DuckDB | `` `:pq:duckdb:db `` | `` `:pq:duckdb:db:trade/ `` | `.pq.hopen_duckdb[alias;arg]` | a path, `":memory:"`, or a dict of `path` and DuckDB options |
+| Kafka | `` `:pq:kafka:feed `` | `` `:pq:kafka:feed:topic/ `` | `.pq.hopen_kafka[alias;arg]` | a dict of librdkafka settings; see [Kafka](../interfaces/kafka.md) |
+
+[`hopen`](../ref/hopen.md) lists the open forms and their errors.
+
+The segment after `:pq:` is the kind, the alias follows, and `:<table>/` after the alias is a table coordinate; both
+names are `[a-zA-Z][a-zA-Z0-9_]*`, and the spelling is case-sensitive. The reserved `pq` segment is what keeps these
+from reading as kdb+ file paths, so anything else under `:pq:` is `'domain`, never a file. Every opener is one line,
+`hopen (`:pq:<kind>:alias;arg)`, so the raw form is the same call
+(a bare `` hopen `:pq:qfork:w1 `` is arg `::`). An opener is rank 2 and stays rank 2: its arg is the kind's obvious
+form, or a **dict of named options**, the one extension point. A key means the same for every kind that takes it:
+`timeout` is the ms to obtain a live handle, `stdout`/`stderr` a worker's log files, and a key a kind does not take
+is `'domain`, never ignored:
+
+| opener | dict keys |
+|---|---|
+| `.pq.hopen_q` | `conn` (any kdb+ form) and `timeout`; a timeout in both is `'domain` |
+| `.pq.hopen_qfork` | `timeout`, `stdout` and `stderr` |
+| `.pq.hopen_qspawn` | `argv`, `timeout`, `stdout` and `stderr` |
+| `.pq.hopen_duckdb` | `path` beside DuckDB's own ATTACH and SET options; `timeout`, `stdout` and `stderr` are `'domain` |
+
+The arg is kept, privately, with the alias: a reconnect or a relaunch replays it through the same door.
+
+```q
+h:.pq.hopen_q[`srv;(`:localhost:5000;1000)]   / answers the alias symbol `:pq:q:srv
+h "2+2"                                         / the handle applies like any q handle: text is a call
+h (`f;20;5)                                     / on a q alias, a list is a (func;args) message as on a kdb handle
+select from `:pq:q:srv:trade/ where px>2          / a table on the peer, the query pushed there
+hclose h                                        / the one close door
+```
+
+- `hopen` **answers the alias symbol** `` `:pq:<kind>:<alias> ``, not an int. The alias is **required**: a handle needs
+  a name, so `` hopen `:pq:duckdb: `` is `'domain`, and a table coordinate is never a connection (`'domain`).
+- The symbol IS the live connection: `` `:pq:q:srv "1+1" `` and `h "1+1"` are the same call, and the public verbs of a
+  kind take it (`.duckdb.exec[h;sql]`). After `hclose h` the same symbol answers `'conn`, and so does any alias that
+  was never opened: a reference never opens anything. Opening the same alias again re-points it in place and answers
+  the same symbol.
+- `hclose h` is the only close door.
+- `.pq.conns[]` lists every open connection, one row each, its columns named in words (`-38!`, `.z.W` and `.z.H` keep
+  kdb's letters): `handle` is always the int (what `.z.pc` gets and `neg` works on), and `spec` the alias symbol
+  (null for a plain handle), with `kind`, `protocol`, `family`, `compressed`, `queued_msgs`, `queued_bytes`,
+  `outbound`, `user`, `address`, `provider` (`q`, `qfork`, `qspawn`, `duckdb`), `alias`, `opened`, `state`, `pid` and
+  `owned` beside them. `owned` is `1b` on a worker's alias row and `pid` is its process id; they are `0b` and null
+  everywhere else, the socket beneath the alias included, so `count select from .pq.conns[] where owned` counts
+  workers. `hclose` of an owned handle kills and reaps the worker, and so does this process's exit (`exit`, `\\` or the
+  end of its script), without firing `.z.pc`.
+- **A q peer's handle is a kdb handle**: on a `:pq:q:`, `:pq:qfork:` or `:pq:qspawn:` alias every message is sent to the
+  other process unchanged, exactly as on an int handle, whatever names exist here. The async send is `neg` of the
+  alias, as on an int: `neg h` is the alias with a leading `-` (`` `:pq:qfork:-w1 ``), so `neg[h] "x:1"` sends
+  async and `neg[h][]` flushes. `neg` toggles the `-` on any `:pq:` symbol whatever its kind; the provider refuses
+  what it cannot do (DuckDB signals `'domain`). `hopen` of the `-` form opens the alias and answers the `-` form. On
+  DuckDB text is SQL and a list is `'type`.
+- The int in the `handle` column is accepted wherever the symbol is, for code that expects `hopen` to answer an int.
+- If a q peer dies, its alias keeps its number and its row (`state` reads `closed`); the next use makes ONE dial
+  attempt through the same open with the same arg, on that arg's own timeout, and a failure errors that use.
+
+**A forked worker.** `` h:.pq.hopen_qfork[`w1;::] `` forks this process: the worker starts with every global this
+process has at that moment, and `h "expr"`, `h (`f;x)` and the async `neg[h] "expr"` talk to it over the kdb
+protocol like any q server. It is a snapshot, not a mirror (later changes on either side are not seen by the other),
+and it only computes: `\t`, `\p` and `\s` are 0, the `.z.p*`/`.z.w*` handlers are the ones a fresh q starts with (so
+`.z.ph` is the built-in web handler), the connections this process had are not open in it, and it exits without
+running `.z.exit`. A worker may open its own port (`` h "system \"p 0W\"" ``): it then serves IPC and HTTP from the
+snapshot as of the fork, and a worker forked again after a death does not re-open it. `hclose h` kills it; if it dies,
+the next use of `h` forks a new worker from this process as it is then (`opened` changes). The arg is `::` or the
+fork's handshake timeout in ms (null, zero or negative = the default, 5000). A process that cannot be copied safely
+refuses with `'nofork` (not the main thread, a parallel region running, a swap-backed heap, Windows); `'fork` is the
+OS refusing. Two forks draw the same random numbers.
+
+**A launched worker.** `` h:.pq.hopen_qspawn[`w1;("init.q";"-s";"2")] `` starts a new peachq (this same executable)
+with exactly that argv: no shell, no splitting, nothing of peachq's added, so `.z.x` and `.z.f` read as they would for
+`q init.q -s 2`. It is an ordinary q process: its script runs (a script error stops the script, not the process, as in
+kdb+), its own `.z.p*` handlers apply, and a `\p` its script sets keeps serving. Its stdin is the null device; its stdout
+and stderr are this process's unless the `stdout`/`stderr` options below name files. `h` talks to it exactly as to a forked worker, and it lives exactly as long as `h`:
+`hclose h` kills it, and it dies with this process. If it dies, the next use of `h` launches it again from the same
+argv: its recipe is its argv, so anything pushed into it since is gone. The argv is one string per argument
+(`` enlist "init.q" `` is one argument); `""` and `::` mean no arguments, and anything else is `'type`. The dict form
+`` `argv`timeout!(("init.q";"-s";"2");20000) `` bounds the launch (ms; null, zero or negative = the default 10000); a
+worker that exits or never answers within it is `'proc`. A successful open means the process started and answered,
+not that its script succeeded: a script error stops the script and leaves the worker serving, so check what the script
+should have defined before relying on it. On Windows `hclose` ends the worker outright: there is no TERM to ask it
+first.
+
+**A worker's logs.** The `stdout` and `stderr` keys, on `.pq.hopen_qfork` and `.pq.hopen_qspawn` only, send the worker's
+output to files: each is a file symbol, and it behaves exactly as `\1`/`\2` run by the worker itself (appended, its
+parent directories created), except that the worker does it first, before its startup script or any option can print.
+So a launched worker's startup output, errors included, lands in the file, which a `\1` sent after `hopen` is too late
+for. Both keys may name the same file. A relative path is made absolute when the handle opens, so a worker restored
+after this process `\cd`s writes to the same file; a restore appends to it. Any other value is `'type`, and a file the
+worker cannot open fails the open (`'fork`, `'proc`).
+
+```q
+.pq.hopen_qspawn[`w2;`argv`stdout`stderr!(("init.q";"-s";"2");`:logs/w2.log;`:logs/w2.log)]
+.pq.hopen_qfork[`w1;`stdout`stderr!(`:w1.out;`:w1.err)]
+```
+
+**External tables and `s)`.** The process has ONE DuckDB database, the main instance, whose own handle is
+`` `:pq:duckdb:main `` (listed by `.pq.conns[]`, answered by `.duckdb.main[]`; `hopen`/`hclose` refuse the alias, and
+`q -duckdb path` makes it a file). Every DuckDB alias is a catalog ATTACHed to it under the alias's name, shared by
+path. A q global bound to a DuckDB table (`` myt:get `:pq:duckdb:al:dt/ ``) is an **external table**: the data stays
+in DuckDB, qSQL and SQL both work on it, and writes go through to DuckDB. At the moment of assignment it becomes a
+same-named VIEW in main (a view, never a copy: `` `myt insert x `` writes through to DuckDB and the next `s)` reads
+it); re-pointing the global re-points the view, any other value drops it, and `` `.ns.t `` is visible under its full
+name. `s)SELECT count(*) FROM myt` is that view; `s)SELECT * FROM al.dt` reaches the alias's catalog qualified, and a
+bare `dt` is NOT visible (a bare name in `s)` is a q name). After `hclose` of the alias the view errors on use, as
+`get` of the coordinate does. `\?duckdb`, [SQL](../basics/sql.md) and [Storing tables in DuckDB](sql-duckdb-storage.md)
+have the rest; a q peer has no external tables.
+
+**Loading and dropping: the sync law.** Anything done THROUGH q is in sync by construction: assigning, re-pointing
+or unbinding an external table, `insert`/`upsert` on one, `hdel` of a coordinate; one global-set seam, one provider
+hook per verb. Anything done through the provider's own language is best effort, weighted to additions; nothing
+prints, and nothing is ever unbound behind your back.
+
+- **Provider to q is a LOAD, and `\l` is its verb.** `` \l `:pq:duckdb:al `` binds every table and view of the
+  alias's catalog as an external table under its own name, at the root (the `\l dir` law), later-wins on names: a
+  global `dt` you had becomes the external table; `` \l `:pq:duckdb:al:dt/ `` loads that one. `.duckdb.load[h;tables]`
+  is the verb form: `()` none, `::` all, else the names; it answers the names bound. The alias must be live (`'conn`):
+  a load never opens a connection. A loaded external table is a q name in `s)` like any other.
+  `q -duckdb path` loads main's tables at startup like `q dir/`, and so implies `\l pq`.
+- **`s)` after a `CREATE` or `ALTER` binds the NEW names** of main's own catalog (`CREATE TABLE … AS SELECT`
+  included); an existing global keeps its value. `\l` is the later-wins door; this one is add-only. Row writes need
+  nothing (an external table reads live). `s)DROP TABLE x` leaves q's `x` bound: it errors on use with DuckDB's own
+  text.
+- **`hdel` on a coordinate drops the OBJECT**: `` hdel `:pq:duckdb:al:dt/ `` is `DROP TABLE` (or `DROP VIEW`, by what
+  the name is); `` hdel `:pq:q:al:t/ `` deletes the table on the peer. A q name bound to it stays bound and errors
+  on use. The connection form is `'domain`, a dead alias `'conn`. Deleting the q
+  name (`delete dt from `.`) never drops the object, as with a splay: deleting `` t:get `:db/t/ `` never removes
+  the directory.
+
+## Compatibility principle
+
+PeachQ should preserve established kdb+/q meanings of handles wherever practical.
+
+The extended resource model is intended to explain and extend those behaviours, not redefine ordinary q file and IPC operations.
+
+- Existing file `get`/`set`, `read0`, and `read1` semantics remain existing file semantics.
+- Existing q IPC resource and opened-handle behaviour remains compatible.
+- Existing splayed-table qSQL behaviour remains valid, including the trailing `/` table-resource convention.
+- New table-resource behaviour extends the same idea to additional sources.
+- Aliases live under the reserved `:pq:` prefix (`:pq:q:`, `:pq:qfork:`, `:pq:qspawn:`, `:pq:duckdb:`), so they do not overload unrelated existing handle forms.
+
+This gives existing q code the familiar compact syntax while allowing new code to treat external data sources consistently.
