@@ -226,6 +226,7 @@ has "download.js fetches latest.json" /download.js '"file/latest.json"'
 has "download page loads download.js" /download    'src="download.js"'
 has "repl fetches the wasm manifest"  /repl.js     '"wasm/latest/manifest.json"'
 has "compatibility loads qdash data"  /compatibility 'src="data/qdash/data.js"'
+has "compatibility fetches apps.json" /compatibility.js '"data/apps/apps.json"'
 has "benchmark loads its data"        /benchmark     'src="data/benchmark/data.js"'
 # The deploy must never delete those directories.
 for dir in file wasm data video; do

@@ -5,6 +5,10 @@ peachq_page_start('PeachQ Compatibility', 'Track PeachQ q compatibility progress
 <main>
 <section class="page-hero compat-hero"><div class="container"><span class="tag">Public progress</span><h1>Compatibility, tracked.</h1><p>Generated from the PeachQ conformance ledger: q behaviour coverage, trend, suite heatmap, and robustness checks from the current build.</p></div></section>
 <section class="section compat-page"><div class="container">
+<section class="compat-apps" id="compatApps" hidden>
+  <div class="compat-apps-head"><div><h2>Does your project run?</h2><p class="section-intro">Public q projects on GitHub, each run unmodified at its latest commit, with its own tests where it has them. A project that is not marked Works shows a gap in PeachQ, not a fault in the project.</p></div><span id="compatAppsUpdated"></span></div>
+  <div class="compat-table-wrap"><table class="compat-table compat-apps-table" id="compatAppsTable"><thead><tr><th>Project</th><th>Grade</th><th>Own tests</th><th>Loads</th><th>Parses</th><th>Runs</th><th>Checked</th><th>Tracking</th></tr></thead><tbody></tbody></table></div>
+</section>
 <p>Moving existing q code? Read the <a href="docs/peachq/compatibility/">additions and deliberate differences</a>, or start with the <a href="docs/">documentation</a>. Passing corpus examples measure coverage, not every possible program.</p>
 <div class="compat-kpis" id="compatKpis"></div>
 <div class="compat-chart">

@@ -45,6 +45,7 @@ fetch() {
 echo "fetching preview fixtures from $BASE"
 fetch data/qdash/data.js
 fetch data/qdash/data.json
+fetch data/apps/apps.json
 fetch file/latest.json
 
 # The browser REPL needs the WebAssembly runtime. Its scripts are named in the
