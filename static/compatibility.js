@@ -261,8 +261,8 @@
     Works: "Runs on PeachQ.",
     Mostly: "PeachQ does not pass all of {n}'s own tests yet.",
     Loads: "PeachQ loads {n} but does not run it yet.",
-    Parses: "PeachQ reads {n} but does not load it yet.",
     Broken: "PeachQ does not run {n} yet.",
+    Unsupported: "A deliberate PeachQ boundary: {w}.",
     absent: "Not measured in the last run."
   };
 
@@ -281,7 +281,7 @@
 
   function row(app) {
     const url = repoUrl(app.repo), grade = BLURB[app.grade] ? app.grade : "absent";
-    const blurb = BLURB[grade].replace("{n}", app.name);
+    const blurb = BLURB[grade].replace("{n}", app.name).replace("{w}", app.why && app.why !== "-" ? app.why : "not supported");
     const sha = /^[0-9a-f]{40}$/.test(app.commit || "") ? app.commit : "";
     const commit = sha && url ? `<a href="${url}/commit/${sha}"><code>${sha.slice(0, 9)}</code></a>` : "";
     const version = app.version ? `v${text(String(app.version).replace(/\.\d{8}$/, ""))}` : "";
@@ -289,10 +289,11 @@
     const checked = commit ? `${commit}<small>${when}</small>` : when;
     return `<tr>
       <td><strong>${url ? `<a href="${url}">${text(app.name)}</a>` : text(app.name)}</strong>
-        <small>${text(url.replace("https://github.com/", ""))}${app.kind ? " · " + text(app.kind) : ""}</small>
+        <small>${text(url.replace("https://github.com/", ""))}</small>
+        ${app.about ? `<small class="apps-about">${text(app.about)}</small>` : ""}
         <small class="apps-blurb">${text(blurb)}</small></td>
       <td><span class="apps-grade apps-${grade.toLowerCase()}">${grade === "absent" ? "Not run" : grade}</span></td>
-      <td>${cell(app.tests)}</td><td>${cell(app.loads)}</td><td>${cell(app.parses)}</td><td>${cell(app.runs)}</td>
+      <td>${cell(app.tests)}</td><td>${cell(app.loads)}</td><td>${cell(app.runs)}</td>
       <td>${checked || `<span class="apps-none">-</span>`}</td>
       <td>${issues(app.issues)}</td>
     </tr>`;
