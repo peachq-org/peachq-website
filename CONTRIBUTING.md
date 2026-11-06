@@ -218,6 +218,7 @@ separately, and MP4 files are never committed:
 | `/file/` | Release archives and `latest.json` | Download page version, names, checksums |
 | `/wasm/latest/` | The WebAssembly runtime, its Worker and client, its example files and its manifest | The browser REPL |
 | `/data/qdash/` | Conformance results | The compatibility chart |
+| `/data/apps/` | `apps.json`: the third-party projects list (`make q-apps` report), copied by `make q-upload` when present | The table at the top of the compatibility page |
 | `/data/benchmark/` | NYSE TAQ benchmark results (`data.js`) and the full-results dashboard (`full/`), uploaded by the benchmark fork's `tools/publish.sh` | The benchmark page |
 | `/video/` | Article recordings as `NAME-HD.mp4` or `NAME-FHD.mp4` | [Article videos](#article-videos) |
 

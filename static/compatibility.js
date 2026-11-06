@@ -252,3 +252,60 @@
   $("#compatViewHeat").addEventListener("click", () => setView("heat"));
   $("#compatViewTable").addEventListener("click", () => setView("table"));
 }());
+
+(function () {
+  const section = document.getElementById("compatApps");
+  if (!section || !window.fetch) return;
+  const ISSUES = "https://github.com/peachq-org/peachq/issues/";
+  const BLURB = {
+    Works: "Runs on PeachQ.",
+    Mostly: "PeachQ does not pass all of {n}'s own tests yet.",
+    Loads: "PeachQ loads {n} but does not run it yet.",
+    Parses: "PeachQ reads {n} but does not load it yet.",
+    Broken: "PeachQ does not run {n} yet.",
+    absent: "Not measured in the last run."
+  };
+
+  function text(value) {
+    return String(value == null ? "" : value)
+      .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+  }
+  const repoUrl = url => /^https:\/\/github\.com\/[\w.-]+\/[\w.-]+$/.test(url || "") ? url : "";
+  const cell = v => v && v !== "-" ? text(v) : `<span class="apps-none">-</span>`;
+
+  function issues(list) {
+    return (list || []).map(id => /^#\d+$/.test(id)
+      ? `<a href="${ISSUES}${id.slice(1)}">${text(id)}</a>`
+      : `<span title="PeachQ defect ledger id">${text(id)}</span>`).join(" ") || `<span class="apps-none">-</span>`;
+  }
+
+  function row(app) {
+    const url = repoUrl(app.repo), grade = BLURB[app.grade] ? app.grade : "absent";
+    const blurb = BLURB[grade].replace("{n}", app.name);
+    const sha = /^[0-9a-f]{40}$/.test(app.commit || "") ? app.commit : "";
+    const commit = sha && url ? `<a href="${url}/commit/${sha}"><code>${sha.slice(0, 9)}</code></a>` : "";
+    const version = app.version ? `v${text(String(app.version).replace(/\.\d{8}$/, ""))}` : "";
+    const when = [version, text(app.date)].filter(Boolean).join(" · ");
+    const checked = commit ? `${commit}<small>${when}</small>` : when;
+    return `<tr>
+      <td><strong>${url ? `<a href="${url}">${text(app.name)}</a>` : text(app.name)}</strong>
+        <small>${text(url.replace("https://github.com/", ""))}${app.kind ? " · " + text(app.kind) : ""}</small>
+        <small class="apps-blurb">${text(blurb)}</small></td>
+      <td><span class="apps-grade apps-${grade.toLowerCase()}">${grade === "absent" ? "Not run" : grade}</span></td>
+      <td>${cell(app.tests)}</td><td>${cell(app.loads)}</td><td>${cell(app.parses)}</td><td>${cell(app.runs)}</td>
+      <td>${checked || `<span class="apps-none">-</span>`}</td>
+      <td>${issues(app.issues)}</td>
+    </tr>`;
+  }
+
+  fetch("data/apps/apps.json", { cache: "no-store" })
+    .then(r => r.ok ? r.json() : null)
+    .then(data => {
+      const apps = data && Array.isArray(data.apps) ? data.apps : [];
+      if (!apps.length) return;
+      section.querySelector("tbody").innerHTML = apps.map(row).join("");
+      document.getElementById("compatAppsUpdated").textContent = data.updated ? `checked ${data.updated}` : "";
+      section.hidden = false;
+    })
+    .catch(() => {});
+}());

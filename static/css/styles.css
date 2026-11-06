@@ -387,6 +387,26 @@ html[data-theme="dark"] .compat-kpi.hero,html[data-theme="dark"] .compat-kpi.her
 .compat-tip span{color:#b9c1cb}
 .compat-tip code{margin:7px 0 5px;color:#ffb38a;font:800 .78rem ui-monospace,SFMono-Regular,Consolas,monospace;white-space:normal;word-break:break-word}
 .compat-tip em{color:#8ed49f;font-style:normal;font-size:.78rem;text-transform:lowercase}
+.compat-apps{margin-bottom:34px}
+.compat-apps[hidden]{display:none}
+.compat-apps-head{display:flex;align-items:end;justify-content:space-between;gap:24px}
+.compat-apps-head h2{font-size:clamp(2rem,4vw,3.4rem);letter-spacing:-.055em;line-height:1;margin:0 0 12px}
+.compat-apps-head>span{color:var(--muted);font-size:.85rem;white-space:nowrap}
+.compat-apps .compat-table-wrap{margin-top:10px}
+.compat-apps-table th,.compat-apps-table td{padding:12px 10px}
+.compat-apps-table td{vertical-align:top;white-space:normal}
+.compat-apps-table td:first-child{min-width:18ch}
+.compat-apps-table td:nth-child(4),.compat-apps-table td:nth-child(6){max-width:18ch;overflow-wrap:anywhere}
+.compat-apps-table td small{white-space:nowrap}
+.compat-apps-table td small.apps-blurb{font:600 .8rem var(--font,inherit);color:var(--text);white-space:normal}
+.compat-apps-table code{font-size:.8rem}
+.apps-none{color:var(--muted)}
+.apps-grade{display:inline-flex;border-radius:999px;padding:2px 10px;font-size:.78rem;font-weight:850;border:1px solid var(--line)}
+.apps-works{background:color-mix(in srgb,var(--green) 22%,var(--surface-solid));border-color:var(--green)}
+.apps-mostly{background:color-mix(in srgb,var(--green) 10%,var(--surface-solid))}
+.apps-loads,.apps-parses{background:color-mix(in srgb,var(--peach) 30%,var(--surface-solid))}
+.apps-broken{background:color-mix(in srgb,var(--peach-strong) 45%,var(--surface-solid))}
+.apps-absent{color:var(--muted)}
 .footer{padding:42px 0 56px;color:var(--muted);font-size:.92rem}.footer-inner{display:flex;justify-content:space-between;gap:20px;border-top:1px solid var(--line);padding-top:24px}
 .bench-hero{padding-bottom:0}
 .bench-page{padding-top:0}
@@ -448,6 +468,7 @@ html[data-theme="dark"] .compat-kpi.hero,html[data-theme="dark"] .compat-kpi.her
   .signup{grid-template-columns:1fr}.help-list{grid-template-columns:1fr}
   .repl-shell{height:min(640px,calc(100vh - 180px));min-height:460px}.repl-panel{min-height:0}
   .compat-toolbar{display:block}.compat-tools{justify-items:start;margin-top:16px}.compat-toolbar input{margin-top:0}
+  .compat-apps-head{display:block}
 }
 @media(max-width:660px){
   .container{width:min(100% - 24px,1180px)}
