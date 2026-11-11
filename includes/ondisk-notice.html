@@ -1,0 +1,6 @@
+<link rel="stylesheet" href="css/notice.css">
+<div class="ondisk-notice">
+  <p class="ondisk-title">On-disk databases: what works today</p>
+  <p>Flat files and splayed tables work: PeachQ reads and writes them in the kdb+ on-disk format, including compressed splayed tables when reading. <strong>Partitioned and segmented databases do not load yet</strong>, and <code>.Q.dpft</code>, <code>dsave</code> and partitioned writes are not available. For a typical historical database (HDB) this is the largest gap today; see <a href="docs/peachq/compatibility/#partitioned-databases">the details</a>.</p>
+  <p>If your team runs kdb+ in production and partitioned support would let you evaluate PeachQ, we would like to hear about your setup and what you need. Real workloads decide what we build next. <a class="ondisk-button" href="contact">Tell us what you need</a></p>
+</div>
