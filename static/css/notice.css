@@ -1,0 +1,6 @@
+.ondisk-notice{border:1px solid rgba(242,139,87,.45);border-left:6px solid #f28b57;background:rgba(255,179,138,.13);padding:20px 24px;margin:0 0 28px;border-radius:4px}
+.ondisk-notice p{margin:0 0 12px;max-width:80ch}
+.ondisk-notice p:last-child{margin-bottom:0}
+.ondisk-notice .ondisk-title{font-size:1.35em;font-weight:800;letter-spacing:-.02em;margin-bottom:10px}
+.ondisk-notice a{text-decoration:underline}
+.ondisk-notice .ondisk-button{display:inline-block;margin-left:6px;padding:5px 14px;border-radius:999px;background:#ffb38a;border:1px solid #e98b5f;color:#18140a;font-weight:800;text-decoration:none}

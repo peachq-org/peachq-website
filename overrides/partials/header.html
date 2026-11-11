@@ -1,0 +1,71 @@
+{#-
+  Adapted from Material for MkDocs' partials/header.html.
+
+  Differences from the original, all so this header matches the PHP root pages'
+  <header class="nav"> in static/template.php:
+
+    * The wordmark renders the Q in --peach-strong and links to the site root,
+      the way .brand does. config.site_name is escaped by Jinja, so this cannot
+      be expressed in mkdocs.yml.
+    * The nav items render inline in the header row instead of in a separate
+      tabs bar below it, matching .nav-links.
+    * The repo source widget is omitted; GitHub uses a plain nav link.
+    * Search uses Material's dialog with an additional exact q lookup.
+    * The per-page topic (which swaps the title for the current page name on
+      scroll) is dropped, since the root pages have no equivalent.
+
+  If Material is upgraded, diff this against the upstream partial.
+-#}
+{% set class = "md-header md-header--shadow" %}
+<header class="{{ class }}" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="{{ lang.t('header') }}">
+    <a href="{{ base_url }}/" title="{{ config.site_name | e }}" class="md-header__button md-logo" aria-label="{{ config.site_name }}" data-md-component="logo">
+      {% include "partials/logo.html" %}
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      {% set icon = config.theme.icon.menu or "material/menu" %}
+      {% include ".icons/" ~ icon ~ ".svg" %}
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <a class="md-ellipsis peachq-wordmark" href="{{ base_url }}/">
+            Peach<span class="peachq-wordmark__q">Q</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    {# The site nav, inline, mirroring .nav-links in template.php. Driven by
+       extra.peachq_nav -- see mkdocs.yml. Each URL is relative to the site root
+       and gets Material's per-page base_url in front, so the links work at any
+       page depth and whether the site is served from a document root or from a
+       subdirectory of another site. #}
+    <nav class="peachq-nav" aria-label="Site">
+      {# page.url is already relative to the site root ("news/"), the same form
+         extra.peachq_nav uses, so they compare directly. #}
+      {% set here = page.url if page and page.url else "" %}
+      {% for item in config.extra.peachq_nav %}
+        {% set current = here == item.url or here == item.url ~ "/" or here.startswith(item.url.rstrip("/") ~ "/") %}
+        <a class="peachq-nav__link{% if current %} peachq-nav__link--active{% endif %}" href="{{ base_url }}/{{ item.url }}">{{ item.title }}</a>
+      {% endfor %}
+      <a class="peachq-nav__link" href="{{ config.repo_url }}" target="_blank" rel="noreferrer">GitHub &#8599;</a>
+    </nav>
+
+    {% if "material/search" in config.plugins %}
+      <label class="md-header__button md-icon" for="__search" aria-label="{{ lang.t('search') }}">
+        {% include ".icons/material/magnify.svg" %}
+      </label>
+      {% include "partials/search.html" %}
+    {% endif %}
+
+    {% if config.theme.palette %}
+      {% if not config.theme.palette is mapping %}
+        {% include "partials/palette.html" %}
+      {% endif %}
+    {% endif %}
+    {% if not config.theme.palette is mapping %}
+      {% include "partials/javascripts/palette.html" %}
+    {% endif %}
+  </nav>
+</header>
