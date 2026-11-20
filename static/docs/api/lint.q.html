@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<!-- Resolves every relative URL below against the site root rather than the
+     requested path. See peachq_install_path(). -->
+
+<title>lint.q - PeachQ API</title>
+<link rel="canonical" href="https://peachq.org/docs/api/lint.q.html">
+<link rel="icon" href="../../img/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="16x16" href="../../img/peachq-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../../img/peachq-32x32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../../img/peachq-180x180.png">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" />
+<link rel="stylesheet" href="qdoc2.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/q.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/shell.min.js"></script>
+<script>hljs.highlightAll();</script>
+<link rel="stylesheet" href="../../css/styles.css">
+<link rel="stylesheet" href="peachq-api.css">
+<script src="../../mirror-banner.js" defer></script>
+<!-- Matomo. Self-hosted at timestored.com/mat, so no third-party analytics
+     service sees the traffic. Site 4 is "peachq"; site 1 is TimeStored's own
+     site, and pointing this at 1 filed every PeachQ visit under TimeStored.
+     Keep in sync with overrides/main.html, which carries the same snippet for
+     the MkDocs half of the site; tests/test_pages.sh checks the id matches. -->
+<script>
+  (function() {
+    // Local previews do not send analytics.
+    var host = window.location.hostname;
+    if (host === 'localhost' || host.endsWith('.localhost') ||
+        /^127\./.test(host) || host === '[::1]' || host === '::1') return;
+    var _paq = window._paq = window._paq || [];
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    var u="//www.timestored.com/mat/";
+    _paq.push(['setTrackerUrl', u+'matomo.php']);
+    _paq.push(['setSiteId', '4']);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+</head>
+<body class="peachq-api">
+<header class="nav">
+  <div class="container nav-inner">
+    <a class="brand" href="../.././"><img class="logo" src="../../img/peachq-logo.svg" alt="PeachQ logo"><span>Peach<span style="color:var(--peach-strong)">Q</span></span></a>
+    <button class="mobile-menu" type="button" data-mobile-menu aria-expanded="false" aria-controls="siteNav">Menu</button>
+    <nav class="nav-links" id="siteNav">
+      <a href="../../repl" class="nav-cta">Try Live</a>
+      <a href="../../download">Download</a>
+      <a href="../../docs/" class="active">Docs</a>
+      <a href="../../compatibility">Compatibility</a>
+      <a href="../../news/">News</a>
+      <a href="../../about">About</a>
+      <a href="https://github.com/peachq-org/peachq" target="_blank" rel="noreferrer">GitHub ↗</a>
+      <button class="theme-toggle" data-theme-toggle aria-label="Toggle theme"></button>
+    </nav>
+  </div>
+</header>
+<div class="preview-ribbon" aria-hidden="true">Early preview</div>
+
+
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav" id="api-sidebar">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+<p><a href="../">← PeachQ docs</a></p>
+        <a href="./"  class="icon icon-home"> PeachQ API</a><div role="search">
+  <!-- form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form -->
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Namespaces</span></p>
+
+
+<ul><li class="toctree-l1 cls-crypto-cls"><a class="reference internal cls-crypto-cls" href='crypto.q.html' >.crypto</a></li>
+	<li class="toctree-l1 cls-csv-cls"><a class="reference internal cls-csv-cls" href='csv.q.html' >.csv</a></li>
+	<li class="toctree-l1 cls-duckdb-cls"><a class="reference internal cls-duckdb-cls" href='duckdb.q.html' >.duckdb</a></li>
+	<li class="toctree-l1 cls-ffi-cls"><a class="reference internal cls-ffi-cls" href='ffi.q.html' >.ffi</a></li>
+	<li class="toctree-l1 cls-fs-cls"><a class="reference internal cls-fs-cls" href='fs.q.html' >.fs</a></li>
+	<li class="toctree-l1 cls-hash-cls"><a class="reference internal cls-hash-cls" href='hash.q.html' >.hash</a></li>
+	<li class="toctree-l1 cls-j-cls"><a class="reference internal cls-j-cls" href='j.q.html' >.j</a></li>
+	<li class="toctree-l1 cls-kafka-cls"><a class="reference internal cls-kafka-cls" href='kafka.q.html' >.kafka</a></li>
+	<li class="toctree-l1 current"><a class="reference internal current" href='lint.q.html' >.lint</a></li>
+	<li class="toctree-l1 cls-lsp-cls"><a class="reference internal cls-lsp-cls" href='lsp.q.html' >.lsp</a></li>
+	<li class="toctree-l1 cls-massive-cls"><a class="reference internal cls-massive-cls" href='massive.q.html' >.massive</a></li>
+	<li class="toctree-l1 cls-md-cls"><a class="reference internal cls-md-cls" href='md.q.html' >.md</a></li>
+	<li class="toctree-l1 cls-parquet-cls"><a class="reference internal cls-parquet-cls" href='parquet.q.html' >.parquet</a></li>
+	<li class="toctree-l1 cls-path-cls"><a class="reference internal cls-path-cls" href='path.q.html' >.path</a></li>
+	<li class="toctree-l1 cls-pkg-cls"><a class="reference internal cls-pkg-cls" href='pkg.q.html' >.pkg</a></li>
+	<li class="toctree-l1 cls-pq-cls"><a class="reference internal cls-pq-cls" href='pq.q.html' >.pq</a></li>
+	<li class="toctree-l1 cls-qunit-cls"><a class="reference internal cls-qunit-cls" href='qunit.q.html' >.qunit</a></li>
+	<li class="toctree-l1 cls-regexp-cls"><a class="reference internal cls-regexp-cls" href='regexp.q.html' >.regexp</a></li>
+	<li class="toctree-l1 cls-s-cls"><a class="reference internal cls-s-cls" href='s.q.html' >.s</a></li>
+	<li class="toctree-l1 cls-s3-cls"><a class="reference internal cls-s3-cls" href='s3.q.html' >.s3</a></li>
+	<li class="toctree-l1 cls-sql-cls"><a class="reference internal cls-sql-cls" href='sql.q.html' >.sql</a></li>
+	<li class="toctree-l1 cls-str-cls"><a class="reference internal cls-str-cls" href='str.q.html' >.str</a></li>
+	<li class="toctree-l1 cls-termbox-cls"><a class="reference internal cls-termbox-cls" href='termbox.q.html' >.termbox</a></li>
+	<li class="toctree-l1 cls-yml-cls"><a class="reference internal cls-yml-cls" href='yml.q.html' >.yml</a></li>
+	<li class="toctree-l1 cls-zip-cls"><a class="reference internal cls-zip-cls" href='zip.q.html' >.zip</a></li>
+</ul><!--NAMESPACE_END-->
+
+              <p class="caption"><span class="caption-text">Files</span></p>
+
+<ul><li class="toctree-l1 cls-crypto-cls"><a class="reference internal cls-crypto-cls" href='crypto.q.html' >crypto.q</a></li>
+	<li class="toctree-l1 cls-csv-cls"><a class="reference internal cls-csv-cls" href='csv.q.html' >csv.q</a></li>
+	<li class="toctree-l1 cls-duckdb-cls"><a class="reference internal cls-duckdb-cls" href='duckdb.q.html' >duckdb.q</a></li>
+	<li class="toctree-l1 cls-ffi-cls"><a class="reference internal cls-ffi-cls" href='ffi.q.html' >ffi.q</a></li>
+	<li class="toctree-l1 cls-fs-cls"><a class="reference internal cls-fs-cls" href='fs.q.html' >fs.q</a></li>
+	<li class="toctree-l1 cls-hash-cls"><a class="reference internal cls-hash-cls" href='hash.q.html' >hash.q</a></li>
+	<li class="toctree-l1 cls-j-cls"><a class="reference internal cls-j-cls" href='j.q.html' >j.q</a></li>
+	<li class="toctree-l1 cls-kafka-cls"><a class="reference internal cls-kafka-cls" href='kafka.q.html' >kafka.q</a></li>
+	<li class="toctree-l1 current"><a class="reference internal current" href='lint.q.html' >lint.q</a></li>
+	<li class="toctree-l1 cls-lsp-cls"><a class="reference internal cls-lsp-cls" href='lsp.q.html' >lsp.q</a></li>
+	<li class="toctree-l1 cls-massive-cls"><a class="reference internal cls-massive-cls" href='massive.q.html' >massive.q</a></li>
+	<li class="toctree-l1 cls-md-cls"><a class="reference internal cls-md-cls" href='md.q.html' >md.q</a></li>
+	<li class="toctree-l1 cls-parquet-cls"><a class="reference internal cls-parquet-cls" href='parquet.q.html' >parquet.q</a></li>
+	<li class="toctree-l1 cls-path-cls"><a class="reference internal cls-path-cls" href='path.q.html' >path.q</a></li>
+	<li class="toctree-l1 cls-pkg-cls"><a class="reference internal cls-pkg-cls" href='pkg.q.html' >pkg.q</a></li>
+	<li class="toctree-l1 cls-pq-cls"><a class="reference internal cls-pq-cls" href='pq.q.html' >pq.q</a></li>
+	<li class="toctree-l1 cls-qunit-cls"><a class="reference internal cls-qunit-cls" href='qunit.q.html' >qunit.q</a></li>
+	<li class="toctree-l1 cls-regexp-cls"><a class="reference internal cls-regexp-cls" href='regexp.q.html' >regexp.q</a></li>
+	<li class="toctree-l1 cls-s-cls"><a class="reference internal cls-s-cls" href='s.q.html' >s.q</a></li>
+	<li class="toctree-l1 cls-s3-cls"><a class="reference internal cls-s3-cls" href='s3.q.html' >s3.q</a></li>
+	<li class="toctree-l1 cls-sql-cls"><a class="reference internal cls-sql-cls" href='sql.q.html' >sql.q</a></li>
+	<li class="toctree-l1 cls-str-cls"><a class="reference internal cls-str-cls" href='str.q.html' >str.q</a></li>
+	<li class="toctree-l1 cls-termbox-cls"><a class="reference internal cls-termbox-cls" href='termbox.q.html' >termbox.q</a></li>
+	<li class="toctree-l1 cls-yml-cls"><a class="reference internal cls-yml-cls" href='yml.q.html' >yml.q</a></li>
+	<li class="toctree-l1 cls-zip-cls"><a class="reference internal cls-zip-cls" href='zip.q.html' >zip.q</a></li>
+</ul><!--FILES_END-->
+
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <button type="button" data-api-menu aria-expanded="false" aria-controls="api-sidebar">☰ API menu</button>
+          <a href="./">PeachQ API</a>
+
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="./" class="icon icon-home" aria-label="Docs"></a></li>
+          <!-- li class="breadcrumb-item">Files-Breadcrumb</li -->
+      <li class="breadcrumb-item active">lint.q</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+
+                <h1 id="foobar">lint.q</h1>
+
+
+
+	<div id='headerDoc'>A linter for q source.  It reads the text with .pq.syntax and runs none of it but the literal-only parts of built-in operators that LITERAL_ERROR evaluates, and type checks on literals, under reval.  Rules carry KX QLint's IDs, but PARAM_TYPE_MISMATCH, qStudio's, and the hazard rules (valid q you probably did not mean), SYNTAX, LITERAL_ERROR and TYPED_PARAM_ERROR, which are peachq's.  A comment "@qlintsuppress RULE(n)" silences RULE on its own line and the n below it, a bare RULE silences it in the whole file and the rule all matches every rule.  A statement that does not parse reports only that: SYNTAX, or ASSIGN_RESERVED_WORD for an assignment to a reserved word.  A string is always source and a symbol always a path: lint never guesses which.<div class='qd-examples'><h3>Examples</h3><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.lint.text "f:{[a;b] a+1}\ng:$[1b;2;0b;3]"</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.lint.rules[]</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div></div></div>
+	<div id='summary'><h2>Entity Summary</h2><table class='overviewSummary'><tbody>
+<tr><th>Entities</th><th>Short Description</th></tr>
+		<tr><td><a href='#-lint-explain'>.lint.explain[rule]</a></td><td>What one rule finds and why it matters.</td></tr>
+		<tr><td><a href='#-lint-main'>.lint.main[args]</a></td><td>The q -lint command line, answering its exit code: args are the words after q, paths and -format text|json|sarif, or -help (--help, -h) for the usage.</td></tr>
+		<tr><td><a href='#-lint-path'>.lint.path[p]</a></td><td>The findings for files, and for every .q file under directories, with a leading file column.</td></tr>
+		<tr><td><a href='#-lint-rules'>.lint.rules[]</a></td><td>Every rule: its severity, whether it runs unless opts says otherwise, and what it finds.</td></tr>
+		<tr><td><a href='#-lint-run'>.lint.run[target;opts]</a></td><td>The findings for source text or paths, with settings: opts maps a rule to 1b (run it), 0b (do not) or a severity, `error, `warning or `info (run it at that severity), over the on and severity columns of .lint.rules[]; any other value is 'domain.</td></tr>
+		<tr><td><a href='#-lint-text'>.lint.text[src]</a></td><td>The findings for q source text, one row each, by position, judged by kdb's grammar whatever the session's \classic (a trailing qSQL comma is SYNTAX).</td></tr>
+</tbody></table></div>
+	<div class='details'>
+	<h2>Entity Details</h2>
+		<div class='entity' id='-lint-explain'><h2>.lint.explain[rule]</h2><p class='qd-description'>What one rule finds and why it matters.  A rule .lint.rules[] does not list signals, saying whether it is a KX QLint rule peachq lacks.</p><table class='qd-tags qd-parameters'>
+<tr><th>Parameters: </th><td><ul class='qd-parameters'>
+	<li><strong>rule</strong> - (symbol) a rule ID</li></ul></td></tr></table><div class='qd-examples'><h3>Examples</h3><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.lint.explain `UNUSED_PARAM</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div></div></div>
+		<div class='entity' id='-lint-main'><h2>.lint.main[args]</h2><p class='qd-description'>The q -lint command line, answering its exit code: args are the words after q, paths and -format text|json|sarif, or -help (--help, -h) for the usage.  Findings and the asked-for usage print to stdout; a notice, or a usage error naming what was wrong, to stderr.  The code is 0 for -help; 2 for a usage error or an input that is missing or cannot be read, whatever else was found; else 1 for a finding of severity error; else 0.</p><table class='qd-tags qd-parameters'>
+<tr><th>Return: </th><td>(long) the exit code</td></tr>
+<tr><th>Parameters: </th><td><ul class='qd-parameters'>
+	<li><strong>args</strong> - (list) the words, each a string</li></ul></td></tr></table><div class='qd-examples'><h3>Examples</h3><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.lint.main ("src";"-format";"json")</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div></div></div>
+		<div class='entity' id='-lint-path'><h2>.lint.path[p]</h2><p class='qd-description'>The findings for files, and for every .q file under directories, with a leading file column.  Each file takes the settings of the lint.config files above it, as q -lint does.  A path that does not exist signals, naming it.</p><table class='qd-tags qd-parameters'>
+<tr><th>Parameters: </th><td><ul class='qd-parameters'>
+	<li><strong>p</strong> - (symbol) a file or directory handle, `:path, or a symbol list of them</li></ul></td></tr></table><div class='qd-examples'><h3>Examples</h3><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.lint.path `:src</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div></div></div>
+		<div class='entity' id='-lint-rules'><h2>.lint.rules[]</h2><p class='qd-description'>Every rule: its severity, whether it runs unless opts says otherwise, and what it finds.</p><div class='qd-examples'><h3>Examples</h3><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.lint.rules[]</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div></div></div>
+		<div class='entity' id='-lint-run'><h2>.lint.run[target;opts]</h2><p class='qd-description'>The findings for source text or paths, with settings: opts maps a rule to 1b (run it), 0b (do not) or a severity, `error, `warning or `info (run it at that severity), over the on and severity columns of .lint.rules[]; any other value is 'domain.  An ID that is no rule this build has is ignored, with a notice on stderr, so stored settings outlive a rule.  Two more keys are options: positions, `utf8 (the default, col and endcol count bytes) or `utf16 (UTF-16 code units, as Java, JavaScript and LSP count, a character past U+FFFF two); and globals, a symbol list of names defined elsewhere, which every rule takes as defined.  Every file one call lints is one project: a name any of them defines is defined for all.  For a path, a file's lint.config settings apply first and opts over them.  A string is source and a symbol a path, always: .lint.run["src/a.q";::] lints the text src/a.q.</p><table class='qd-tags qd-parameters'>
+<tr><th>Parameters: </th><td><ul class='qd-parameters'>
+	<li><strong>opts</strong> - (dict) rule!boolean or rule!severity, and the options positions and globals</li>
+	<li><strong>target</strong> - (any) source text (string), or paths (symbol), as for .lint.text and .lint.path</li></ul></td></tr></table><div class='qd-examples'><h3>Examples</h3><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.lint.run["f:{[a;b] a}";(enlist `UNUSED_PARAM)!enlist 1b]</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.lint.run["a:$[1b;2;0b;3]";(enlist `COND_EVENARGS)!enlist `warning]</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.lint.run["f:{g x}";`UNDECLARED_VAR`globals`positions!(1b;enlist `g;`utf16)]</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div></div></div>
+		<div class='entity' id='-lint-text'><h2>.lint.text[src]</h2><p class='qd-description'>The findings for q source text, one row each, by position, judged by kdb's grammar whatever the session's \classic (a trailing qSQL comma is SYNTAX).  line and col are 1-based, col counts bytes, and endline/endcol name the last byte a finding covers.  src is always source, even text that names a file: a path is a symbol, for .lint.path.</p><table class='qd-tags qd-parameters'>
+<tr><th>Return: </th><td>(table) ([] line; col; endline; endcol; rule; severity; msg)</td></tr>
+<tr><th>Parameters: </th><td><ul class='qd-parameters'>
+	<li><strong>src</strong> - (string) the text of a q file, or a char atom</li></ul></td></tr></table><div class='qd-examples'><h3>Examples</h3><div class='qd-example'><pre class='qd-example-code'><code class='language-q'>.lint.text "f:{x+1\ng:$[1b;2;0b;3]"</code></pre><button type="button" class="qd-example-link" data-copy-example title="Copy example" aria-label="Copy example to clipboard">Copy</button><span class="qd-copy-status" role="status"></span></div></div></div></div><!--MAIN_END-->
+
+
+            </div>
+
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <!-- a href="../foo/" class="btn btn-neutral float-left" title="Foo"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../../namespaces/bar/" class="btn btn-neutral float-right" title="Bar">Next <span class="icon icon-circle-arrow-right"></span></a -->
+    </div>
+
+  <hr/>
+
+
+
+  <div role="contentinfo">
+    <!-- Copyright -->
+  </div>
+
+  Built with <a href="https://www.timestored.com/qstudio/help/qdoc">QDoc</a> provided by <a href="https://www.timestored.com/">TimeStored</a>. <nav class="peachq-api-links" aria-label="PeachQ links"><a href="../">Docs</a> · <a href="../../thanks/">Thanks</a> · <a href="https://github.com/peachq-org/peachq/blob/23847ae64c5b3f85470c8c16354744b2abb76185/qlib/lint.q">Source</a> · PeachQ v0.92.20261120 · generated 2026-11-20</nav>
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+
+
+
+
+
+
+
+<script src="peachq-api.js"></script><footer class="footer">
+  <div class="container footer-inner">
+    <div>PeachQ - MIT-licensed open source q, built on Rayforce with DuckDB storage in progress.
+      <a href="../../thanks/">Thanks</a>
+    </div>
+    <nav class="footer-links" aria-label="Footer">
+      <a href="../../repl">Try Live</a><a href="../../download">Download</a><a href="../../docs/">Docs</a>
+      <a href="../../compatibility">Compatibility</a><a href="../../roadmap">Roadmap</a><a href="../../news/">News</a>
+      <a href="../../about">About</a><a href="../../contact">Contact</a>
+      <a href="https://github.com/peachq-org/peachq" target="_blank" rel="noreferrer">GitHub ↗</a>
+    </nav>
+  </div>
+</footer>
+<script src="../../script.js"></script>
+</body>
+</html>
