@@ -1,0 +1,11 @@
+<link rel="stylesheet" href="css/notice.css">
+<div class="roadmap-notice">
+  <p class="roadmap-title">Roadmap: what doesn't work yet</p>
+  <p>PeachQ 0.92 reads and writes kdb+ on-disk data, including partitioned and segmented databases. The main gaps now are:</p>
+  <ul>
+    <li><strong>Performance.</strong> Queries on a partitioned database give correct results but are not yet efficient. Each query builds one in-memory table from the partitions it reads, so a large historical database (HDB) will be much slower than kdb+ and use far more memory.</li>
+    <li><strong>Multi-threading.</strong> Query execution does not yet spread work across cores as kdb+ does.</li>
+    <li><strong>Snappy-compressed and encrypted files</strong> do not read yet. gzip and lz4 do.</li>
+  </ul>
+  <p>If your firm runs kdb+ in production, talk to us. We have spent a lot of time ironing out the edge cases of running real q applications such as TorQ, and real workloads decide what we build next. <a class="roadmap-button" href="contact">Talk to us</a></p>
+</div>
