@@ -1,0 +1,10 @@
+{
+  "name": "peachq-website-checks",
+  "private": true,
+  "scripts": {
+    "test:repl": "node tests/test_repl.cjs"
+  },
+  "devDependencies": {
+    "playwright": "1.61.1"
+  }
+}
