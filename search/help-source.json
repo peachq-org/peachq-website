@@ -1,0 +1,9 @@
+{
+  "source_type": "local-git-snapshot",
+  "revision": "996ed564d5692ee6624eee3b4be9107e99126b02",
+  "path": "qlib/help-builtins.tsv",
+  "sha256": "fae5d765df52cacc05df37c6a602eb96dfb5745b1654407ae4a01442af13786d",
+  "license_path": "LICENSE",
+  "license_sha256": "831a4345d4a0e5efafcd16f810223b79f26915153d2f084430230b2388a78be1",
+  "last_changed_revision": "77d8707de1c174d2b56f6bfaf4569d433ed9578d"
+}

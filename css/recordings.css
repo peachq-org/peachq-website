@@ -1,0 +1,46 @@
+/* Keep terminal geometry independent of the surrounding article typography. */
+.peachq-recording {
+  position: relative;
+  width: 100%;
+  min-width: 0;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: #121314;
+  isolation: isolate;
+}
+.peachq-recording > .ap-wrapper { position: relative; z-index: 0; width: 100%; height: 100%; }
+.md-typeset .peachq-recording pre { margin: 0; padding: 0; background: none; color: inherit; }
+.peachq-recording[data-recording-error] { padding: 1rem; color: white; }
+
+.peachq-recording-poster {
+  position: absolute; inset: 0; width: 100%; height: 100%; padding: 0;
+  border: 0; cursor: pointer; background: #171311; color: white; z-index: 2;
+}
+.peachq-recording-poster img { display: block; width: 100%; height: 100%; object-fit: contain; }
+.peachq-recording-poster span {
+  position: absolute; right: 3%; bottom: 4%; padding: .3em .8em;
+  background: #171311; border: 2px solid #f5a77f; font: bold 16px monospace;
+}
+.peachq-recording-poster:focus-visible { outline: 3px solid #fff0dc; outline-offset: -4px; }
+
+.peachq-video { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; background: #121314; }
+.peachq-video-frame { position: relative; }
+/* Leaves the native control bar clickable; Chromium ignores clicks on an unloaded preload="none" video. */
+.peachq-video-play {
+  position: absolute; inset: 0 0 64px; z-index: 1; padding: 0;
+  border: 0; background: none; cursor: pointer; --size: clamp(3.5rem, 14%, 6.5rem);
+}
+.peachq-video-play::before, .peachq-video-play::after {
+  content: ""; position: absolute; top: calc(50% + 32px); left: 50%; transform: translate(-50%, -50%);
+}
+.peachq-video-play::before {
+  width: var(--size); aspect-ratio: 1; box-sizing: border-box;
+  border: 3px solid #f5a77f; border-radius: 50%; background: rgb(23 19 17 / .85);
+}
+.peachq-video-play::after {
+  width: calc(var(--size) * .36); aspect-ratio: 10 / 11; margin-left: calc(var(--size) * .05);
+  background: white; clip-path: polygon(0 0, 100% 50%, 0 100%);
+}
+.peachq-video-play:hover::before { background: #171311; }
+.peachq-video-play:focus-visible { outline: none; }
+.peachq-video-play:focus-visible::before { outline: 3px solid #fff0dc; outline-offset: 3px; }
